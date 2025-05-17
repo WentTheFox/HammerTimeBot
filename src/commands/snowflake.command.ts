@@ -1,4 +1,3 @@
-import moment from 'moment';
 import { getSnowflakeCommandOptions } from '../options/snowflake.options.js';
 import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { SnowflakeCommandOptionName } from '../types/localization.js';
@@ -8,6 +7,7 @@ import snowflakeToUnix from '../utils/snowflake.js';
 import { SnowflakeError } from '../classes/snowflake-error.js';
 import { ApplicationCommandType, MessageFlags } from 'discord-api-types/v10';
 import { interactionReply } from '../utils/interaction-reply.js';
+import { TZDate } from '@date-fns/tz';
 
 export const snowflakeCommand: BotChatInputCommand = {
   getDefinition: (t) => ({
@@ -34,8 +34,8 @@ export const snowflakeCommand: BotChatInputCommand = {
 
       throw e;
     }
-    const localMoment = moment.unix(unixValue).utc();
+    const localDate = TZDate.tz('UTC', unixValue * 1e3);
 
-    await replyWithSyntax({ localMoment, interaction, context, settings, timezone: undefined });
+    await replyWithSyntax({ localDate, interaction, context, settings, timezone: undefined });
   },
 };

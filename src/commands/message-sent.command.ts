@@ -1,9 +1,9 @@
-import moment from 'moment-timezone';
 import { BotMessageContextMenuCommand } from '../types/bot-interaction.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { getSyntaxReplyOptions } from '../utils/reply-with-syntax.js';
 import { ApplicationCommandType, ComponentType, MessageFlags } from 'discord-api-types/v10';
 import { interactionReply } from '../utils/interaction-reply.js';
+import { TZDate } from '@date-fns/tz';
 
 export const messageSentCommand: BotMessageContextMenuCommand = {
   getDefinition: (t) => ({
@@ -16,8 +16,8 @@ export const messageSentCommand: BotMessageContextMenuCommand = {
     const messageTarget = t('commands.Message Sent.responses.targetMessage', { replace: { url: interaction.targetMessage.url } });
     const contentPrefix = `${messageTarget}\n\n`;
 
-    const localMoment = moment(interaction.targetMessage.createdAt).utc();
-    const replyOptions = await getSyntaxReplyOptions({ localMoment, interaction, context, settings });
+    const localDate = TZDate.tz('UTC', interaction.targetMessage.createdAt);
+    const replyOptions = await getSyntaxReplyOptions({ localDate, interaction, context, settings });
     await interactionReply(t, interaction, replyOptions.components ? {
       ...replyOptions,
       components: [

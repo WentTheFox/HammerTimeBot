@@ -1,6 +1,5 @@
-import moment from 'moment-timezone';
 import {
-  adjustMoment,
+  adjustDate,
   constrain,
   convertHour12To24,
   defaultHourOptions,
@@ -18,10 +17,11 @@ import { ResponseColumnChoices } from '../types/localization.js';
 import { pad } from './numbers';
 import { describe, expect, it } from 'vitest';
 import { TFunction } from 'i18next';
+import { TZDate } from '@date-fns/tz';
+import { addHours, format, getHours, subDays } from 'date-fns';
 
 describe('time utils', () => {
-  const nowInSeconds = 1650802953;
-  const now = new Date(nowInSeconds * 1e3);
+  const now = new Date('2022-04-24T12:22:33.000Z');
   const ts = new MessageTimestamp(now);
 
   describe('pad', () => {
@@ -48,7 +48,6 @@ describe('time utils', () => {
     it('should find exact match', () => {
       expect(findTimezone('GMT')).toEqual(gmtTimezoneOptions);
       expect(findTimezone('gmt')).toEqual(gmtTimezoneOptions);
-      expect(findTimezone('cet')).toEqual(['CET']);
     });
 
     it('should find partial match', () => {
@@ -60,7 +59,7 @@ describe('time utils', () => {
       expect(findTimezone('budapest')).toEqual(['Europe/Budapest']);
       expect(findTimezone('london')).toEqual(['Europe/London']);
       expect(findTimezone('los angeles')).toEqual(['America/Los_Angeles']);
-      expect(findTimezone('buenos aires')).toEqual(['America/Buenos_Aires', 'America/Argentina/Buenos_Aires']);
+      expect(findTimezone('buenos aires')).toEqual(['America/Buenos_Aires']);
       expect(findTimezone('madrid')).toEqual(['Europe/Madrid']);
       expect(findTimezone('tokyo')).toEqual(['Asia/Tokyo']);
       expect(findTimezone('warsaw')).toEqual(['Europe/Warsaw']);
@@ -114,17 +113,17 @@ describe('time utils', () => {
     });
   });
 
-  describe('adjustMoment', () => {
+  describe('adjustDate', () => {
     it('should add the specified time', () => {
-      const actual = adjustMoment({ hour: 10 }, 'add', now);
-      const expected = moment(now).add(10, 'hour');
-      expect(actual.hours()).toEqual(expected.hours());
+      const actual = adjustDate({ hours: 10 }, 'add', now);
+      const expected = addHours(new TZDate(now), 10);
+      expect(getHours(actual)).toEqual(getHours(expected));
     });
 
     it('should subtract the specified time', () => {
-      const actual = adjustMoment({ day: 3 }, 'subtract', now);
-      const expected = moment(now).subtract(3, 'day');
-      expect(actual.days()).toEqual(expected.days());
+      const actual = adjustDate({ days: 3 }, 'subtract', now);
+      const expected = subDays(now, 3);
+      expect(format(actual, 'yyyy-MM-dd')).toEqual(format(expected, 'yyyy-MM-dd'));
     });
   });
 

@@ -1,4 +1,3 @@
-import moment from 'moment-timezone';
 import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { GlobalCommandOptionName, IsoCommandOptionName } from '../types/localization.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
@@ -7,6 +6,8 @@ import { ApplicationCommandType, MessageFlags } from 'discord-api-types/v10';
 import { getIsoCommandOptions } from '../options/iso.options.js';
 import { findTimezoneOptionValue, handleTimezoneAutocomplete } from '../utils/messaging.js';
 import { interactionReply } from '../utils/interaction-reply.js';
+import { TZDate } from '@date-fns/tz';
+import { isValid } from 'date-fns';
 
 export const isoCommand: BotChatInputCommand = {
   getDefinition: (t) => ({
@@ -35,8 +36,8 @@ export const isoCommand: BotChatInputCommand = {
       return;
     }
 
-    const localMoment = moment.tz(value, moment.ISO_8601, timezone);
-    if (!localMoment.isValid()) {
+    const localDate = TZDate.tz(timezone, value);
+    if (!isValid(localDate)) {
       await interactionReply(t, interaction, {
         content: t('commands.iso.responses.invalidIsoFormat'),
         flags: MessageFlags.Ephemeral,
@@ -44,6 +45,6 @@ export const isoCommand: BotChatInputCommand = {
       return;
     }
 
-    await replyWithSyntax({ localMoment, interaction, context, settings, timezone });
+    await replyWithSyntax({ localDate, interaction, context, settings, timezone });
   },
 };

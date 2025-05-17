@@ -1,4 +1,3 @@
-import moment, { Moment } from 'moment-timezone';
 import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { constrain, getGmtTimezoneValue, gmtZoneRegex, processMixedHourParameters } from '../utils/time.js';
 import { AtCommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
@@ -8,6 +7,8 @@ import { getAtOptions } from '../options/at.options.js';
 import { ApplicationCommandType, MessageFlags } from 'discord-api-types/v10';
 import { findTimezoneOptionValue, handleHourAutocomplete, handleTimezoneAutocomplete } from '../utils/messaging.js';
 import { interactionReply } from '../utils/interaction-reply.js';
+import { TZDate } from '@date-fns/tz';
+import { setDate, setHours, setMilliseconds, setMinutes, setMonth, setSeconds, setYear } from 'date-fns';
 
 export const atCommand: BotChatInputCommand = {
   getDefinition: (t) => ({
@@ -57,21 +58,21 @@ export const atCommand: BotChatInputCommand = {
       return;
     }
 
-    let localMoment: Moment;
+    let localDate: TZDate;
     try {
       if (gmtZoneRegex.test(timezone)) {
         const utcOffset = getGmtTimezoneValue(timezone, 0);
-        localMoment = moment.tz('UTC').utcOffset(utcOffset.toString());
+        localDate = TZDate.tz(utcOffset.toString());
       } else {
-        localMoment = moment.tz(timezone);
+        localDate = TZDate.tz(timezone);
       }
-      localMoment = localMoment.millisecond(0);
-      if (year !== null) localMoment.year(constrain(year, 0, 275759));
-      if (month !== null) localMoment.month(constrain(month - 1, 0, 11));
-      if (date !== null) localMoment.date(constrain(date, 1, 31));
-      if (hour !== null) localMoment.hour(constrain(hour, 0, 23));
-      if (minute !== null) localMoment.minute(constrain(minute, 0, 59));
-      if (second !== null) localMoment.second(constrain(second, 0, 59));
+      localDate = setMilliseconds(localDate, 0);
+      if (year !== null) localDate = setYear(localDate, constrain(year, 0, 275759));
+      if (month !== null) localDate = setMonth(localDate, constrain(month - 1, 0, 11));
+      if (date !== null) localDate = setDate(localDate, constrain(date, 1, 31));
+      if (hour !== null) localDate = setHours(localDate, constrain(hour, 0, 23));
+      if (minute !== null) localDate = setMinutes(localDate, constrain(minute, 0, 59));
+      if (second !== null) localDate = setSeconds(localDate, constrain(second, 0, 59));
     } catch (e) {
       if (e instanceof RangeError && e.message === 'Invalid date') {
         await interactionReply(t, interaction, {
@@ -85,6 +86,6 @@ export const atCommand: BotChatInputCommand = {
     }
 
     const usingAtHoursOnly = (hourStr !== null && !/[ap]m$/.test(hourStr)) && am == null && pm === null;
-    await replyWithSyntax({ localMoment, interaction, context, timezone, settings, usingAtHoursOnly });
+    await replyWithSyntax({ localDate, interaction, context, timezone, settings, usingAtHoursOnly });
   },
 };

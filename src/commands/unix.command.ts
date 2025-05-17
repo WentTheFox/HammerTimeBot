@@ -1,10 +1,10 @@
-import moment from 'moment-timezone';
 import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { UnixCommandOptionName } from '../types/localization.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
 import { getUnixCommandOptions } from '../options/unix.options.js';
 import { ApplicationCommandType } from 'discord-api-types/v10';
+import { TZDate } from '@date-fns/tz';
 
 export const unixCommand: BotChatInputCommand = {
   getDefinition: (t) => ({
@@ -16,8 +16,8 @@ export const unixCommand: BotChatInputCommand = {
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const value = interaction.options.getInteger(UnixCommandOptionName.VALUE, true);
-    const localMoment = moment.unix(value).utc();
+    const localDate = TZDate.tz('UTC', value * 1e3);
 
-    await replyWithSyntax({ localMoment, interaction, context, settings, timezone: undefined });
+    await replyWithSyntax({ localDate, interaction, context, settings, timezone: undefined });
   },
 };

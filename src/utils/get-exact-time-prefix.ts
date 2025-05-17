@@ -1,5 +1,6 @@
 import { EmojiCharacters } from '../constants/emoji-characters.js';
-import { Moment } from 'moment';
+import { TZDate } from '@date-fns/tz';
+import { format, getHours, getMilliseconds, getMinutes } from 'date-fns';
 
 const clockEmojiMap: Record<number, EmojiCharacters> = {
   0: EmojiCharacters.TWELVE_OCLOCK,
@@ -28,11 +29,11 @@ const clockEmojiMap: Record<number, EmojiCharacters> = {
   1130: EmojiCharacters.ELEVEN_THIRTY,
 };
 
-export const getExactTimePrefix = (localMoment: Moment, timezone: string): string => {
-  const clockNumber = ((localMoment.hours() % 12) * 100) + (localMoment.minutes() > 30 ? 30 : 0);
+export const getExactTimePrefix = (localDate: TZDate, timezone: string): string => {
+  const clockNumber = ((getHours(localDate) % 12) * 100) + (getMinutes(localDate) > 30 ? 30 : 0);
   return [
-    `${EmojiCharacters.CALENDAR} ${localMoment.format('YYYY-MM-DD')}`,
-    `${clockEmojiMap[clockNumber]} ${localMoment.format(localMoment.milliseconds() > 0 ? 'HH:mm:ss.SSS' : 'HH:mm:ss')}`,
-    `${EmojiCharacters.GLOBE} ${timezone}`,
+    `${EmojiCharacters.CALENDAR} ${format(localDate, 'yyyy-MM-dd')}`,
+    `${clockEmojiMap[clockNumber]} ${format(localDate, getMilliseconds(localDate) > 0 ? 'HH:mm:ss.SSS' : 'HH:mm:ss')}`,
+    `${EmojiCharacters.GLOBE} ${timezone.replace(/^([+-])/, 'GMT$1')}`,
   ].join(' • ');
 };

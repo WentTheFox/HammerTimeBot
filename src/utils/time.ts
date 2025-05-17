@@ -1,6 +1,4 @@
-import moment, { Moment } from 'moment-timezone';
 import levenshtein from 'js-levenshtein';
-import { unitOfTime } from 'moment';
 import { TimezoneError } from '../classes/timezone-error.js';
 import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
 import { ResponseColumnChoices } from '../types/localization.js';
@@ -8,6 +6,22 @@ import { UtcOffset } from '../classes/utc-offset.js';
 import { pad, PadDirection } from './numbers.js';
 import { TFunction } from 'i18next';
 import { SettingsValue } from './settings.js';
+import {
+  addDays,
+  addHours,
+  addMinutes,
+  addMonths,
+  addSeconds,
+  addYears,
+  isDate,
+  subDays,
+  subHours,
+  subMinutes,
+  subMonths,
+  subSeconds,
+  subYears,
+} from 'date-fns';
+import { TZDate } from '@date-fns/tz';
 
 export const gmtTimezoneOptions = [
   'GMT',
@@ -73,7 +87,7 @@ const compareGmtStrings = (a: string, b: string) => {
 };
 
 export const getSortedNormalizedTimezoneNames = (): string[] => [
-  ...moment.tz.names().filter((name) => !/GMT/g.test(name)),
+  ...Intl.supportedValuesOf('timeZone').filter((name) => !/GMT/g.test(name)),
   ...gmtTimezoneOptions,
 ].sort((a, b) => {
   const isAGmt = gmtZoneRegex.test(a);
@@ -173,13 +187,47 @@ export const formattedResponse = (ts: MessageTimestamp, formats: MessageTimestam
   return strings.join('\n');
 };
 
-export const adjustMoment = <TimeMap extends Partial<Record<unitOfTime.DurationConstructor, number | null>>>(timeMap: TimeMap, method: 'add' | 'subtract', now?: Date | Moment): Moment => {
-  const timestamp = moment.isMoment(now) ? now : moment(now);
-  (Object.keys(timeMap) as unitOfTime.DurationConstructor[]).forEach((key) => {
-    const value = timeMap[key];
-    if (typeof value === 'number' && value > 0) timestamp[method](value, key);
-  });
-  return timestamp;
+type AdjustMethod = 'add' | 'subtract';
+const adjustFunctions = {
+  years: {
+    add: (date, value) => addYears(date, value),
+    subtract: (date, value) => subYears(date, value),
+  },
+  months: {
+    add: (date, value) => addMonths(date, value),
+    subtract: (date, value) => subMonths(date, value),
+  },
+  days: {
+    add: (date, value) => addDays(date, value),
+    subtract: (date, value) => subDays(date, value),
+  },
+  hours: {
+    add: (date, value) => addHours(date, value),
+    subtract: (date, value) => subHours(date, value),
+  },
+  minutes: {
+    add: (date, value) => addMinutes(date, value),
+    subtract: (date, value) => subMinutes(date, value),
+  },
+  seconds: {
+    add: (date, value) => addSeconds(date, value),
+    subtract: (date, value) => subSeconds(date, value),
+  },
+} as const satisfies Record<string, Record<AdjustMethod, (date: TZDate, value: number) => TZDate>>;
+
+export type TimeUnit = keyof typeof adjustFunctions;
+export type TimeMap = Partial<Record<TimeUnit, number | null>>;
+
+export const adjustDate = (timeMap: TimeMap, method: AdjustMethod, now?: Date | TZDate): TZDate => {
+  const timestamp = isDate(now) ? new TZDate(now) : (now ?? new TZDate());
+  return (Object.keys(adjustFunctions)).reduce((finalTs, key) => {
+    const unit = key as TimeUnit;
+    const value = timeMap[unit];
+    if (typeof value === 'number' && value > 0) {
+      return adjustFunctions[unit][method](finalTs, value);
+    }
+    return finalTs;
+  }, timestamp);
 };
 
 export const constrain = (n: number, min: number, max?: number): number => (max ? Math.min(Math.max(n, min), max) : Math.max(n, min));

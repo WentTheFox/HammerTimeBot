@@ -1,12 +1,12 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
-import { adjustMoment } from '../utils/time.js';
+import { adjustDate, TimeMap } from '../utils/time.js';
 import { InCommandOptionName } from '../types/localization.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
 import { getInOptions } from '../options/in.options.js';
-import moment from 'moment-timezone';
 import { atLeastOneNonZeroKey } from '../utils/at-least-one-non-zero-key.js';
 import { ApplicationCommandType, MessageFlags } from 'discord-api-types/v10';
+import { TZDate } from '@date-fns/tz';
 
 export const inCommand: BotChatInputCommand = {
   getDefinition: (t) => ({
@@ -18,7 +18,7 @@ export const inCommand: BotChatInputCommand = {
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const { t } = context;
-    const options = {
+    const options: TimeMap = {
       years: interaction.options.getInteger(InCommandOptionName.IN_YEARS),
       months: interaction.options.getInteger(InCommandOptionName.IN_MONTHS),
       days: interaction.options.getInteger(InCommandOptionName.IN_DAYS),
@@ -41,8 +41,8 @@ export const inCommand: BotChatInputCommand = {
 
     // Fixed value for relative timestamps
     const timezone = 'UTC';
-    const localMoment = adjustMoment(options, 'add', moment.tz(timezone));
+    const localDate = adjustDate(options, 'add', TZDate.tz(timezone));
 
-    await replyWithSyntax({ localMoment, interaction, context, timezone, settings });
+    await replyWithSyntax({ localDate, interaction, context, timezone, settings });
   },
 };

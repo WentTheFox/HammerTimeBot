@@ -83,8 +83,8 @@
           "description": "Tentukan jam (default pada jam saat ini)"
         },
         "hour12": {
-          "name": "hour12",
-          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
+          "name": "jam12",
+          "description": "Tentukan jam menggunakan format jam 12 jam (jam saat ini adalah bawaan)"
         },
         "minute": {
           "name": "menit",
@@ -96,20 +96,20 @@
         },
         "am": {
           "name": "am",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          "description": "Jika Benar, jam harus berada di antara 1 hingga 12 dan akan diartikan sebagai AM (ante meridiem)"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
+          "description": "Jika Benar, jam harus berada di antara 1 hingga 12 dan akan diartikan sebagai PM (post meridiem)"
         }
       },
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
-        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem in provided in the hour option",
-        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
-        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
-        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
+        "amOrPmOnly": "Anda tidak dapat menentukan opsi am dan pm secara bersamaan",
+        "meridiemRequired": "Anda harus memberikan opsi am atau pm saat menggunakan opsi jam12",
+        "noAmOrPmWithMeridiem": "Anda tidak dapat menentukan opsi am atau pm ketika meridiem disediakan dalam opsi jam",
+        "hourOrHour12Only": "Anda tidak dapat menentukan opsi jam dan jam12 secara bersamaan",
+        "hourRange": "Jika meridiem tidak ditentukan, jam harus berupa angka 0 dan 23",
+        "hour12Range": "Ketika meridiem ditentukan, jam harus berupa angka antara 1 dan 12"
       }
     },
     "add": {
@@ -199,7 +199,7 @@
         "noComponentsCurrentTime": "Anda harus menentukan setidaknya satu komponen waktu untuk diubah. Jika Anda membutuhkan waktu saat ini, gunakan `/{{atCommand}}` tanpa menentukan argumen apa pun",
         "noComponentsUnix": "Anda harus menentukan setidaknya satu komponen waktu untuk diubah. Jika Anda ingin mendapatkan sintaks untuk stempel waktu UNIX, gunakan `/{{unixCommand}}`",
         "timezoneNotFound": "Zona waktu yang ditentukan tidak dapat ditemukan",
-        "unexpectedError": "There was an unexpected error while processing this interaction"
+        "unexpectedError": "Terjadi kesalahan tak terduga saat memproses interaksi ini"
       },
       "options": {
         "format": {
@@ -213,7 +213,7 @@
             "f": "tanggal dan waktu",
             "F": "hari kerja, tanggal dan waktu",
             "R": "relatif",
-            "all": "all (default)"
+            "all": "semua (bawaan)"
           }
         },
         "columns": {
@@ -239,16 +239,16 @@
         }
       },
       "components": {
-        "replyWithSpecificFormat": "Select a format below to receive it in a reply (for copying on touch devices)",
-        "incompleteTranslations": "Translations are incomplete",
-        "contributeTranslations": "Contribute",
-        "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
-        "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
-        "privacyPolicyLink": "Privacy Policy",
-        "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
-        "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
-        "feedbackWanted": "Feedback wanted!",
-        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
+        "replyWithSpecificFormat": "Pilih format di bawah ini untuk menerima balasan (untuk disalin pada perangkat sentuh)",
+        "incompleteTranslations": "Terjemahannya tidak lengkap",
+        "contributeTranslations": "Kontribusi",
+        "telemetryThankYou": "Terima kasih telah menyumbangkan data telemetri, yang membantu pengembangan bot di masa mendatang. Lihat {{privacyPolicy}} untuk keterangan lebih lanjut.",
+        "telemetryInfoCount": "Ini adalah eksekusi #{{executionNumber}} untuk perintah {{command}} (sejak kita mulai menghitung).",
+        "privacyPolicyLink": "Kebijakan Privasi",
+        "recordingTelemetry": "Telemetri sedang dikumpulkan untuk perintah ini, hasilnya masih menunggu…",
+        "telemetryPlaceholder": "Sisa teks ini hanya ada di sini untuk mencegah ukuran pesan berubah terlalu banyak ketika hasil telemetri tersedia.",
+        "feedbackWanted": "Masukan Dibutuhkan!",
+        "at12Hint": "Sekarang ada beberapa opsi berbeda untuk menentukan jumlah jam baik dalam perintah {{slashAt}} (melalui opsi {{hourOptionName}} yang sudah ada yang sekarang memiliki pelengkapan otomatis, atau opsi {{hour12OptionName}}, {{amOptionName}}, dan {{pmOptionName}} yang baru) dan perintah {{slashAt12}} yang baru. Gunakan mana pun yang lebih nyaman bagi Anda. Seberapa popular setiap metode (berdasarkan data telemetri) akan menentukan opsi mana yang akan menjadi permanen."
       }
     },
     "statistics": {
@@ -264,8 +264,8 @@
         "noShards": "(Bot saat ini tidak menggunakan sharding)",
         "serverInvite": "Mendukung URL undangan server:",
         "totalUserCount": "Total pengguna di server yang bergabung:",
-        "supportedLanguages": "Supported languages:",
-        "crowdinProject": "Crowdin project URL:"
+        "supportedLanguages": "Bahasa yang didukung:",
+        "crowdinProject": "URL proyek Crowdin:"
       }
     },
     "snowflake": {
@@ -323,48 +323,48 @@
       },
       "options": {},
       "components": {
-        "openSettingsButton": "Bot Settings"
+        "openSettingsButton": "Pengaturan Bot"
       }
     },
     "at12": {
       "name": "at12",
-      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
+      "description": "Tentukan komponen stempel waktu yang tepat (menggunakan jam 12 jam)",
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option"
+        "amOrPmOnly": "Anda tidak dapat menentukan opsi am dan pm secara bersamaan",
+        "meridiemRequired": "Anda harus memberikan opsi am atau pm"
       },
       "options": {
         "year": {
-          "name": "year",
-          "description": "Specify the year (defaults to current year)"
+          "name": "tahun",
+          "description": "Tentukan tahun (bawaan adalah tahun sekarang)"
         },
         "month": {
-          "name": "month",
-          "description": "Specify the month (defaults to current month)"
+          "name": "bulan",
+          "description": "Tentukan bulan (bawaan adalah bulan ini)"
         },
         "day": {
-          "name": "day",
-          "description": "Specify the day (defaults to current day)"
+          "name": "hari",
+          "description": "Tentukan hari (bawaan adalah hari ini)"
         },
         "hour": {
-          "name": "hour",
-          "description": "Specify the hour (defaults to current hour)"
+          "name": "jam",
+          "description": "Tentukan jam (bawaan adalah jam saat ini)"
         },
         "minute": {
-          "name": "minute",
-          "description": "Specify the minute (defaults to current minute)"
+          "name": "menit",
+          "description": "Tentukan menit (bawaan adalah menit saat ini)"
         },
         "second": {
-          "name": "second",
-          "description": "Specify the second (defaults to 0)"
+          "name": "detik",
+          "description": "Tentukan detik (bawaannya 0)"
         },
         "am": {
           "name": "am",
-          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          "description": "Jika Benar, jam akan diartikan sebagai am (ante meridiem, sebelum tengah hari)"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          "description": "Jika Benar, jam akan diartikan sebagai pm (post meridiem, setelah tengah hari)"
         }
       }
     }

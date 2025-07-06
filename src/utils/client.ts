@@ -8,7 +8,7 @@ import {
 } from './interaction-handlers.js';
 import { InteractionHandlerContext } from '../types/bot-interaction.js';
 
-import { updateBotTimezonesInApi, updateCommands, updateShardStats } from './backend-api-data-updaters.js';
+import { updateShardStats } from './backend-api-data-updaters.js';
 
 const FIVE_MINUTES_MS = 5 * 60 * 1e3;
 
@@ -23,13 +23,7 @@ const handleReady = (context: InteractionHandlerContext) => async (client: Clien
     .catch(() => 'an unknown version');
   clientUser.setActivity(versionString);
 
-  const shardUtils = client.shard;
-  const shardIds = shardUtils?.ids;
   const startupPromises: Promise<void>[] = [];
-  if (shardIds && shardIds.includes(0)) {
-    startupPromises.push(updateCommands(context));
-    startupPromises.push(updateBotTimezonesInApi(context));
-  }
 
   const statsUpdate = async () => {
     const currentShardIds = client.shard?.ids ?? [];

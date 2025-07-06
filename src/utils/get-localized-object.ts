@@ -28,8 +28,8 @@ export function getLocalizedObject<Key extends LocalizedKey>(key: Key, translato
       }
 
       if (sanitize && key === 'name') {
-        // Automatically replace spaces with dash and make all-lowercase
-        value = value.toLowerCase().replace(/ /g, '-');
+        // Automatically replace unsupported characters with dash and make all-lowercase
+        value = value.toLowerCase().replace(/[\s（）]/g, '-').replace(/-+$/, '');
       }
       return ({
         ...localizations,

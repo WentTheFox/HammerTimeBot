@@ -16,14 +16,8 @@ import { createResolvablePromise } from './utils/resolvable-promise.js';
       const data = await fs.readFile(tzDataPath).then((contents) => JSON.parse(contents.toString()));
       moment.tz.load(data);
     })(),
-    (async () => {
-      logger.log('Initializing i18n');
-      return initI18next();
-    })(),
-    (async () => {
-      logger.log('Getting application emoji data');
-      return getApplicationEmojis({ logger });
-    })(),
+    initI18next(logger),
+    getApplicationEmojis({ logger }),
   ]);
 
   logger.log('Creating client');

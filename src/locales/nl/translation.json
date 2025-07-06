@@ -84,7 +84,7 @@
         },
         "hour12": {
           "name": "hour12",
-          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
+          "description": "Geef het uur op in 12-uursklok formaat (standaard ingesteld op het huidige uur)"
         },
         "minute": {
           "name": "minute",
@@ -96,20 +96,20 @@
         },
         "am": {
           "name": "am",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          "description": "Bij deze optie moet het uur tussen 1 en 12 liggen en wordt het geïnterpreteerd als AM"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
+          "description": "Bij deze optie moet het uur tussen 1 en 12 liggen en wordt het geïnterpreteerd als PM"
         }
       },
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
-        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem in provided in the hour option",
-        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
-        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
-        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
+        "amOrPmOnly": "Je kan niet tegelijkertijd de opties 'am' en 'pm' opgeven",
+        "meridiemRequired": "Je moet de optie 'am' of 'pm' opgeven wanneer je de optie 'hour12' gebruikt",
+        "noAmOrPmWithMeridiem": "Je kunt de 'am' of 'pm' opties niet opgeven wanneer de meridiem is verstrekt in de urenoptie",
+        "hourOrHour12Only": "Je kan niet tegelijkertijd de opties 'am' en 'pm' opgeven",
+        "hourRange": "Wanneer er geen meridiem is opgegeven, moet het uur een getal tussen 0 en 23 zijn",
+        "hour12Range": "Wanneer er een meridiem is opgegeven, moet het uur een getal tussen 1 en 12 zijn"
       }
     },
     "add": {
@@ -242,13 +242,13 @@
         "replyWithSpecificFormat": "Selecteer hieronder een formaat om het in een losstaand antwoord te ontvangen (makkelijker kopiëren op touchscreen apparaten)",
         "incompleteTranslations": "Vertalingen zijn onvolledig",
         "contributeTranslations": "Help mee",
-        "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
-        "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
-        "privacyPolicyLink": "Privacy Policy",
-        "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
-        "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
-        "feedbackWanted": "Feedback wanted!",
-        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
+        "telemetryThankYou": "Bedankt voor het bijdragen van telemetriegegevens. Deze gegevens helpen bij de toekomstige ontwikkeling van de bot. Zie de {{privacyPolicy}} voor details.",
+        "telemetryInfoCount": "Dit is uitvoering #{{executionNumber}} voor het commando {{command}} (sinds we tellen).",
+        "privacyPolicyLink": "Privacybeleid",
+        "recordingTelemetry": "Telemetry wordt verzameld voor dit commando, de resultaten zijn in behandeling…",
+        "telemetryPlaceholder": "De rest van deze tekst is er alleen om te voorkomen dat de berichtgrootte te veel verandert wanneer de resultaten van de telemetrie-opname beschikbaar zijn.",
+        "feedbackWanted": "Feedback gevraagd!",
+        "at12Hint": "Er zijn nu verschillende opties om het aantal uren in het {{slashAt}} commando op te geven (via de bestaande {{hourOptionName}} optie die nu automatisch wordt aangevuld, of de nieuwe {{hour12OptionName}}, {{amOptionName}} en {{pmOptionName}} opties) en het nieuwe {{slashAt12}} commando. Gebruik welke je fijner vind. Hoe populair elke methode is (gebaseerd op de telemetriegegevens) zal bepalen welke van deze opties permanent zullen worden."
       }
     },
     "statistics": {
@@ -328,43 +328,43 @@
     },
     "at12": {
       "name": "at12",
-      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
+      "description": "Geef de exacte componenten van de tijdstempel op (met een 12-uursklok)",
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option"
+        "amOrPmOnly": "Je kan niet tegelijkertijd de opties 'am' en 'pm' opgeven",
+        "meridiemRequired": "Je moet de optie 'am' of 'pm' opgeven"
       },
       "options": {
         "year": {
           "name": "year",
-          "description": "Specify the year (defaults to current year)"
+          "description": "Het jaar van de tijdstempel (standaard is het huidige jaar)"
         },
         "month": {
           "name": "month",
-          "description": "Specify the month (defaults to current month)"
+          "description": "De maand van de tijdstempel (standaard is de huidige maand)"
         },
         "day": {
           "name": "day",
-          "description": "Specify the day (defaults to current day)"
+          "description": "De dag van de tijdstempel (standaard is de huidige dag)"
         },
         "hour": {
           "name": "hour",
-          "description": "Specify the hour (defaults to current hour)"
+          "description": "Het uur van de tijdstempel (standaard is het huidige uur)"
         },
         "minute": {
           "name": "minute",
-          "description": "Specify the minute (defaults to current minute)"
+          "description": "De minuut van de tijdstempel (standaard is de huidige minuut)"
         },
         "second": {
           "name": "second",
-          "description": "Specify the second (defaults to 0)"
+          "description": "De seconde van de tijdstempel (standaard is 0)"
         },
         "am": {
           "name": "am",
-          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          "description": "Bij deze optie wordt uur geïnterpreteerd als am (ante meridiem; voor de middag)"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          "description": "Bij deze optie wordt het uur geïnterpreteerd als pm (post meridiem; na de middag)"
         }
       }
     }

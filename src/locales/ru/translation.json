@@ -84,7 +84,7 @@
         },
         "hour12": {
           "name": "hour12",
-          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
+          "description": "Укажите час, используя 12-часовые часы (по умолчанию - текущий час)"
         },
         "minute": {
           "name": "minute",
@@ -96,20 +96,20 @@
         },
         "am": {
           "name": "am",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          "description": "Если True, значение часа должно быть от 1 до 12 и оно будет интерпретироваться как AM (до полудня)"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
+          "description": "Если True, значение часа должно быть от 1 до 12 и оно будет интерпретировано как PM (после полудня)"
         }
       },
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
-        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem in provided in the hour option",
-        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
-        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
-        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
+        "amOrPmOnly": "Нельзя указывать am и pm одновременно",
+        "meridiemRequired": "При использовании опции hour12 вы должны указать либо am, либо pm",
+        "noAmOrPmWithMeridiem": "Вы не можете указать опции am или pm, если полдень указан в опции hour",
+        "hourOrHour12Only": "Нельзя использовать hour and hour12 одновременно",
+        "hourRange": "Если полдень не указан, час должен быть числом от 0 до 23",
+        "hour12Range": "Если полдень указен, час должен быть числом от 1 до 12"
       }
     },
     "add": {
@@ -248,7 +248,7 @@
         "recordingTelemetry": "Сбор телеметрии для этой команды в процессе, результаты будут доступны позже…",
         "telemetryPlaceholder": "Остальной текст нужен лишь для того, чтобы сообщение не поменяло размер, после завершения сбора данных.",
         "feedbackWanted": "Требуется ваше мнение!",
-        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
+        "at12Hint": "Теперь существует несколько вариантов указания часов как в команде {{slashAt}} (с помощью существующей опции {{hourOptionName}}, которая теперь имеет автозавершение или новых опций {{hour12OptionName}}, {{amOptionName}} и {{pmOptionName}}), так и в новой команде {{slashAt12}}. Используйте ту, с которой вам удобнее работать. От того, насколько популярным окажется каждый из методов (на основании данных телеметрии), будет зависеть, какая из этих опций станет постоянной."
       }
     },
     "statistics": {
@@ -328,43 +328,43 @@
     },
     "at12": {
       "name": "at12",
-      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
+      "description": "Укажите точные компоненты временной метки (используя 12-часовой формат)",
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option"
+        "amOrPmOnly": "Нельзя указывать am и pm одновременно",
+        "meridiemRequired": "Вы должны указать вариант \"am\" или \"pm\""
       },
       "options": {
         "year": {
           "name": "year",
-          "description": "Specify the year (defaults to current year)"
+          "description": "Укажите год (по умолчанию - текущий год)"
         },
         "month": {
           "name": "month",
-          "description": "Specify the month (defaults to current month)"
+          "description": "Укажите месяц (по умолчанию - текущий месяц)"
         },
         "day": {
           "name": "day",
-          "description": "Specify the day (defaults to current day)"
+          "description": "Укажите день (по умолчанию - текущий день)"
         },
         "hour": {
           "name": "hour",
-          "description": "Specify the hour (defaults to current hour)"
+          "description": "Укажите час (по умолчанию - текущий час)"
         },
         "minute": {
           "name": "minute",
-          "description": "Specify the minute (defaults to current minute)"
+          "description": "Укажите минуту (по умолчанию - текущая минута)"
         },
         "second": {
           "name": "second",
-          "description": "Specify the second (defaults to 0)"
+          "description": "Укажите секунду (по умолчанию 0)"
         },
         "am": {
           "name": "am",
-          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          "description": "Если True, час будет интерпретирован как am (ante meridiem, до полудня)"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          "description": "Если True, час будет интерпретирован как pm (post meridiem, после полудня)"
         }
       }
     }

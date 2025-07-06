@@ -248,7 +248,7 @@
         "recordingTelemetry": "我们仍在收集此命令的使用数据，正在等待结果…",
         "telemetryPlaceholder": "剩下的这段文字只是为了填补空间，以避免使用数据收集完成后消息的显示大小变化过大。",
         "feedbackWanted": "我们需要您的反馈！",
-        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
+        "at12Hint": "现在有多种方式指定您输入的时间戳是12小时制还是24小时制。您可以使用{{slashAt}}中的已有的{{hourOptionName}}选项（现在支持自动完成），或者新的{{hour12OptionName}}、{{amOptionName}}、{{pmOptionName}}选项，也可以使用新的{{slashAt12}}命令。您可以按照您的喜好选用。这些方式被采用的程度将决定哪一种方式会永久保留。"
       }
     },
     "statistics": {
@@ -327,44 +327,44 @@
       }
     },
     "at12": {
-      "name": "at12",
-      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
+      "name": "在（12小时制）",
+      "description": "用12小时制指定时间戳的每个部分",
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option"
+        "amOrPmOnly": "不能同时指定上午和下午选项",
+        "meridiemRequired": "必须选择“上午”和“下午”中的一个"
       },
       "options": {
         "year": {
-          "name": "year",
-          "description": "Specify the year (defaults to current year)"
+          "name": "年",
+          "description": "指定年份，默认为当前年份"
         },
         "month": {
-          "name": "month",
-          "description": "Specify the month (defaults to current month)"
+          "name": "月",
+          "description": "指定月份，默认为当前月份"
         },
         "day": {
-          "name": "day",
-          "description": "Specify the day (defaults to current day)"
+          "name": "日",
+          "description": "指定日期，默认为当前日期"
         },
         "hour": {
-          "name": "hour",
-          "description": "Specify the hour (defaults to current hour)"
+          "name": "时",
+          "description": "指定小时，默认为当前小时"
         },
         "minute": {
-          "name": "minute",
-          "description": "Specify the minute (defaults to current minute)"
+          "name": "分",
+          "description": "指定分钟，默认为当前分钟"
         },
         "second": {
-          "name": "second",
-          "description": "Specify the second (defaults to 0)"
+          "name": "秒",
+          "description": "指定秒钟，默认为0"
         },
         "am": {
-          "name": "am",
-          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          "name": "上午",
+          "description": "若为True，小时视作am（凌晨，早上，上午）的时间。“上午12时”为午夜"
         },
         "pm": {
-          "name": "pm",
-          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          "name": "下午",
+          "description": "若为True，小时视作pm（下午，傍晚，晚上）的时间。“下午12时”为正午"
         }
       }
     }

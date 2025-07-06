@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
 
 read oldrev newrev refname
 echo "Push triggered update to revision $newrev ($refname)"

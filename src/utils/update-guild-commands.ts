@@ -41,7 +41,7 @@ export const updateGuildCommands = async (context: InteractionContext, guildId: 
     process.exit(1);
   }
 
-  await updateBotCommandsInApi(context, body, result);
+  void updateBotCommandsInApi(context, body, result);
 
   return result;
 };
@@ -83,7 +83,7 @@ export const updateGlobalCommands = async (context: InteractionContext): Promise
     process.exit(1);
   }
 
-  await updateBotCommandsInApi(context, body, result);
+  void updateBotCommandsInApi(context, body, result);
 
   return result;
 };

@@ -362,8 +362,8 @@
         "14730100"
       ],
       "progress": {
-        "approval": 67,
-        "translation": 67
+        "approval": 100,
+        "translation": 100
       }
     },
     "no": {
@@ -409,13 +409,13 @@
     "ru": {
       "translatorIds": [
         "15276232",
-        "13911943",
         "17136840",
+        "13911943",
         "12500432"
       ],
       "progress": {
-        "approval": 73,
-        "translation": 73
+        "approval": 100,
+        "translation": 100
       }
     },
     "sv-SE": {
@@ -471,8 +471,8 @@
         "12485887"
       ],
       "progress": {
-        "approval": 73,
-        "translation": 73
+        "approval": 100,
+        "translation": 100
       }
     },
     "zh-TW": {

@@ -16,7 +16,6 @@ import { i18n, TFunction } from 'i18next';
 
 import { NestableLogger } from './logger-types.js';
 import { SettingsValue } from '../utils/settings.js';
-import { ResolvablePromise } from '../utils/resolvable-promise.js';
 
 export const enum BotChatInputCommandName {
   ADD = 'add',
@@ -53,7 +52,7 @@ export interface UserSettingsContext {
 export interface InteractionHandlerContext extends LoggerContext {
   i18next: i18n;
   emojiIdMap: Record<string, string>;
-  commandIdMap: ResolvablePromise<Record<string, string | undefined>>;
+  commandIdMap: Record<string, string | undefined>;
 }
 
 export interface InteractionContext extends Omit<InteractionHandlerContext, 'i18next'> {

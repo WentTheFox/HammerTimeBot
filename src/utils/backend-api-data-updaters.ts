@@ -116,14 +116,7 @@ export const updateCommands = async (context: InteractionHandlerContext): Promis
   const logger = context.logger.nest('updateCommands');
   logger.log('Updating commands…');
   const t = i18next.t.bind(i18next);
-  const result = await updateCommandsFromInteraction({ ...restContext, t, logger });
-  if (result) {
-    const commandIdMap = result.reduce((acc, item) => ({
-      ...acc,
-      [item.name]: item.id,
-    }), {} as Record<string, string>);
-    context.commandIdMap.resolve(commandIdMap);
-  }
+  await updateCommandsFromInteraction({ ...restContext, t, logger });
 };
 
 export const updateShardStats = async (context: LoggerContext, client: Client, shardId: number) => {

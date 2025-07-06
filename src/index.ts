@@ -6,26 +6,29 @@ import { Logger } from './classes/logger.js';
 import { updateBotTimezonesInApi, updateCommands } from './utils/backend-api-data-updaters.js';
 import { InteractionHandlerContext } from './types/bot-interaction.js';
 import { NestableLogger } from './types/logger-types.js';
-import { createResolvablePromise } from './utils/resolvable-promise.js';
 import { initI18next } from './constants/locales.js';
-import { getApplicationEmojis } from './utils/get-application-emojis.js';
+import { getEmojiIdMap } from './utils/get-emoji-id-map.js';
+import { getCommandIdMap } from './utils/get-command-id-map.js';
 
 // This file is the main entry point that starts the bot
 
-async function startupCommandsUpdate(logger: NestableLogger): Promise<void[]> {
-  logger.log('Startup commands update');
+async function startupCommandsUpdate(parentLogger: NestableLogger): Promise<void> {
+  const logger = parentLogger.nest('startupCommandsUpdate');
+  logger.log('Updating…');
   const i18next = await initI18next(logger);
   const context: InteractionHandlerContext = {
-    commandIdMap: createResolvablePromise(),
-    logger: logger.nest('startupCommandsUpdate'),
-    emojiIdMap: await getApplicationEmojis({ logger }),
+    commandIdMap: await getCommandIdMap({ logger }),
+    logger,
+    emojiIdMap: await getEmojiIdMap({ logger }),
     i18next,
   };
 
-  return Promise.all([
+  await Promise.all([
     updateCommands(context),
     updateBotTimezonesInApi(context),
   ]);
+
+  logger.log('Completed.');
 }
 
 (async function createShards() {

@@ -14,7 +14,7 @@
     "start:dev": "npm run build:clean && npm run build && npm run start",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "prepare": "ts-patch install && husky install"
+    "prepare": "ts-patch install"
   },
   "dependencies": {
     "@discordjs/rest": "^2.5.0",

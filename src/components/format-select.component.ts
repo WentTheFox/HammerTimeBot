@@ -1,7 +1,7 @@
 import { BotMessageComponent, BotMessageComponentCustomId } from '../types/bot-interaction.js';
 import { ComponentType, MessageComponentInteraction, StringSelectMenuInteraction } from 'discord.js';
 import { TFunction } from 'i18next';
-import { MessageTimestampFormat } from '../classes/message-timestamp.js';
+import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
 import { APISelectMenuOption } from 'discord-api-types/v9';
 import { MessageFlags } from 'discord-api-types/v10';
 import { findTextComponentContentsRecursively } from '../utils/messaging.js';
@@ -54,8 +54,9 @@ export const formatSelectComponent: BotMessageComponent = {
       throw new Error(`No timestamp could be found in the original message (${JSON.stringify(syntaxReplyContent)})`);
     }
 
+    const unixTimestamp = timestamps[0].replace(/[^\d-]/g, '');
+    const content = MessageTimestamp.fromTimestamp(unixTimestamp, format);
 
-    const content = timestamps[0];
     if (interaction.replied) {
       await interaction.editReply({
         content,

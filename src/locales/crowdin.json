@@ -158,6 +158,11 @@
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/16240978/medium/aaf8e2898e6e7eab5d0fc3b6797a9b61.gif",
       "fullName": "Suthipong Masopmao"
     },
+    "16303638": {
+      "username": "Quent12b0",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/16303638/medium/dc2e9da34701045c85e1495abb46cf9e.jpeg",
+      "fullName": "Quentin Deborde"
+    },
     "16406120": {
       "username": "philliphatrod",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/16406120/medium/907be003885afcc83a7e40eeb5941f11.png",
@@ -195,6 +200,11 @@
       "username": "ekidoxx",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17146676/medium/b8b933d286c6d1639dc3e85762a7ed5e.png",
       "fullName": "Piotr G."
+    },
+    "17322000": {
+      "username": "hvalomi",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17322000/medium/b117bdf14a784a7620ff69aeb53036de.jpeg",
+      "fullName": "Hvalomi"
     }
   },
   "languages": {
@@ -265,7 +275,7 @@
       ],
       "progress": {
         "approval": 73,
-        "translation": 73
+        "translation": 75
       }
     },
     "fi": {
@@ -277,11 +287,13 @@
     },
     "fr": {
       "translatorIds": [
-        "14840926"
+        "16303638",
+        "14840926",
+        "17322000"
       ],
       "progress": {
-        "approval": 6,
-        "translation": 6
+        "approval": 100,
+        "translation": 100
       }
     },
     "hi": {
@@ -369,7 +381,8 @@
     "no": {
       "translatorIds": [
         "16406120",
-        "17105460"
+        "17105460",
+        "17322000"
       ],
       "progress": {
         "approval": 67,
@@ -402,8 +415,8 @@
         "15627125"
       ],
       "progress": {
-        "approval": 67,
-        "translation": 67
+        "approval": 100,
+        "translation": 100
       }
     },
     "ru": {

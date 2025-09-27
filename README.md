@@ -43,7 +43,10 @@ English and Hungarian translations have been included, so no translators will be
   - [Blurplix](https://crowdin.com/profile/Blurplix)
   - [klauny](https://crowdin.com/profile/klauny)
 - 🇳🇱 Dutch: [Jesse](https://crowdin.com/profile/Jessuh)
-- 🇫🇷 French: [Cookie Kiro](https://crowdin.com/profile/Cookikui)
+- 🇫🇷 French
+  - [Cookie Kiro](https://crowdin.com/profile/Cookikui)
+  - [Hvalomi](https://crowdin.com/profile/hvalomi)
+  - [Quentin Deborde](https://crowdin.com/profile/Quent12b0)
 - 🇩🇪 German
   - [Fabian9799](https://crowdin.com/profile/Fabian9799)
   - [Maximilian](https://crowdin.com/profile/maxlengert12051)
@@ -59,6 +62,7 @@ English and Hungarian translations have been included, so no translators will be
   - [미르냥](https://crowdin.com/profile/Mirnyang)
 - 🇱🇹 Lithuanian: [Trent](https://crowdin.com/profile/nothingness)
 - 🇳🇴 Norwegian
+  - [Hvalomi](https://crowdin.com/profile/hvalomi)
   - [kidneb1g](https://crowdin.com/profile/klinge9797)
   - [Phillip Rodseth](https://crowdin.com/profile/philliphatrod)
 - 🇵🇱 Polish

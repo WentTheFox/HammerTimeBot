@@ -146,13 +146,13 @@ export const updateShardStats = async (context: LoggerContext, client: Client, s
   logger.log('Successfully updated shard statistics');
 };
 
-export const sendCommandTelemetry = async (context: LoggerContext & UserSettingsContext, interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction): Promise<TelemetryResponse | undefined> => {
+export const sendCommandTelemetry = async (context: LoggerContext & UserSettingsContext, interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction): Promise<TelemetryResponse | undefined | null> => {
   const logger = context.logger.nest('sendCommandTelemetry');
   logger.debug('Obtaining user consent…');
   const settings = await context.getSettings();
   if (!settings.telemetry) {
     logger.debug('User consent revoked, skip sending telemetry');
-    return;
+    return null;
   }
   logger.log('Sending command telemetry…');
   const body = {

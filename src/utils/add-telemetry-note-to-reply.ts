@@ -26,9 +26,14 @@ export interface TelemetryResponse {
 export const addTelemetryNoteToReply = async (
   context: InteractionContext,
   interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction,
-  telemetryResponse: TelemetryResponse | undefined,
+  telemetryResponse: TelemetryResponse | undefined | null,
 ) => {
   const logger = context.logger.nest('addTelemetryNoteToReply');
+  if (telemetryResponse === null) {
+    logger.debug('Skipped');
+    return;
+  }
+
   logger.debug('Adding telemetry note to reply…');
   let reply;
   try {

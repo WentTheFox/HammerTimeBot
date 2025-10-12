@@ -58,7 +58,6 @@ export const stringifyGuildName = (guildId: string | null, guild: CommandInterac
 export const stringifyOptionsData = (data: readonly CommandInteractionOption[]): string => data.map((option): string => {
   const optionName = option.name;
   let optionValue: string | number | boolean | null | undefined = option.value;
-  // eslint-disable-next-line default-case
   switch (option.type) {
     case ApplicationCommandOptionType.Channel:
       if (option.channel) optionValue = `${option.channel.type === ChannelType.GuildText ? '#' : ''}${option.channel.name}`;

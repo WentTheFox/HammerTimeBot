@@ -2,10 +2,7 @@ import { CrowdinLanguage } from './crowdin-api-types.js';
 import { Locale } from 'discord-api-types/rest/common.js';
 import { isAvailableLanguage } from '../../src/constants/language-config.js';
 
-const languageMapping: Record<string, Locale> = {
-  /* eslint-disable @typescript-eslint/naming-convention */
-  /* eslint-enable @typescript-eslint/naming-convention */
-};
+const languageMapping: Record<string, Locale> = {};
 export const mapCrowdinLanguageToAvailableLanguage = (crowdinLanguage: CrowdinLanguage): Locale | null => {
   if (crowdinLanguage.id in languageMapping) {
     return languageMapping[crowdinLanguage.id];

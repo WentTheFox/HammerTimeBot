@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
-
-interface CrowdinApiRequestParams {
+ interface CrowdinApiRequestParams {
   path: string;
   crowdinApiKey: string;
   method?: string;

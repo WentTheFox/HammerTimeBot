@@ -14,8 +14,6 @@ export interface GetCrowdinReportDataOptions {
   rawReportDataCachePath: string;
 }
 
-/* eslint-disable no-console */
-
 export const getCrowdinReportData = async ({
   cachedDataExists,
   useCache,
@@ -32,7 +30,6 @@ export const getCrowdinReportData = async ({
       crowdinApiKey,
       method: 'POST',
       headers: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -68,7 +65,6 @@ export const getCrowdinReportData = async ({
         }
         const nextTimeoutMs = 100 * 2 ** pollIntervalFactor++;
         console.info(`Running next check in ${nextTimeoutMs}ms…`);
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         reportCheckTimeout = setTimeout(() => void checkerFunction(), nextTimeoutMs);
       }
 

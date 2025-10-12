@@ -6,8 +6,6 @@ import { Locale } from 'discord-api-types/rest/common.js';
 import { TranslationCreditOverride } from '../../src/types/translation-credit-override.js';
 import { reportData } from './crowdin-types.js';
 
-/* eslint-disable no-console */
-
 interface PublicLocalesConfig<V extends number = number> {
   version: V;
   languages: Record<Locale, V extends 1 ? LanguageConfigV1 : V extends 2 ? LanguageConfigV2 : LatestLanguageConfigType>;
@@ -24,7 +22,7 @@ export const forEachLanguage = (configContent: PublicLocalesConfig, iterator: (l
 const runMigration = (currentConfig: PublicLocalesConfig): PublicLocalesConfig => {
   const { version, ...configContent } = currentConfig;
   let migratedConfigContent: PublicLocalesConfig = currentConfig;
-  /* eslint-disable no-fallthrough,default-case,no-empty,no-param-reassign */
+  /* eslint-disable no-fallthrough */
   // noinspection FallThroughInSwitchStatementJS
   switch (version) {
     case undefined:
@@ -64,7 +62,7 @@ const runMigration = (currentConfig: PublicLocalesConfig): PublicLocalesConfig =
     }
     // Add new migrations here
   }
-  /* eslint-enable no-fallthrough,default-case,no-empty */
+  /* eslint-enable no-fallthrough */
 
   return migratedConfigContent;
 };

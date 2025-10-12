@@ -12,5 +12,5 @@ export const SettingName = {
   defaultAtMinute: 'defaultAtMinute',
   defaultAtSecond: 'defaultAtSecond',
 } as const;
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+
 export type SettingName = typeof SettingName[keyof typeof SettingName];

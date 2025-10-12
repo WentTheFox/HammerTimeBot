@@ -38,12 +38,12 @@ const ellipsis = '…';
 
 const processingErrorMessageFactory = (t: TFunction): string => `${EmojiCharacters.OCTAGONAL_SIGN} ${t('commands.global.responses.unexpectedError')}`;
 
-const handleInteractionError = async (interaction: ChatInputCommandInteraction | ButtonInteraction | AutocompleteInteraction | ContextMenuCommandInteraction | MessageComponentInteraction, t: TFunction) => {
+const handleInteractionError = async (interaction: ChatInputCommandInteraction | ButtonInteraction | AutocompleteInteraction | ContextMenuCommandInteraction | MessageComponentInteraction, context: UserInteractionContext) => {
   if (interaction.type === InteractionType.ApplicationCommandAutocomplete) {
     await interaction.respond([
       {
         value: '',
-        name: processingErrorMessageFactory(t),
+        name: processingErrorMessageFactory(context.t),
       },
     ]);
     return;
@@ -52,8 +52,8 @@ const handleInteractionError = async (interaction: ChatInputCommandInteraction |
   let alreadyReplied = interaction.replied;
   if (!alreadyReplied) {
     try {
-      await interactionReply(t, interaction, {
-        content: processingErrorMessageFactory(t),
+      await interactionReply(context, interaction, {
+        content: processingErrorMessageFactory(context.t),
         flags: MessageFlags.Ephemeral,
       });
     } catch (e) {
@@ -70,7 +70,7 @@ const handleInteractionError = async (interaction: ChatInputCommandInteraction |
   // If we already replied, we need to do some editing on the existing message to include the error
   const oldReply = await interaction.fetchReply();
   const flags = oldReply.flags.bitfield;
-  const processingErrorMessage = processingErrorMessageFactory(t);
+  const processingErrorMessage = processingErrorMessageFactory(context.t);
   const oldReplyComponents = oldReply.components;
   if (oldReply.flags.has(MessageFlags.IsComponentsV2)) {
     await interaction.editReply({
@@ -150,8 +150,14 @@ export const handleContextMenuInteraction = async (interaction: MessageContextMe
     locale: interaction.locale,
     guild: interaction.guild,
   });
+  const userInteractionContext: UserInteractionContext = {
+    ...context,
+    logger,
+    t,
+    getSettings: createCachedGetSettingsFunction({ logger }, interaction),
+  };
   if (!isKnownMessageContextmenuInteraction(interaction)) {
-    await interactionReply(t, interaction, {
+    await interactionReply(userInteractionContext, interaction, {
       content: `Unsupported context menu interaction with name ${interaction.commandName}`,
       flags: MessageFlags.Ephemeral,
     });
@@ -163,17 +169,11 @@ export const handleContextMenuInteraction = async (interaction: MessageContextMe
 
   logger.log(`${getUserIdentifier(user)} ran "${commandName}" in ${stringifyChannelName(channelId, channel)} of ${stringifyGuildName(guildId, guild)}`);
 
-  const userInteractionContext: UserInteractionContext = {
-    ...context,
-    logger,
-    t,
-    getSettings: createCachedGetSettingsFunction({ logger }, interaction),
-  };
   try {
     await command.handle(interaction, userInteractionContext);
   } catch (e) {
     logger.error(`Error while responding to context menu command (commandName=${commandName})`, e);
-    await handleInteractionError(interaction, t);
+    await handleInteractionError(interaction, userInteractionContext);
   }
 
   void sendCommandTelemetry(userInteractionContext, interaction)
@@ -181,22 +181,16 @@ export const handleContextMenuInteraction = async (interaction: MessageContextMe
 };
 
 export const handleCommandInteraction = async (interaction: CommandInteraction, context: InteractionHandlerContext): Promise<void> => {
+  if (interaction.isMessageContextMenuCommand()) {
+    return handleContextMenuInteraction(interaction, context);
+  }
+
   const t = createTFunction({
     i18next: context.i18next,
     ephemeral: true,
     locale: interaction.locale,
     guild: interaction.guild,
   });
-  if (!isChatInputCommandInteraction(interaction)) {
-    if (interaction.isMessageContextMenuCommand()) {
-      return handleContextMenuInteraction(interaction, context);
-    }
-    await interactionReply(t, interaction, {
-      content: `Unsupported command type ${interaction.commandType} when running ${interaction.commandName}`,
-      flags: MessageFlags.Ephemeral,
-    });
-    return;
-  }
   const { i18next, ...restContext } = context;
   const logger =  context.logger.nest(`Interaction#${interaction.id}`);
   const userInteractionContext: UserInteractionContext = {
@@ -205,6 +199,13 @@ export const handleCommandInteraction = async (interaction: CommandInteraction, 
     t,
     getSettings: createCachedGetSettingsFunction({ logger }, interaction),
   };
+  if (!isChatInputCommandInteraction(interaction)) {
+    await interactionReply(userInteractionContext, interaction, {
+      content: `Unsupported command type ${interaction.commandType} when running ${interaction.commandName}`,
+      flags: MessageFlags.Ephemeral,
+    });
+    return;
+  }
   const ephemeral = isEphemeralResponse(interaction, await userInteractionContext.getSettings());
   userInteractionContext.t = createTFunction({
     i18next,
@@ -214,7 +215,7 @@ export const handleCommandInteraction = async (interaction: CommandInteraction, 
   });
 
   if (!isKnownChatInputCommandInteraction(interaction)) {
-    await interactionReply(t, interaction, { content: `Unknown command ${interaction.commandName}` });
+    await interactionReply(userInteractionContext, interaction, { content: `Unknown command ${interaction.commandName}` });
     return;
   }
 
@@ -230,7 +231,7 @@ export const handleCommandInteraction = async (interaction: CommandInteraction, 
     await command.handle(interaction, userInteractionContext);
   } catch (e) {
     logger.error(`Error while responding to command interaction (commandName=${commandName})`, e);
-    await handleInteractionError(interaction, t);
+    await handleInteractionError(interaction, userInteractionContext);
   }
 
   void sendCommandTelemetry(userInteractionContext, interaction)
@@ -254,17 +255,18 @@ export const handleCommandAutocomplete = async (interaction: AutocompleteInterac
     locale,
     guild,
   });
-
-  try {
-    await command.autocomplete?.(interaction, {
+  const userInteractionContext: UserInteractionContext = {
       ...context,
       logger,
       t,
       getSettings: createCachedGetSettingsFunction({ logger }, interaction),
-    });
+    };
+
+  try {
+    await command.autocomplete?.(interaction, userInteractionContext);
   } catch (e) {
     logger.error(`Error while responding to command autocomplete (commandName=${commandName})`, e);
-    await handleInteractionError(interaction, t);
+    await handleInteractionError(interaction, userInteractionContext);
   }
 };
 
@@ -279,8 +281,14 @@ export const handleComponentInteraction = async (interaction: MessageComponentIn
     locale: interaction.locale,
     guild: interaction.guild,
   });
+  const userInteractionContext: UserInteractionContext = {
+    ...context,
+    logger,
+    t,
+    getSettings: createCachedGetSettingsFunction({ logger }, interaction),
+  };
   if (!isKnownMessageComponentInteraction(interaction)) {
-    await interactionReply(t, interaction, {
+    await interactionReply(userInteractionContext, interaction, {
       content: `Unsupported component interaction with customId ${interaction.customId}`,
       flags: MessageFlags.Ephemeral,
     });
@@ -290,18 +298,12 @@ export const handleComponentInteraction = async (interaction: MessageComponentIn
   const { customId, user, channel, channelId, guild, guildId } = interaction;
   const command = messageComponentMap[customId];
 
-
   logger.log(`${getUserIdentifier(user)} interacted with component "${customId}" in ${stringifyChannelName(channelId, channel)} of ${stringifyGuildName(guildId, guild)}`);
 
   try {
-    await command.handle(interaction, {
-      ...context,
-      logger,
-      t,
-      getSettings: createCachedGetSettingsFunction({ logger }, interaction),
-    });
+    await command.handle(interaction, userInteractionContext);
   } catch (e) {
     logger.error(`Error while responding to component interaction (customId=${customId})`, e);
-    await handleInteractionError(interaction, t);
+    await handleInteractionError(interaction, userInteractionContext);
   }
 };

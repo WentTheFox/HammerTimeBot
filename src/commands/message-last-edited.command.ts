@@ -18,7 +18,7 @@ export const messageLastEditedCommand: BotMessageContextMenuCommand = {
 
     const editTime = interaction.targetMessage.editedAt;
     if (editTime === null) {
-      await interactionReply(t, interaction, {
+      await interactionReply(context, interaction, {
         content: contentPrefix + t('commands.Message Last Edited.responses.notEdited'),
         flags: MessageFlags.Ephemeral,
       });
@@ -26,7 +26,7 @@ export const messageLastEditedCommand: BotMessageContextMenuCommand = {
     }
     const localDate = TZDate.tz('UTC', editTime);
     const replyOptions = await getSyntaxReplyOptions({ localDate, interaction, context, settings });
-    await interactionReply(t, interaction, replyOptions.components ? {
+    await interactionReply(context, interaction, replyOptions.components ? {
       ...replyOptions,
       components: [
         {

@@ -16,7 +16,8 @@ import { defaultHour12Options, defaultHourOptions, findHours, findTimezone, gmtT
 import { TimezoneError } from '../classes/timezone-error.js';
 import { MessageFlags } from 'discord-api-types/v10';
 import { interactionReply } from './interaction-reply.js';
-import { InteractionHandlerContext, LoggerContext } from '../types/bot-interaction.js';
+import { InteractionHandlerContext, LoggerContext, UserInteractionContext } from '../types/bot-interaction.js';
+import { EmojiCharacters } from '../constants/emoji-characters.js';
 
 type UserFriendCode = `@${string}` | `${string}#${string}`;
 export const getUserFriendCode = (user: User): UserFriendCode => {
@@ -103,10 +104,10 @@ export const getBareNumberFormatter = (interaction: Pick<CommandInteraction, 'lo
 /**
  * Normally this is able to always return some kind of value, so if we get null the code flow should be terminated
  */
-export const findTimezoneOptionValue = async (t: TFunction, interaction: ChatInputCommandInteraction, settings: SettingsValue): Promise<string | null> => {
-  const timezoneInput = interaction.options.getString(GlobalCommandOptionName.TIMEZONE);
-  // Apply user's timezone settings, if available
-  let timezone = settings.timezone ?? 'GMT';
+export const findTimezoneOptionValue = async (context: UserInteractionContext, interaction: ChatInputCommandInteraction, settings: SettingsValue): Promise<string | TimezoneError> => {
+  // When option is not provided, fall back to user's timezone setting
+  const timezoneInput = interaction.options.getString(GlobalCommandOptionName.TIMEZONE) ?? settings.timezone;
+  let timezone = 'GMT';
   if (timezoneInput) {
     try {
       timezone = findTimezone(timezoneInput)[0];
@@ -114,14 +115,26 @@ export const findTimezoneOptionValue = async (t: TFunction, interaction: ChatInp
       if (!(e instanceof TimezoneError)) {
         throw e;
       }
-      await interactionReply(t, interaction, {
-        content: t('commands.global.responses.timezoneNotFound'),
+      await interactionReply(context, interaction, {
+        content: getUnsupportedTimezoneErrorMessage(timezoneInput, context.t, settings),
         flags: MessageFlags.Ephemeral,
       });
-      return null;
+      return e;
     }
   }
   return timezone;
+};
+
+export const getUnsupportedTimezoneErrorMessage = (timezone: string, t: TFunction, settings: SettingsValue): string => {
+    const replyContent = [t('commands.global.responses.unsupportedTimezone', { replace: { timezone } })];
+    if (settings.timezone !== null) {
+      replyContent.push(`${EmojiCharacters.INFO} ${t('commands.global.responses.changeTimezoneSetting', {
+        replace: {
+          settingsCommand: t('commands.settings.name'),
+        }
+      })}`);
+    }
+    return replyContent.join('\n\n');
 };
 
 export const handleTimezoneAutocomplete = async (interaction: AutocompleteInteraction) => {

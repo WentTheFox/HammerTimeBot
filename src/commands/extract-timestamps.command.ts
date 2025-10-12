@@ -12,7 +12,8 @@ export const extractTimestampsCommand: BotMessageContextMenuCommand = {
     type: ApplicationCommandType.Message,
     ...getLocalizedObject('name', (lng) => t('commands.Extract Timestamps.name', { lng }), true, false),
   }),
-  async handle(interaction, { t }) {
+  async handle(interaction, context) {
+    const { t } = context;
     const messageTarget = t('commands.Extract Timestamps.responses.targetMessage', { replace: { url: interaction.targetMessage.url } });
     const contentPrefix = `${messageTarget}\n\n`;
 
@@ -22,7 +23,7 @@ export const extractTimestampsCommand: BotMessageContextMenuCommand = {
       ...findEmbedsTextFields(interaction.targetMessage.embeds),
     ]);
     if (timestamps.length === 0) {
-      await interactionReply(t, interaction, {
+      await interactionReply(context, interaction, {
         flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
         components: [
           {
@@ -34,7 +35,7 @@ export const extractTimestampsCommand: BotMessageContextMenuCommand = {
       return;
     }
 
-    await interactionReply(t, interaction, {
+    await interactionReply(context, interaction, {
       flags: MessageFlags.Ephemeral | MessageFlags.IsComponentsV2,
       components: [
         {

@@ -9,6 +9,7 @@ import { interactionReply } from '../utils/interaction-reply.js';
 import { getAt12Options } from '../options/at12.options.js';
 import { TZDate } from '@date-fns/tz';
 import { setDate, setHours, setMilliseconds, setMinutes, setMonth, setSeconds, setYear } from 'date-fns';
+import { TimezoneError } from '../classes/timezone-error.js';
 
 export const at12Command: BotChatInputCommand = {
   getDefinition: (t) => ({
@@ -41,13 +42,13 @@ export const at12Command: BotChatInputCommand = {
     const pm = interaction.options.getBoolean(At12CommandOptionName.PM);
 
     if (am !== null && pm !== null) {
-      await interactionReply(t, interaction, {
+      await interactionReply(context, interaction, {
         content: t('commands.at12.responses.amOrPmOnly'),
         flags: MessageFlags.Ephemeral,
       });
       return;
     } else if (am === null && pm === null) {
-      await interactionReply(t, interaction, {
+      await interactionReply(context, interaction, {
         content: t('commands.at12.responses.meridiemRequired'),
         flags: MessageFlags.Ephemeral,
       });
@@ -56,8 +57,8 @@ export const at12Command: BotChatInputCommand = {
 
     const hour = convertHour12To24(hour12, am, pm);
 
-    const timezone = await findTimezoneOptionValue(t, interaction, settings);
-    if (timezone === null) {
+    const timezone = await findTimezoneOptionValue(context, interaction, settings);
+    if (timezone instanceof TimezoneError) {
       return;
     }
 
@@ -78,7 +79,7 @@ export const at12Command: BotChatInputCommand = {
       if (second !== null) localDate = setSeconds(localDate, constrain(second, 0, 59));
     } catch (e) {
       if (e instanceof RangeError && e.message === 'Invalid date') {
-        await interactionReply(t, interaction, {
+        await interactionReply(context, interaction, {
           content: t('commands.global.responses.invalidDate'),
           flags: MessageFlags.Ephemeral,
         });

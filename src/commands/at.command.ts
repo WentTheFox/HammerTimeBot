@@ -9,6 +9,7 @@ import { findTimezoneOptionValue, handleHourAutocomplete, handleTimezoneAutocomp
 import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 import { setDate, setHours, setMilliseconds, setMinutes, setMonth, setSeconds, setYear } from 'date-fns';
+import { TimezoneError } from '../classes/timezone-error.js';
 
 export const atCommand: BotChatInputCommand = {
   getDefinition: (t) => ({
@@ -46,15 +47,15 @@ export const atCommand: BotChatInputCommand = {
 
     const hour = processMixedHourParameters({ t, settings, hourStr, hour12, am, pm });
     if (typeof hour === 'string') {
-      await interactionReply(t, interaction, {
+      await interactionReply(context, interaction, {
         content: hour,
         flags: MessageFlags.Ephemeral,
       });
       return;
     }
 
-    const timezone = await findTimezoneOptionValue(t, interaction, settings);
-    if (timezone === null) {
+    const timezone = await findTimezoneOptionValue(context, interaction, settings);
+    if (timezone instanceof TimezoneError) {
       return;
     }
 
@@ -75,7 +76,7 @@ export const atCommand: BotChatInputCommand = {
       if (second !== null) localDate = setSeconds(localDate, constrain(second, 0, 59));
     } catch (e) {
       if (e instanceof RangeError && e.message === 'Invalid date') {
-        await interactionReply(t, interaction, {
+        await interactionReply(context, interaction, {
           content: t('commands.global.responses.invalidDate'),
           flags: MessageFlags.Ephemeral,
         });

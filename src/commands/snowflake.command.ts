@@ -25,7 +25,7 @@ export const snowflakeCommand: BotChatInputCommand = {
       unixValue = snowflakeToUnix(snowflake);
     } catch (e) {
       if (e instanceof SnowflakeError) {
-        await interactionReply(t, interaction, {
+        await interactionReply(context, interaction, {
           content: t('commands.snowflake.responses.invalidSnowflake'),
           flags: MessageFlags.Ephemeral,
         });

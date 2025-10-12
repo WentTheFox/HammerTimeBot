@@ -8,6 +8,7 @@ import { findTimezoneOptionValue, handleTimezoneAutocomplete } from '../utils/me
 import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 import { isValid } from 'date-fns';
+import { TimezoneError } from '../classes/timezone-error.js';
 
 export const isoCommand: BotChatInputCommand = {
   getDefinition: (t) => ({
@@ -31,14 +32,14 @@ export const isoCommand: BotChatInputCommand = {
     const settings = await context.getSettings();
     const { t } = context;
     const value = interaction.options.getString(IsoCommandOptionName.VALUE, true);
-    const timezone = await findTimezoneOptionValue(t, interaction, settings);
-    if (timezone === null) {
+    const timezone = await findTimezoneOptionValue(context, interaction, settings);
+    if (timezone instanceof TimezoneError) {
       return;
     }
 
     const localDate = TZDate.tz(timezone, value);
     if (!isValid(localDate)) {
-      await interactionReply(t, interaction, {
+      await interactionReply(context, interaction, {
         content: t('commands.iso.responses.invalidIsoFormat'),
         flags: MessageFlags.Ephemeral,
       });

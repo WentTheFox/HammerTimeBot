@@ -31,7 +31,7 @@ export const subtractCommand: BotChatInputCommand = {
     };
 
     if (!atLeastOneNonZeroKey(options)) {
-      await interactionReply(t, interaction, {
+      await interactionReply(context, interaction, {
         content: t('commands.global.responses.noComponentsUnix', {
           replace: {
             unixCommand: t('commands.unix.name'),

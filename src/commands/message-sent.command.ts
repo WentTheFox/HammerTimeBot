@@ -18,7 +18,7 @@ export const messageSentCommand: BotMessageContextMenuCommand = {
 
     const localDate = TZDate.tz('UTC', interaction.targetMessage.createdAt);
     const replyOptions = await getSyntaxReplyOptions({ localDate, interaction, context, settings });
-    await interactionReply(t, interaction, replyOptions.components ? {
+    await interactionReply(context, interaction, replyOptions.components ? {
       ...replyOptions,
       components: [
         {

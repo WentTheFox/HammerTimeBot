@@ -83,8 +83,8 @@
           "description": "Especifique la hora (por defecto será la hora actual)"
         },
         "hour12": {
-          "name": "hour12",
-          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
+          "name": "hora12",
+          "description": "Especifique la hora utilizando el reloj de 12 horas (por defecto, la hora actual)"
         },
         "minute": {
           "name": "minuto",
@@ -335,27 +335,27 @@
       },
       "options": {
         "year": {
-          "name": "year",
+          "name": "año",
           "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "month",
+          "name": "mes",
           "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "day",
+          "name": "día",
           "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "hour",
+          "name": "hora",
           "description": "Specify the hour (defaults to current hour)"
         },
         "minute": {
-          "name": "minute",
+          "name": "minuto",
           "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "second",
+          "name": "segundo",
           "description": "Specify the second (defaults to 0)"
         },
         "am": {

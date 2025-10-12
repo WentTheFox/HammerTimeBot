@@ -244,7 +244,7 @@
         "contributeTranslations": "Medvirke",
         "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
         "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
-        "privacyPolicyLink": "Privacy Policy",
+        "privacyPolicyLink": "Personvernerklæring",
         "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
         "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
         "feedbackWanted": "Feedback wanted!",
@@ -340,7 +340,7 @@
         },
         "month": {
           "name": "month",
-          "description": "Specify the month (defaults to current month)"
+          "description": "Spesifiser måneden (standarden settes til denne måneden)"
         },
         "day": {
           "name": "day",

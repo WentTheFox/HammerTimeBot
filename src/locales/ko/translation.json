@@ -360,11 +360,11 @@
         },
         "am": {
           "name": "am",
-          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          "description": "True를 입력하면 시간은 오전 (정오 이전) 으로 해석됩니다"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          "description": "True를 입력하면 시간은 오후 (정오 이후) 로 해석됩니다"
         }
       }
     }

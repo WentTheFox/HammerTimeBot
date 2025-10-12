@@ -52,10 +52,54 @@ describe('time utils', () => {
 
     it('should find partial match', () => {
       expect(findTimezone('gmt+')).toEqual(['GMT+1', 'GMT+2', 'GMT+3', 'GMT+4', 'GMT+5', 'GMT+6', 'GMT+7', 'GMT+8', 'GMT+9', 'GMT+10', 'GMT+11', 'GMT+12', 'GMT+13', 'GMT+14', 'GMT+15', 'GMT+16']);
-      expect(findTimezone('gmt+2')).toEqual(['GMT+2']);
-      expect(findTimezone('gmt-1')).toEqual(['GMT-1', 'GMT-10', 'GMT-11', 'GMT-12', 'GMT-13', 'GMT-14', 'GMT-15', 'GMT-16']);
-      expect(findTimezone('gmt-12')).toEqual(['GMT-12']);
+      expect(findTimezone('gmt+2')).toEqual(['GMT+2', 'GMT+2:10', 'GMT+2:20', 'GMT+2:30', 'GMT+2:40', 'GMT+2:50']);
+      expect(findTimezone('gmt-1')).toEqual([
+        'GMT-1',
+        'GMT-1:10',
+        'GMT-1:20',
+        'GMT-1:30',
+        'GMT-1:40',
+        'GMT-1:50',
+        'GMT-10',
+        'GMT-10:10',
+        'GMT-10:20',
+        'GMT-10:30',
+        'GMT-10:40',
+        'GMT-10:50',
+        'GMT-11',
+        'GMT-11:10',
+        'GMT-11:20',
+        'GMT-11:30',
+        'GMT-11:40',
+        'GMT-11:50',
+        'GMT-12',
+        'GMT-12:10',
+        'GMT-13',
+        'GMT-14',
+        'GMT-15',
+        'GMT-16',
+      ]);
+      expect(findTimezone('gmt-12')).toEqual([
+        'GMT-12',
+        'GMT-12:10',
+        'GMT-12:20',
+        'GMT-12:30',
+        'GMT-12:40',
+        'GMT-12:50',
+      ]);
       expect(findTimezone('gmt+5:30')).toEqual(['GMT+5:30']);
+      expect(findTimezone('gmt+5:1')).toEqual([
+        'GMT+5:10',
+        'GMT+5:11',
+        'GMT+5:12',
+        'GMT+5:13',
+        'GMT+5:14',
+        'GMT+5:15',
+        'GMT+5:16',
+        'GMT+5:17',
+        'GMT+5:18',
+        'GMT+5:19',
+      ]);
       expect(findTimezone('budapest')).toEqual(['Europe/Budapest']);
       expect(findTimezone('london')).toEqual(['Europe/London']);
       expect(findTimezone('los angeles')).toEqual(['America/Los_Angeles']);
@@ -300,7 +344,7 @@ describe('findHours', () => {
 
 describe('processMixedHourParameters', () => {
   const t = ((key: string) => key) as TFunction;
-  const settings = { defaultAtHour: null,  defaultAt12Hour: null };
+  const settings = { defaultAtHour: null, defaultAt12Hour: null };
   it('should handle regular numbers on their own', () => {
     expect(processMixedHourParameters({ t, settings, hourStr: '0', hour12: null, am: null, pm: null })).toEqual(0);
     expect(processMixedHourParameters({ t, settings, hourStr: '1', hour12: null, am: null, pm: null })).toEqual(1);
@@ -396,7 +440,7 @@ describe('processMixedHourParameters', () => {
     expect(processMixedHourParameters({ t, settings, hourStr: '9am', hour12: null, am: null, pm: null })).toEqual(9);
     expect(processMixedHourParameters({ t, settings, hourStr: '10am', hour12: null, am: null, pm: null })).toEqual(10);
     expect(processMixedHourParameters({ t, settings, hourStr: '11am', hour12: null, am: null, pm: null })).toEqual(11);
-    expect(processMixedHourParameters({ t, settings, hourStr: '12pm', hour12:null, am: null, pm: null })).toEqual(12);
+    expect(processMixedHourParameters({ t, settings, hourStr: '12pm', hour12: null, am: null, pm: null })).toEqual(12);
     expect(processMixedHourParameters({ t, settings, hourStr: '1pm', hour12: null, am: null, pm: null })).toEqual(13);
     expect(processMixedHourParameters({ t, settings, hourStr: '2pm', hour12: null, am: null, pm: null })).toEqual(14);
     expect(processMixedHourParameters({ t, settings, hourStr: '3pm', hour12: null, am: null, pm: null })).toEqual(15);
@@ -411,128 +455,814 @@ describe('processMixedHourParameters', () => {
   });
 
   it('should read default 12-hour value with am true', () => {
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(0);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 1 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(1);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 2 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(2);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 3 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(3);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 4 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(4);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 5 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(5);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 6 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(6);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 7 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(7);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 8 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(8);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 9 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(9);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 10 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(10);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 11 }, hourStr: null, hour12: null, am: true, pm: null })).toEqual(11);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(0);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 1 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(1);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 2 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(2);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 3 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(3);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 4 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(4);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 5 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(5);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 6 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(6);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 7 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(7);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 8 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(8);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 9 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(9);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 10 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(10);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 11 },
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual(11);
   });
   it('should read default 12-hour value with am false', () => {
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(12);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 1 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(13);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 2 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(14);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 3 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(15);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 4 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(16);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 5 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(17);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 6 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(18);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 7 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(19);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 8 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(20);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 9 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(21);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 10 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(22);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 11 }, hourStr: null, hour12: null, am: false, pm: null })).toEqual(23);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(12);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 1 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(13);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 2 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(14);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 3 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(15);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 4 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(16);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 5 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(17);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 6 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(18);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 7 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(19);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 8 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(20);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 9 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(21);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 10 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(22);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 11 },
+      hourStr: null,
+      hour12: null,
+      am: false,
+      pm: null
+    })).toEqual(23);
   });
   it('should read default 12-hour value with pm false', () => {
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(0);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 1 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(1);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 2 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(2);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 3 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(3);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 4 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(4);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 5 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(5);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 6 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(6);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 7 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(7);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 8 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(8);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 9 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(9);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 10 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(10);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 11 }, hourStr: null, hour12: null, am: null, pm: false })).toEqual(11);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(0);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 1 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(1);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 2 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(2);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 3 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(3);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 4 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(4);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 5 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(5);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 6 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(6);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 7 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(7);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 8 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(8);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 9 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(9);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 10 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(10);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 11 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: false
+    })).toEqual(11);
   });
   it('should read default 12-hour value with pm true', () => {
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(12);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 1 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(13);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 2 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(14);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 3 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(15);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 4 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(16);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 5 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(17);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 6 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(18);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 7 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(19);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 8 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(20);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 9 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(21);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 10 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(22);
-    expect(processMixedHourParameters({ t, settings: { ...settings, defaultAt12Hour: 11 }, hourStr: null, hour12: null, am: null, pm: true })).toEqual(23);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(12);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 1 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(13);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 2 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(14);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 3 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(15);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 4 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(16);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 5 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(17);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 6 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(18);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 7 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(19);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 8 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(20);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 9 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(21);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 10 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(22);
+    expect(processMixedHourParameters({
+      t,
+      settings: { ...settings, defaultAt12Hour: 11 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual(23);
   });
   it('should read default 24-hour with default 12-hour value defined', () => {
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 0, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(0);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 1, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(1);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 2, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(2);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 3, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(3);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 4, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(4);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 5, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(5);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 6, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(6);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 7, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(7);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 8, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(8);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 9, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(9);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 10, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(10);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 11, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(11);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 12, defaultAt12Hour: 1 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(12);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 13, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(13);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 14, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(14);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 15, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(15);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 16, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(16);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 17, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(17);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 18, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(18);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 19, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(19);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 20, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(20);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 21, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(21);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 22, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(22);
-    expect(processMixedHourParameters({ t, settings: { defaultAtHour: 23, defaultAt12Hour: 12 }, hourStr: null, hour12: null, am: null, pm: null })).toEqual(23);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 0, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(0);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 1, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(1);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 2, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(2);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 3, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(3);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 4, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(4);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 5, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(5);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 6, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(6);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 7, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(7);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 8, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(8);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 9, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(9);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 10, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(10);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 11, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(11);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 12, defaultAt12Hour: 1 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(12);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 13, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(13);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 14, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(14);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 15, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(15);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 16, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(16);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 17, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(17);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 18, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(18);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 19, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(19);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 20, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(20);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 21, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(21);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 22, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(22);
+    expect(processMixedHourParameters({
+      t,
+      settings: { defaultAtHour: 23, defaultAt12Hour: 12 },
+      hourStr: null,
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual(23);
   });
   it('should return null when nothing is defined', () => {
     expect(processMixedHourParameters({ t, settings, hourStr: null, hour12: null, am: null, pm: null })).toEqual(null);
   });
   it('should return error when using both hourStr and hour12 together', () => {
-    expect(processMixedHourParameters({ t, settings, hourStr: '10', hour12: 10, am: null, pm: null })).toEqual('commands.at.responses.hourOrHour12Only');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '10',
+      hour12: 10,
+      am: null,
+      pm: null
+    })).toEqual('commands.at.responses.hourOrHour12Only');
   });
   it('should return error when using hour12 without am or pm', () => {
-    expect(processMixedHourParameters({ t, settings, hourStr: null, hour12: 10, am: null, pm: null })).toEqual('commands.at.responses.meridiemRequired');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: null,
+      hour12: 10,
+      am: null,
+      pm: null
+    })).toEqual('commands.at.responses.meridiemRequired');
   });
   it('should return error when using am or pm together', () => {
-    expect(processMixedHourParameters({ t, settings, hourStr: null, hour12: null, am: true, pm: true })).toEqual('commands.at.responses.amOrPmOnly');
-    expect(processMixedHourParameters({ t, settings, hourStr: '10', hour12: null, am: true, pm: true })).toEqual('commands.at.responses.amOrPmOnly');
-    expect(processMixedHourParameters({ t, settings, hourStr: null, hour12: 10, am: true, pm: true })).toEqual('commands.at.responses.amOrPmOnly');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: null,
+      hour12: null,
+      am: true,
+      pm: true
+    })).toEqual('commands.at.responses.amOrPmOnly');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '10',
+      hour12: null,
+      am: true,
+      pm: true
+    })).toEqual('commands.at.responses.amOrPmOnly');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: null,
+      hour12: 10,
+      am: true,
+      pm: true
+    })).toEqual('commands.at.responses.amOrPmOnly');
   });
   it('should return error when 24-hour value is out of range', () => {
-    expect(processMixedHourParameters({ t, settings, hourStr: '-1', hour12: null, am: null, pm: null })).toEqual('commands.at.responses.hourRange');
-    expect(processMixedHourParameters({ t, settings, hourStr: '24', hour12: null, am: null, pm: null })).toEqual('commands.at.responses.hourRange');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '-1',
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual('commands.at.responses.hourRange');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '24',
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual('commands.at.responses.hourRange');
   });
   it('should return error when 12-hour value is out of range', () => {
-    expect(processMixedHourParameters({ t, settings, hourStr: '0am', hour12: null, am: null, pm: null })).toEqual('commands.at.responses.hour12Range');
-    expect(processMixedHourParameters({ t, settings, hourStr: '13am', hour12: null, am: null, pm: null })).toEqual('commands.at.responses.hour12Range');
-    expect(processMixedHourParameters({ t, settings, hourStr: '0pm', hour12: null, am: null, pm: null })).toEqual('commands.at.responses.hour12Range');
-    expect(processMixedHourParameters({ t, settings, hourStr: '13pm', hour12: null, am: null, pm: null })).toEqual('commands.at.responses.hour12Range');
-    expect(processMixedHourParameters({ t, settings, hourStr: '0', hour12: null, am: true, pm: null })).toEqual('commands.at.responses.hour12Range');
-    expect(processMixedHourParameters({ t, settings, hourStr: '13', hour12: null, am: true, pm: null })).toEqual('commands.at.responses.hour12Range');
-    expect(processMixedHourParameters({ t, settings, hourStr: '0', hour12: null, am: null, pm: true })).toEqual('commands.at.responses.hour12Range');
-    expect(processMixedHourParameters({ t, settings, hourStr: '13', hour12: null, am: null, pm: true })).toEqual('commands.at.responses.hour12Range');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '0am',
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual('commands.at.responses.hour12Range');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '13am',
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual('commands.at.responses.hour12Range');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '0pm',
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual('commands.at.responses.hour12Range');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '13pm',
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual('commands.at.responses.hour12Range');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '0',
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual('commands.at.responses.hour12Range');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '13',
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual('commands.at.responses.hour12Range');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '0',
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual('commands.at.responses.hour12Range');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '13',
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual('commands.at.responses.hour12Range');
   });
   it('should return error when hour with meridiem and meridiem parameters are used together', () => {
-    expect(processMixedHourParameters({ t, settings, hourStr: '1am', hour12: null, am: true, pm: null })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
-    expect(processMixedHourParameters({ t, settings, hourStr: '12am', hour12: null, am: true, pm: null })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
-    expect(processMixedHourParameters({ t, settings, hourStr: '1am', hour12: null, am: null, pm: true })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
-    expect(processMixedHourParameters({ t, settings, hourStr: '12am', hour12: null, am: null, pm: true })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
-    expect(processMixedHourParameters({ t, settings, hourStr: '1pm', hour12: null, am: null, pm: true })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
-    expect(processMixedHourParameters({ t, settings, hourStr: '12pm', hour12: null, am: null, pm: true })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
-    expect(processMixedHourParameters({ t, settings, hourStr: '1pm', hour12: null, am: true, pm: null })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
-    expect(processMixedHourParameters({ t, settings, hourStr: '12pm', hour12: null, am: true, pm: null })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '1am',
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '12am',
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '1am',
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '12am',
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '1pm',
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '12pm',
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '1pm',
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: '12pm',
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual('commands.at.responses.noAmOrPmWithMeridiem');
   });
   it('should return error with malformed hours input', () => {
-    expect(processMixedHourParameters({ t, settings, hourStr: 'am3', hour12: null, am: null, pm: null })).toEqual('commands.at.responses.hourRange');
-    expect(processMixedHourParameters({ t, settings, hourStr: 'am3', hour12: null, am: true, pm: null })).toEqual('commands.at.responses.hour12Range');
-    expect(processMixedHourParameters({ t, settings, hourStr: 'am3', hour12: null, am: null, pm: true })).toEqual('commands.at.responses.hour12Range');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: 'am3',
+      hour12: null,
+      am: null,
+      pm: null
+    })).toEqual('commands.at.responses.hourRange');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: 'am3',
+      hour12: null,
+      am: true,
+      pm: null
+    })).toEqual('commands.at.responses.hour12Range');
+    expect(processMixedHourParameters({
+      t,
+      settings,
+      hourStr: 'am3',
+      hour12: null,
+      am: null,
+      pm: true
+    })).toEqual('commands.at.responses.hour12Range');
   });
 });

@@ -129,9 +129,39 @@ export const findTimezone = (value: string): string[] => {
   const utcOffset = getGmtTimezoneValue(value);
   if (!isNaN(utcOffset.hours)) {
     const inputUppercase = value.toUpperCase();
-    const results = gmtTimezoneOptions.filter(option => option.startsWith(inputUppercase)).sort(compareGmtStrings);
-    if (results.length === 0) {
+    const [inputBeforeColon, inputAfterColon = ''] = inputUppercase.split(/:/);
+    const results = gmtTimezoneOptions.filter(option => option.startsWith(inputBeforeColon)).sort(compareGmtStrings);
+    if (results.length === 0 || inputAfterColon.length === 2) {
       return [`GMT${utcOffset.toString(false)}`];
+    }
+    const onlyNumbersInputAfterColon = inputAfterColon.replace(/\D/g, '');
+    switch (onlyNumbersInputAfterColon.length) {
+      case 0:
+        results.slice().some(result => {
+          if (result.length >= 25) {
+            return true;
+          }
+          for (let i = 1; i < 6; i += 1) {
+            if (results.length >= 24) {
+              break;
+            }
+            results.push(`${result}:${i}0`);
+          }
+        });
+        results.sort(compareGmtStrings);
+        break;
+      case 1: {
+        const firstResult = results[0];
+        results.splice(0, results.length);
+        for (let i = 0; i < 10; i += 1) {
+          if (results.length >= 25) {
+            break;
+          }
+          results.push(`${firstResult}:${onlyNumbersInputAfterColon}${i}`);
+        }
+        results.sort(compareGmtStrings);
+        break;
+      }
     }
     return results;
   }

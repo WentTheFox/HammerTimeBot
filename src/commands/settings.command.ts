@@ -1,12 +1,17 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
-import { ApplicationCommandType, ButtonStyle, ComponentType, MessageFlags } from 'discord-api-types/v10';
+import {
+  APIMessageTopLevelComponent,
+  ApplicationCommandType,
+  ButtonStyle,
+  ComponentType,
+  MessageFlags
+} from 'discord-api-types/v10';
 import { env } from '../env.js';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
 import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
 import { backendApiRequest } from '../utils/backend-api-request.js';
 import typia from 'typia';
-import { APIMessageTopLevelComponent } from 'discord-api-types/payloads/v10/channel.js';
 
 interface LoginLinkResponse {
   loginUrl: string;

@@ -60,8 +60,10 @@ English and Hungarian translations have been included, so no translators will be
   - [Phrygia](https://github.com/sjkim04)
   - [SkyStorage\_](https://crowdin.com/profile/SkyStorage_)
   - [미르냥](https://crowdin.com/profile/Mirnyang)
+  - [정규민](https://crowdin.com/profile/smillle)
 - 🇱🇹 Lithuanian: [Trent](https://crowdin.com/profile/nothingness)
 - 🇳🇴 Norwegian
+  - [barecharge](https://crowdin.com/profile/barecharge)
   - [Hvalomi](https://crowdin.com/profile/hvalomi)
   - [kidneb1g](https://crowdin.com/profile/klinge9797)
   - [Phillip Rodseth](https://crowdin.com/profile/philliphatrod)

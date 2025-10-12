@@ -173,6 +173,10 @@
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/16756819/medium/406acac09fc85931bf58867c08c12920.png",
       "fullName": "Maximilian"
     },
+    "16831061": {
+      "username": "barecharge",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/16831061/medium/a10112ec2019490be2c108a3c55cf606.png"
+    },
     "17096866": {
       "username": "DmitroMeow",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17096866/medium/2761e5e49bb89d33fb4f655592ac19be.png"
@@ -205,6 +209,11 @@
       "username": "hvalomi",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17322000/medium/b117bdf14a784a7620ff69aeb53036de.jpeg",
       "fullName": "Hvalomi"
+    },
+    "17372204": {
+      "username": "smillle",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17372204/medium/90fb3a134c7782ca49dff2de6f0dc337.jpeg",
+      "fullName": "정규민"
     }
   },
   "languages": {
@@ -274,7 +283,7 @@
         "13524864"
       ],
       "progress": {
-        "approval": 73,
+        "approval": 75,
         "translation": 75
       }
     },
@@ -353,11 +362,12 @@
         "14469636",
         "15404404",
         "14531480",
-        "14153733"
+        "14153733",
+        "17372204"
       ],
       "progress": {
-        "approval": 66,
-        "translation": 66
+        "approval": 68,
+        "translation": 68
       }
     },
     "lt": {
@@ -382,11 +392,12 @@
       "translatorIds": [
         "16406120",
         "17105460",
-        "17322000"
+        "17322000",
+        "16831061"
       ],
       "progress": {
-        "approval": 67,
-        "translation": 67
+        "approval": 68,
+        "translation": 68
       }
     },
     "pl": {

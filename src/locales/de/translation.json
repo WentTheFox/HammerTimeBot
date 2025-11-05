@@ -198,8 +198,9 @@
         "invalidDate": "Das angegebene Datum ist ungültig (zum Beispiel: der angegebene Tag existiert nicht)",
         "noComponentsCurrentTime": "Du musst mindestens einmal eine Zeitkomponente angeben, um sie zu ändern. Wenn du die aktuelle Zeit brauchst, benutze `/{{atCommand}}` ohne irgendwelche Argumente anzugeben",
         "noComponentsUnix": "Du musst mindestens einmal eine Zeitkomponente angeben, um sie zu ändern. Wenn du die Syntax für einen UNIX Zeitstempel erhalten möchtest, benutze `/{{unixCommand}}`",
-        "timezoneNotFound": "Die angegebene Zeitzone kann nicht gefunden werden",
-        "unexpectedError": "Es ist ein unerwarteter Fehler bei der Verarbeitung dieser Interaktion aufgetreten"
+        "unexpectedError": "Es ist ein unerwarteter Fehler bei der Verarbeitung dieser Interaktion aufgetreten",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

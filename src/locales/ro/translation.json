@@ -198,8 +198,9 @@
         "invalidDate": "Data specificată nu este valabilă (de exemplu: ziua dată nu există)",
         "noComponentsCurrentTime": "Trebuie să specificați cel puțin o componentă de timp care trebuie modificată. Dacă aveți nevoie de ora curentă, utilizați `/{{atCommand}}` fără să specificați niciun argument",
         "noComponentsUnix": "Trebuie să specificați cel puțin o componentă de timp care trebuie modificată. Dacă doriți să obțineți sintaxa pentru un timestamp UNIX, utilizați `/{{unixCommand}}`",
-        "timezoneNotFound": "Fusul orar specificat nu poate fi găsit",
-        "unexpectedError": "A apărut o eroare neașteptată în timpul procesării acestei interacțiuni"
+        "unexpectedError": "A apărut o eroare neașteptată în timpul procesării acestei interacțiuni",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

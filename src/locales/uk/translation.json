@@ -198,8 +198,9 @@
         "invalidDate": "Зазначена дата недійсна (наприклад, даного дня не існує)",
         "noComponentsCurrentTime": "Ви повинні вказати принаймні один часовий компонент для зміни. Якщо вам потрібен поточний час, використовуйте `/{{atCommand}}` без зазначення аргументів",
         "noComponentsUnix": "Ви повинні вказати принаймні один компонент часу для зміни. Якщо ви хочете отримати синтаксис мітки часу UNIX, скористайтеся `/{{unixCommand}}`",
-        "timezoneNotFound": "Неможливо знайти вказаний часовий пояс",
-        "unexpectedError": "Неочікувана помилка під час дії"
+        "unexpectedError": "Неочікувана помилка під час дії",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

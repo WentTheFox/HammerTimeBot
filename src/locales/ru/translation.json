@@ -198,8 +198,9 @@
         "invalidDate": "Указанная дата недействительна (например: заданный день не существует)",
         "noComponentsCurrentTime": "Необходимо указать изменение как минимум одной величины. Если вас интересует нынешнее время, используйте `/{{atCommand}}` без каких либо аргументов",
         "noComponentsUnix": "Необходимо указать изменение как минимум одной величины. Если вас интересует синтаксис временной метки UNIX, используйте `/{{unixCommand}}`",
-        "timezoneNotFound": "Указанный часовой пояс не может быть найден",
-        "unexpectedError": "При обработке этого действия произошла непредвиденная ошибка"
+        "unexpectedError": "При обработке этого действия произошла непредвиденная ошибка",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

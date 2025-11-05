@@ -198,8 +198,9 @@
         "invalidDate": "Η καθορισμένη ημερομηνία δεν είναι έγκυρη (για παράδειγμα: η δεδομένη ημέρα δεν υπάρχει)",
         "noComponentsCurrentTime": "Πρέπει να καθορίσετε τουλάχιστον ένα στοιχείο χρόνου προς αλλαγή. Αν χρειάζεστε την τρέχουσα ώρα, χρησιμοποιήστε `/{{atCommand}}` χωρίς να καθορίσετε οποιαδήποτε παραμέτρους",
         "noComponentsUnix": "Πρέπει να καθορίσετε τουλάχιστον ένα στοιχείο χρόνου προς αλλαγή. Αν θέλετε να λάβετε την σύνταξη της εντολής UNIX χρονοσήμανσης, χρησιμοποιήστε `/{{unixCommand}}`",
-        "timezoneNotFound": "Η καθορισμένη ζώνη ώρας δεν μπορεί να βρεθεί",
-        "unexpectedError": "Παρουσιάστηκε ένα απρόσμενο σφάλμα κατά την επεξεργασία αυτής της αλληλεπίδρασης"
+        "unexpectedError": "Παρουσιάστηκε ένα απρόσμενο σφάλμα κατά την επεξεργασία αυτής της αλληλεπίδρασης",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

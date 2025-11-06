@@ -199,8 +199,8 @@
         "noComponentsCurrentTime": "Legalább egy időegységet meg kell adnod a módosításhoz. Ha az aktuális időre van szükséged, használd ezt a parancsot paraméterek nélkül: `/{{atCommand}}`",
         "noComponentsUnix": "Legalább egy időegységet meg kell adnod a módosításhoz. Ha egy UNIX időbélyegző kódját szeretnéd megkapni, használd ezt a parancsot: `/{{unixCommand}}`",
         "unexpectedError": "Váratlan hiba történt az interakció feldolgozása során",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "unsupportedTimezone": "A megadott időzóna ({{timezone}}) nem támogatott",
+        "changeTimezoneSetting": "Az időbélyegek generálásának módja a szerveren nemrég megváltozott. Ha korábban ez működött, akkor a `/{{settingsCommand}}` paranccsal frissítened kell a beállításaidat."
       },
       "options": {
         "format": {

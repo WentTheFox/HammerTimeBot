@@ -199,8 +199,8 @@
         "noComponentsCurrentTime": "Devi specificare almeno un componente da cambiare. Se hai bisogno dell'orario corrente use `/{{atCommand}}` senza specificare nessun parametro",
         "noComponentsUnix": "Devi specificare almeno un componente da cambiare. Se vuoi ottenere la sintassi per lo UNIX timestamp, usa`/{{unixCommand}}`",
         "unexpectedError": "Si è verificato un errore imprevisto durante l'elaborazione di questa interazione",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "unsupportedTimezone": "Il fuso orario fornito ({{timezone}}) non è supportato",
+        "changeTimezoneSetting": "Il modo in cui i timestamp vengono generati sul server è cambiato di recente. Se prima funzionava, potrebbe essere necessario aggiornare le impostazioni utilizzando il comando `/{{settingsCommand}}`."
       },
       "options": {
         "format": {

@@ -199,8 +199,8 @@
         "noComponentsCurrentTime": "Du musst mindestens einmal eine Zeitkomponente angeben, um sie zu ändern. Wenn du die aktuelle Zeit brauchst, benutze `/{{atCommand}}` ohne irgendwelche Argumente anzugeben",
         "noComponentsUnix": "Du musst mindestens einmal eine Zeitkomponente angeben, um sie zu ändern. Wenn du die Syntax für einen UNIX Zeitstempel erhalten möchtest, benutze `/{{unixCommand}}`",
         "unexpectedError": "Es ist ein unerwarteter Fehler bei der Verarbeitung dieser Interaktion aufgetreten",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "unsupportedTimezone": "Die angegebene Zeitzone ({{timezone}}) wird nicht unterstützt",
+        "changeTimezoneSetting": "Die Art und Weise, wie Zeitstempel auf dem Server generiert werden, hat sich kürzlich geändert. Wenn das vorher funktioniert hat, musst du möglicherweise deine Einstellungen mit dem `/{{settingsCommand}}` Befehl aktualisieren."
       },
       "options": {
         "format": {

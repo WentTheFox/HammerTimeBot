@@ -26,7 +26,7 @@ export function getLocalizedObject<Key extends LocalizedKey>(key: Key, translato
 
       if (sanitize && key === 'name') {
         // Automatically replace unsupported characters with dash and make all-lowercase
-        value = value.toLowerCase().replace(/[\s（）]/g, '-').replace(/-+$/, '');
+        value = value.toLowerCase().replace(/[\s（）.]/g, '-').replace(/-+$/, '');
       }
       return ({
         ...localizations,

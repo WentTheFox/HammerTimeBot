@@ -12,7 +12,7 @@ describe('getLocalizedObject', () => {
   const mockTranslator: TranslatorFunction = (lng) => `mock.key.${lng}`;
   const mockNameLocalizationMap = SUPPORTED_LANGUAGES.reduce((mockObject, language) => ({
     ...mockObject,
-    [language]: `mock.key.${language.toLowerCase()}`,
+    [language]: `mock-key-${language.toLowerCase()}`,
   }), {} as SupportedLocalizations);
   const mockDescriptionLocalizationMap = SUPPORTED_LANGUAGES.reduce((mockObject, language) => ({
     ...mockObject,

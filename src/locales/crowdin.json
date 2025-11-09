@@ -223,8 +223,8 @@
         "15659129"
       ],
       "progress": {
-        "approval": 20,
-        "translation": 20
+        "approval": 19,
+        "translation": 19
       }
     },
     "cs": {
@@ -233,8 +233,8 @@
         "15193976"
       ],
       "progress": {
-        "approval": 64,
-        "translation": 64
+        "approval": 62,
+        "translation": 62
       }
     },
     "da": {
@@ -259,8 +259,8 @@
         "14459560"
       ],
       "progress": {
-        "approval": 73,
-        "translation": 73
+        "approval": 100,
+        "translation": 100
       }
     },
     "en-GB": {
@@ -273,8 +273,8 @@
     "es-419": {
       "translatorIds": [],
       "progress": {
-        "approval": 66,
-        "translation": 66
+        "approval": 64,
+        "translation": 64
       }
     },
     "es-ES": {
@@ -283,8 +283,8 @@
         "13524864"
       ],
       "progress": {
-        "approval": 75,
-        "translation": 75
+        "approval": 72,
+        "translation": 72
       }
     },
     "fi": {
@@ -301,8 +301,8 @@
         "17322000"
       ],
       "progress": {
-        "approval": 100,
-        "translation": 100
+        "approval": 97,
+        "translation": 97
       }
     },
     "hi": {
@@ -319,8 +319,8 @@
         "15734961"
       ],
       "progress": {
-        "approval": 64,
-        "translation": 64
+        "approval": 62,
+        "translation": 62
       }
     },
     "hu": {
@@ -335,8 +335,8 @@
         "15258052"
       ],
       "progress": {
-        "approval": 100,
-        "translation": 100
+        "approval": 97,
+        "translation": 97
       }
     },
     "it": {
@@ -353,8 +353,8 @@
         "14469636"
       ],
       "progress": {
-        "approval": 36,
-        "translation": 36
+        "approval": 35,
+        "translation": 35
       }
     },
     "ko": {
@@ -366,8 +366,8 @@
         "17372204"
       ],
       "progress": {
-        "approval": 68,
-        "translation": 68
+        "approval": 66,
+        "translation": 66
       }
     },
     "lt": {
@@ -384,8 +384,8 @@
         "14730100"
       ],
       "progress": {
-        "approval": 100,
-        "translation": 100
+        "approval": 97,
+        "translation": 97
       }
     },
     "no": {
@@ -396,8 +396,8 @@
         "16831061"
       ],
       "progress": {
-        "approval": 68,
-        "translation": 68
+        "approval": 66,
+        "translation": 66
       }
     },
     "pl": {
@@ -406,8 +406,8 @@
         "17146676"
       ],
       "progress": {
-        "approval": 73,
-        "translation": 73
+        "approval": 71,
+        "translation": 71
       }
     },
     "pt-BR": {
@@ -416,8 +416,8 @@
         "17099634"
       ],
       "progress": {
-        "approval": 67,
-        "translation": 67
+        "approval": 65,
+        "translation": 65
       }
     },
     "ro": {
@@ -426,8 +426,8 @@
         "15627125"
       ],
       "progress": {
-        "approval": 100,
-        "translation": 100
+        "approval": 97,
+        "translation": 97
       }
     },
     "ru": {
@@ -438,8 +438,8 @@
         "12500432"
       ],
       "progress": {
-        "approval": 100,
-        "translation": 100
+        "approval": 97,
+        "translation": 97
       }
     },
     "sv-SE": {
@@ -455,8 +455,8 @@
         "16240978"
       ],
       "progress": {
-        "approval": 77,
-        "translation": 77
+        "approval": 75,
+        "translation": 75
       }
     },
     "tr": {
@@ -465,8 +465,8 @@
         "14391214"
       ],
       "progress": {
-        "approval": 100,
-        "translation": 100
+        "approval": 97,
+        "translation": 97
       }
     },
     "uk": {
@@ -476,8 +476,8 @@
         "17096866"
       ],
       "progress": {
-        "approval": 67,
-        "translation": 67
+        "approval": 65,
+        "translation": 65
       }
     },
     "vi": {
@@ -486,8 +486,8 @@
         "16061216"
       ],
       "progress": {
-        "approval": 73,
-        "translation": 73
+        "approval": 71,
+        "translation": 71
       }
     },
     "zh-CN": {
@@ -495,8 +495,8 @@
         "12485887"
       ],
       "progress": {
-        "approval": 100,
-        "translation": 100
+        "approval": 97,
+        "translation": 97
       }
     },
     "zh-TW": {

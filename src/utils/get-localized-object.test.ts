@@ -10,11 +10,11 @@ import { describe, expect, it } from 'vitest';
 
 describe('getLocalizedObject', () => {
   const mockTranslator: TranslatorFunction = (lng) => `mock.key.${lng}`;
-  const mockNameLocalizationMap = SUPPORTED_LANGUAGES.reduce((mockObject, language) => language === DEFAULT_LANGUAGE ? mockObject : ({
+  const mockNameLocalizationMap = SUPPORTED_LANGUAGES.reduce((mockObject, language) => ({
     ...mockObject,
     [language]: `mock.key.${language.toLowerCase()}`,
   }), {} as SupportedLocalizations);
-  const mockDescriptionLocalizationMap = SUPPORTED_LANGUAGES.reduce((mockObject, language) => language === DEFAULT_LANGUAGE ? mockObject : ({
+  const mockDescriptionLocalizationMap = SUPPORTED_LANGUAGES.reduce((mockObject, language) => ({
     ...mockObject,
     [language]: `mock.key.${language}`,
   }), {} as SupportedLocalizations);

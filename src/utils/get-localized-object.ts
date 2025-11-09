@@ -23,9 +23,6 @@ export function getLocalizedObject<Key extends LocalizedKey>(key: Key, translato
     ...baseObject,
     [localizationsKey]: SUPPORTED_LANGUAGES.reduce((localizations, locale) => {
       let value = translator(locale);
-      if (value === defaultValue) {
-        return localizations;
-      }
 
       if (sanitize && key === 'name') {
         // Automatically replace unsupported characters with dash and make all-lowercase

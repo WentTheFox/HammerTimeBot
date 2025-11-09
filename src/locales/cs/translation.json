@@ -198,8 +198,9 @@
         "invalidDate": "Zadané datum je neplatné (například: daný den neexistuje)",
         "noComponentsCurrentTime": "Musíte zadat alespoň jednu časovou jednotku, kterou chcete změnit. Pokud potřebujete aktuální čas, použijte `/{{atCommand}}` bez zadání argumentů",
         "noComponentsUnix": "Musíte zadat alespoň jednu časovou jednotku, kterou chcete změnit. Pokud chcete získat syntaxe pro časové razítko systému UNIX, použijte `/{{unixCommand}}`",
-        "timezoneNotFound": "Zadané časové pásmo nelze nalézt",
-        "unexpectedError": "There was an unexpected error while processing this interaction"
+        "unexpectedError": "There was an unexpected error while processing this interaction",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

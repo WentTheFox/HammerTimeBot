@@ -198,8 +198,9 @@
         "invalidDate": "Den angitte datoen er ugyldig (for eksempel: den angitte dagen finnes ikke)",
         "noComponentsCurrentTime": "Du må angi minst én tidskomponent som skal endres. Hvis du trenger gjeldende klokkeslett, bruker du `/{{atCommand}}` uten å spesifisere noen argumenter",
         "noComponentsUnix": "Du må angi minst én tidskomponent som skal endres. Hvis du vil ha syntaksen for et UNIX-tidsstempel, bruker du `/{{unixCommand}}`",
-        "timezoneNotFound": "Den angitte tidssonen ble ikke funnet",
-        "unexpectedError": "Det skjedde en uventet feil mens handlingen ble prosessert"
+        "unexpectedError": "Det skjedde en uventet feil mens handlingen ble prosessert",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

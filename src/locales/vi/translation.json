@@ -198,8 +198,9 @@
         "invalidDate": "Ngày đã chỉ định không hợp lệ (ví dụ: ngày đã cho không tồn tại)",
         "noComponentsCurrentTime": "Bạn phải chỉ định ít nhất một thành phần thời gian để thay đổi. Nếu bạn cần thời gian hiện tại, hãy sử dụng `/{{atCommand}}` mà không chỉ định bất kỳ đối số nào",
         "noComponentsUnix": "Bạn phải chỉ định ít nhất một thành phần thời gian để thay đổi. Nếu bạn muốn lấy cú pháp cho một UNIX timestamp, hãy sử dụng `/{{unixCommand}}`",
-        "timezoneNotFound": "Múi giờ đã chỉ định không thể tìm thấy",
-        "unexpectedError": "Đã xảy ra lỗi hiếm gặp trong quá trình xử lý câu lệnh"
+        "unexpectedError": "Đã xảy ra lỗi hiếm gặp trong quá trình xử lý câu lệnh",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

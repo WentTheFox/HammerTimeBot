@@ -198,8 +198,9 @@
         "invalidDate": "Podana data jest nieprawidłowa (na przykład: podany dzień nie istnieje)",
         "noComponentsCurrentTime": "Należy podać przynajmniej jeden składnik czasu do zmiany. Jeżeli potrzebny jest aktualny czas, należy użyć `/{{atCommand}}` bez podawania argumentów",
         "noComponentsUnix": "Musisz określić co najmniej jeden składnik czasu do zmiany. Jeśli chcesz uzyskać składnię dla UNIX-owego znacznika czasu, użyj `/{{unixCommand}}`",
-        "timezoneNotFound": "Nie można znaleźć podanej strefy czasowej",
-        "unexpectedError": "Podczas przetwarzania tej interakcji wystąpił nieoczekiwany błąd"
+        "unexpectedError": "Podczas przetwarzania tej interakcji wystąpił nieoczekiwany błąd",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

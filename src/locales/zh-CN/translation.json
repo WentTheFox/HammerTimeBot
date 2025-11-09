@@ -198,8 +198,9 @@
         "invalidDate": "指定的日期无效（例如：给定的日期不存在）",
         "noComponentsCurrentTime": "您必须指定至少一个要更改的时间数值。若要显示当前时间，请不带任何参数使用 `/{{atCommand}}`。",
         "noComponentsUnix": "您必须指定至少一个要更改的时间数值。若要获取某个UNIX时间戳的语法，请使用 `/{{unixCommand}}`。",
-        "timezoneNotFound": "找不到指定的时区",
-        "unexpectedError": "处理您的请求时出现了未知错误"
+        "unexpectedError": "处理您的请求时出现了未知错误",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

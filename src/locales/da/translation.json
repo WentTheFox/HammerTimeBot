@@ -198,8 +198,9 @@
         "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
         "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
         "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
-        "timezoneNotFound": "The specified timezone cannot be found",
-        "unexpectedError": "There was an unexpected error while processing this interaction"
+        "unexpectedError": "There was an unexpected error while processing this interaction",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

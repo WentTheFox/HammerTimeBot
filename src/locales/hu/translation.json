@@ -198,8 +198,9 @@
         "invalidDate": "A megadott dátum érvénytelen (például: az adott nap nem létezik)",
         "noComponentsCurrentTime": "Legalább egy időegységet meg kell adnod a módosításhoz. Ha az aktuális időre van szükséged, használd ezt a parancsot paraméterek nélkül: `/{{atCommand}}`",
         "noComponentsUnix": "Legalább egy időegységet meg kell adnod a módosításhoz. Ha egy UNIX időbélyegző kódját szeretnéd megkapni, használd ezt a parancsot: `/{{unixCommand}}`",
-        "timezoneNotFound": "A megadott időzóna nem található",
-        "unexpectedError": "Váratlan hiba történt az interakció feldolgozása során"
+        "unexpectedError": "Váratlan hiba történt az interakció feldolgozása során",
+        "unsupportedTimezone": "A megadott időzóna ({{timezone}}) nem támogatott",
+        "changeTimezoneSetting": "Az időbélyegek generálásának módja a szerveren nemrég megváltozott. Ha korábban ez működött, akkor a `/{{settingsCommand}}` paranccsal frissítened kell a beállításaidat."
       },
       "options": {
         "format": {

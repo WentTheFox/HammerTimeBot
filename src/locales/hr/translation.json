@@ -198,8 +198,9 @@
         "invalidDate": "Navedeni datum je nevažeći (na primjer: navedeni dan ne postoji)",
         "noComponentsCurrentTime": "Morate navesti barem jednu vremensku komponentu za promjenu. Ako vam je potrebno trenutno vrijeme, koristite `/{{atCommand}}` bez navođenja argumenata",
         "noComponentsUnix": "Morate navesti barem jednu vremensku komponentu za promjenu. Ako želite dobiti sintaksu za UNIX vremensku oznaku, koristite `/{{unixCommand}}`",
-        "timezoneNotFound": "Navedena vremenska zona ne može se pronaći",
-        "unexpectedError": "There was an unexpected error while processing this interaction"
+        "unexpectedError": "There was an unexpected error while processing this interaction",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {

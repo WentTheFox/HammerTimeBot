@@ -83,8 +83,8 @@
           "description": "Καθορίστε την ώρα (προεπιλογή η τρέχουσα ώρα)"
         },
         "hour12": {
-          "name": "hour12",
-          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
+          "name": "12ωρο",
+          "description": "Καθορίστε την ώρα χρησιμοποιώντας το ρολόι 12 ωρών (προεπιλογή στην τρέχουσα ώρα)"
         },
         "minute": {
           "name": "λεπτό",
@@ -95,21 +95,21 @@
           "description": "Καθορίστε το δευτερόλεπτο (προεπιλογή το 0)"
         },
         "am": {
-          "name": "am",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          "name": "Π.Μ.",
+          "description": "Με την επιλογή, η ώρα πρέπει να είναι μεταξύ 1 και 12 και θα ερμηνεύεται ως Π.Μ. (προ μεσημβρίας)."
         },
         "pm": {
-          "name": "pm",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
+          "name": "Μ.Μ.",
+          "description": "Με την επιλογή, η ώρα πρέπει να είναι μεταξύ 1 και 12 και θα ερμηνεύεται ως Μ.Μ. (μετά μεσημβρίας)."
         }
       },
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
-        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem in provided in the hour option",
-        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
-        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
-        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
+        "amOrPmOnly": "Δεν μπορείτε να καθορίσετε ταυτόχρονα τις επιλογές Π.Μ. και Μ.Μ.",
+        "meridiemRequired": "Πρέπει να δώσετε την επιλογή Π.Μ. ή Μ.Μ. όταν χρησιμοποιείτε την επιλογή 12ώρου",
+        "noAmOrPmWithMeridiem": "Δεν μπορείτε να καθορίσετε τις επιλογές Π.Μ. ή Μ.Μ. όταν είναι διαθέσιμες ήδη από την επιλογή ώρας",
+        "hourOrHour12Only": "Δεν μπορείτε να καθορίσετε ταυτόχρονα τις επιλογές 12ωρο και ώρα",
+        "hourRange": "Όταν δεν προσδιορίζεται ένα Π.Μ. ή Μ.Μ. , η ώρα πρέπει να είναι ένας αριθμός μεταξύ 0 και 23",
+        "hour12Range": "Όταν ένα Π.Μ. ή Μ.Μ. είναι προσδιορισμένο, η ώρα πρέπει να είναι ένας αριθμός μεταξύ 1 και 12"
       }
     },
     "add": {
@@ -198,8 +198,9 @@
         "invalidDate": "Η καθορισμένη ημερομηνία δεν είναι έγκυρη (για παράδειγμα: η δεδομένη ημέρα δεν υπάρχει)",
         "noComponentsCurrentTime": "Πρέπει να καθορίσετε τουλάχιστον ένα στοιχείο χρόνου προς αλλαγή. Αν χρειάζεστε την τρέχουσα ώρα, χρησιμοποιήστε `/{{atCommand}}` χωρίς να καθορίσετε οποιαδήποτε παραμέτρους",
         "noComponentsUnix": "Πρέπει να καθορίσετε τουλάχιστον ένα στοιχείο χρόνου προς αλλαγή. Αν θέλετε να λάβετε την σύνταξη της εντολής UNIX χρονοσήμανσης, χρησιμοποιήστε `/{{unixCommand}}`",
-        "timezoneNotFound": "Η καθορισμένη ζώνη ώρας δεν μπορεί να βρεθεί",
-        "unexpectedError": "Παρουσιάστηκε ένα απρόσμενο σφάλμα κατά την επεξεργασία αυτής της αλληλεπίδρασης"
+        "unexpectedError": "Παρουσιάστηκε ένα απρόσμενο σφάλμα κατά την επεξεργασία αυτής της αλληλεπίδρασης",
+        "unsupportedTimezone": "Δεν υποστηρίζεται η παρεχόμενη ζώνη ώρας ({{timezone}})",
+        "changeTimezoneSetting": "Ο τρόπος με τον οποίο δημιουργούνται οι χρονοσημάνσεις στον διακομιστή έχει πρόσφατα αλλάξει. Αν αυτό λειτουργούσε πριν, ίσως χρειαστεί να ενημερώσετε τις ρυθμίσεις σας χρησιμοποιώντας την εντολή `/{{settingsCommand}}`."
       },
       "options": {
         "format": {
@@ -247,8 +248,8 @@
         "privacyPolicyLink": "Πολιτική Απορρήτου",
         "recordingTelemetry": "Συλλέγεται τηλεμετρία για αυτή την εντολή, τα αποτελέσματα εκκρεμούν…",
         "telemetryPlaceholder": "Το υπόλοιπο κείμενο είναι μόνο εδώ για να αποτρέψει το μέγεθος του μηνύματος από το να αλλάξει πάρα πολύ όταν τα αποτελέσματα της τηλεμετρίας είναι διαθέσιμα.",
-        "feedbackWanted": "Feedback wanted!",
-        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
+        "feedbackWanted": "Θέλουμε τα σχόλιά σας!",
+        "at12Hint": "Υπάρχουν πλέον πολλές διαφορετικές επιλογές για τον καθορισμό του αριθμού των ωρών, τόσο εντός της εντολής {{slashAt}} (μέσω της υπάρχουσας επιλογής {{hourOptionName}} , η οποία διαθέτει πλέον αυτόματη συμπλήρωση, ή των νέων επιλογών {{hour12OptionName}}, {{amOptionName}} και {{pmOptionName}} ) όσο και της νέας εντολής {{slashAt12}} . Χρησιμοποιήστε όποια σας βολεύει περισσότερο. Στο μέλλον (με βάση τα δεδομένα τηλεμετρίας) θα καθοριστεί ποια από αυτές τις επιλογές θα γίνει μόνιμη."
       }
     },
     "statistics": {
@@ -328,43 +329,43 @@
     },
     "at12": {
       "name": "at12",
-      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
+      "description": "Καθορίστε τα ακριβή στοιχεία της χρονοσήμανσης (με τη χρήση ρολογιού 12 ωρών)",
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option"
+        "amOrPmOnly": "Δεν μπορείτε να καθορίσετε ταυτόχρονα τις επιλογές Π.Μ. και Μ.Μ.",
+        "meridiemRequired": "Πρέπει να δώσετε είτε την επιλογή Π.Μ. είτε την επιλογή Μ.Μ."
       },
       "options": {
         "year": {
-          "name": "year",
-          "description": "Specify the year (defaults to current year)"
+          "name": "έτος",
+          "description": "Καθορίστε το έτος (προεπιλογή το τρέχον έτος)"
         },
         "month": {
-          "name": "month",
-          "description": "Specify the month (defaults to current month)"
+          "name": "μήνας",
+          "description": "Καθορίστε τον μήνα (προεπιλογή ο τρέχον μήνας)"
         },
         "day": {
-          "name": "day",
-          "description": "Specify the day (defaults to current day)"
+          "name": "ημέρα",
+          "description": "Καθορίστε την ημέρα (προεπιλογή η τρέχουσα ημέρα)"
         },
         "hour": {
-          "name": "hour",
-          "description": "Specify the hour (defaults to current hour)"
+          "name": "ώρα",
+          "description": "Καθορίστε την ώρα (προεπιλογή η τρέχουσα ώρα)"
         },
         "minute": {
-          "name": "minute",
-          "description": "Specify the minute (defaults to current minute)"
+          "name": "λεπτό",
+          "description": "Καθορίστε το λεπτό (προεπιλογή το τρέχον λεπτό)"
         },
         "second": {
-          "name": "second",
-          "description": "Specify the second (defaults to 0)"
+          "name": "δευτερόλεπτο",
+          "description": "Καθορίστε το δευτερόλεπτο (προεπιλογή το 0)"
         },
         "am": {
-          "name": "am",
-          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          "name": "Π.Μ.",
+          "description": "Με την επιλογή, η ώρα θα ερμηνεύεται ως Π.Μ. (προ μεσημβρίας, πριν από το μεσημέρι)"
         },
         "pm": {
-          "name": "pm",
-          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          "name": "Μ.Μ.",
+          "description": "Με την επιλογή, η ώρα θα ερμηνεύεται ως Μ.Μ. (μετά μεσημβρίας, μετά το μεσημέρι)"
         }
       }
     }

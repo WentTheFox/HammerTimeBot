@@ -10,6 +10,10 @@ env:
   API_URL: MOCK_API_URL
   API_TOKEN: MOCK_API_TOKEN
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint-and-test:
     name: 'Building, Linting and Unit Tests'

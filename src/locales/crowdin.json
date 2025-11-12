@@ -155,7 +155,7 @@
     },
     "16240978": {
       "username": "Windsor_911",
-      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/16240978/medium/aaf8e2898e6e7eab5d0fc3b6797a9b61.gif",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/16240978/medium/0c4cea7930705aee45dfd286db7a10a8.png",
       "fullName": "Suthipong Masopmao"
     },
     "16303638": {
@@ -271,10 +271,12 @@
       }
     },
     "es-419": {
-      "translatorIds": [],
+      "translatorIds": [
+        "14524626"
+      ],
       "progress": {
         "approval": 64,
-        "translation": 64
+        "translation": 69
       }
     },
     "es-ES": {
@@ -456,7 +458,7 @@
       ],
       "progress": {
         "approval": 75,
-        "translation": 75
+        "translation": 100
       }
     },
     "tr": {

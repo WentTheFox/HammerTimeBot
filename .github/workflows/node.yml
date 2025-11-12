@@ -44,7 +44,7 @@ jobs:
         run: npm ci --ignore-scripts
 
       - name: Re-generate translation credits
-        run: npm run predev:translation-credits
+        run: npm run prestart:dev
         env:
           CROWDIN_API_KEY: ${{ secrets.CROWDIN_API_KEY }}
           CROWDIN_PROJECT_IDENTIFIER: ${{ vars.CROWDIN_PROJECT_IDENTIFIER }}

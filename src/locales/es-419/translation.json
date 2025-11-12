@@ -96,16 +96,16 @@
         },
         "am": {
           "name": "am",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          "description": "Cuendo es Verdadero, la hora debe estar entre 1 y 12 y será interpretada como AM (ante meridiem)"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
+          "description": "Cuendo es Verdadero, la hora debe estar entre 1 y 12 y será interpretada como PM (post meridiem)"
         }
       },
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
+        "amOrPmOnly": "No puedes especificar opciones am y pm al mismo tiempo",
+        "meridiemRequired": "Debes proporcionar la opción am o pm cuando usas la opción hour12",
         "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem in provided in the hour option",
         "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
         "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",

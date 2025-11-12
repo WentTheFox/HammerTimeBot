@@ -104,12 +104,12 @@
         }
       },
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
-        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem in provided in the hour option",
-        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
-        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
-        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
+        "amOrPmOnly": "คุณไม่สามารถระบุตัวเลือก am และ pm พร้อมกันได้ในเวลาเดียวกัน",
+        "meridiemRequired": "คุณต้องระบุตัวเลือก am หรือ pm อย่างใดอย่างหนึ่งเมื่อใช้ตัวเลือกเวลาแบบ12ชั่วโมง",
+        "noAmOrPmWithMeridiem": "คุณไม่สามารถระบุตัวเลือก am หรือ pm ได้ เมื่อมีการระบุค่า เมอริเดียม ไว้แล้วในตัวเลือกชั่วโมง",
+        "hourOrHour12Only": "คุณไม่สามารถระบุตัวเลือกชั่วโมง และแบบ12ชั่วโมง พร้อมกันได้ในเวลาเดียวกัน",
+        "hourRange": "เมื่อไม่ได้ระบุค่าเมอริเดียม (Am หรือ Pm) ค่าชั่วโมงต้องเป็นตัวเลขระหว่าง 0 ถึง 23",
+        "hour12Range": "เมื่อมีการระบุค่าเมอริเดียม (Am หรือ Pm) ค่าชั่วโมงต้องเป็นตัวเลขระหว่าง 1 ถึง 12"
       }
     },
     "add": {
@@ -199,8 +199,8 @@
         "noComponentsCurrentTime": "คุณต้องระบุองค์ประกอบเวลาอย่างน้อยหนึ่งรายการเพื่อเปลี่ยนแปลง หากคุณต้องการเวลาปัจจุบัน ให้ใช้ `/{{atCommand}}` โดยไม่ต้องระบุข้อมูลใดๆ",
         "noComponentsUnix": "คุณต้องระบุองค์ประกอบเวลาอย่างน้อยหนึ่งรายการเพื่อเปลี่ยนแปลง หากคุณต้องการรับไวยากรณ์สำหรับเวลา UNIX ให้ใช้ `/{{unixCommand}}`",
         "unexpectedError": "เกิดข้อผิดพลาดที่ไม่คาดคิดระหว่างดำเนินการ",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "unsupportedTimezone": "เขตเวลาที่ระบุไว้ ({{timezone}}) ไม่รองรับ",
+        "changeTimezoneSetting": "วิธีการสร้างค่าตราประทับเวลาบนเซิร์ฟเวอร์มีการเปลี่ยนแปลงเมื่อไม่นานมานี้ หากก่อนหน้านี้ใช้งานได้ตามปกติ คุณอาจต้องอัปเดตการตั้งค่าของคุณโดยใช้คำสั่ง /{{settingsCommand}}"
       },
       "options": {
         "format": {
@@ -249,7 +249,7 @@
         "recordingTelemetry": "กำลังรวบรวมข้อมูลการวัดผลการใช้งาน สำหรับคำสั่งนี้ ผลลัพธ์กำลังรอการดำเนินการ…",
         "telemetryPlaceholder": "ส่วนที่เหลือของข้อความนี้มีไว้เพื่อป้องกันไม่ให้ขนาดข้อความเปลี่ยนแปลงมากเกินไปเมื่อมีผลการบันทึกข้อมูลการวัดผลการใช้งาน",
         "feedbackWanted": "พวกเราต้องการความคิดเห็นจากคุณ!",
-        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
+        "at12Hint": "ขณะนี้มีตัวเลือกหลายแบบสำหรับการระบุจำนวนชั่วโมง ทั้งภายในคำสั่ง {{slashAt}} (ผ่านตัวเลือก {{hourOptionName}} ที่มีระบบเติมคำอัตโนมัติแล้วในตอนนี้ รวมถึงตัวเลือกใหม่ {{hour12OptionName}}, {{amOptionName}} และ {{pmOptionName}}) และคำสั่งใหม่ {{slashAt12}}\nคุณสามารถเลือกใช้วิธีใดก็ได้ที่คุณสะดวกมากที่สุด ความนิยมของแต่ละวิธี (อ้างอิงจากข้อมูล Telemetry) จะเป็นตัวกำหนดว่าตัวเลือกใดจะถูกทำให้เป็นแบบถาวรในอนาคต"
       }
     },
     "statistics": {
@@ -329,43 +329,43 @@
     },
     "at12": {
       "name": "at12",
-      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
+      "description": "ระบุองค์ประกอบของค่าตราประทับเวลาอย่างละเอียด (โดยใช้ระบบเวลาแบบ 12 ชั่วโมง)",
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option"
+        "amOrPmOnly": "คุณไม่สามารถระบุตัวเลือก am และ pm พร้อมกันได้ในเวลาเดียวกัน",
+        "meridiemRequired": "คุณต้องระบุตัวเลือก am หรือ pm อย่างใดอย่างหนึ่ง"
       },
       "options": {
         "year": {
-          "name": "year",
-          "description": "Specify the year (defaults to current year)"
+          "name": "ปี",
+          "description": "ระบุปี (ค่าเริ่มต้นคือปีปัจจุบัน)"
         },
         "month": {
-          "name": "month",
-          "description": "Specify the month (defaults to current month)"
+          "name": "เดือน",
+          "description": "ระบุเดือน (ค่าเริ่มต้นคือเดือนปัจจุบัน)"
         },
         "day": {
-          "name": "day",
-          "description": "Specify the day (defaults to current day)"
+          "name": "วัน",
+          "description": "ระบุวัน (ค่าเริ่มต้นคือวันนี้)"
         },
         "hour": {
-          "name": "hour",
-          "description": "Specify the hour (defaults to current hour)"
+          "name": "ชั่วโมง",
+          "description": "ระบุชั่วโมง (ค่าเริ่มต้นคือชั่วโมงนี้)"
         },
         "minute": {
-          "name": "minute",
-          "description": "Specify the minute (defaults to current minute)"
+          "name": "นาที",
+          "description": "ระบุนาที (ค่าเริ่มต้นคือนาทีนี้)"
         },
         "second": {
-          "name": "second",
-          "description": "Specify the second (defaults to 0)"
+          "name": "วินาที",
+          "description": "ระบุวินาที (ค่าเริ่มต้นคือ 0)"
         },
         "am": {
-          "name": "am",
-          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          "name": "เวลาก่อนเที่ยง",
+          "description": "เมื่อค่าเป็นจริง ชั่วโมงจะถูกตีความว่าเป็นช่วงเวลาก่อนเที่ยง (am — ก่อนเที่ยง)"
         },
         "pm": {
-          "name": "pm",
-          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          "name": "เวลาหลังเที่ยง",
+          "description": "เมื่อค่าเป็นจริง ชั่วโมงจะถูกตีความว่าเป็นช่วงหลังเที่ยง (pm — หลังเที่ยง)"
         }
       }
     }

@@ -213,6 +213,8 @@
             "T": "heure complète",
             "f": "date et heure",
             "F": "jour, date et heure",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "relatif",
             "all": "complet (par défaut)"
           }

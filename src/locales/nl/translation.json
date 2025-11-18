@@ -213,6 +213,8 @@
             "T": "uren, minuten en seconden",
             "f": "datum en tijd",
             "F": "dag, datum en tijd",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "relatief",
             "all": "alles (standaard)"
           }

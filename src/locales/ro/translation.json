@@ -213,6 +213,8 @@
             "T": "timp lung",
             "f": "data și simpu",
             "F": "ziua săptămânii, data și ora",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "relativ",
             "all": "toate (implicit)"
           }

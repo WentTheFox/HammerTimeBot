@@ -213,6 +213,8 @@
             "T": "ora estesa",
             "f": "data e ora",
             "F": "giorno della settimana, data e ora",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "relativo",
             "all": "tutti (predefinito)"
           }

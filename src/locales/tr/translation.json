@@ -213,6 +213,8 @@
             "T": "uzun zaman",
             "f": "tarih ve zaman",
             "F": "haftanın günü, tarih ve saat",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "göreceli",
             "all": "tümü (varsayılan)"
           }

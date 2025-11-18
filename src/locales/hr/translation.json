@@ -213,6 +213,8 @@
             "T": "duže vrijeme",
             "f": "datum i vrijeme",
             "F": "radni dan, datum i vrijeme",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "relativno",
             "all": "all (default)"
           }

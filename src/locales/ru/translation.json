@@ -213,6 +213,8 @@
             "T": "long time",
             "f": "date and time",
             "F": "weekday, date and time",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "relative",
             "all": "все (по умолчанию)"
           }

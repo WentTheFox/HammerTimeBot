@@ -9,6 +9,10 @@ export enum MessageTimestampFormat {
   LONG_DATE = 'D',
   /** @example `Wednesday, 18 August 2021 09:52` */
   LONG_FULL = 'F',
+  /** @example `18/08/2021 09:52` */
+  SHORT_COMPACT = 's',
+  /** @example `18/08/2021 09:52:00` */
+  LONG_COMPACT = 'S',
   /** @example `8 minutes ago` */
   RELATIVE = 'R',
   /** @example `09:52:00` */
@@ -21,6 +25,8 @@ export const validFormatsSet = new Set<MessageTimestampFormat>([
   MessageTimestampFormat.SHORT_TIME,
   MessageTimestampFormat.LONG_DATE,
   MessageTimestampFormat.LONG_FULL,
+  MessageTimestampFormat.LONG_COMPACT,
+  MessageTimestampFormat.SHORT_COMPACT,
   MessageTimestampFormat.RELATIVE,
   MessageTimestampFormat.LONG_TIME,
 ]);

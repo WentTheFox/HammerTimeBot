@@ -213,6 +213,8 @@
             "T": "waktu yang lama",
             "f": "tanggal dan waktu",
             "F": "hari kerja, tanggal dan waktu",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "relatif",
             "all": "semua (bawaan)"
           }

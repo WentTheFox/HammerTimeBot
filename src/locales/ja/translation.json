@@ -83,8 +83,8 @@
           "description": "時間を指定（デフォルト：現在の時間）"
         },
         "hour12": {
-          "name": "hour12",
-          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
+          "name": "12時間",
+          "description": "12時間制で時間を指定してください（デフォルトは現在の時刻です）"
         },
         "minute": {
           "name": "minute",
@@ -95,18 +95,18 @@
           "description": "秒を指定（デフォルト：0）"
         },
         "am": {
-          "name": "am",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          "name": "午前",
+          "description": "Trueの場合、時間は1時から12時の間でなければならず、午前（ante meridiem）として解釈されます"
         },
         "pm": {
-          "name": "pm",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
+          "name": "午後",
+          "description": "Trueの場合、時間は1から12の間でなければならず、午後（午後）として解釈されます"
         }
       },
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
-        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem in provided in the hour option",
+        "amOrPmOnly": "午前と午後の両方のオプションを同時に指定することはできません",
+        "meridiemRequired": "12進法のオプションを使用する際は、am または pm オプションのいずれかを指定する必要があります",
+        "noAmOrPmWithMeridiem": "時刻オプションに午前/午後が指定されている場合、am/pmオプションを別途指定することはできません",
         "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
         "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
         "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
@@ -213,6 +213,8 @@
             "T": "長い時刻",
             "f": "日付と時間",
             "F": "曜日、日付と時間",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "相対的",
             "all": "all (default)"
           }

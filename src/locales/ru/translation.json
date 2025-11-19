@@ -199,8 +199,8 @@
         "noComponentsCurrentTime": "Необходимо указать изменение как минимум одной величины. Если вас интересует нынешнее время, используйте `/{{atCommand}}` без каких либо аргументов",
         "noComponentsUnix": "Необходимо указать изменение как минимум одной величины. Если вас интересует синтаксис временной метки UNIX, используйте `/{{unixCommand}}`",
         "unexpectedError": "При обработке этого действия произошла непредвиденная ошибка",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "unsupportedTimezone": "Указанный часовой пояс ({{timezone}}) не поддерживается",
+        "changeTimezoneSetting": "Способ генерации временных меток на сервере недавно изменился. Если раньше это работало, то возможно вам потребуется обновить настройки с помощью команды `/{{settingsCommand}}`."
       },
       "options": {
         "format": {
@@ -213,6 +213,8 @@
             "T": "long time",
             "f": "date and time",
             "F": "weekday, date and time",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "relative",
             "all": "все (по умолчанию)"
           }

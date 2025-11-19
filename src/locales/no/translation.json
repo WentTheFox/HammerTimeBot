@@ -213,6 +213,8 @@
             "T": "lang tid",
             "f": "dato og klokkeslett",
             "F": "hverdag, dato og klokkeslett",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "relativ",
             "all": "alle (standard)"
           }

@@ -213,6 +213,8 @@
             "T": "długi czas",
             "f": "data i czas",
             "F": "dzień tygodnia, data i godzina",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "względna",
             "all": "wszystkie (domyślnie)"
           }

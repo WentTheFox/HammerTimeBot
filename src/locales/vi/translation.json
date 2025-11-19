@@ -213,6 +213,8 @@
             "T": "thời gian dài",
             "f": "ngày và thời gian",
             "F": "thứ trong tuần, ngày và thời gian",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "tương đối",
             "all": "tất cả (mặc định)"
           }

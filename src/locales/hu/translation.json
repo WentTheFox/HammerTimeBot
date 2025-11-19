@@ -213,6 +213,8 @@
             "T": "hosszú idő",
             "f": "dátum és idő",
             "F": "hét napja, dátum és idő",
+            "s": "rövid dátum és rövid idő",
+            "S": "rövid dátum és hosszú idő",
             "R": "viszonylagos",
             "all": "összes (alapértelmezett)"
           }

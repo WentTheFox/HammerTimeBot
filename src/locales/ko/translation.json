@@ -213,6 +213,8 @@
             "T": "긴 시간",
             "f": "날짜 및 시간",
             "F": "평일, 날짜 그리고 시간",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "상대적",
             "all": "all (default)"
           }

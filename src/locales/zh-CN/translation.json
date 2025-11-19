@@ -213,6 +213,8 @@
             "T": "长时间",
             "f": "日期与时间",
             "F": "星期几，日期与时间",
+            "s": "short date and short time",
+            "S": "short date and long time",
             "R": "相对",
             "all": "全部（默认）"
           }

@@ -62,7 +62,7 @@ export const gmtTimezoneOptions = [
 export const defaultHourOptions = Array.from({ length: 24 }, (_, i) => String(i));
 export const defaultHour12Options = Array.from({ length: 12 }, (_, i) => String(i + 1));
 
-export const gmtZoneRegex = /^(?:GMT|UTC)([+-]\d+)?(?::([0-5]\d?)?)?$/i;
+export const gmtZoneRegex = /^(?:(Etc\\?\/)?(?:GMT|UTC))?\+?(-?\d+)(?::?(\d{1,2})?)?$/i;
 
 export const getGmtTimezoneValue = (gmtTimezone: string, fallbackHours = NaN): UtcOffset => {
   const match = gmtTimezone.match(gmtZoneRegex);
@@ -70,13 +70,15 @@ export const getGmtTimezoneValue = (gmtTimezone: string, fallbackHours = NaN): U
     return new UtcOffset(fallbackHours);
   }
 
+  const [, etcPrefix, hoursString, minutesString] = match;
+  const hoursMultiplier = etcPrefix ? -1 : 1;
   let hours = 0;
   let minutes = 0;
-  if (match[1]) {
-    hours = parseInt(match[1], 10);
+  if (hoursString) {
+    hours = parseInt(hoursString, 10) * hoursMultiplier;
   }
-  if (match[2]) {
-    minutes = parseInt(pad(match[2], 2, PadDirection.RIGHT), 10);
+  if (minutesString) {
+    minutes = parseInt(pad(minutesString, 2, PadDirection.RIGHT), 10);
   }
   return new UtcOffset(hours, minutes);
 };
@@ -141,7 +143,7 @@ export const findTimezone = (value: string): string[] => {
     switch (onlyNumbersInputAfterColon.length) {
       case 0:
         results.slice().some(result => {
-          if (result.length >= 25) {
+          if (results.length >= 25) {
             return true;
           }
           for (let i = 1; i < 6; i += 1) {

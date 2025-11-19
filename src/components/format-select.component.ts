@@ -15,6 +15,8 @@ const getFormatSelectOptions = (t: TFunction, emojiIdMap: Record<string, string>
     MessageTimestampFormat.LONG_TIME,
     MessageTimestampFormat.SHORT_FULL,
     MessageTimestampFormat.LONG_FULL,
+    MessageTimestampFormat.SHORT_COMPACT,
+    MessageTimestampFormat.LONG_COMPACT,
     MessageTimestampFormat.RELATIVE,
   ].map((value) => {
     const emojiName = `format${value}`;

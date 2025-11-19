@@ -214,6 +214,11 @@
       "username": "smillle",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17372204/medium/90fb3a134c7782ca49dff2de6f0dc337.jpeg",
       "fullName": "정규민"
+    },
+    "17429540": {
+      "username": "yuuuyu",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17429540/medium/7b7795e161913d3a385d07d9c9bff04c.png",
+      "fullName": "ゆううゆ"
     }
   },
   "languages": {
@@ -233,8 +238,8 @@
         "15193976"
       ],
       "progress": {
-        "approval": 62,
-        "translation": 62
+        "approval": 61,
+        "translation": 61
       }
     },
     "da": {
@@ -250,8 +255,8 @@
         "16756819"
       ],
       "progress": {
-        "approval": 100,
-        "translation": 100
+        "approval": 99,
+        "translation": 99
       }
     },
     "el": {
@@ -303,8 +308,8 @@
         "17322000"
       ],
       "progress": {
-        "approval": 97,
-        "translation": 97
+        "approval": 100,
+        "translation": 100
       }
     },
     "hi": {
@@ -321,8 +326,8 @@
         "15734961"
       ],
       "progress": {
-        "approval": 62,
-        "translation": 62
+        "approval": 61,
+        "translation": 61
       }
     },
     "hu": {
@@ -337,8 +342,8 @@
         "15258052"
       ],
       "progress": {
-        "approval": 97,
-        "translation": 97
+        "approval": 96,
+        "translation": 96
       }
     },
     "it": {
@@ -352,11 +357,12 @@
     },
     "ja": {
       "translatorIds": [
-        "14469636"
+        "14469636",
+        "17429540"
       ],
       "progress": {
-        "approval": 35,
-        "translation": 35
+        "approval": 42,
+        "translation": 42
       }
     },
     "ko": {
@@ -368,8 +374,8 @@
         "17372204"
       ],
       "progress": {
-        "approval": 66,
-        "translation": 66
+        "approval": 65,
+        "translation": 65
       }
     },
     "lt": {
@@ -386,8 +392,8 @@
         "14730100"
       ],
       "progress": {
-        "approval": 97,
-        "translation": 97
+        "approval": 96,
+        "translation": 96
       }
     },
     "no": {
@@ -398,8 +404,8 @@
         "16831061"
       ],
       "progress": {
-        "approval": 66,
-        "translation": 66
+        "approval": 65,
+        "translation": 65
       }
     },
     "pl": {
@@ -408,8 +414,8 @@
         "17146676"
       ],
       "progress": {
-        "approval": 71,
-        "translation": 71
+        "approval": 70,
+        "translation": 70
       }
     },
     "pt-BR": {
@@ -418,8 +424,8 @@
         "17099634"
       ],
       "progress": {
-        "approval": 65,
-        "translation": 65
+        "approval": 64,
+        "translation": 64
       }
     },
     "ro": {
@@ -428,8 +434,8 @@
         "15627125"
       ],
       "progress": {
-        "approval": 97,
-        "translation": 97
+        "approval": 100,
+        "translation": 100
       }
     },
     "ru": {
@@ -440,8 +446,8 @@
         "12500432"
       ],
       "progress": {
-        "approval": 97,
-        "translation": 97
+        "approval": 99,
+        "translation": 99
       }
     },
     "sv-SE": {
@@ -457,8 +463,8 @@
         "16240978"
       ],
       "progress": {
-        "approval": 100,
-        "translation": 100
+        "approval": 99,
+        "translation": 99
       }
     },
     "tr": {
@@ -467,8 +473,8 @@
         "14391214"
       ],
       "progress": {
-        "approval": 97,
-        "translation": 97
+        "approval": 96,
+        "translation": 96
       }
     },
     "uk": {
@@ -478,8 +484,8 @@
         "17096866"
       ],
       "progress": {
-        "approval": 65,
-        "translation": 65
+        "approval": 64,
+        "translation": 64
       }
     },
     "vi": {
@@ -488,8 +494,8 @@
         "16061216"
       ],
       "progress": {
-        "approval": 71,
-        "translation": 71
+        "approval": 70,
+        "translation": 70
       }
     },
     "zh-CN": {
@@ -497,8 +503,8 @@
         "12485887"
       ],
       "progress": {
-        "approval": 97,
-        "translation": 97
+        "approval": 96,
+        "translation": 96
       }
     },
     "zh-TW": {

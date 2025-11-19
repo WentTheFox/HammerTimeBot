@@ -54,7 +54,9 @@ English and Hungarian translations have been included, so no translators will be
 - 🇮🇳 Hindi: [Balajiasli](https://crowdin.com/profile/Balajiasli)
 - 🇮🇩 Indonesian: [Jackie](https://github.com/Jckcr)
 - 🇮🇹 Italian: [RVG|𝓵𝓸𝓻𝔂](https://top.gg/bot/1076200668810985634)
-- 🇯🇵 Japanese: [Phrygia](https://github.com/sjkim04)
+- 🇯🇵 Japanese
+  - [Phrygia](https://github.com/sjkim04)
+  - [ゆううゆ](https://crowdin.com/profile/yuuuyu)
 - 🇰🇷 Korean
   - [Bin](https://crowdin.com/profile/cheesepickle12345678)
   - [Phrygia](https://github.com/sjkim04)

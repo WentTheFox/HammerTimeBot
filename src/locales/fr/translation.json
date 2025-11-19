@@ -199,8 +199,8 @@
         "noComponentsCurrentTime": "Vous devez indiquer au moins un élément temporel à modifier. Si vous avez besoin du temps actuel, utilisez `/{{atCommand}}` sans indiquer d'arguments",
         "noComponentsUnix": "Vous devez indiquer au moins un élément temporel à modifier. Si vous voulez avoir la syntaxe d'un horodatage UNIX, utilisez `/{{unixCommand}}`",
         "unexpectedError": "Une erreur inattendue s'est produite lors du traitement de l'interaction",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "unsupportedTimezone": "Le fuseau horaire renseigné ({{timezone}}) n'est pas pris en charge",
+        "changeTimezoneSetting": "La façon dont les horodatages sont générés sur le serveur a récemment changé. Si cela fonctionnait auparavant, vous devrez peut-être mettre à jour vos paramètres en utilisant la commande `/{{settingsCommand}}`."
       },
       "options": {
         "format": {
@@ -213,8 +213,8 @@
             "T": "heure complète",
             "f": "date et heure",
             "F": "jour, date et heure",
-            "s": "short date and short time",
-            "S": "short date and long time",
+            "s": "date courte et heure courte",
+            "S": "date courte et heure longue",
             "R": "relatif",
             "all": "complet (par défaut)"
           }

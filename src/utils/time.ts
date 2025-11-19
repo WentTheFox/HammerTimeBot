@@ -70,8 +70,11 @@ export const getGmtTimezoneValue = (gmtTimezone: string, fallbackHours = NaN): U
     return new UtcOffset(fallbackHours);
   }
 
-  const hours = parseInt(match[1], 10);
+  let hours = 0;
   let minutes = 0;
+  if (match[1]) {
+    hours = parseInt(match[1], 10);
+  }
   if (match[2]) {
     minutes = parseInt(pad(match[2], 2, PadDirection.RIGHT), 10);
   }

@@ -1,5 +1,5 @@
 import { CrowdinLanguage } from './crowdin-api-types.js';
-import { Locale } from 'discord-api-types/rest/common.js';
+import { Locale } from 'discord-api-types/v10';
 import { isAvailableLanguage } from '../../src/constants/language-config.js';
 
 const languageMapping: Record<string, Locale> = {};

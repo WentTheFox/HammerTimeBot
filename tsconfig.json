@@ -8,7 +8,7 @@
     ],
     "incremental": true,
     "tsBuildInfoFile": "./build/.tsbuildinfo",
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "outDir": "build",
@@ -16,7 +16,7 @@
     "sourceMap": true,
     "strict": true,
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "NodeNext",
     "forceConsistentCasingInFileNames": true,
     "plugins": [
       {

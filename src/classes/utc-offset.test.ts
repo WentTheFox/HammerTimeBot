@@ -1,4 +1,4 @@
-import { UtcOffset } from './utc-offset';
+import { UtcOffset } from './utc-offset.js';
 import { describe, expect, it } from 'vitest';
 
 describe('UtcOffset', () => {

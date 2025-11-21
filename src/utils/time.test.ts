@@ -14,7 +14,7 @@ import {
 import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
 import { TimezoneError } from '../classes/timezone-error.js';
 import { ResponseColumnChoices } from '../types/localization.js';
-import { pad } from './numbers';
+import { pad } from './numbers.js';
 import { describe, expect, it } from 'vitest';
 import { TFunction } from 'i18next';
 import { TZDate } from '@date-fns/tz';

@@ -16,10 +16,10 @@ import { crowdinApiRequest } from './helpers/crowdin-api-request.js';
 import { getCrowdinReportData } from './helpers/get-crowdin-report-data.js';
 import { mapCrowdinLanguageToAvailableLanguage } from './helpers/map-crowdin-language-to-available-language.js';
 import { migrateLanguageConfig } from './helpers/migrate-language-config.js';
-import { Locale } from 'discord-api-types/rest/common.js';
+import { Locale } from 'discord-api-types/v10';
 import { fileURLToPath } from 'url';
 
-dotenvConfig();
+dotenvConfig({ quiet: true });
 
 const markerString = '### Credits';
 const readmeFolder = path.join(fileURLToPath(import.meta.url), '..', '..');

@@ -1,8 +1,8 @@
 import path from 'path';
 import { promises as fs } from 'fs';
-import { LanguageConfigV1 } from '../../src/types/legacy';
+import { LanguageConfigV1 } from '../../src/types/legacy.js';
 import { LanguageConfigV2, LatestLanguageConfigType } from '../../src/types/language-config.js';
-import { Locale } from 'discord-api-types/rest/common.js';
+import { Locale } from 'discord-api-types/v10';
 import { TranslationCreditOverride } from '../../src/types/translation-credit-override.js';
 import { reportData } from './crowdin-types.js';
 

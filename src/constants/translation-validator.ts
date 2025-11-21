@@ -1,5 +1,5 @@
 import { Localization } from '../types/localization.js';
-import { Locale } from 'discord-api-types/rest/common.js';
+import { Locale } from 'discord-api-types/v10';
 import type enUS from '../locales/en-US/translation.json';
 import type enGB from '../locales/en-GB/translation.json';
 import type bg from '../locales/bg/translation.json';

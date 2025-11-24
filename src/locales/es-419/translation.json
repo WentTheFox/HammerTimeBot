@@ -106,7 +106,7 @@
       "responses": {
         "amOrPmOnly": "No puedes especificar opciones am y pm al mismo tiempo",
         "meridiemRequired": "Debes proporcionar la opción am o pm cuando usas la opción hour12",
-        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem in provided in the hour option",
+        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
         "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
         "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
         "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"

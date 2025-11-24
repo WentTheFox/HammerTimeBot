@@ -32,7 +32,7 @@
       }
     },
     "in": {
-      "name": "v",
+      "name": "za",
       "description": "Zadání časového razítka v budoucnosti vzhledem k aktuálnímu času",
       "responses": {},
       "options": {
@@ -63,7 +63,7 @@
       }
     },
     "at": {
-      "name": "na",
+      "name": "v",
       "description": "Zadejte přesné součásti časového razítka (včetně časového pásma)",
       "options": {
         "year": {
@@ -83,8 +83,8 @@
           "description": "Zadejte hodiny (výchozí hodnota je aktuální hodina)"
         },
         "hour12": {
-          "name": "hour12",
-          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
+          "name": "hodina12",
+          "description": "Zadejte hodiny pomocí 12-hodinových hodin (výchozí hodnota je aktuální hodina)"
         },
         "minute": {
           "name": "minuta",
@@ -95,21 +95,21 @@
           "description": "Zadejte vteřiny (výchozí hodnota je 0)"
         },
         "am": {
-          "name": "am",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          "name": "dop.",
+          "description": "Pokud je hodnota pravdivá, hodina musí být v rozmezí 1 až 12 a bude vykládána jako čas dopoledne"
         },
         "pm": {
-          "name": "pm",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
+          "name": "odp.",
+          "description": "Pokud je hodnota pravdivá, hodina musí být v rozmezí 1 až 12 a bude vykládána jako čas odpoledne"
         }
       },
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
-        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem in provided in the hour option",
-        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
-        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
-        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
+        "amOrPmOnly": "Nesmíte zadat zároveň možnost dop. a odp.",
+        "meridiemRequired": "Musíte zadat buď možnost dop. nebo odp. při užití možnosti hodina12",
+        "noAmOrPmWithMeridiem": "Nesmíte zadat možnosti dop. a odp., pokud je již zadaná v možnosti hodina",
+        "hourOrHour12Only": "Nesmíte zadat zároveň možnost hodina a hodina12",
+        "hourRange": "Hodina musí být v rozmezí 0 až 23, pokud nejsou možnosti dop. a odp. nikde zadány",
+        "hour12Range": "Hodina musí být v rozmezí 1 až 12, pokud jsou možnosti dop. a odp. zadány"
       }
     },
     "add": {
@@ -184,7 +184,7 @@
     },
     "unix": {
       "name": "unix",
-      "description": "Zobrazení syntaxe pro konkrétní časové razítko systému UNIX",
+      "description": "Zobrazení zápisu pro konkrétní časové razítko systému UNIX",
       "responses": {},
       "options": {
         "value": {
@@ -197,10 +197,10 @@
       "responses": {
         "invalidDate": "Zadané datum je neplatné (například: daný den neexistuje)",
         "noComponentsCurrentTime": "Musíte zadat alespoň jednu časovou jednotku, kterou chcete změnit. Pokud potřebujete aktuální čas, použijte `/{{atCommand}}` bez zadání argumentů",
-        "noComponentsUnix": "Musíte zadat alespoň jednu časovou jednotku, kterou chcete změnit. Pokud chcete získat syntaxe pro časové razítko systému UNIX, použijte `/{{unixCommand}}`",
-        "unexpectedError": "There was an unexpected error while processing this interaction",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "noComponentsUnix": "Musíte zadat alespoň jednu časovou jednotku, kterou chcete změnit. Pokud chcete získat zápis pro časové razítko systému UNIX, použijte `/{{unixCommand}}`",
+        "unexpectedError": "Při zpracování této interakce došlo k neočekávané chybě",
+        "unsupportedTimezone": "Zadané časové pásmo ({{timezone}}) není podporováno",
+        "changeTimezoneSetting": "Způsob generování časových razítek na serveru byl nedávno změněn. Pokud toto dříve fungovalo, může být potřeba aktualizovat vaše nastavení pomocí příkazu `/{{settingsCommand}}`."
       },
       "options": {
         "format": {
@@ -209,23 +209,23 @@
           "choices": {
             "d": "krátké datum",
             "D": "dlouhé datum",
-            "t": "krátká doba",
-            "T": "dlouhá doba",
+            "t": "krátký čas",
+            "T": "dlouhý čas",
             "f": "datum a čas",
             "F": "den v týdnu, datum a čas",
-            "s": "short date and short time",
-            "S": "short date and long time",
+            "s": "krátké datum a krátký čas",
+            "S": "krátké datum a dlouhý čas",
             "R": "relativní",
-            "all": "all (default)"
+            "all": "vše (výchozí)"
           }
         },
         "columns": {
           "name": "sloupce",
-          "description": "Určení sloupců, které se mají zobrazit ve vrácené odpovědi",
+          "description": "Určete, které sloupce se mají zobrazit v navrácené odpovědi",
           "choices": {
-            "both": "jak syntaxe, tak náhled",
+            "both": "zároveň zápis i náhled",
             "preview": "pouze náhled",
-            "syntax": "pouze syntaxe"
+            "syntax": "pouze zápis"
           }
         },
         "ephemeral": {
@@ -242,38 +242,38 @@
         }
       },
       "components": {
-        "replyWithSpecificFormat": "Select a format below to receive it in a reply (for copying on touch devices)",
-        "incompleteTranslations": "Translations are incomplete",
-        "contributeTranslations": "Contribute",
-        "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
-        "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
-        "privacyPolicyLink": "Privacy Policy",
-        "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
-        "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
-        "feedbackWanted": "Feedback wanted!",
-        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
+        "replyWithSpecificFormat": "Níže vyberte formát, který chcete obdržet v odpovědi (pro snadné kopírování na dotykových zařízeních)",
+        "incompleteTranslations": "Překlad není úplný",
+        "contributeTranslations": "Přispět",
+        "telemetryThankYou": "Děkujeme, že jste přispěli telemetrickými daty, která napomáhájí dalšímu vývoji bota. Podrobnosti naleznete v {{privacyPolicy}}.",
+        "telemetryInfoCount": "Toto je provedení č. {{executionNumber}} příkazu {{command}} (od zahájení počítání).",
+        "privacyPolicyLink": "Zásady ochrany osobních údajů",
+        "recordingTelemetry": "Probíhá sběr telemetrie pro tento příkaz, čeká se na výsledky…",
+        "telemetryPlaceholder": "Zbytek tohoto textu je zde pouze proto, aby se velikost zprávy příliš neměnila ve chvíli, kdy budou výsledky telemetrického záznamu k dispozici.",
+        "feedbackWanted": "Žádáme o zpětnou vazbu!",
+        "at12Hint": "Momentálně existuje několik různých způsobů, jak zadat počet hodin, a to jak v rámci příkazu {{slashAt}} (prostřednictvím stávající možnosti {{hourOptionName}}, která nyní podporuje našeptávání, nebo pomocí nových možností {{hour12OptionName}}, {{amOptionName}} a {{pmOptionName}}), tak i v novém příkazu {{slashAt12}}. Použijte ten, který vám vyhovuje nejvíce. To, jak budou jednotlivé způsoby populární (podle telemetrických dat), určí, která z daných možností zůstane natrvalo."
       }
     },
     "statistics": {
       "name": "statistiky",
-      "description": "Zobrazuje různé informace o botovi",
+      "description": "Zobrazení různých informací o botovi",
       "options": {},
       "responses": {
         "totalServerCount": "Celkový počet připojených serverů:",
-        "shardServerCount": "Servery na tomto střepu:",
-        "uptime": "Doba spuštění střepu:",
+        "shardServerCount": "Počet serverů na tomto střepu:",
+        "uptime": "Čas spuštění střepu:",
         "shardCount": "Počet střepů:",
         "shardNumber": "(Tyto statistiky byly vygenerovány střepem #{{shardId}})",
-        "noShards": "(Bot v současné době nepoužívá štěpení na střepy)",
-        "serverInvite": "Adresa URL pro pozvání na server podpory:",
+        "noShards": "(Bot v současné době nepoužívá rozštěpení databáze)",
+        "serverInvite": "URL pozvánka na server podpory:",
         "totalUserCount": "Celkový počet uživatelů na připojených serverech:",
-        "supportedLanguages": "Supported languages:",
-        "crowdinProject": "Crowdin project URL:"
+        "supportedLanguages": "Počet podporovaných jazyků:",
+        "crowdinProject": "URL Crowdin projektu:"
       }
     },
     "snowflake": {
       "name": "snowflake",
-      "description": "Zobrazení syntaxe pro časové razítko Snowflaku (většina ID je součástí Discordu)",
+      "description": "Zobrazení zápisu pro časové razítko Snowflaku (většina ID je součástí Discordu)",
       "responses": {
         "invalidSnowflake": "Zadaný Snowflake je neplatný"
       },
@@ -299,7 +299,7 @@
     },
     "iso": {
       "name": "iso",
-      "description": "Zobrazení syntaxe pro konkrétní časové razítko ISO 8601",
+      "description": "Zobrazení zápisu pro konkrétní časové razítko ISO 8601",
       "responses": {
         "invalidIsoFormat": "Poskytnutá hodnota neodpovídá normě ISO 8601"
       },
@@ -319,55 +319,55 @@
     },
     "settings": {
       "name": "nastavení",
-      "description": "Vytvořte odkaz pro správu nastavení prostřednictvím webu",
+      "description": "Vytvoření odkazu pro správu nastavení skrze web",
       "responses": {
         "linkCreated": "Navštivte prosím níže uvedený odkaz, abyste byli automaticky přihlášeni na webové stránky bota a mohli změnit svá nastavení.\n<{{magicLink}}>\nTento odkaz vyprší {{expiresAt}}, avšak vždy můžete spustit tento příkaz znovu pro vygenerování nového odkazu nebo navštívit <{{loginUrl}}> přihlásit se ručně, poté přejít na <{{settingsUrl}}> a změnit svá nastavení tam.",
         "failedToCreateLink": "Nepodařilo se vygenerovat odkaz, který by vás automaticky přihlásil, navštivte prosím <{{loginUrl}}> a přihlaste se ručně, poté přejděte na <{{settingsUrl}}> a změňte nastavení tam."
       },
       "options": {},
       "components": {
-        "openSettingsButton": "Bot Settings"
+        "openSettingsButton": "Nastavení bota"
       }
     },
     "at12": {
-      "name": "at12",
-      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
+      "name": "v12",
+      "description": "Zadejte přesné součásti časového razítka (pomocí 12-hodinových hodin)",
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option"
+        "amOrPmOnly": "Nesmíte zadat zároveň možnost dop. a odp.",
+        "meridiemRequired": "Musíte zadat buď možnost dop. nebo odp."
       },
       "options": {
         "year": {
-          "name": "year",
-          "description": "Specify the year (defaults to current year)"
+          "name": "rok",
+          "description": "Zadejte rok (výchozí hodnota je aktuální rok)"
         },
         "month": {
-          "name": "month",
-          "description": "Specify the month (defaults to current month)"
+          "name": "měsíc",
+          "description": "Zadejte měsíc (výchozí hodnota je aktuální měsíc)"
         },
         "day": {
-          "name": "day",
-          "description": "Specify the day (defaults to current day)"
+          "name": "den",
+          "description": "Zadejte den (výchozí hodnota je aktuální den)"
         },
         "hour": {
-          "name": "hour",
-          "description": "Specify the hour (defaults to current hour)"
+          "name": "hodina",
+          "description": "Zadejte hodiny (výchozí hodnota je aktuální hodina)"
         },
         "minute": {
-          "name": "minute",
-          "description": "Specify the minute (defaults to current minute)"
+          "name": "minuta",
+          "description": "Zadejte minuty (výchozí hodnota je aktuální minuta)"
         },
         "second": {
-          "name": "second",
-          "description": "Specify the second (defaults to 0)"
+          "name": "vteřina",
+          "description": "Zadejte vteřiny (výchozí hodnota je 0)"
         },
         "am": {
-          "name": "am",
-          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          "name": "dop.",
+          "description": "Pokud je hodnota pravdivá, hodina bude vykládána jako čas dopoledne"
         },
         "pm": {
-          "name": "pm",
-          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          "name": "odp.",
+          "description": "Pokud je hodnota pravdivá, hodina bude vykládána jako čas odpoledne"
         }
       }
     }

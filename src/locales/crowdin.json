@@ -57,8 +57,8 @@
     },
     "14744332": {
       "username": "okunamayanad",
-      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/14744332/medium/0cbbb2ef7f1e01e5433f7019b457f2a9.png",
-      "fullName": "Baran Moroğan"
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/14744332/medium/6e527a469ab3a9e1dc5b877fb4152f2f.png",
+      "fullName": "Baran Mordoğan"
     },
     "14830652": {
       "username": "leo0six",
@@ -219,6 +219,11 @@
       "username": "yuuuyu",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17429540/medium/7b7795e161913d3a385d07d9c9bff04c.png",
       "fullName": "ゆううゆ"
+    },
+    "17472692": {
+      "username": "ServiceAide",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17472692/medium/ddfdb92f56ab8f343a47ee204b14dafd.jpeg",
+      "fullName": "Its Me Lol"
     }
   },
   "languages": {
@@ -287,11 +292,12 @@
     "es-ES": {
       "translatorIds": [
         "14524626",
-        "13524864"
+        "13524864",
+        "17472692"
       ],
       "progress": {
         "approval": 72,
-        "translation": 72
+        "translation": 100
       }
     },
     "fi": {
@@ -399,13 +405,13 @@
     "no": {
       "translatorIds": [
         "16406120",
-        "17105460",
         "17322000",
+        "17105460",
         "16831061"
       ],
       "progress": {
         "approval": 65,
-        "translation": 65
+        "translation": 66
       }
     },
     "pl": {
@@ -474,7 +480,7 @@
       ],
       "progress": {
         "approval": 96,
-        "translation": 96
+        "translation": 100
       }
     },
     "uk": {

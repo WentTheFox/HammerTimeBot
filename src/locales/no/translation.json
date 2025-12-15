@@ -338,23 +338,23 @@
       },
       "options": {
         "year": {
-          "name": "year",
+          "name": "år",
           "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "month",
+          "name": "måned",
           "description": "Spesifiser måneden (standarden settes til denne måneden)"
         },
         "day": {
-          "name": "day",
+          "name": "dag",
           "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "hour",
+          "name": "time",
           "description": "Specify the hour (defaults to current hour)"
         },
         "minute": {
-          "name": "minute",
+          "name": "minutt",
           "description": "Specify the minute (defaults to current minute)"
         },
         "second": {

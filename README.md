@@ -84,9 +84,11 @@ English and Hungarian translations have been included, so no translators will be
   - [Nikita Sharikov](https://crowdin.com/profile/Aligatoor)
   - [Vladimir](https://crowdin.com/profile/bill876)
 - 🇪🇸 Spanish
+  - [Its Me Lol](https://crowdin.com/profile/ServiceAide)
   - [Street Dog](https://crowdin.com/profile/streetdog.arg)
   - [Yareaj](https://github.com/Yareaj/)
 - 🇲🇽 Spanish, Latin America
+  - [MrCRACK](https://crowdin.com/profile/MrCRACK)
   - [Street Dog](https://crowdin.com/profile/streetdog.arg)
   - [Yareaj](https://github.com/Yareaj/)
 - 🇹🇭 Thai

@@ -18,6 +18,7 @@ import { MessageFlags } from 'discord-api-types/v10';
 import { interactionReply } from './interaction-reply.js';
 import { InteractionHandlerContext, LoggerContext, UserInteractionContext } from '../types/bot-interaction.js';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
+import { timeZoneAliases } from './time-zone-aliases.js';
 
 type UserFriendCode = `@${string}` | `${string}#${string}`;
 export const getUserFriendCode = (user: User): UserFriendCode => {
@@ -154,7 +155,10 @@ export const handleTimezoneAutocomplete = async (interaction: AutocompleteIntera
     }
   }
 
-  await interaction.respond(tzNames.slice(0, 25).map(name => ({ name, value: name })));
+  await interaction.respond(tzNames.slice(0, 25).map(name => {
+    const aliasesString = name in timeZoneAliases ? ` (${timeZoneAliases[name as keyof typeof timeZoneAliases].join('/')})` : '';
+    return ({ name: name + aliasesString, value: name });
+  }));
 };
 
 export const handleHourAutocomplete = async (interaction: AutocompleteInteraction) => {

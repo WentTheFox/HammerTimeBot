@@ -22,6 +22,7 @@ import {
   subYears,
 } from 'date-fns';
 import { TZDate } from '@date-fns/tz';
+import { timeZoneAliases } from './time-zone-aliases.js';
 
 export const gmtTimezoneOptions = [
   'GMT',
@@ -92,7 +93,7 @@ const compareGmtStrings = (a: string, b: string) => {
 };
 
 export const getSortedNormalizedTimezoneNames = (): string[] => [
-  ...Intl.supportedValuesOf('timeZone').filter((name) => !/GMT/g.test(name)),
+  ...Intl.supportedValuesOf('timeZone').filter((name) => !name.includes('GMT')),
   ...gmtTimezoneOptions,
 ].sort((a, b) => {
   const isAGmt = gmtZoneRegex.test(a);
@@ -104,19 +105,36 @@ export const getSortedNormalizedTimezoneNames = (): string[] => [
 
 export const timezoneNames = getSortedNormalizedTimezoneNames();
 
-const slashPartRegex = /\/(\w+)$/g;
-export const timezoneIndex: Record<string, string> = timezoneNames.reduce((record, name) => {
+const specialCharRegex = /\/(\w+)$/;
+export const timezoneIndex: Record<string, string[]> = timezoneNames.reduce((record, name) => {
   const lowerName = name.toLowerCase();
   const lowerKeys = [lowerName];
-  const slashPart = lowerName.match(slashPartRegex);
+  const slashPart = lowerName.match(specialCharRegex);
   if (slashPart) {
     lowerKeys.push(slashPart[1]);
   }
-  return {
-    ...record,
-    ...lowerKeys.reduce((part, lowerKey) => ({ ...part, [lowerKey]: name }), {}),
-  };
-}, {});
+  if (name in timeZoneAliases) {
+    timeZoneAliases[name as keyof typeof timeZoneAliases].forEach(alias => {
+      const aliasParts = alias.toLowerCase().split(/\s/g);
+      aliasParts.forEach(aliasPart => {
+        if (typeof aliasPart !== 'undefined' && aliasPart.length > 0) {
+          lowerKeys.push(aliasPart);
+        }
+      });
+    });
+  }
+  return lowerKeys.reduce((part, lowerKey) => {
+    const newAdditions = { [lowerKey]: [...(part[lowerKey] ?? []), name] };
+    if (lowerKey.includes('_')) {
+      const lowerKeyNoUnderscore = lowerKey.replace(/_/g, '');
+      newAdditions[lowerKeyNoUnderscore] = [...(part[lowerKeyNoUnderscore] ?? []), name];
+    }
+    return ({
+      ...part,
+      ...newAdditions,
+    });
+  }, record);
+}, {} as Record<string, string[]>);
 export const hourOptions = defaultHourOptions.reduce((options, hourString) => {
   const optionsWithAmPM = [hourString];
   const hour = parseInt(hourString, 10);
@@ -174,7 +192,7 @@ export const findTimezone = (value: string): string[] => {
   const lowerValue = value.toLowerCase().replace(/\s+/g, '_');
   let candidates: string[] = [];
   if (lowerValue in timezoneIndex) {
-    candidates.push(timezoneIndex[lowerValue]);
+    candidates = [...candidates, ...timezoneIndex[lowerValue]];
   }
 
   const matchingKeys = Object.keys(timezoneIndex).filter((key) => key.includes(lowerValue));
@@ -187,7 +205,10 @@ export const findTimezone = (value: string): string[] => {
       return distanceCache[key];
     };
     const sortedKeys = matchingKeys.sort((a, b) => getCachedDistance(a) - getCachedDistance(b));
-    candidates = Array.from(new Set([...candidates, ...sortedKeys.map(key => timezoneIndex[key])]));
+    candidates = Array.from(new Set([
+      ...candidates,
+      ...sortedKeys.reduce((acc, key) => [...acc, ...timezoneIndex[key]], [] as string[]),
+    ]));
   }
 
   if (candidates.length === 0) {

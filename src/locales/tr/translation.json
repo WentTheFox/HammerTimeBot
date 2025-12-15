@@ -199,8 +199,8 @@
         "noComponentsCurrentTime": "Değiştirmek için en az bir zaman bileşeni belirtmelisiniz. Geçerli saate ihtiyacınız varsa, herhangi bir argüman belirtmeden `/{{atCommand}}` kullanın",
         "noComponentsUnix": "Değiştirmek için en az bir zaman bileşeni belirtmelisiniz. UNIX zaman damgası için sözdizimini almak istiyorsanız, `/{{unixCommand}}`",
         "unexpectedError": "Bu etkileşimi işlerken beklenmeyen bir hata oluştu",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "unsupportedTimezone": "Sağlanan zaman dilimi ({{timezone}}) desteklenmiyor",
+        "changeTimezoneSetting": "Sunucuda zaman damgalarının oluşturulma şekli yakın zamanda değişti. Bu daha önce çalışıyorduysa, `/{{settingsCommand}}` komutunu kullanarak ayarlarınızı güncellemeniz gerekebilir."
       },
       "options": {
         "format": {
@@ -213,8 +213,8 @@
             "T": "uzun zaman",
             "f": "tarih ve zaman",
             "F": "haftanın günü, tarih ve saat",
-            "s": "short date and short time",
-            "S": "short date and long time",
+            "s": "kısa tarih ve kısa zaman",
+            "S": "kısa tarih ve uzun zaman",
             "R": "göreceli",
             "all": "tümü (varsayılan)"
           }

@@ -84,7 +84,7 @@
         },
         "hour12": {
           "name": "hora12",
-          "description": "Especifique la hora utilizando el reloj de 12 horas (por defecto, la hora actual)"
+          "description": "Especifica la hora usando el reloj de 12 horas (por defecto será la hora actual)"
         },
         "minute": {
           "name": "minuto",
@@ -106,10 +106,10 @@
       "responses": {
         "amOrPmOnly": "No puedes especificar opciones am y pm al mismo tiempo",
         "meridiemRequired": "Debes proporcionar la opción am o pm cuando usas la opción hour12",
-        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
-        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
-        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
-        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
+        "noAmOrPmWithMeridiem": "No puedes especificar las opciones am o pm cuando el meridiem ya está incluido en la opción de hora",
+        "hourOrHour12Only": "No puedes especificar las opciones hora y hora12 al mismo tiempo",
+        "hourRange": "Cuando no se especifica un meridiem, la hora debe ser un número entre 0 y 23",
+        "hour12Range": "Cuando se especifica un meridiem, la hora debe ser un número entre 1 y 12"
       }
     },
     "add": {
@@ -199,8 +199,8 @@
         "noComponentsCurrentTime": "Debe especificar al menos un componente de tiempo a cambiar. Si necesita la hora actual, utilice `/{{atCommand}}` sin especificar ningún argumento",
         "noComponentsUnix": "Debe especificar al menos un componente de tiempo a cambiar. Si desea obtener la sintaxis de una marca de tiempo UNIX, utilice `/{{unixCommand}}`",
         "unexpectedError": "Hubo un error inesperado al procesar esta interacción",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "unsupportedTimezone": "La zona horaria proporcionada ({{timezone}}) no es compatible",
+        "changeTimezoneSetting": "La forma en que se generan las marcas de tiempo en el servidor ha cambiado recientemente. Si esto funcionaba antes, es posible que necesites actualizar tu configuración usando el comando `/{{settingsCommand}}`."
       },
       "options": {
         "format": {
@@ -213,8 +213,8 @@
             "T": "hora larga",
             "f": "fecha y hora",
             "F": "día de la semana, fecha y hora",
-            "s": "short date and short time",
-            "S": "short date and long time",
+            "s": "fecha corta y hora corta",
+            "S": "fecha corta y hora larga",
             "R": "relativa",
             "all": "todos (predeterminado)"
           }
@@ -244,14 +244,14 @@
       "components": {
         "replyWithSpecificFormat": "Seleccione un formato debajo para recibirlo en una respuesta (para copiar en dispositivos táctiles)",
         "incompleteTranslations": "Las traducciones están incompletas",
-        "contributeTranslations": "Contribuye",
-        "telemetryThankYou": "Gracias por aportar datos de telemetría, los cuales ayudan al futuro desarrollo del bot. Revisa la {{privacyPolicy}} para más detalles.",
+        "contributeTranslations": "Contribuir",
+        "telemetryThankYou": "Gracias por contribuir datos de telemetría, lo cual ayuda al desarrollo futuro del bot. Consulta la {{privacyPolicy}} para más detalles.",
         "telemetryInfoCount": "Esta es la ejecución #{{executionNumber}} del comando {{command}} (desde que comenzamos a contar).",
         "privacyPolicyLink": "Política de Privacidad",
-        "recordingTelemetry": "Se está recolectando telemetría para este comando, los resultados están pendientes…",
-        "telemetryPlaceholder": "El resto de este texto está aquí solamente para prevenir el tamaño del mensaje cambie demasiado una vez los resultados de telemetría estén disponibles.",
-        "feedbackWanted": "Feedback wanted!",
-        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
+        "recordingTelemetry": "Se está recopilando telemetría para este comando, los resultados están pendientes…",
+        "telemetryPlaceholder": "El resto de este texto solo está aquí para evitar que el tamaño del mensaje cambie demasiado cuando los resultados del registro de telemetría estén disponibles.",
+        "feedbackWanted": "¡Queremos tu opinión!",
+        "at12Hint": "Ahora hay varias opciones diferentes para especificar el número de horas tanto dentro del comando {{slashAt}} (a través de la opción existente {{hourOptionName}} que ahora tiene autocompletado, o las nuevas opciones {{hour12OptionName}}, {{amOptionName}} y {{pmOptionName}}) como el nuevo comando {{slashAt12}}. Usa la que te resulte más cómoda. La popularidad de cada método (basada en los datos de telemetría) determinará cuáles de estas opciones serán permanentes."
       }
     },
     "statistics": {
@@ -267,8 +267,8 @@
         "noShards": "(El bot no utiliza actualmente sharding)",
         "serverInvite": "Invitación al Servidor de Soporte:",
         "totalUserCount": "Total de usuarios en los servidores unidos:",
-        "supportedLanguages": "Idiomas disponibles:",
-        "crowdinProject": "URL del proyecto en Crowdin:"
+        "supportedLanguages": "Idiomas compatibles:",
+        "crowdinProject": "URL del proyecto Crowdin:"
       }
     },
     "snowflake": {
@@ -326,48 +326,48 @@
       },
       "options": {},
       "components": {
-        "openSettingsButton": "Ajustes del Bot"
+        "openSettingsButton": "Configuración del Bot"
       }
     },
     "at12": {
-      "name": "at12",
-      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
+      "name": "en12",
+      "description": "Especifica los componentes exactos de la marca de tiempo (usando un reloj de 12 horas)",
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option"
+        "amOrPmOnly": "No puedes especificar las opciones am y pm al mismo tiempo",
+        "meridiemRequired": "Debes proporcionar la opción am o pm"
       },
       "options": {
         "year": {
           "name": "año",
-          "description": "Specify the year (defaults to current year)"
+          "description": "Especifica el año (por defecto será el año actual)"
         },
         "month": {
           "name": "mes",
-          "description": "Specify the month (defaults to current month)"
+          "description": "Especifica el mes (por defecto será el mes actual)"
         },
         "day": {
           "name": "día",
-          "description": "Specify the day (defaults to current day)"
+          "description": "Especifica el día (por defecto será el día actual)"
         },
         "hour": {
           "name": "hora",
-          "description": "Specify the hour (defaults to current hour)"
+          "description": "Especifica la hora (por defecto será la hora actual)"
         },
         "minute": {
           "name": "minuto",
-          "description": "Specify the minute (defaults to current minute)"
+          "description": "Especifica el minuto (por defecto será el minuto actual)"
         },
         "second": {
           "name": "segundo",
-          "description": "Specify the second (defaults to 0)"
+          "description": "Especifica el segundo (por defecto será 0)"
         },
         "am": {
           "name": "am",
-          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          "description": "Cuando sea Verdadero, la hora se interpretará como am (ante meridiem, antes del mediodía)"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          "description": "Cuando sea Verdadero, la hora se interpretará como pm (post meridiem, después del mediodía)"
         }
       }
     }

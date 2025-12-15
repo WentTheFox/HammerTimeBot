@@ -96,20 +96,20 @@
         },
         "am": {
           "name": "am",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          "description": "Cuando sea True, la hora debe estar entre 1 y 12 y será interpretada como AM (ante meridiem)"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
+          "description": "Cuando sea True, la hora debe estar entre 1 y 12 y será interpretada como PM (post meridiem)"
         }
       },
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
-        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
-        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
-        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
-        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
+        "amOrPmOnly": "No puede seleccionar las opciones AM y PM a la vez",
+        "meridiemRequired": "Debe introducir la opción AM o PM usando uses la opción hora12",
+        "noAmOrPmWithMeridiem": "No puedes introducir las opciones AM o PM cuando ya ha sido especificado en la opción de hora",
+        "hourOrHour12Only": "No puede especificar las opciones hora y hora12 a la vez",
+        "hourRange": "Cuando no se especifique un meridiem, la hora debe ser un número entre 0 y 23",
+        "hour12Range": "Cuando se especifique un meridiem, la hora debe ser un número entre 1 y 12"
       }
     },
     "add": {
@@ -199,8 +199,8 @@
         "noComponentsCurrentTime": "Debe especificar al menos un componente de tiempo a cambiar. Si necesita la hora actual, utilice `/{{atCommand}}` sin especificar ningún argumento",
         "noComponentsUnix": "Debe especificar al menos un componente de tiempo a cambiar. Si desea obtener la sintaxis de una marca de tiempo UNIX, utilice `/{{unixCommand}}`",
         "unexpectedError": "Hubo un error inesperado al procesar esta interacción",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "unsupportedTimezone": "La zona horaria proporcionada ({{timezone}}) no es compatible",
+        "changeTimezoneSetting": "La forma en que se generan las marcas de tiempo en el servidor ha cambiado recientemente. Si esto funcionaba antes, puede que tenga que actualizar su configuración utilizando el comando `/{{settingsCommand}}`."
       },
       "options": {
         "format": {
@@ -213,8 +213,8 @@
             "T": "hora larga",
             "f": "fecha y hora",
             "F": "día de la semana, fecha y hora",
-            "s": "short date and short time",
-            "S": "short date and long time",
+            "s": "fecha corta y hora corta",
+            "S": "fecha corta y hora larga",
             "R": "relativa",
             "all": "todos (predeterminado)"
           }
@@ -250,8 +250,8 @@
         "privacyPolicyLink": "Política de Privacidad",
         "recordingTelemetry": "Se está recolectando telemetría para este comando, los resultados están pendientes…",
         "telemetryPlaceholder": "El resto de este texto está aquí solamente para prevenir el tamaño del mensaje cambie demasiado una vez los resultados de telemetría estén disponibles.",
-        "feedbackWanted": "Feedback wanted!",
-        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
+        "feedbackWanted": "¡Queremos tus comentarios!",
+        "at12Hint": "Ahora existen varias opciones diferentes para especificar el número de horas tanto dentro del comando {{slashAt}} (a través de la opción existente {{hourOptionName}} que ahora tiene autocompletado, o las nuevas opciones {{hour12OptionName}}, {{amOptionName}} y {{pmOptionName}} ) como del nuevo comando {{slashAt12}} . Utilice el que le resulte más cómodo. La popularidad de cada método (basada en los datos de telemetría) determinará cuál de estas opciones se convertirá en permanente."
       }
     },
     "statistics": {
@@ -330,44 +330,44 @@
       }
     },
     "at12": {
-      "name": "at12",
-      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
+      "name": "en12",
+      "description": "Especifique los componentes exactos de la marca de tiempo (usando un formato de 12 horas)",
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option"
+        "amOrPmOnly": "No puede especificar las opciones AM y PM a la vez",
+        "meridiemRequired": "Debe proporcionar la opción AM o PM"
       },
       "options": {
         "year": {
           "name": "año",
-          "description": "Specify the year (defaults to current year)"
+          "description": "Especifique el año (por defecto, será el año actual)"
         },
         "month": {
           "name": "mes",
-          "description": "Specify the month (defaults to current month)"
+          "description": "Especifique el mes (por defecto, será el mes actual)"
         },
         "day": {
           "name": "día",
-          "description": "Specify the day (defaults to current day)"
+          "description": "Especifique el día (por defecto, será el día actual)"
         },
         "hour": {
           "name": "hora",
-          "description": "Specify the hour (defaults to current hour)"
+          "description": "Especifique la hora (por defecto, será la hora actual)"
         },
         "minute": {
           "name": "minuto",
-          "description": "Specify the minute (defaults to current minute)"
+          "description": "Especifique el minuto (por defecto, será el minuto actual)"
         },
         "second": {
           "name": "segundo",
-          "description": "Specify the second (defaults to 0)"
+          "description": "Especifique el segundo (por defecto, será 0)"
         },
         "am": {
           "name": "am",
-          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          "description": "Cuando sea True, la hora será interpretada como AM (ante meridiem, antes del mediodía)"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          "description": "Cuando sea True, la hora será interpretada como PM (post meridiem, después del mediodía)"
         }
       }
     }

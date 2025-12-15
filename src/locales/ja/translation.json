@@ -107,8 +107,8 @@
         "amOrPmOnly": "午前と午後の両方のオプションを同時に指定することはできません",
         "meridiemRequired": "12進法のオプションを使用する際は、am または pm オプションのいずれかを指定する必要があります",
         "noAmOrPmWithMeridiem": "時刻オプションに午前/午後が指定されている場合、am/pmオプションを別途指定することはできません",
-        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
-        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
+        "hourOrHour12Only": "時間指定オプションと12時間形式指定オプションを同時に指定することはできません",
+        "hourRange": "午前・午後が指定されていない場合、時間は0から23までの数値でなければなりません",
         "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
       }
     },

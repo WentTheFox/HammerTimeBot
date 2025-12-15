@@ -88,6 +88,7 @@ English and Hungarian translations have been included, so no translators will be
   - [Street Dog](https://crowdin.com/profile/streetdog.arg)
   - [Yareaj](https://github.com/Yareaj/)
 - 🇲🇽 Spanish, Latin America
+  - [MrCRACK](https://crowdin.com/profile/MrCRACK)
   - [Street Dog](https://crowdin.com/profile/streetdog.arg)
   - [Yareaj](https://github.com/Yareaj/)
 - 🇹🇭 Thai

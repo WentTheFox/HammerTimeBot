@@ -24,7 +24,7 @@
     "discord-api-types": "^0.38.34",
     "discord.js": "^14.23.2",
     "dotenv": "^17.2.3",
-    "i18next": "^25.6.0",
+    "i18next": "^25.7.3",
     "i18next-fs-backend": "^2.6.0",
     "js-levenshtein": "^1.1.6",
     "date-fns": "^4.1.0",

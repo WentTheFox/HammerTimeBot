@@ -46,7 +46,7 @@ English and Hungarian translations have been included, so no translators will be
 - 🇫🇷 French
   - [Cookie Kiro](https://crowdin.com/profile/Cookikui)
   - [Hvalomi](https://crowdin.com/profile/hvalomi)
-  - [Quentin Deborde](https://crowdin.com/profile/Quent12b0)
+  - [Quent12b0](https://crowdin.com/profile/Quent12b0)
 - 🇩🇪 German
   - [Fabian9799](https://crowdin.com/profile/Fabian9799)
   - [Maximilian](https://crowdin.com/profile/maxlengert12051)

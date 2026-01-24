@@ -47,7 +47,7 @@
       "fullName": "Pablo"
     },
     "14531480": {
-      "username": "SkyStorage_",
+      "username": "uxirq",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/14531480/medium/0b26cb0dbb2b20b7615fa67d8f847ba5.png"
     },
     "14730100": {
@@ -227,6 +227,11 @@
       "username": "ServiceAide",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17472692/medium/ddfdb92f56ab8f343a47ee204b14dafd.jpeg",
       "fullName": "Its Me Lol"
+    },
+    "17517330": {
+      "username": "bartschliam",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17517330/medium/47957956e3b905d55e2157bebefd504d.jpeg",
+      "fullName": "Liam Bartsch"
     }
   },
   "languages": {
@@ -260,6 +265,7 @@
     "de": {
       "translatorIds": [
         "13020288",
+        "17517330",
         "16756819"
       ],
       "progress": {

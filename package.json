@@ -10,7 +10,7 @@
     "build": "tsc",
     "build:clean": "rimraf build",
     "start": "node ./build/src/index.js",
-    "prestart:dev": "tsx ./utils/translation-credits",
+    "generate-translation-credits": "tsx ./utils/translation-credits",
     "start:dev": "npm run build:clean && npm run build && npm run start",
     "test": "vitest",
     "test:watch": "vitest --watch",

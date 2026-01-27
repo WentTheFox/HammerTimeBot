@@ -1,0 +1,5 @@
+* text=auto eol=lf
+
+crowdin*.json merge=ours
+
+/.github export-ignore

@@ -46,9 +46,10 @@ English and Hungarian translations have been included, so no translators will be
 - 🇫🇷 French
   - [Cookie Kiro](https://crowdin.com/profile/Cookikui)
   - [Hvalomi](https://crowdin.com/profile/hvalomi)
-  - [Quentin Deborde](https://crowdin.com/profile/Quent12b0)
+  - [Quent12b0](https://crowdin.com/profile/Quent12b0)
 - 🇩🇪 German
   - [Fabian9799](https://crowdin.com/profile/Fabian9799)
+  - [Liam Bartsch](https://crowdin.com/profile/bartschliam)
   - [Maximilian](https://crowdin.com/profile/maxlengert12051)
 - 🇬🇷 Greek: [Belle Bernice](https://crowdin.com/profile/BelleBernice)
 - 🇮🇳 Hindi: [Balajiasli](https://crowdin.com/profile/Balajiasli)
@@ -60,7 +61,7 @@ English and Hungarian translations have been included, so no translators will be
 - 🇰🇷 Korean
   - [Bin](https://crowdin.com/profile/cheesepickle12345678)
   - [Phrygia](https://github.com/sjkim04)
-  - [SkyStorage\_](https://crowdin.com/profile/SkyStorage_)
+  - [uxirq](https://crowdin.com/profile/uxirq)
   - [미르냥](https://crowdin.com/profile/Mirnyang)
   - [정규민](https://crowdin.com/profile/smillle)
 - 🇱🇹 Lithuanian: [Trent](https://crowdin.com/profile/nothingness)

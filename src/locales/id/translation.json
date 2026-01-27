@@ -199,8 +199,8 @@
         "noComponentsCurrentTime": "Anda harus menentukan setidaknya satu komponen waktu untuk diubah. Jika Anda membutuhkan waktu saat ini, gunakan `/{{atCommand}}` tanpa menentukan argumen apa pun",
         "noComponentsUnix": "Anda harus menentukan setidaknya satu komponen waktu untuk diubah. Jika Anda ingin mendapatkan sintaks untuk stempel waktu UNIX, gunakan `/{{unixCommand}}`",
         "unexpectedError": "Terjadi kesalahan tak terduga saat memproses interaksi ini",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "unsupportedTimezone": "Zona waktu yang diberikan ({{timezone}}) tidak didukung",
+        "changeTimezoneSetting": "Cara pembuatan stempel waktu di server baru-baru ini berubah. Jika sebelumnya berfungsi, Anda mungkin perlu memperbarui pengaturan Anda menggunakan perintah `/{{settingsCommand}}`."
       },
       "options": {
         "format": {
@@ -213,8 +213,8 @@
             "T": "waktu yang lama",
             "f": "tanggal dan waktu",
             "F": "hari kerja, tanggal dan waktu",
-            "s": "short date and short time",
-            "S": "short date and long time",
+            "s": "tanggal singkat dan waktu singkat",
+            "S": "tanggal singkat dan waktu lama",
             "R": "relatif",
             "all": "semua (bawaan)"
           }

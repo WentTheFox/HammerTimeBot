@@ -106,7 +106,7 @@ interface CreateTFunctionOptions {
   guild: { preferredLocale?: string } | undefined | null;
 }
 
-const createTFunction = ({ i18next, ephemeral, locale, guild }: CreateTFunctionOptions) => {
+export const createTFunction = ({ i18next, ephemeral, locale, guild }: CreateTFunctionOptions) => {
   return i18next.getFixedT(
     // Always use user's locale for ephemeral responses, otherwise use server's preferred locale when available
     ephemeral

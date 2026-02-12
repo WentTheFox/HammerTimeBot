@@ -15,7 +15,7 @@ import { SettingsValue } from './settings.js';
 import { formatSelectComponent } from '../components/format-select.component.js';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
 import { InteractionContext } from '../types/bot-interaction.js';
-import { addIncompleteTranslationsFooter } from './interaction-reply.js';
+import { addIncompleteTranslationsFooter, createCommandMention } from './interaction-reply.js';
 import { getTelemetryPlaceholder } from './add-telemetry-note-to-reply.js';
 import { TZDate } from '@date-fns/tz';
 import { isValid } from 'date-fns';
@@ -111,11 +111,7 @@ export const getSyntaxReplyOptions = async ({
     ],
   };
   if (!formatInput) {
-    // TODO Looks like this hangs all shards other than 0, get this from Bot API instead
-    const at12CommandMention = typeof context.commandIdMap.at12 !== 'undefined'
-      ? `</at12:${context.commandIdMap.at12}>`
-      : `\`/${t('commands.at12.name')}\``;
-    replyOptions = addIncompleteTranslationsFooter(t, interaction, {
+    replyOptions = addIncompleteTranslationsFooter(context, interaction, {
       ...replyOptions,
       components: [
         {
@@ -131,8 +127,8 @@ export const getSyntaxReplyOptions = async ({
           {
             type: ComponentType.TextDisplay,
             content: `-# ${EmojiCharacters.INFO} ${t('commands.global.components.at12Hint', {
-              slashAt: `</${interaction.commandName}:${interaction.commandId}>`,
-              slashAt12: at12CommandMention,
+              slashAt: createCommandMention('at', context),
+              slashAt12: createCommandMention('at12', context),
               hourOptionName: `\`${t('commands.at.options.hour.name')}\``,
               hour12OptionName: `\`${t('commands.at.options.hour12.name')}\``,
               amOptionName: `\`${t('commands.at.options.am.name')}\``,

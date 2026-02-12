@@ -31,9 +31,7 @@ export const agoCommand: BotChatInputCommand = {
     if (!atLeastOneNonZeroKey(options)) {
       await interactionReply(context, interaction, {
         content: t('commands.global.responses.noComponentsCurrentTime', {
-          replace: {
-            atCommand: t('commands.at.name'),
-          },
+          atCommand: 'at',
         }),
         flags: MessageFlags.Ephemeral,
       });

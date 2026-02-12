@@ -11,11 +11,16 @@ export const DEFAULT_LANGUAGE = Locale.EnglishUS;
 export const CROWDIN_PROJECT_URL = `https://crowdin.com/project/${env.CROWDIN_PROJECT_IDENTIFIER}`;
 
 const localesPath = join('.', 'src', 'locales');
+let i18nextInitPromise: Promise<typeof i18next> | null = null;
 
 export const initI18next = async (logger: NestableLogger): Promise<i18n> => {
+  if (i18nextInitPromise !== null) {
+    return i18nextInitPromise;
+  }
+
   logger.log('Initializing i18n');
 
-  await i18next.use(Backend).init({
+  i18nextInitPromise = i18next.use(Backend).init({
     lng: DEFAULT_LANGUAGE,
     fallbackLng: DEFAULT_LANGUAGE,
     debug: env.DEBUG_I18N,
@@ -26,7 +31,9 @@ export const initI18next = async (logger: NestableLogger): Promise<i18n> => {
     interpolation: {
       escapeValue: false,
     },
-  });
+    overloadTranslationOptionHandler: () => ({}),
+    showSupportNotice: false,
+  }).then(() => i18next);
 
-  return i18next;
+  return await i18nextInitPromise;
 };

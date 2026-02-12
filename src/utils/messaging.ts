@@ -11,12 +11,16 @@ import {
 } from 'discord.js';
 import { AtCommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
 import { SettingsValue } from './settings.js';
-import { TFunction } from 'i18next';
 import { defaultHour12Options, defaultHourOptions, findHours, findTimezone, gmtTimezoneOptions } from './time.js';
 import { TimezoneError } from '../classes/timezone-error.js';
 import { MessageFlags } from 'discord-api-types/v10';
 import { interactionReply } from './interaction-reply.js';
-import { InteractionHandlerContext, LoggerContext, UserInteractionContext } from '../types/bot-interaction.js';
+import {
+  InteractionContext,
+  InteractionHandlerContext,
+  LoggerContext,
+  UserInteractionContext
+} from '../types/bot-interaction.js';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
 import { timeZoneAliases } from './time-zone-aliases.js';
 
@@ -117,7 +121,7 @@ export const findTimezoneOptionValue = async (context: UserInteractionContext, i
         throw e;
       }
       await interactionReply(context, interaction, {
-        content: getUnsupportedTimezoneErrorMessage(timezoneInput, context.t, settings),
+        content: getUnsupportedTimezoneErrorMessage(timezoneInput, context, settings),
         flags: MessageFlags.Ephemeral,
       });
       return e;
@@ -126,16 +130,14 @@ export const findTimezoneOptionValue = async (context: UserInteractionContext, i
   return timezone;
 };
 
-export const getUnsupportedTimezoneErrorMessage = (timezone: string, t: TFunction, settings: SettingsValue): string => {
-    const replyContent = [t('commands.global.responses.unsupportedTimezone', { replace: { timezone } })];
-    if (settings.timezone !== null) {
-      replyContent.push(`${EmojiCharacters.INFO} ${t('commands.global.responses.changeTimezoneSetting', {
-        replace: {
-          settingsCommand: t('commands.settings.name'),
-        }
-      })}`);
-    }
-    return replyContent.join('\n\n');
+export const getUnsupportedTimezoneErrorMessage = (timezone: string, { t }: Pick<InteractionContext, 't'>, settings: SettingsValue): string => {
+  const replyContent = [t('commands.global.responses.unsupportedTimezone', { replace: { timezone } })];
+  if (settings.timezone !== null) {
+    replyContent.push(`${EmojiCharacters.INFO} ${t('commands.global.responses.changeTimezoneSetting', {
+      settingsCommand: 'settings',
+    })}`);
+  }
+  return replyContent.join('\n\n');
 };
 
 export const handleTimezoneAutocomplete = async (interaction: AutocompleteInteraction) => {

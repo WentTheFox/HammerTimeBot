@@ -10,20 +10,21 @@ import {
   SeparatorSpacingSize,
 } from 'discord.js';
 import { getTranslationCompletionData } from '../../utils/helpers/crowdin-types.js';
-import { TFunction } from 'i18next';
 import { env } from '../env.js';
 import { LANGUAGES } from '../constants/language-config.js';
 import { filledBar } from 'string-progressbar';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
 
 import { CROWDIN_PROJECT_URL } from '../constants/locales.js';
-import { UserInteractionContext } from '../types/bot-interaction.js';
+import { InteractionContext, UserInteractionContext } from '../types/bot-interaction.js';
 
-type InteractionReplyOptionsWithComponents = InteractionReplyOptions & { components: Required<InteractionReplyOptions>['components'] };
+type InteractionReplyOptionsWithComponents = InteractionReplyOptions & {
+  components: Required<InteractionReplyOptions>['components']
+};
 
 const isInteractionReplyOptionsWithComponents = (options: InteractionReplyOptions): options is InteractionReplyOptionsWithComponents => Boolean(options.components);
 
-const upgradeToComponentsV2 = (options: InteractionReplyOptions, commandIdMap: Record<string, string|undefined>): InteractionReplyOptionsWithComponents => {
+const upgradeToComponentsV2 = (options: InteractionReplyOptions, context: Pick<InteractionContext, 't' | 'commandIdMap'>): InteractionReplyOptionsWithComponents => {
   if (isInteractionReplyOptionsWithComponents(options)) {
     return options;
   }
@@ -35,18 +36,28 @@ const upgradeToComponentsV2 = (options: InteractionReplyOptions, commandIdMap: R
     components: [
       {
         type: ComponentType.TextDisplay,
-        content: reformatCommandNamesInContent(content, commandIdMap),
+        content: reformatCommandNamesInContent(content, context),
       },
     ],
   };
 };
 
-export const reformatCommandNamesInContent = (content: string | undefined, commandIdMap: Record<string, string|undefined>) =>
-  content?.replace(/`\/(\S+)`/g, (fullMatchText, commandName) => {
-    return commandName in commandIdMap ? `</${commandName}:${commandIdMap[commandName]}>` : fullMatchText;
-  });
+export const reformatCommandNamesInContent = <T extends string|undefined>(content: T, context: Pick<InteractionContext, 't' | 'commandIdMap'>): T extends string ? string : undefined =>
+  content?.replace(/`\/(\S+)`/g, (_, commandName) => createCommandMention(commandName, context)) as never;
 
-export const addIncompleteTranslationsFooter = (t: TFunction, interaction: CommandInteraction | ChatInputCommandInteraction | ContextMenuCommandInteraction | MessageComponentInteraction, options: InteractionReplyOptionsWithComponents): InteractionReplyOptionsWithComponents => {
+export const createCommandMention = (commandName: string, {
+  t,
+  commandIdMap
+}: Pick<InteractionContext, 't' | 'commandIdMap'>) => {
+  if (typeof commandIdMap[commandName] !== 'undefined') {
+    return `</${commandName}:${commandIdMap[commandName]}>`;
+  }
+  const tKey = `commands.${commandName}.name`;
+  const translatedCommandName = t(tKey);
+  return `\`/${translatedCommandName === tKey ? commandName : translatedCommandName}\``;
+};
+
+export const addIncompleteTranslationsFooter = ({ t }: Pick<InteractionContext, 't'>, interaction: CommandInteraction | ChatInputCommandInteraction | ContextMenuCommandInteraction | MessageComponentInteraction, options: InteractionReplyOptionsWithComponents): InteractionReplyOptionsWithComponents => {
   const translationCompletionData = getTranslationCompletionData(interaction.locale);
   if (typeof translationCompletionData?.approval === 'number' && translationCompletionData.approval < 100 && env.CROWDIN_PROJECT_IDENTIFIER) {
     const crowdinLocale = LANGUAGES[interaction.locale].crowdinLocale ?? interaction.locale;
@@ -82,8 +93,8 @@ export const addIncompleteTranslationsFooter = (t: TFunction, interaction: Comma
   return options;
 };
 
-export const interactionReply = ({ t, commandIdMap }: Pick<UserInteractionContext, 't' | 'commandIdMap'>, interaction: CommandInteraction | ChatInputCommandInteraction | ContextMenuCommandInteraction | MessageComponentInteraction, options: InteractionReplyOptions) => {
-  const upgradedOptions = upgradeToComponentsV2(options, commandIdMap);
-  const optionsWithFooter = addIncompleteTranslationsFooter(t, interaction, upgradedOptions);
+export const interactionReply = (context: Pick<UserInteractionContext, 't' | 'commandIdMap'>, interaction: CommandInteraction | ChatInputCommandInteraction | ContextMenuCommandInteraction | MessageComponentInteraction, options: InteractionReplyOptions) => {
+  const upgradedOptions = upgradeToComponentsV2(options, context);
+  const optionsWithFooter = addIncompleteTranslationsFooter(context, interaction, upgradedOptions);
   return interaction.reply(optionsWithFooter);
 };

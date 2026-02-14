@@ -9,6 +9,7 @@ import { APISeparatorComponent, ComponentType } from 'discord-api-types/v10';
 import { env } from '../env.js';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
 import { emoji, getBareNumberFormatter } from './messaging.js';
+import { createCommandMention } from './interaction-reply.js';
 
 const telemetryPlaceholderSeparator: APISeparatorComponent = {
   type: ComponentType.Separator,
@@ -72,7 +73,7 @@ export const addTelemetryNoteToReply = async (
           '-#',
           telemetryResponse ? context.t('commands.global.components.telemetryInfoCount', {
             executionNumber: numberFormatter.format(telemetryResponse.executionNumber ?? -1),
-            command: `</${telemetryResponse.commandName}:${telemetryResponse.commandId}>`,
+            command: createCommandMention(telemetryResponse.commandName ?? interaction.commandName, context),
           }) : null,
           context.t('commands.global.components.telemetryThankYou', {
             privacyPolicy: `[${context.t('commands.global.components.privacyPolicyLink')}](<${privacyPolicyUrl}>)`,

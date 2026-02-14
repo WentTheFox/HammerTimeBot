@@ -26,8 +26,11 @@
     "strictNullChecks": true,
     "jsx": "react-jsx",
     "paths": {
-      "rollup/parseAst": ["./node_modules/rollup/dist/parseAst"]
-    }
+      "rollup/parseAst": [
+        "./node_modules/rollup/dist/parseAst"
+      ]
+    },
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.ts",

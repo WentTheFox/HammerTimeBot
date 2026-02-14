@@ -32,9 +32,7 @@ export const addCommand: BotChatInputCommand = {
     if (!atLeastOneNonZeroKey(options)) {
       await interactionReply(context, interaction, {
         content: t('commands.global.responses.noComponentsUnix', {
-          replace: {
-            unixCommand: t('commands.unix.name'),
-          },
+          unixCommand: 'unix',
         }),
         flags: MessageFlags.Ephemeral,
       });

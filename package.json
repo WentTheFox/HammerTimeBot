@@ -50,7 +50,7 @@
     "eslint-plugin-i18n-validator": "^0.1.4",
     "eslint-plugin-import": "^2.32.0",
     "globals": "^17.3.0",
-    "jsdom": "^28.0.0",
+    "jsdom": "^28.1.0",
     "nodemon": "^3.1.10",
     "rollup": "^4.52.4",
     "ts-patch": "^3.3.0",

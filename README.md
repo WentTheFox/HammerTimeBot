@@ -36,7 +36,9 @@ English and Hungarian translations have been included, so no translators will be
 - 🇧🇬 Bulgarian
   - [Casper](https://crowdin.com/profile/JajarGG)
   - [Rxshi](https://crowdin.com/profile/Rxshi)
-- 🇨🇳 Chinese Simplified: [User670](https://crowdin.com/profile/User670)
+- 🇨🇳 Chinese Simplified
+  - [Hoshub](https://crowdin.com/profile/Hoshub)
+  - [User670](https://crowdin.com/profile/User670)
 - 🇹🇼 ChineseTW: [Jckcr](https://crowdin.com/profile/jckcr)
 - 🇭🇷 Croatian: [Volvone](https://github.com/volvone)
 - 🇨🇿 Czech
@@ -95,6 +97,7 @@ English and Hungarian translations have been included, so no translators will be
 - 🇹🇭 Thai
   - [Suthipong Masopmao](https://crowdin.com/profile/Windsor_911)
   - [timelessnesses](https://github.com/timelessnesses)
+  - [ปิยาพัชร อินทร์ช่วย](https://crowdin.com/profile/piyaphachrxinthrchwy)
 - 🇹🇷 Turkish
   - [Baran Moroğan](https://crowdin.com/profile/okunamayanad)
   - [tututuana](https://crowdin.com/profile/tututuana)

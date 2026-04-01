@@ -50,6 +50,10 @@
       "username": "uxirq",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/14531480/medium/0b26cb0dbb2b20b7615fa67d8f847ba5.png"
     },
+    "14666868": {
+      "username": "Hoshub",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/14666868/medium/73ecb5c55714b76c7650692c42305bf2_default.png"
+    },
     "14730100": {
       "username": "Jessuh",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/14730100/medium/c819c192ba8d27779598167353cb01ee.png",
@@ -196,7 +200,7 @@
     },
     "17111570": {
       "username": "Gamer_Yaroslaw",
-      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17111570/medium/90104c0bf590e20982b84141dfbca253.jpeg",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17111570/medium/68d0ce231a665f02954ec4777291aa75.jpg",
       "fullName": "Кухарчук Ярослав"
     },
     "17136840": {
@@ -232,6 +236,11 @@
       "username": "bartschliam",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17517330/medium/47957956e3b905d55e2157bebefd504d.jpeg",
       "fullName": "Liam Bartsch"
+    },
+    "17628392": {
+      "username": "piyaphachrxinthrchwy",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17628392/medium/f1552317603b307d011bf358aa21bdbb.jpeg",
+      "fullName": "ปิยาพัชร อินทร์ช่วย"
     }
   },
   "languages": {
@@ -476,11 +485,12 @@
     "th": {
       "translatorIds": [
         "15514192",
-        "16240978"
+        "16240978",
+        "17628392"
       ],
       "progress": {
         "approval": 99,
-        "translation": 99
+        "translation": 100
       }
     },
     "tr": {
@@ -500,8 +510,8 @@
         "17096866"
       ],
       "progress": {
-        "approval": 64,
-        "translation": 64
+        "approval": 73,
+        "translation": 73
       }
     },
     "vi": {
@@ -516,11 +526,12 @@
     },
     "zh-CN": {
       "translatorIds": [
-        "12485887"
+        "12485887",
+        "14666868"
       ],
       "progress": {
-        "approval": 96,
-        "translation": 96
+        "approval": 100,
+        "translation": 100
       }
     },
     "zh-TW": {

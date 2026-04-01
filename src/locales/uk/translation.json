@@ -84,7 +84,7 @@
         },
         "hour12": {
           "name": "hour12",
-          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
+          "description": "Вкажіть годину, використовуючи 12-годинний годинник (за замовчуванням поточна година)"
         },
         "minute": {
           "name": "minute",
@@ -96,7 +96,7 @@
         },
         "am": {
           "name": "am",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          "description": "Якщо значення True, година повинна бути між 1 і 12 і буде інтерпретуватися як AM (ante meridiem)"
         },
         "pm": {
           "name": "pm",
@@ -108,8 +108,8 @@
         "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
         "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
         "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
-        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
-        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
+        "hourRange": "Якщо меридіум не вказано, година має бути числом від 0 до 23",
+        "hour12Range": "Якщо вказано меридіум, година має бути числом від 1 до 12"
       }
     },
     "add": {
@@ -213,7 +213,7 @@
             "T": "довгий формат часу",
             "f": "дата та час",
             "F": "день тижня, дата та час",
-            "s": "short date and short time",
+            "s": "коротка дата і короткий час",
             "S": "short date and long time",
             "R": "відносний",
             "all": "усі (за замовчуванням)"
@@ -247,9 +247,9 @@
         "contributeTranslations": "Зробити внесок",
         "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
         "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
-        "privacyPolicyLink": "Privacy Policy",
-        "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
-        "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
+        "privacyPolicyLink": "Політика конфіденційності",
+        "recordingTelemetry": "Для цієї команди збирається телеметрія, результати очікуються…",
+        "telemetryPlaceholder": "Решта тексту тут лише для того, щоб запобігти надмірній зміні розміру повідомлення, коли будуть доступні результати запису телеметрії.",
         "feedbackWanted": "Feedback wanted!",
         "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
       }

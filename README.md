@@ -1,4 +1,4 @@
-# HammerTimeBot ![Workflow status](https://github.com/DJDavid98/HammerTimeBot/workflows/Build/badge.svg) <a title="Crowdin" target="_blank" href="https://crowdin.com/project/hammertimebot"><img src="https://badges.crowdin.net/hammertimebot/localized.svg" alt=""></a> <a href="https://top.gg/bot/964106782790283295"><img src="https://top.gg/api/widget/servers/964106782790283295.svg" alt=""></a></h1>
+# HammerTimeBot [![Build](https://github.com/WentTheFox/HammerTimeBot/actions/workflows/node.yml/badge.svg)](https://github.com/WentTheFox/HammerTimeBot/actions/workflows/node.yml) <a title="Crowdin" target="_blank" href="https://crowdin.com/project/hammertimebot"><img src="https://badges.crowdin.net/hammertimebot/localized.svg" alt=""></a> <a href="https://top.gg/bot/964106782790283295"><img src="https://top.gg/api/widget/servers/964106782790283295.svg" alt=""></a></h1>
 
 Discord bot written in Node.js (using [discord.js](https://www.npmjs.com/package/discord.js)) for [HammerTime]
 

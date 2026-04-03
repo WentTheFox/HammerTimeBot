@@ -1,3 +1,4 @@
+import { MessageFlags } from 'discord-api-types/v10';
 import {
   ApplicationCommandOptionType,
   AutocompleteInteraction,
@@ -9,20 +10,26 @@ import {
   TopLevelComponent,
   User,
 } from 'discord.js';
-import { AtCommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
-import { SettingsValue } from './settings.js';
-import { defaultHour12Options, defaultHourOptions, findHours, findTimezone, gmtTimezoneOptions } from './time.js';
 import { TimezoneError } from '../classes/timezone-error.js';
-import { MessageFlags } from 'discord-api-types/v10';
-import { interactionReply } from './interaction-reply.js';
+import { EmojiCharacters } from '../constants/emoji-characters.js';
 import {
+  BotMessageComponentType,
   InteractionContext,
   InteractionHandlerContext,
   LoggerContext,
-  UserInteractionContext
+  UserInteractionContext,
 } from '../types/bot-interaction.js';
-import { EmojiCharacters } from '../constants/emoji-characters.js';
+import { AtCommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
+import { interactionReply } from './interaction-reply.js';
+import { SettingsValue } from './settings.js';
 import { timeZoneAliases } from './time-zone-aliases.js';
+import {
+  defaultHour12Options,
+  defaultHourOptions,
+  findHours,
+  findTimezone,
+  gmtTimezoneOptions,
+} from './time.js';
 
 type UserFriendCode = `@${string}` | `${string}#${string}`;
 export const getUserFriendCode = (user: User): UserFriendCode => {
@@ -220,4 +227,14 @@ export const findTextComponentContentsRecursively = (components: TopLevelCompone
 
 export const emoji = (context: Pick<InteractionHandlerContext, 'emojiIdMap'>, name: string, animated = false): string => {
   return `<${animated ? 'a' : ''}:${name}:${context.emojiIdMap[name]}>`;
+};
+
+interface CustomIdSegments {
+  customId: BotMessageComponentType,
+  resourceId: string | undefined;
+}
+
+export const getCustomIdSegments = (customIdInput: string): CustomIdSegments => {
+  const [customId, resourceId] = customIdInput.split(/:/);
+  return { customId: customId as BotMessageComponentType, resourceId };
 };

@@ -1,7 +1,7 @@
 import { APIApplicationCommand, APIApplicationCommandOption } from 'discord-api-types/v10';
 import {
   BotChatInputCommandName,
-  BotMessageComponentCustomId,
+  BotMessageComponentType,
   BotMessageContextMenuCommandName,
 } from './bot-interaction.js';
 import { MessageTimestampFormat } from '../classes/message-timestamp.js';
@@ -161,7 +161,7 @@ interface CommandResponsesMap {
 }
 
 interface ComponentsMap {
-  global: [BotMessageComponentCustomId.FORMAT_SELECT],
+  global: [BotMessageComponentType.FORMAT_SELECT],
   [BotChatInputCommandName.SETTINGS]: ['openSettingsButton'],
 }
 

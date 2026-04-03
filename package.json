@@ -7,6 +7,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint \"{src,utils}/**/*.ts\"",
+    "lint:fix": "npm run lint -- --fix",
     "build": "tsc",
     "build:clean": "rimraf build",
     "start": "node ./build/src/index.js",

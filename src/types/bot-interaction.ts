@@ -1,3 +1,8 @@
+import {
+  ApplicationCommandOptionType,
+  ApplicationCommandType,
+  RESTPostAPIChatInputApplicationCommandsJSONBody,
+} from 'discord-api-types/v10';
 import type {
   APIMessageComponent,
   AutocompleteInteraction,
@@ -7,15 +12,11 @@ import type {
   RESTPostAPIContextMenuApplicationCommandsJSONBody,
 } from 'discord.js';
 import { MessageContextMenuCommandInteraction } from 'discord.js';
-import {
-  ApplicationCommandOptionType,
-  ApplicationCommandType,
-  RESTPostAPIChatInputApplicationCommandsJSONBody,
-} from 'discord-api-types/v10';
 import { i18n, TFunction } from 'i18next';
+import { BotMessageComponentCustomId } from '../utils/interactions/message-components.js';
+import { SettingsValue } from '../utils/settings.js';
 
 import { NestableLogger } from './logger-types.js';
-import { SettingsValue } from '../utils/settings.js';
 
 export const enum BotChatInputCommandName {
   ADD = 'add',
@@ -38,13 +39,16 @@ export const enum BotMessageContextMenuCommandName {
   EXTRACT_TIMESTAMPS = 'Extract Timestamps',
 }
 
-export const enum BotMessageComponentCustomId {
+export const enum BotMessageComponentType {
   FORMAT_SELECT = 'format-select',
+  APPROVE_PROPOSAL = 'approve-proposal',
+  REJECT_PROPOSAL = 'reject-proposal',
 }
 
 export interface LoggerContext {
   logger: NestableLogger;
 }
+
 export interface UserSettingsContext {
   getSettings: () => Promise<SettingsValue>;
 }
@@ -63,26 +67,38 @@ export type UserInteractionContext = InteractionContext & UserSettingsContext;
 
 export type InteractionHandler<T extends BaseInteraction> = (
   interaction: T,
-  context: UserInteractionContext
+  context: UserInteractionContext,
+  resourceId?: string,
 ) => void | Promise<void>;
 
 export interface BotChatInputCommand {
   registerCondition?: () => boolean;
   getDefinition: (t: TFunction) => RESTPostAPIChatInputApplicationCommandsJSONBody;
-  handle: InteractionHandler<ChatInputCommandInteraction & { commandName: BotChatInputCommandName }>;
-  autocomplete?: InteractionHandler<AutocompleteInteraction & { commandName: BotChatInputCommandName }>;
+  handle: InteractionHandler<ChatInputCommandInteraction & {
+    commandName: BotChatInputCommandName
+  }>;
+  autocomplete?: InteractionHandler<AutocompleteInteraction & {
+    commandName: BotChatInputCommandName
+  }>;
 }
 
 export interface BotMessageContextMenuCommand {
   getDefinition: (t: TFunction) => Omit<RESTPostAPIContextMenuApplicationCommandsJSONBody, 'type'> & {
     type: ApplicationCommandType.Message
   };
-  handle: InteractionHandler<MessageContextMenuCommandInteraction & { commandName: BotMessageContextMenuCommandName }>;
+  handle: InteractionHandler<MessageContextMenuCommandInteraction & {
+    commandName: BotMessageContextMenuCommandName
+  }>;
 }
 
+export type BotMessageComponentHandler = InteractionHandler<MessageComponentInteraction & {
+  customId: BotMessageComponentCustomId
+}>;
+export type BotMessageComponentDefinitionGetter = (t: TFunction, emojiIdMap: Record<string, string>, idSuffix?: string) => APIMessageComponent;
+
 export interface BotMessageComponent {
-  getDefinition: (t: TFunction, emojiIdMap: Record<string, string>) => APIMessageComponent;
-  handle: InteractionHandler<MessageComponentInteraction & { customId: BotMessageComponentCustomId }>;
+  getDefinition: BotMessageComponentDefinitionGetter;
+  handle: BotMessageComponentHandler;
 }
 
 export interface IntegerOptionMetadata {
@@ -96,7 +112,6 @@ export interface NumberOptionMetadata {
   min_value?: number;
   max_value?: number;
 }
-
 
 export interface StringOptionMetadata {
   type: ApplicationCommandOptionType.String;

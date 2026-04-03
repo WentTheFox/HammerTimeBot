@@ -18,7 +18,8 @@ export interface BackendApiResponse<T> {
   responseText: string | undefined;
   response: T;
   validation: IValidation<T>;
-  ok: boolean
+  ok: boolean;
+  status: number;
 }
 
 export const backendApiRequest = async <T>(
@@ -50,7 +51,7 @@ export const backendApiRequest = async <T>(
     logger.error('Failed API request:', e);
   }
 
-  const response = responseText && JSON.parse(responseText);
+  const response = responseText && r?.headers.get('content-type') === 'application/json' ? JSON.parse(responseText) : responseText;
   const validation = params.validator(response);
   if (!validation.success) {
     const errorMessage = `fetch ${requestUrl}: Validation failed\n${responseText}\n${['', ...validation.errors.map(err => JSON.stringify(err))].join('\n- ')}`;
@@ -60,5 +61,5 @@ export const backendApiRequest = async <T>(
     logger.warn(errorMessage);
   }
 
-  return { responseText, response, validation, ok: r?.ok ?? false };
+  return { responseText, response, validation, ok: r?.ok ?? false, status: r?.status ?? NaN };
 };

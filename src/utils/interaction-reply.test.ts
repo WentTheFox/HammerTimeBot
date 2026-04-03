@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { createTFunction } from './interaction-handlers/create-t-function.js';
 import { reformatCommandNamesInContent } from './interaction-reply.js';
-import { createTFunction } from './interaction-handlers.js';
 import { Locale } from 'discord-api-types/v10';
 import { initI18next } from '../constants/locales.js';
 import { DevNullLogger } from '../classes/dev-null-logger.js';

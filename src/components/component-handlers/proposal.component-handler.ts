@@ -28,6 +28,7 @@ export const proposalComponentHandler = (decision: 'approve' | 'reject'): BotMes
       },
     },
     validator: typia.createValidate<{ success: boolean, message?: string }>(),
+    failOnInvalidResponse: false,
   });
 
   if (status !== 200) {

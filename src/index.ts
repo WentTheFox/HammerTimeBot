@@ -60,5 +60,5 @@ async function startupCommandsUpdate(parentLogger: NestableLogger): Promise<void
       logger.log(`Shard ${shard.id} died`);
     });
   });
-  await manager.spawn();
+  await manager.spawn({ delay: 0 });
 })();

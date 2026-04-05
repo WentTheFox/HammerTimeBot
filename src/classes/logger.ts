@@ -1,31 +1,39 @@
-import { NestableLogger } from '../types/logger-types.js';
+import { ILogger, LogMethod } from '../types/logger-types.js';
 
-export class Logger implements NestableLogger {
+export class Logger implements ILogger {
   protected prefixes: string[] = [];
 
   protected prefixString = '';
 
-  constructor(prefix: string | string[]) {
+  protected mutedMethods = new Set<LogMethod>();
+
+  constructor(prefix: string | string[], mutedMethods: LogMethod[] | Set<LogMethod> = []) {
     this.setPrefix(prefix);
+    this.setMutedMethods(mutedMethods);
   }
 
   debug(...params: unknown[]): void {
+    if (this.mutedMethods.has('debug')) return;
     console.debug(...this.addPrefixToLog(params));
   }
 
   info(...params: unknown[]): void {
+    if (this.mutedMethods.has('info')) return;
     console.info(...this.addPrefixToLog(params));
   }
 
   log(...params: unknown[]): void {
+    if (this.mutedMethods.has('log')) return;
     console.log(...this.addPrefixToLog(params));
   }
 
   warn(...params: unknown[]): void {
+    if (this.mutedMethods.has('warn')) return;
     console.warn(...this.addPrefixToLog(params));
   }
 
   error(...params: unknown[]): void {
+    if (this.mutedMethods.has('error')) return;
     console.error(...this.addPrefixToLog(params));
   }
 
@@ -39,6 +47,10 @@ export class Logger implements NestableLogger {
       this.prefixes = rawPrefixArray;
     }
     this.prefixString = `[${this.prefixes.join('][')}]`;
+  }
+
+  private setMutedMethods(mutedMethods: LogMethod[] | Set<LogMethod>): void {
+    this.mutedMethods = Array.isArray(mutedMethods) ? new Set(mutedMethods) : mutedMethods;
   }
 
   protected static getPrefixForShardsValue(shards: string) {
@@ -62,8 +74,20 @@ export class Logger implements NestableLogger {
     return [this.prefixString, ...params];
   }
 
-  nest(nestedPrefix: string | string[]) {
+  /**
+   * Returns a new logger with the provided prefix(es) added to the existing prefix list
+   */
+  nest(nestedPrefix: string | string[]): Logger {
     const nestedPrefixArray = Array.isArray(nestedPrefix) ? nestedPrefix : [nestedPrefix];
-    return new Logger([...this.prefixes, ...nestedPrefixArray]);
+    return new Logger([...this.prefixes, ...nestedPrefixArray], this.mutedMethods);
+  }
+
+  /**
+   * Returns a new logger with only the provided methods muted
+   *
+   * @param mutedMethods
+   */
+  muteMethods(mutedMethods: LogMethod[]): Logger {
+    return new Logger(this.prefixes, mutedMethods);
   }
 }

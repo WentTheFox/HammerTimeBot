@@ -120,7 +120,7 @@ export const updateCommands = async (context: InteractionHandlerContext): Promis
 };
 
 export const updateShardStats = async (context: LoggerContext, client: Client, shardId: number) => {
-  const logger = context.logger.nest('updateShardStats');
+  const logger = context.logger.nest('updateShardStats').muteMethods(['debug', 'info']);
   const serverCount = client.guilds.cache.size;
   const memberCount = client.guilds.cache.reduce((members, guild) => {
     if (members === null) return null;
@@ -136,14 +136,14 @@ export const updateShardStats = async (context: LoggerContext, client: Client, s
     started_at: startedAt,
   };
   logger.debug('Shard statistics collected:', body);
-  await backendApiRequest(context, {
+  await backendApiRequest({ logger }, {
     path: '/shard-statistics',
     method: 'POST',
     body,
     validator: typia.createValidate<Record<string, unknown>>(),
     failOnInvalidResponse: false,
   });
-  logger.log('Successfully updated shard statistics');
+  logger.info('Successfully updated shard statistics');
 };
 
 export const sendCommandTelemetry = async (context: LoggerContext & UserSettingsContext, interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction): Promise<TelemetryResponse | undefined | null> => {

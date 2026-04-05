@@ -16,7 +16,7 @@ import { i18n, TFunction } from 'i18next';
 import { BotMessageComponentCustomId } from '../utils/interactions/message-components.js';
 import { SettingsValue } from '../utils/settings.js';
 
-import { NestableLogger } from './logger-types.js';
+import { ILogger } from './logger-types.js';
 
 export const enum BotChatInputCommandName {
   ADD = 'add',
@@ -46,7 +46,7 @@ export const enum BotMessageComponentType {
 }
 
 export interface LoggerContext {
-  logger: NestableLogger;
+  logger: ILogger;
 }
 
 export interface UserSettingsContext {

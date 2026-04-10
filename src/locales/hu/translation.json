@@ -329,6 +329,16 @@
         "openSettingsButton": "Bot Beállítások"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Get answers to frequently asked questions",
+      "options": {
+        "topic": {
+          "name": "topic",
+          "description": "The FAQ topic to display"
+        }
+      }
+    },
     "at12": {
       "name": "ekkor12",
       "description": "Add meg az időbélyeg pontos részeit (12-órás formátumban)",

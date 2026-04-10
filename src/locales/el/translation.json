@@ -329,6 +329,16 @@
         "openSettingsButton": "Ρυθμίσεις Bot"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Get answers to frequently asked questions",
+      "options": {
+        "topic": {
+          "name": "topic",
+          "description": "The FAQ topic to display"
+        }
+      }
+    },
     "at12": {
       "name": "at12",
       "description": "Καθορίστε τα ακριβή στοιχεία της χρονοσήμανσης (με τη χρήση ρολογιού 12 ωρών)",

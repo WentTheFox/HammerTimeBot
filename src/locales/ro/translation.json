@@ -329,6 +329,16 @@
         "openSettingsButton": "Setări Bot"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Get answers to frequently asked questions",
+      "options": {
+        "topic": {
+          "name": "topic",
+          "description": "The FAQ topic to display"
+        }
+      }
+    },
     "at12": {
       "name": "la12",
       "description": "Specificați componentele exacte ale marcajului temporal (utilizând un ceas de 12 ore)",

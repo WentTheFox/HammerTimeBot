@@ -329,6 +329,16 @@
         "openSettingsButton": "Bot Einstellungen"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Get answers to frequently asked questions",
+      "options": {
+        "topic": {
+          "name": "topic",
+          "description": "The FAQ topic to display"
+        }
+      }
+    },
     "at12": {
       "name": "um12",
       "description": "Gib die genauen Komponenten des Zeitstempels an (unter Verwendung einer 12-Stunden-Uhr)",

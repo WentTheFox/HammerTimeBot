@@ -329,6 +329,16 @@
         "openSettingsButton": "Impostazioni del Bot"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Get answers to frequently asked questions",
+      "options": {
+        "topic": {
+          "name": "topic",
+          "description": "The FAQ topic to display"
+        }
+      }
+    },
     "at12": {
       "name": "alle12",
       "description": "Specifichi i componenti esatti del timestamp (utilizzando un orologio a 12 ore)",

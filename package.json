@@ -11,7 +11,7 @@
     "generate-faq": "tsx ./utils/generate-faq",
     "build": "npm run generate-faq && tsc",
     "build:clean": "rimraf build",
-    "start": "node ./build/src/index.js",
+    "start": "node --enable-source-maps ./build/src/index.js",
     "generate-translation-credits": "tsx ./utils/translation-credits",
     "start:dev": "npm run build:clean && npm run build && npm run start",
     "test": "vitest",

@@ -31,6 +31,7 @@ export const enum BotChatInputCommandName {
   SETTINGS = 'settings',
   API = 'api',
   AT12 = 'at12',
+  FAQ = 'faq',
 }
 
 export const enum BotMessageContextMenuCommandName {

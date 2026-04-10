@@ -238,3 +238,6 @@ export const getCustomIdSegments = (customIdInput: string): CustomIdSegments => 
   const [customId, resourceId] = customIdInput.split(/:/);
   return { customId: customId as BotMessageComponentType, resourceId };
 };
+
+export const truncateText = (text: string, maxLength: number) =>
+  text.length <= maxLength ? text : `${text.slice(0, maxLength - 1)}…`;

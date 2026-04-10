@@ -92,6 +92,10 @@ export const enum SnowflakeCommandOptionName {
   VALUE = 'value',
 }
 
+export const enum FaqCommandOptionName {
+  TOPIC = 'topic',
+}
+
 interface CommandOptionsMap {
   [BotChatInputCommandName.IN]: InCommandOptionName,
   [BotChatInputCommandName.AGO]: AgoCommandOptionName,
@@ -102,6 +106,7 @@ interface CommandOptionsMap {
   [BotChatInputCommandName.ISO]: IsoCommandOptionName,
   [BotChatInputCommandName.STATISTICS]: never,
   [BotChatInputCommandName.AT12]: At12CommandOptionName,
+  [BotChatInputCommandName.FAQ]: FaqCommandOptionName,
   [BotMessageContextMenuCommandName.MESSAGE_SENT]: never,
   [BotMessageContextMenuCommandName.MESSAGE_LAST_EDITED]: never,
 }
@@ -155,6 +160,7 @@ interface CommandResponsesMap {
   [BotChatInputCommandName.STATISTICS]: never,
   [BotChatInputCommandName.SNOWFLAKE]: SnowflakeCommandResponse,
   [BotChatInputCommandName.AT12]: At12CommandResponse,
+  [BotChatInputCommandName.FAQ]: never,
   [BotMessageContextMenuCommandName.MESSAGE_SENT]: MessageSentCommandResponse,
   [BotMessageContextMenuCommandName.MESSAGE_LAST_EDITED]: MessageLastEditedCommandResponse,
   [BotMessageContextMenuCommandName.EXTRACT_TIMESTAMPS]: ExtractTimestampsCommandResponse,

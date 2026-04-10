@@ -1,31 +1,33 @@
+import type { APIApplicationCommand, APIApplicationCommandOption } from 'discord-api-types/v10';
+import { ChatInputCommandInteraction, Client, ContextMenuCommandInteraction } from 'discord.js';
+import { filledBar } from 'string-progressbar';
+import typia from 'typia';
+import { EmojiCharacters } from '../constants/emoji-characters.js';
+import { env } from '../env.js';
+import { FAQ_ENTRIES } from '../faq/faq-entries.generated.js';
 import {
   InteractionContext,
   InteractionHandlerContext,
   LoggerContext,
   UserSettingsContext,
 } from '../types/bot-interaction.js';
-import { BotCommandItem, BotCommands } from './get-application-commands.js';
+import { TelemetryResponse } from './add-telemetry-note-to-reply.js';
 import { backendApiRequest } from './backend-api-request.js';
-import typia from 'typia';
-import type { APIApplicationCommand, APIApplicationCommandOption } from 'discord-api-types/v10';
-import { ChatInputCommandInteraction, Client, ContextMenuCommandInteraction } from 'discord.js';
+import { BotCommandItem, BotCommands } from './get-application-commands.js';
 import { getProcessStartTs } from './get-process-start-ts.js';
-import { env } from '../env.js';
+import { resolveFaqMentions } from './resolve-faq-mentions.js';
 import {
   cleanGlobalCommands,
   getAuthorizedServers,
   updateGlobalCommands,
   updateGuildCommands,
 } from './update-guild-commands.js';
-import { filledBar } from 'string-progressbar';
-import { EmojiCharacters } from '../constants/emoji-characters.js';
-import { TelemetryResponse } from './add-telemetry-note-to-reply.js';
 
 type MinimalAPIApplicationCommand =
   Pick<APIApplicationCommand, 'id' | 'name' | 'name_localizations' | 'description' | 'description_localizations' | 'type'>
   & {
-    options?: Array<Pick<APIApplicationCommandOption, 'name' | 'name_localizations' | 'description' | 'description_localizations' | 'type' | 'required'>>
-  };
+  options?: Array<Pick<APIApplicationCommandOption, 'name' | 'name_localizations' | 'description' | 'description_localizations' | 'type' | 'required'>>
+};
 
 const augmentResultWithOptions = <T extends MinimalAPIApplicationCommand[] | undefined>(input: BotCommands | undefined, result: T): T => {
   const indexedOptions = input?.reduce((acc, command) => ({
@@ -57,6 +59,41 @@ export const updateBotCommandsInApi = async (parentContext: LoggerContext, input
       body: resultWithOptions,
     });
 
+    logger.log('Successful');
+  } catch (error) {
+    logger.warn('Failed', error);
+  }
+};
+
+export const updateFaqEntriesInApi = async (parentContext: LoggerContext): Promise<void> => {
+  const logger = parentContext.logger.nest('updateFaqEntriesInApi');
+  if (!env.SUPPORT_SERVER_ID) {
+    logger.warn('Skipped due to missing SUPPORT_SERVER_ID env var');
+    return;
+  }
+  logger.log('Updating…');
+  try {
+    const entries = Object.values(FAQ_ENTRIES);
+    const { channels, users, roles } = await resolveFaqMentions(
+      entries.map((e) => e.content),
+      logger,
+    );
+    await backendApiRequest({ logger }, {
+      path: '/faq-entries',
+      method: 'PUT',
+      validator: typia.createValidate<unknown>(),
+      body: {
+        entries: entries.map((entry) => ({
+          identifier: entry.id,
+          topic: entry.title,
+          source_text: entry.content,
+        })),
+        channels,
+        users,
+        roles,
+        guild_id: env.SUPPORT_SERVER_ID,
+      },
+    });
     logger.log('Successful');
   } catch (error) {
     logger.warn('Failed', error);

@@ -18,7 +18,9 @@ const compat = new FlatCompat({
     allConfig: js.configs.all
 });
 
-export default defineConfig([{
+export default defineConfig([
+  { ignores: ['src/faq/faq-entries.generated.ts'] },
+  {
     extends: fixupConfigRules(compat.extends(
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -81,4 +83,5 @@ export default defineConfig([{
             }],
         }],
     },
-}]);
+  },
+]);

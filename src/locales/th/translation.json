@@ -329,6 +329,16 @@
         "openSettingsButton": "การตั้งค่าบอท"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Get answers to frequently asked questions",
+      "options": {
+        "topic": {
+          "name": "topic",
+          "description": "The FAQ topic to display"
+        }
+      }
+    },
     "at12": {
       "name": "ณ12",
       "description": "ระบุองค์ประกอบของค่าตราประทับเวลาอย่างละเอียด (โดยใช้ระบบเวลาแบบ 12 ชั่วโมง)",

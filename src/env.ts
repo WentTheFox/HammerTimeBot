@@ -13,6 +13,7 @@ const {
   DISCORD_INVITE_URL,
   API_URL,
   API_TOKEN,
+  SUPPORT_SERVER_ID,
 } = process.env;
 
 /**
@@ -30,6 +31,8 @@ export const env = (() => {
     DISCORD_INVITE_URL,
     API_URL,
     API_TOKEN,
+    /** Server ID used to resolve role mentions in FAQ entries. Optional. */
+    SUPPORT_SERVER_ID: SUPPORT_SERVER_ID ?? '',
   };
 
   type Values = typeof values;

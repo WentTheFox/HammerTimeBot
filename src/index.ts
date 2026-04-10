@@ -3,7 +3,7 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { env } from './env.js';
 import { Logger } from './classes/logger.js';
-import { updateBotTimezonesInApi, updateCommands } from './utils/backend-api-data-updaters.js';
+import { updateBotTimezonesInApi, updateCommands, updateFaqEntriesInApi } from './utils/backend-api-data-updaters.js';
 import { InteractionHandlerContext } from './types/bot-interaction.js';
 import { ILogger } from './types/logger-types.js';
 import { initI18next } from './constants/locales.js';
@@ -26,6 +26,7 @@ async function startupCommandsUpdate(parentLogger: ILogger): Promise<void> {
   await Promise.all([
     updateCommands(context),
     updateBotTimezonesInApi(context),
+    updateFaqEntriesInApi(context),
   ]);
 
   logger.log('Completed.');

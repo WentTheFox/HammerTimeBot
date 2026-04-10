@@ -8,7 +8,8 @@
   "scripts": {
     "lint": "eslint \"{src,utils}/**/*.ts\"",
     "lint:fix": "npm run lint -- --fix",
-    "build": "tsc",
+    "generate-faq": "tsx ./utils/generate-faq",
+    "build": "npm run generate-faq && tsc",
     "build:clean": "rimraf build",
     "start": "node ./build/src/index.js",
     "generate-translation-credits": "tsx ./utils/translation-credits",
@@ -57,7 +58,7 @@
     "tsx": "^4.20.6",
     "typescript": "~5.9.3",
     "typia": "^11.0.3",
-    "vite": "^7.2.4",
+    "vite": "^7.3.2",
     "vitest": "^4.0.12"
   },
   "nodemonConfig": {

@@ -329,6 +329,16 @@
         "openSettingsButton": "Bot instellingen"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Get answers to frequently asked questions",
+      "options": {
+        "topic": {
+          "name": "topic",
+          "description": "The FAQ topic to display"
+        }
+      }
+    },
     "at12": {
       "name": "at12",
       "description": "Geef de exacte componenten van de tijdstempel op (met een 12-uursklok)",

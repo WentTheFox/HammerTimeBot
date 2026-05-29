@@ -20,7 +20,9 @@ export const faqCommand: BotChatInputCommand = {
   async autocomplete(interaction) {
     const query = interaction.options.getFocused().trim().toLowerCase();
     const results = Object.values(FAQ_ENTRIES).filter((entry) =>
-      entry.id.toString().startsWith(query) || entry.title.toLowerCase().includes(query),
+      entry.id.toString().startsWith(query) ||
+      formatFaqIdentifier(entry.id).startsWith(query) ||
+      entry.title.toLowerCase().includes(query),
     );
     await interaction.respond(
       results.slice(0, 25).map((entry) => {

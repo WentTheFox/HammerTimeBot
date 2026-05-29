@@ -125,7 +125,7 @@
     },
     "15514192": {
       "username": "unpredictable",
-      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/15514192/medium/375165879a1d44129a06d1c635976680.png",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/15514192/medium/a132d8901920e022bf8da6a0dcbf4435.jpg",
       "fullName": "Rukchad Wongprayoon"
     },
     "15627125": {
@@ -241,6 +241,11 @@
       "username": "piyaphachrxinthrchwy",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17628392/medium/f1552317603b307d011bf358aa21bdbb.jpeg",
       "fullName": "ปิยาพัชร อินทร์ช่วย"
+    },
+    "17660166": {
+      "username": "Orange_1006",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17660166/medium/31a9672afef81938820200b502e357c3.png",
+      "fullName": "오렌지"
     }
   },
   "languages": {
@@ -316,7 +321,7 @@
       ],
       "progress": {
         "approval": 98,
-        "translation": 98
+        "translation": 100
       }
     },
     "fi": {
@@ -334,7 +339,7 @@
       ],
       "progress": {
         "approval": 98,
-        "translation": 98
+        "translation": 100
       }
     },
     "hi": {
@@ -377,7 +382,7 @@
       ],
       "progress": {
         "approval": 98,
-        "translation": 98
+        "translation": 100
       }
     },
     "ja": {
@@ -395,12 +400,13 @@
         "14469636",
         "15404404",
         "14531480",
+        "17660166",
         "14153733",
         "17372204"
       ],
       "progress": {
         "approval": 65,
-        "translation": 65
+        "translation": 69
       }
     },
     "lt": {

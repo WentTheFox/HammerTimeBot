@@ -330,12 +330,12 @@
       }
     },
     "faq": {
-      "name": "faq",
-      "description": "Get answers to frequently asked questions",
+      "name": "preguntasfrecuentes",
+      "description": "Obtenga respuestas a preguntas frecuentes",
       "options": {
         "topic": {
-          "name": "topic",
-          "description": "The FAQ topic to display"
+          "name": "tema",
+          "description": "El tema de preguntas frecuentes a mostrar"
         }
       }
     },

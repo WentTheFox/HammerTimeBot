@@ -1,6 +1,10 @@
 name: Build
 
-on: [ push, pull_request ]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 env:
   DISCORD_BOT_TOKEN: MOCK_DISCORD_BOT_TOKEN
@@ -19,23 +23,13 @@ jobs:
     name: 'Building, Linting and Unit Tests'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '22'
-
-      - name: Cache node_modules
-        id: cache-node-modules
-        uses: actions/cache@v3
-        with:
-          path: ./node_modules
-          key: node_modules-${{ hashFiles('./package-lock.json') }}
-
-      - name: Upgrade NPM
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm install -g npm
+          node-version: '24'
+          cache: 'npm'
 
       - name: Install npm dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'

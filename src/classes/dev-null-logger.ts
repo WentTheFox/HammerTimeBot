@@ -1,6 +1,6 @@
-import { NestableLogger } from '../types/logger-types.js';
+import { ILogger } from '../types/logger-types.js';
 
-export class DevNullLogger implements NestableLogger {
+export class DevNullLogger implements ILogger {
   debug(): void {
   }
 
@@ -16,7 +16,11 @@ export class DevNullLogger implements NestableLogger {
   error(): void {
   }
 
-  nest(): NestableLogger {
+  nest(): ILogger {
     return new DevNullLogger();
+  }
+
+  muteMethods(): this {
+    return this;
   }
 }

@@ -12,6 +12,7 @@ import { isoCommand } from '../../commands/iso.command.js';
 import { settingsCommand } from '../../commands/settings.command.js';
 import { apiCommand } from '../../commands/api.command.js';
 import { at12Command } from '../../commands/at12.command.js';
+import { faqCommand } from '../../commands/faq.command.js';
 
 export const chatInputCommandMap: Record<BotChatInputCommandName, BotChatInputCommand> = {
   [BotChatInputCommandName.ADD]: addCommand,
@@ -26,6 +27,7 @@ export const chatInputCommandMap: Record<BotChatInputCommandName, BotChatInputCo
   [BotChatInputCommandName.SETTINGS]: settingsCommand,
   [BotChatInputCommandName.API]: apiCommand,
   [BotChatInputCommandName.AT12]: at12Command,
+  [BotChatInputCommandName.FAQ]: faqCommand,
 };
 
 export const chatInputCommandNames = (Object.keys(chatInputCommandMap) as BotChatInputCommandName[]);

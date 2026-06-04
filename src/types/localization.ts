@@ -1,7 +1,7 @@
 import { APIApplicationCommand, APIApplicationCommandOption } from 'discord-api-types/v10';
 import {
   BotChatInputCommandName,
-  BotMessageComponentCustomId,
+  BotMessageComponentType,
   BotMessageContextMenuCommandName,
 } from './bot-interaction.js';
 import { MessageTimestampFormat } from '../classes/message-timestamp.js';
@@ -92,6 +92,10 @@ export const enum SnowflakeCommandOptionName {
   VALUE = 'value',
 }
 
+export const enum FaqCommandOptionName {
+  TOPIC = 'topic',
+}
+
 interface CommandOptionsMap {
   [BotChatInputCommandName.IN]: InCommandOptionName,
   [BotChatInputCommandName.AGO]: AgoCommandOptionName,
@@ -102,6 +106,7 @@ interface CommandOptionsMap {
   [BotChatInputCommandName.ISO]: IsoCommandOptionName,
   [BotChatInputCommandName.STATISTICS]: never,
   [BotChatInputCommandName.AT12]: At12CommandOptionName,
+  [BotChatInputCommandName.FAQ]: FaqCommandOptionName,
   [BotMessageContextMenuCommandName.MESSAGE_SENT]: never,
   [BotMessageContextMenuCommandName.MESSAGE_LAST_EDITED]: never,
 }
@@ -155,13 +160,14 @@ interface CommandResponsesMap {
   [BotChatInputCommandName.STATISTICS]: never,
   [BotChatInputCommandName.SNOWFLAKE]: SnowflakeCommandResponse,
   [BotChatInputCommandName.AT12]: At12CommandResponse,
+  [BotChatInputCommandName.FAQ]: never,
   [BotMessageContextMenuCommandName.MESSAGE_SENT]: MessageSentCommandResponse,
   [BotMessageContextMenuCommandName.MESSAGE_LAST_EDITED]: MessageLastEditedCommandResponse,
   [BotMessageContextMenuCommandName.EXTRACT_TIMESTAMPS]: ExtractTimestampsCommandResponse,
 }
 
 interface ComponentsMap {
-  global: [BotMessageComponentCustomId.FORMAT_SELECT],
+  global: [BotMessageComponentType.FORMAT_SELECT],
   [BotChatInputCommandName.SETTINGS]: ['openSettingsButton'],
 }
 

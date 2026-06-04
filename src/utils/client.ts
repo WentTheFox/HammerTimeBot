@@ -1,14 +1,12 @@
 import { Client, Events, InteractionType } from 'discord.js';
 import { env } from '../env.js';
 import { getGitData } from './get-git-data.js';
-import {
-  handleCommandAutocomplete,
-  handleCommandInteraction,
-  handleComponentInteraction,
-} from './interaction-handlers.js';
 import { InteractionHandlerContext } from '../types/bot-interaction.js';
 
 import { updateShardStats } from './backend-api-data-updaters.js';
+import { handleCommandAutocomplete } from './interaction-handlers/handle-command-autocomplete.js';
+import { handleCommandInteraction } from './interaction-handlers/handle-command-interaction.js';
+import { handleComponentInteraction } from './interaction-handlers/handle-component-interaction.js';
 
 const FIVE_MINUTES_MS = 5 * 60 * 1e3;
 

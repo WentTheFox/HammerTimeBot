@@ -65,6 +65,7 @@ English and Hungarian translations have been included, so no translators will be
   - [Phrygia](https://github.com/sjkim04)
   - [uxirq](https://crowdin.com/profile/uxirq)
   - [미르냥](https://crowdin.com/profile/Mirnyang)
+  - [오렌지](https://crowdin.com/profile/Orange_1006)
   - [정규민](https://crowdin.com/profile/smillle)
 - 🇱🇹 Lithuanian: [Trent](https://crowdin.com/profile/nothingness)
 - 🇳🇴 Norwegian

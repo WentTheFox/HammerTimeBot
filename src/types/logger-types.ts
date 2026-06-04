@@ -1,15 +1,12 @@
-interface ILogger {
-  debug(...params: unknown[]): void;
+export type LogMethod =
+  | 'debug'
+  | 'info'
+  | 'log'
+  | 'warn'
+  | 'error';
 
-  info(...params: unknown[]): void;
+export type ILogger = Record<LogMethod, (...params: unknown[]) => void> & {
+  nest(nestedPrefix: string | string[]): ILogger;
 
-  log(...params: unknown[]): void;
-
-  warn(...params: unknown[]): void;
-
-  error(...params: unknown[]): void;
-}
-
-export interface NestableLogger extends ILogger {
-  nest(nestedPrefix: string | string[]): NestableLogger;
+  muteMethods(mutedMethods: LogMethod[]): ILogger;
 }

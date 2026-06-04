@@ -5,10 +5,10 @@ import {
   Routes,
 } from 'discord-api-types/v10';
 import { env } from '../env.js';
-import { NestableLogger } from '../types/logger-types.js';
+import { ILogger } from '../types/logger-types.js';
 import { getAuthorizedServers } from './update-guild-commands.js';
 
-export const getCommandIdMap = async (context: { logger: NestableLogger }): Promise<Record<string, string>> => {
+export const getCommandIdMap = async (context: { logger: ILogger }): Promise<Record<string, string>> => {
   const logger = context.logger.nest('getCommandIdMap');
   let commandsResponse: RESTGetAPIApplicationCommandsResult | RESTGetAPIApplicationGuildCommandResult;
   if (env.LOCAL) {

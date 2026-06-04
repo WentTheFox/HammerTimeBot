@@ -1,4 +1,4 @@
-import { BotMessageComponent, BotMessageComponentCustomId } from '../types/bot-interaction.js';
+import { BotMessageComponent, BotMessageComponentType } from '../types/bot-interaction.js';
 import { ComponentType, MessageComponentInteraction, StringSelectMenuInteraction } from 'discord.js';
 import { TFunction } from 'i18next';
 import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
@@ -37,7 +37,7 @@ const getSyntaxReplyContent = (interaction: MessageComponentInteraction): string
 export const formatSelectComponent: BotMessageComponent = {
   getDefinition: (t, customEmojiIds) => ({
     type: ComponentType.StringSelect,
-    custom_id: BotMessageComponentCustomId.FORMAT_SELECT,
+    custom_id: BotMessageComponentType.FORMAT_SELECT,
     options: getFormatSelectOptions(t, customEmojiIds),
   }),
   async handle(interaction) {

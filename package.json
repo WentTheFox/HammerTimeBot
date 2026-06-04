@@ -7,13 +7,13 @@
   "type": "module",
   "scripts": {
     "lint": "eslint \"{src,utils}/**/*.ts\"",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm run lint -- --fix",
     "generate-faq": "tsx ./utils/generate-faq",
-    "build": "npm run generate-faq && tsc",
+    "build": "pnpm run generate-faq && tsc",
     "build:clean": "rimraf build",
     "start": "node --enable-source-maps ./build/src/index.js",
     "generate-translation-credits": "tsx ./utils/translation-credits",
-    "start:dev": "npm run build:clean && npm run build && npm run start",
+    "start:dev": "pnpm run build:clean && pnpm run build && pnpm run start",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "prepare": "ts-patch install"
@@ -64,7 +64,9 @@
   "nodemonConfig": {
     "delay": 1000
   },
+  "packageManager": "pnpm@11.5.1",
   "engines": {
-    "node": "24.x"
+    "node": "24.x",
+    "pnpm": ">=11"
   }
 }

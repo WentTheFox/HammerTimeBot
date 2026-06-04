@@ -6,7 +6,7 @@ echo "Push triggered update to revision $newrev ($refname)"
 GIT="env -i git"
 CMD_PWD="cd .. && pwd"
 CMD_FETCH="$GIT fetch"
-CMD_NPM_INSTALL="npm ci"
+CMD_NPM_INSTALL="pnpm install --frozen-lockfile"
 CMD_NPM_BUILD="npm run build"
 CMD_RESTART="pm2 restart pm2.json"
 
@@ -15,7 +15,7 @@ eval $CMD_PWD
 echo "$ $CMD_FETCH"
 eval $CMD_FETCH
 
-if $GIT diff --name-only $oldrev $newrev | grep "^package-lock.json"; then
+if $GIT diff --name-only $oldrev $newrev | grep "^pnpm-lock.yaml"; then
   echo "$ $CMD_NPM_INSTALL"
   eval $CMD_NPM_INSTALL
 else

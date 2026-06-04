@@ -23,20 +23,22 @@ jobs:
     name: 'Building, Linting and Unit Tests'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@d15e628ca66d93ee5f352c71671a7bc6a97af5c9 # v6.0.8
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '24'
-          cache: 'npm'
+          cache: 'pnpm'
 
-      - name: Install npm dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
-      - run: npm run lint
+      - run: pnpm run lint
 
-      - run: npm run test
+      - run: pnpm run test
 
-      - run: npm run build
+      - run: pnpm run build

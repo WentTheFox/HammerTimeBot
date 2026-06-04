@@ -118,6 +118,11 @@
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/15404404/medium/f5661cd0e6ea9c6e6904a9efcc79c3ba.png",
       "fullName": "Bin"
     },
+    "15410796": {
+      "username": "Alpaca_Man",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/15410796/medium/ccc6fe4673b495b0f8536d8b3460a25a.png",
+      "fullName": "AlpacaMan"
+    },
     "15418756": {
       "username": "nothingness",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/15418756/medium/222d9668836c1215651e9ba9dd94ce36.jpg",
@@ -292,15 +297,15 @@
         "14459560"
       ],
       "progress": {
-        "approval": 98,
-        "translation": 98
+        "approval": 100,
+        "translation": 100
       }
     },
     "en-GB": {
       "translatorIds": [],
       "progress": {
-        "approval": 98,
-        "translation": 98
+        "approval": 100,
+        "translation": 100
       }
     },
     "es-419": {
@@ -320,7 +325,7 @@
         "17472692"
       ],
       "progress": {
-        "approval": 98,
+        "approval": 100,
         "translation": 100
       }
     },
@@ -338,7 +343,7 @@
         "17322000"
       ],
       "progress": {
-        "approval": 98,
+        "approval": 100,
         "translation": 100
       }
     },
@@ -363,8 +368,8 @@
     "hu": {
       "translatorIds": [],
       "progress": {
-        "approval": 98,
-        "translation": 98
+        "approval": 100,
+        "translation": 100
       }
     },
     "id": {
@@ -372,8 +377,8 @@
         "15258052"
       ],
       "progress": {
-        "approval": 98,
-        "translation": 98
+        "approval": 100,
+        "translation": 100
       }
     },
     "it": {
@@ -381,7 +386,7 @@
         "15096881"
       ],
       "progress": {
-        "approval": 98,
+        "approval": 100,
         "translation": 100
       }
     },
@@ -405,7 +410,7 @@
         "17372204"
       ],
       "progress": {
-        "approval": 65,
+        "approval": 69,
         "translation": 69
       }
     },
@@ -442,11 +447,12 @@
     "pl": {
       "translatorIds": [
         "14844020",
+        "15410796",
         "17146676"
       ],
       "progress": {
-        "approval": 69,
-        "translation": 69
+        "approval": 100,
+        "translation": 100
       }
     },
     "pt-BR": {

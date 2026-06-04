@@ -331,11 +331,11 @@
     },
     "faq": {
       "name": "faq",
-      "description": "Get answers to frequently asked questions",
+      "description": "Dapatkan jawaban atas pertanyaan umum",
       "options": {
         "topic": {
-          "name": "topic",
-          "description": "The FAQ topic to display"
+          "name": "topik",
+          "description": "Topik FAQ yang akan ditampilkan"
         }
       }
     },

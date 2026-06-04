@@ -329,6 +329,16 @@
         "openSettingsButton": "Ajustes del Bot"
       }
     },
+    "faq": {
+      "name": "preguntasfrecuentes",
+      "description": "Obtenga respuestas a preguntas frecuentes",
+      "options": {
+        "topic": {
+          "name": "tema",
+          "description": "El tema de preguntas frecuentes a mostrar"
+        }
+      }
+    },
     "at12": {
       "name": "en12",
       "description": "Especifique los componentes exactos de la marca de tiempo (usando un formato de 12 horas)",

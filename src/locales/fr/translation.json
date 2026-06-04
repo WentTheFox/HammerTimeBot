@@ -329,6 +329,16 @@
         "openSettingsButton": "Paramètres du bot"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Trouvez des réponses aux questions fréquemment posées",
+      "options": {
+        "topic": {
+          "name": "sujet",
+          "description": "Le sujet de la FAQ à afficher"
+        }
+      }
+    },
     "at12": {
       "name": "à12",
       "description": "Spécifier les composants exacts de l'horodatage (par demi-journée)",

@@ -329,6 +329,16 @@
         "openSettingsButton": "机器人设置"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Get answers to frequently asked questions",
+      "options": {
+        "topic": {
+          "name": "topic",
+          "description": "The FAQ topic to display"
+        }
+      }
+    },
     "at12": {
       "name": "在（12小时制）",
       "description": "用12小时制指定时间戳的每个部分",

@@ -74,6 +74,7 @@ English and Hungarian translations have been included, so no translators will be
   - [kidneb1g](https://crowdin.com/profile/klinge9797)
   - [Phillip Rodseth](https://crowdin.com/profile/philliphatrod)
 - 🇵🇱 Polish
+  - [AlpacaMan](https://crowdin.com/profile/Alpaca_Man)
   - [Dawid Jaworski](https://crowdin.com/profile/MinerPL)
   - [Piotr G.](https://crowdin.com/profile/ekidoxx)
 - 🇧🇷 Portuguese, Brazilian

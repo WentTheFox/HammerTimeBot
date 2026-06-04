@@ -329,6 +329,16 @@
         "openSettingsButton": "Настройки бота"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Get answers to frequently asked questions",
+      "options": {
+        "topic": {
+          "name": "topic",
+          "description": "The FAQ topic to display"
+        }
+      }
+    },
     "at12": {
       "name": "at12",
       "description": "Укажите точные компоненты временной метки (используя 12-часовой формат)",

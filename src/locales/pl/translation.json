@@ -83,8 +83,8 @@
           "description": "Określ godzinę (domyślnie jest to bieżąca godzina)"
         },
         "hour12": {
-          "name": "hour12",
-          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
+          "name": "godzina12",
+          "description": "Określ godzinę w formacie 12-godzinnym (domyślnie jest to bieżąca godzina)"
         },
         "minute": {
           "name": "minuta",
@@ -95,21 +95,21 @@
           "description": "Określ sekundę (domyślnie 0)"
         },
         "am": {
-          "name": "am",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          "name": "przedpołudnie",
+          "description": "Jeżeli True, godzina musi wynosić od 1 do 12 i będzie interpretowana jako AM (przed południem)"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
+          "description": "Jeżeli True, godzina musi wynosić od 1 do 12 i będzie interpretowana jako PM (po południu)"
         }
       },
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
-        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
-        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
-        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
-        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
+        "amOrPmOnly": "Nie możesz określić warunków PM oraz AM w jednym poleceniu",
+        "meridiemRequired": "Musisz podać warunek AM lub PM, jeżeli korzystasz z formatu 12-godzinnego",
+        "noAmOrPmWithMeridiem": "Nie możesz określić warunku AM lub PM jeżeli pora dnia jest określona w opcji godziny",
+        "hourOrHour12Only": "Nie możesz określić opcji hour i hour12 w jednym poleceniu",
+        "hourRange": "Jeżeli nie określono południa (AM lub PM), godzina musi być liczbą od 0 do 23",
+        "hour12Range": "Jeżeli określono południe (AM lub PM), godzina musi być liczbą od 1 do 12"
       }
     },
     "add": {
@@ -199,8 +199,8 @@
         "noComponentsCurrentTime": "Należy podać przynajmniej jeden składnik czasu do zmiany. Jeżeli potrzebny jest aktualny czas, należy użyć `/{{atCommand}}` bez podawania argumentów",
         "noComponentsUnix": "Musisz określić co najmniej jeden składnik czasu do zmiany. Jeśli chcesz uzyskać składnię dla UNIX-owego znacznika czasu, użyj `/{{unixCommand}}`",
         "unexpectedError": "Podczas przetwarzania tej interakcji wystąpił nieoczekiwany błąd",
-        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
-        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
+        "unsupportedTimezone": "Podana strefa czasowa ({{timezone}}) nie jest wspierana",
+        "changeTimezoneSetting": "Sposób generowania znaczników czasu na serwerze został w ostatnim czasie zmieniony. Jeżeli ta opcja działała wcześniej, możliwe, że musisz zaktualizować swoje ustawienia przy użyciu polecenia `/{{settingsCommand}}`."
       },
       "options": {
         "format": {
@@ -213,8 +213,8 @@
             "T": "długi czas",
             "f": "data i czas",
             "F": "dzień tygodnia, data i godzina",
-            "s": "short date and short time",
-            "S": "short date and long time",
+            "s": "krótki format daty i czasu",
+            "S": "krótki format daty i długi format czasu",
             "R": "względna",
             "all": "wszystkie (domyślnie)"
           }
@@ -251,7 +251,7 @@
         "recordingTelemetry": "Dane telemetryczne są zbierane dla tej komendy, wyniki są w trakcie opracowywania…",
         "telemetryPlaceholder": "Reszta tego tekstu jest tutaj tylko po to, żeby zapobiec zbyt dużej zmianie rozmiaru wiadomości, gdy wyniki zbieranych danych telemetrycznych będą dostępne.",
         "feedbackWanted": "Proszę o opinie!",
-        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
+        "at12Hint": "Istnieje obecnie kilka różnych opcji określania godziny zarówno w poleceniu {{slashAt}} (za pomocą istniejącej już opcji {{hourOptionName}} która jest teraz uzupełniana automatycznie, lub nowych opcji {{hour12OptionName}} {{amOptionName}} {{pmOptionName}}) i nowego polecenia {{slashAt12}}. Używaj tego, które preferujesz. Popularność danej metody (w oparciu o dane telemetryczne) zdecyduje która z tych opcji zostanie wprowadzona na zawsze."
       }
     },
     "statistics": {
@@ -329,45 +329,55 @@
         "openSettingsButton": "Ustawienia bota"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Uzyskaj odpowiedzi do najcześciej zadawanych pytań",
+      "options": {
+        "topic": {
+          "name": "temat",
+          "description": "Temat FAQ do wyświetlenia"
+        }
+      }
+    },
     "at12": {
       "name": "at12",
-      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
+      "description": "Określ dokładne składniki znacznika czasu (używając formatu 12-godzinnego)",
       "responses": {
-        "amOrPmOnly": "You can't specify both am and pm options at the same time",
-        "meridiemRequired": "You must provide either the am or pm option"
+        "amOrPmOnly": "Nie możesz określić warunków AM oraz PM w jednym poleceniu",
+        "meridiemRequired": "Musisz podać warunek AM lub PM"
       },
       "options": {
         "year": {
-          "name": "year",
-          "description": "Specify the year (defaults to current year)"
+          "name": "rok",
+          "description": "Określ rok (domyślnie jest to bieżący rok)"
         },
         "month": {
-          "name": "month",
-          "description": "Specify the month (defaults to current month)"
+          "name": "miesiąc",
+          "description": "Określ miesiąc (domyślnie jest to bieżący miesiąc)"
         },
         "day": {
-          "name": "day",
-          "description": "Specify the day (defaults to current day)"
+          "name": "dzień",
+          "description": "Określ dzień (domyślnie jest to bieżący dzień)"
         },
         "hour": {
-          "name": "hour",
-          "description": "Specify the hour (defaults to current hour)"
+          "name": "godzina",
+          "description": "Określ godzinę (domyślnie jest to bieżąca godzina)"
         },
         "minute": {
-          "name": "minute",
-          "description": "Specify the minute (defaults to current minute)"
+          "name": "minuta",
+          "description": "Określ minutę (domyślnie jest to bieżąca minuta)"
         },
         "second": {
-          "name": "second",
-          "description": "Specify the second (defaults to 0)"
+          "name": "sekunda",
+          "description": "Określ sekundę (domyślnie wynosi 0)"
         },
         "am": {
-          "name": "am",
-          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          "name": "przedpołudnie",
+          "description": "Jeżeli True, godzina będzie interpretowana jako AM (ante meridiem, przed południem)"
         },
         "pm": {
-          "name": "pm",
-          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          "name": "popołudnie",
+          "description": "Jeżeli True, godzina będzie interpretowana jako PM (post meridiem, po południu)"
         }
       }
     }

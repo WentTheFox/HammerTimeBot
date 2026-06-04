@@ -329,6 +329,16 @@
         "openSettingsButton": "Pengaturan Bot"
       }
     },
+    "faq": {
+      "name": "faq",
+      "description": "Dapatkan jawaban atas pertanyaan umum",
+      "options": {
+        "topic": {
+          "name": "topik",
+          "description": "Topik FAQ yang akan ditampilkan"
+        }
+      }
+    },
     "at12": {
       "name": "at12",
       "description": "Tentukan komponen stempel waktu yang tepat (menggunakan jam 12 jam)",

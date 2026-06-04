@@ -329,6 +329,16 @@
         "openSettingsButton": "Bot Beállítások"
       }
     },
+    "faq": {
+      "name": "gyik",
+      "description": "Szerezz válaszokat a gyakran ismételt kérdésekre",
+      "options": {
+        "topic": {
+          "name": "téma",
+          "description": "A megjelenítendő GYIK téma"
+        }
+      }
+    },
     "at12": {
       "name": "ekkor12",
       "description": "Add meg az időbélyeg pontos részeit (12-órás formátumban)",

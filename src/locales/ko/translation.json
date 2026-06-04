@@ -84,7 +84,7 @@
         },
         "hour12": {
           "name": "hour12",
-          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
+          "description": "AM 또는 PM으로 시간을 지정합니다 (기본 값은 현재 시간)"
         },
         "minute": {
           "name": "minute",
@@ -96,11 +96,11 @@
         },
         "am": {
           "name": "am",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          "description": "True인 경우, 1에서 12(시)까지만 지정할 수 있으며 오전으로 해석됩니다"
         },
         "pm": {
           "name": "pm",
-          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
+          "description": "True인 경우, 1에서 12(시)까지만 지정할 수 있으며 오후로 해석됩니다"
         }
       },
       "responses": {

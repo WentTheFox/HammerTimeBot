@@ -331,11 +331,11 @@
     },
     "faq": {
       "name": "faq",
-      "description": "Get answers to frequently asked questions",
+      "description": "Ottieni risposte alle domande più frequenti",
       "options": {
         "topic": {
-          "name": "topic",
-          "description": "The FAQ topic to display"
+          "name": "argomento",
+          "description": "L'argomento FAQ da visualizzare"
         }
       }
     },

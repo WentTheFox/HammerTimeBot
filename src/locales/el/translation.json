@@ -331,11 +331,11 @@
     },
     "faq": {
       "name": "faq",
-      "description": "Get answers to frequently asked questions",
+      "description": "Λάβετε απαντήσεις σε συχνές ερωτήσεις",
       "options": {
         "topic": {
-          "name": "topic",
-          "description": "The FAQ topic to display"
+          "name": "θέμα",
+          "description": "Το θέμα FAQ που θα εμφανιστεί"
         }
       }
     },

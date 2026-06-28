@@ -1,98 +1,98 @@
 {
   "commands": {
     "ago": {
-      "name": "преди",
-      "description": "Задава времева марка в миналото спрямо текущото време",
+      "name": "ago",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "години",
-          "description": "Колко години да се извадят от текущото време"
+          "name": "years",
+          "description": "How many years to subtract from the current time"
         },
         "months": {
-          "name": "месеци",
-          "description": "Колко месеца да се извадят от текущото време"
+          "name": "months",
+          "description": "How many months to subtract from the current time"
         },
         "days": {
-          "name": "дни",
-          "description": "Колко дни да се извадят от текущото време"
+          "name": "days",
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
-          "name": "часове",
-          "description": "Колко часа да се извадят от текущото време"
+          "name": "hours",
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
-          "name": "минути",
-          "description": "Колко минути да се извадят от текущото време"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
-          "name": "секунди",
-          "description": "Колко секунди да се извадят от текущото време"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
-      "name": "в",
-      "description": "Задава времева марка в бъдещето спрямо текущото време",
+      "name": "in",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "години",
-          "description": "Колко години да се добавят към текущото време"
+          "name": "years",
+          "description": "How many years to add to the current time"
         },
         "months": {
-          "name": "месеци",
-          "description": "Колко месеца да се добавят към текущото време"
+          "name": "months",
+          "description": "How many months to add to the current time"
         },
         "days": {
-          "name": "дни",
-          "description": "Колко дни да се добавят към текущото време"
+          "name": "days",
+          "description": "How many days to add to the current time"
         },
         "hours": {
-          "name": "часове",
-          "description": "Колко часа да се добавят към текущото време"
+          "name": "hours",
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
-          "name": "минути",
-          "description": "Колко минути да се добавят към текущото време"
+          "name": "minutes",
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
-          "name": "секунди",
-          "description": "Колко секунди да се добавят към текущото време"
+          "name": "seconds",
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
       "name": "at",
-      "description": "Посочете точните компоненти на времевата марка (включително часовата зона)",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
-          "name": "година",
-          "description": "Посочете годината (по подразбиране е текущата година)"
+          "name": "year",
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "месец",
-          "description": "Посочете месеца (по подразбиране е текущият месец)"
+          "name": "month",
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "ден",
-          "description": "Посочете деня (по подразбиране е текущият ден)"
+          "name": "day",
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "час",
-          "description": "Посочете часа (по подразбиране е текущият час)"
+          "name": "hour",
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
           "name": "hour12",
           "description": "Specify the hour using 12-hour clock (defaults to current hour)"
         },
         "minute": {
-          "name": "минута",
-          "description": "Посочете минутата (по подразбиране е текущата минута)"
+          "name": "minute",
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "секунда",
-          "description": "Посочете секундата (по подразбиране е 0)"
+          "name": "second",
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
@@ -114,15 +114,15 @@
     },
     "add": {
       "name": "add",
-      "description": "Добавя време към зададена времева марка с UNIX формат",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
-          "name": "към",
-          "description": "Времевата марка в UNIX формат в секунди"
+          "name": "to",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "години",
+          "name": "years",
           "description": "How many years to add to the specified timestamp"
         },
         "months": {
@@ -237,8 +237,8 @@
           "description": "Display the initial time (as interpreted by the bot) on top of the response"
         },
         "timezone": {
-          "name": "часова зона",
-          "description": "Посочете часовата зона (по подразбиране е GMT)"
+          "name": "timezone",
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {

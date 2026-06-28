@@ -2,200 +2,200 @@
   "commands": {
     "ago": {
       "name": "ago",
-      "description": "現在時間から過去のタイムスタンプを作成",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
           "name": "years",
-          "description": "現在時間から引く年数"
+          "description": "How many years to subtract from the current time"
         },
         "months": {
           "name": "months",
-          "description": "現在時間から引く月数"
+          "description": "How many months to subtract from the current time"
         },
         "days": {
           "name": "days",
-          "description": "現在時間から引く日数"
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
           "name": "hours",
-          "description": "現在時間から引く時間数"
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
           "name": "minutes",
-          "description": "現在時間から引く分数"
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
           "name": "seconds",
-          "description": "現在時間から引く秒数"
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
       "name": "in",
-      "description": "現在時間から未来のタイムスタンプを作成",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
           "name": "years",
-          "description": "現在時間に足す年数"
+          "description": "How many years to add to the current time"
         },
         "months": {
           "name": "months",
-          "description": "現在時間に足す月数"
+          "description": "How many months to add to the current time"
         },
         "days": {
           "name": "days",
-          "description": "現在時間に足す日数"
+          "description": "How many days to add to the current time"
         },
         "hours": {
           "name": "hours",
-          "description": "現在時間に足す時間数"
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
           "name": "minutes",
-          "description": "現在時間に足す分数"
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
           "name": "seconds",
-          "description": "現在時間に足す秒数"
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
       "name": "at",
-      "description": "タイムスタンプの要素を指定する（時間帯を含む）",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
           "name": "year",
-          "description": "年を指定（デフォルト：今年）"
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
           "name": "month",
-          "description": "月を指定（デフォルト：今月）"
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
           "name": "day",
-          "description": "日を指定（デフォルト：今日）"
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
           "name": "hour",
-          "description": "時間を指定（デフォルト：現在の時間）"
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
-          "name": "12時間",
-          "description": "12時間制で時間を指定してください（デフォルトは現在の時刻です）"
+          "name": "hour12",
+          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
         },
         "minute": {
           "name": "minute",
-          "description": "分を指定（デフォルト：現在の分）"
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
           "name": "second",
-          "description": "秒を指定（デフォルト：0）"
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
-          "name": "午前",
-          "description": "Trueの場合、時間は1時から12時の間でなければならず、午前（ante meridiem）として解釈されます"
+          "name": "am",
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
         },
         "pm": {
-          "name": "午後",
-          "description": "Trueの場合、時間は1から12の間でなければならず、午後（午後）として解釈されます"
+          "name": "pm",
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
         }
       },
       "responses": {
-        "amOrPmOnly": "午前と午後の両方のオプションを同時に指定することはできません",
-        "meridiemRequired": "12進法のオプションを使用する際は、am または pm オプションのいずれかを指定する必要があります",
-        "noAmOrPmWithMeridiem": "時刻オプションに午前/午後が指定されている場合、am/pmオプションを別途指定することはできません",
-        "hourOrHour12Only": "時間指定オプションと12時間形式指定オプションを同時に指定することはできません",
-        "hourRange": "午前・午後が指定されていない場合、時間は0から23までの数値でなければなりません",
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
+        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
+        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
+        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
         "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
       }
     },
     "add": {
-      "name": "addd",
-      "description": "指定されたUNIXタイムスタンプに時間を足す",
+      "name": "add",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
           "name": "to",
-          "description": "UNIXタイムスタンプ（秒）"
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
           "name": "years",
-          "description": "指定されたタイムスタンプに足す年数"
+          "description": "How many years to add to the specified timestamp"
         },
         "months": {
           "name": "months",
-          "description": "指定されたタイムスタンプに足す月数"
+          "description": "How many months to add to the specified timestamp"
         },
         "days": {
           "name": "days",
-          "description": "指定されたタイムスタンプに足す日数"
+          "description": "How many days to add to the specified timestamp"
         },
         "hours": {
           "name": "hours",
-          "description": "指定されたタイムスタンプに足す時間数"
+          "description": "How many hours to add to the specified timestamp"
         },
         "minutes": {
           "name": "minutes",
-          "description": "指定されたタイムスタンプに足す分数"
+          "description": "How many minutes to add to the specified timestamp"
         },
         "seconds": {
           "name": "seconds",
-          "description": "指定されたタイムスタンプに足す秒数"
+          "description": "How many seconds to add to the specified timestamp"
         }
       }
     },
     "subtract": {
       "name": "subtract",
-      "description": "指定されたUNIXタイムスタンプから時間を引く",
+      "description": "Subtract some time from the specified UNIX timestamp",
       "responses": {},
       "options": {
         "from": {
           "name": "from",
-          "description": "UNIXタイムスタンプ（秒）"
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
           "name": "years",
-          "description": "指定されたタイムスタンプから引く年数"
+          "description": "How many years to subtract from the specified timestamp"
         },
         "months": {
           "name": "months",
-          "description": "指定されたタイムスタンプから引く月数"
+          "description": "How many months to subtract from the specified timestamp"
         },
         "days": {
           "name": "days",
-          "description": "指定されたタイムスタンプから引く日数"
+          "description": "How many days to subtract from the specified timestamp"
         },
         "hours": {
           "name": "hours",
-          "description": "指定されたタイムスタンプから引く時間数"
+          "description": "How many hours to subtract from the specified timestamp"
         },
         "minutes": {
           "name": "minutes",
-          "description": "指定されたタイムスタンプから引く分数"
+          "description": "How many minutes to subtract from the specified timestamp"
         },
         "seconds": {
           "name": "seconds",
-          "description": "指定されたタイムスタンプから引く秒数"
+          "description": "How many seconds to subtract from the specified timestamp"
         }
       }
     },
     "unix": {
       "name": "unix",
-      "description": "特定のUNIXタイムスタンプの構文を表示する",
+      "description": "Display the syntaxes for a specific UNIX timestamp",
       "responses": {},
       "options": {
         "value": {
           "name": "value",
-          "description": "UNIXタイムスタンプ（秒）"
+          "description": "The UNIX timestamp in seconds"
         }
       }
     },
     "global": {
       "responses": {
-        "invalidDate": "指定された日付が無効です（例：指定された日が存在しない）",
+        "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
         "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
         "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
         "unexpectedError": "There was an unexpected error while processing this interaction",
@@ -205,17 +205,17 @@
       "options": {
         "format": {
           "name": "format",
-          "description": "指定された形式のみを表示",
+          "description": "Returns only the specified format in the response",
           "choices": {
-            "d": "短い日付",
-            "D": "長い日付",
-            "t": "短い時刻",
-            "T": "長い時刻",
-            "f": "日付と時間",
-            "F": "曜日、日付と時間",
+            "d": "short date",
+            "D": "long date",
+            "t": "short time",
+            "T": "long time",
+            "f": "date and time",
+            "F": "weekday, date and time",
             "s": "short date and short time",
             "S": "short date and long time",
-            "R": "相対的",
+            "R": "relative",
             "all": "all (default)"
           }
         },
@@ -238,7 +238,7 @@
         },
         "timezone": {
           "name": "timezone",
-          "description": "時間帯を指定（デフォルト：GMT（ロンドン））"
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {

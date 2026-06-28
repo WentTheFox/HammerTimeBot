@@ -1,332 +1,332 @@
 {
   "commands": {
     "ago": {
-      "name": "ที่ผ่านมา",
-      "description": "กรุณาระบุเวลาในอดีตของเวลาปัจจุบัน",
+      "name": "ago",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "ปี",
-          "description": "หาปีได้นีปีนั้นมาลบกับปีปัจจุบัน"
+          "name": "years",
+          "description": "How many years to subtract from the current time"
         },
         "months": {
-          "name": "เดือน",
-          "description": "หาเดือนได้โดยนำเดือนมาลบกับเดือนปัจจุบัน"
+          "name": "months",
+          "description": "How many months to subtract from the current time"
         },
         "days": {
-          "name": "วัน",
-          "description": "หาวันได้โดยนำวันมาลบกันวันปัจจุบัน"
+          "name": "days",
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
-          "name": "ชั่วโมง",
-          "description": "หาชั่วโมงได้โดยนำชั่วโมงมาลบกับชั่วโมงปัจจุบัน"
+          "name": "hours",
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
-          "name": "นาที",
-          "description": "หานาทีได้โดยนำนาทีลบกับปัจจุบัน"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
-          "name": "วินาที",
-          "description": "หาวินาทีได้โดยนำวินาทีมาลบกับปัจจุบัน"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
-      "name": "ใน",
-      "description": "ระบุเวลาในอนาคตของเวลาปัจจุบัน",
+      "name": "in",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "ปี",
-          "description": "หาปีได้นีปีนั้นมาบวกกับปีปัจจุบัน"
+          "name": "years",
+          "description": "How many years to add to the current time"
         },
         "months": {
-          "name": "เดือน",
-          "description": "หาเดือนได้โดยนำเดือนมาบวกกับเดือนปัจจุบัน"
+          "name": "months",
+          "description": "How many months to add to the current time"
         },
         "days": {
-          "name": "วัน",
-          "description": "หาวันได้โดยนำวันมาบวกกันวันปัจจุบัน"
+          "name": "days",
+          "description": "How many days to add to the current time"
         },
         "hours": {
-          "name": "ชั่วโมง",
-          "description": "หาชั่วโมงได้โดยนำชั่วโมงมาบวกชั่วโมงปัจจุบัน"
+          "name": "hours",
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
-          "name": "นาที",
-          "description": "หานาทีได้โดยนำนาทีบวกกับปัจจุบัน"
+          "name": "minutes",
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
-          "name": "วินาที",
-          "description": "หาวินาทีได้โดยนำวินาทีมาบวกวินาทีปัจจุบัน"
+          "name": "seconds",
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
-      "name": "ณ",
-      "description": "ระบุเวลาที่แน่นอน (รวมถึงเขตเวลา)",
+      "name": "at",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
-          "name": "ปี",
-          "description": "ระบุปี (ค่าเริ่มต้นคือปีนี้)"
+          "name": "year",
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "เดือน",
-          "description": "ระบุเดือน (ค่าเริ่มต้นคือเดือนนี้)"
+          "name": "month",
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "วัน",
-          "description": "ระบุวัน (ค่าเริ่มต้นคือวันนี้)"
+          "name": "day",
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "ชั่วโมง",
-          "description": "ระบุชั่วโมง (ค่าเริ่มต้นคือชั่วโมงนี้)"
+          "name": "hour",
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
-          "name": "รูปแบบเวลา 12 ชั่วโมง",
-          "description": "ระบุชั่วโมงเป็น 12 ชั่วโมง (ค่าดั้งเดิมคือชั่วโมง ณ ปัจจุบัน)"
+          "name": "hour12",
+          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
         },
         "minute": {
-          "name": "นาที",
-          "description": "ระบุนาที (ค่าเริ่มต้นคือนาทีนี้)"
+          "name": "minute",
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "วินาที",
-          "description": "ระบุวินาที (ค่าเริ่มต้นคือ 0)"
+          "name": "second",
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
-          "name": "เวลาก่อนเที่ยง",
-          "description": "เมื่อตัวเลือกเป็นใช่ ชั่วโมงจะต้องเป็นเลขตั้งแต่ 1 ถึง 12 และจะเป็นเวลาก่อนเที่ยง (AM/ante meridiem)"
+          "name": "am",
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
         },
         "pm": {
-          "name": "เวลาหลังเที่ยง",
-          "description": "เมื่อตัวเลือกนี้คือใช่ ชั่วโมงจะต้องเป็นเลขตั้งแต่ 1 ถึง 12 และจะเป็นชั่วโมงหลังจากเที่ยง"
+          "name": "pm",
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
         }
       },
       "responses": {
-        "amOrPmOnly": "คุณไม่สามารถระบุตัวเลือก am และ pm พร้อมกันได้ในเวลาเดียวกัน",
-        "meridiemRequired": "คุณต้องระบุตัวเลือก am หรือ pm อย่างใดอย่างหนึ่งเมื่อใช้ตัวเลือกเวลาแบบ12ชั่วโมง",
-        "noAmOrPmWithMeridiem": "คุณไม่สามารถระบุตัวเลือก am หรือ pm ได้ เมื่อมีการระบุค่า เมอริเดียม ไว้แล้วในตัวเลือกชั่วโมง",
-        "hourOrHour12Only": "คุณไม่สามารถระบุตัวเลือกชั่วโมง และแบบ12ชั่วโมง พร้อมกันได้ในเวลาเดียวกัน",
-        "hourRange": "เมื่อไม่ได้ระบุค่าเมอริเดียม (Am หรือ Pm) ค่าชั่วโมงต้องเป็นตัวเลขระหว่าง 0 ถึง 23",
-        "hour12Range": "เมื่อมีการระบุค่าเมอริเดียม (Am หรือ Pm) ค่าชั่วโมงต้องเป็นตัวเลขระหว่าง 1 ถึง 12"
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
+        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
+        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
+        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
+        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
       }
     },
     "add": {
-      "name": "เพิ่ม",
-      "description": "เพิ่มเวลาสำหรับเวลารูปแบบ UNIX",
+      "name": "add",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
-          "name": "ถึง",
-          "description": "รูปแบบเวลาแบบ UNIX ในรูปของวินาที"
+          "name": "to",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "ปี",
-          "description": "จำนวนปีที่จะเพิ่มในการประทับเวลาที่ระบุ"
+          "name": "years",
+          "description": "How many years to add to the specified timestamp"
         },
         "months": {
-          "name": "เดือน",
-          "description": "จำนวนเดือนที่จะเพิ่มในการประทับเวลาที่ระบุ"
+          "name": "months",
+          "description": "How many months to add to the specified timestamp"
         },
         "days": {
-          "name": "วัน",
-          "description": "จำนวนวันที่จะเพิ่มในการประทับเวลาที่ระบุ"
+          "name": "days",
+          "description": "How many days to add to the specified timestamp"
         },
         "hours": {
-          "name": "ชั่วโมง",
-          "description": "จำนวนชั่วโมงที่จะเพิ่มในการประทับเวลาที่ระบุ"
+          "name": "hours",
+          "description": "How many hours to add to the specified timestamp"
         },
         "minutes": {
-          "name": "นาที",
-          "description": "จำนวนนาทีที่จะเพิ่มในการประทับเวลาที่ระบุ"
+          "name": "minutes",
+          "description": "How many minutes to add to the specified timestamp"
         },
         "seconds": {
-          "name": "วินาที",
-          "description": "จำนวนวินาทีที่จะเพิ่มในการประทับเวลาที่ระบุ"
+          "name": "seconds",
+          "description": "How many seconds to add to the specified timestamp"
         }
       }
     },
     "subtract": {
-      "name": "ลบ",
-      "description": "ลบเวลาบางส่วนจากการประทับเวลา UNIX ที่ระบุ",
+      "name": "subtract",
+      "description": "Subtract some time from the specified UNIX timestamp",
       "responses": {},
       "options": {
         "from": {
-          "name": "จาก",
-          "description": "ประทับเวลา UNIX เป็นวินาที"
+          "name": "from",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "ปี",
-          "description": "จำนวนปีที่จะลบออกจากการประทับเวลาที่ระบุ"
+          "name": "years",
+          "description": "How many years to subtract from the specified timestamp"
         },
         "months": {
-          "name": "เดือน",
-          "description": "จำนวนเดือนที่จะลบออกจากการประทับเวลาที่ระบุ"
+          "name": "months",
+          "description": "How many months to subtract from the specified timestamp"
         },
         "days": {
-          "name": "วัน",
-          "description": "จำนวนวันที่จะลบออกจากการประทับเวลาที่ระบุ"
+          "name": "days",
+          "description": "How many days to subtract from the specified timestamp"
         },
         "hours": {
-          "name": "ชั่วโมง",
-          "description": "จำนวนชั่วโมงที่จะลบออกจากการประทับเวลาที่ระบุ"
+          "name": "hours",
+          "description": "How many hours to subtract from the specified timestamp"
         },
         "minutes": {
-          "name": "นาที",
-          "description": "ลบจำนวนนาทีจากเวลาที่ระบุ"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the specified timestamp"
         },
         "seconds": {
-          "name": "วินาที",
-          "description": "ลบจำนวนวินาทีจากเวลาที่ระบุ"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the specified timestamp"
         }
       }
     },
     "unix": {
       "name": "unix",
-      "description": "แสดงไวยากรณ์สำหรับการประทับเวลา UNIX โดยเฉพาะ",
+      "description": "Display the syntaxes for a specific UNIX timestamp",
       "responses": {},
       "options": {
         "value": {
-          "name": "ค่า",
-          "description": "การประทับเวลา UNIX เป็นวินาที"
+          "name": "value",
+          "description": "The UNIX timestamp in seconds"
         }
       }
     },
     "global": {
       "responses": {
-        "invalidDate": "วันที่ที่ระบุไม่ถูกต้อง (เช่น วันที่ระบุไม่มีอยู่จริง)",
-        "noComponentsCurrentTime": "คุณต้องระบุองค์ประกอบเวลาอย่างน้อยหนึ่งรายการเพื่อเปลี่ยนแปลง หากคุณต้องการเวลาปัจจุบัน ให้ใช้ `/{{atCommand}}` โดยไม่ต้องระบุข้อมูลใดๆ",
-        "noComponentsUnix": "คุณต้องระบุองค์ประกอบเวลาอย่างน้อยหนึ่งรายการเพื่อเปลี่ยนแปลง หากคุณต้องการรับไวยากรณ์สำหรับเวลา UNIX ให้ใช้ `/{{unixCommand}}`",
-        "unexpectedError": "เกิดข้อผิดพลาดที่ไม่คาดคิดระหว่างดำเนินการ",
-        "unsupportedTimezone": "เขตเวลาที่ระบุไว้ ({{timezone}}) ไม่รองรับ",
-        "changeTimezoneSetting": "วิธีการสร้างค่าตราประทับเวลาบนเซิร์ฟเวอร์มีการเปลี่ยนแปลงเมื่อไม่นานมานี้ หากก่อนหน้านี้ใช้งานได้ตามปกติ คุณอาจต้องอัปเดตการตั้งค่าของคุณโดยใช้คำสั่ง /{{settingsCommand}}"
+        "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
+        "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
+        "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
+        "unexpectedError": "There was an unexpected error while processing this interaction",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {
-          "name": "รูปแบบ",
-          "description": "ส่งกลับเฉพาะรูปแบบที่ระบุในการตอบกลับ",
+          "name": "format",
+          "description": "Returns only the specified format in the response",
           "choices": {
-            "d": "วันในรูปแบบสั้น",
-            "D": "วันในรูปแบบยาว",
-            "t": "ระยะเวลารูปแบบสั้น",
-            "T": "ระยะเวลารูปแบบยาว",
-            "f": "วันและเวลา",
-            "F": "วันธรรมดา วันที่และเวลา",
+            "d": "short date",
+            "D": "long date",
+            "t": "short time",
+            "T": "long time",
+            "f": "date and time",
+            "F": "weekday, date and time",
             "s": "short date and short time",
             "S": "short date and long time",
-            "R": "อิงเวลา",
-            "all": "ทั้งหมด (ค่าเริ่มต้น)"
+            "R": "relative",
+            "all": "all (default)"
           }
         },
         "columns": {
-          "name": "คอลัมน์",
-          "description": "ระบุคอลัมน์ที่จะแสดงในการตอบกลับที่ส่งคืน",
+          "name": "columns",
+          "description": "Specify which columns to display in the returned response",
           "choices": {
-            "both": "ทั้งไวยากรณ์และการแสดงตัวอย่าง",
-            "preview": "ดูตัวอย่างเท่านั้น",
-            "syntax": "ไวยากรณ์เท่านั้น"
+            "both": "both syntax and preview",
+            "preview": "preview only",
+            "syntax": "syntax only"
           }
         },
         "ephemeral": {
-          "name": "ชั่วคราว",
-          "description": "เมื่อเป็นจริง การตอบกลับจะปรากฏให้คุณเห็นเท่านั้น"
+          "name": "ephemeral",
+          "description": "When true the response will only be visible to you"
         },
         "header": {
-          "name": "ส่วนหัว",
-          "description": "แสดงเวลาเริ่มต้น (ตามที่บอทตีความ) ที่ด้านบนของการตอบกลับ"
+          "name": "header",
+          "description": "Display the initial time (as interpreted by the bot) on top of the response"
         },
         "timezone": {
-          "name": "เขตเวลา",
-          "description": "ระบุเขตเวลา (ค่าเริ่มต้นคือ GMT)"
+          "name": "timezone",
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {
-        "replyWithSpecificFormat": "เลือกฟอร์แมตด้านล่างเพื่อรับข้อความตอบกลับ (สำหรับคัดลอกบนอุปกรณ์สัมผัส)",
-        "incompleteTranslations": "การแปลยังไม่สมบูรณ์",
-        "contributeTranslations": "การสนับสนุน",
-        "telemetryThankYou": "ขอขอบคุณที่ให้ข้อมูลการวัดผลการใช้งานที่จะช่วยในการพัฒนาบอทในอนาคต ดูรายละเอียดเพิ่มเติมได้ที่ {{privacyPolicy}}",
-        "telemetryInfoCount": "นี่คือคำสั่งครั้งที่ #{{executionNumber}} สำหรับคำสั่ง {{command}} (เนื่องจากเราพึ่งได้นับ)",
-        "privacyPolicyLink": "นโยบายความเป็นส่วนตัว",
-        "recordingTelemetry": "กำลังรวบรวมข้อมูลการวัดผลการใช้งาน สำหรับคำสั่งนี้ ผลลัพธ์กำลังรอการดำเนินการ…",
-        "telemetryPlaceholder": "ส่วนที่เหลือของข้อความนี้มีไว้เพื่อป้องกันไม่ให้ขนาดข้อความเปลี่ยนแปลงมากเกินไปเมื่อมีผลการบันทึกข้อมูลการวัดผลการใช้งาน",
-        "feedbackWanted": "พวกเราต้องการความคิดเห็นจากคุณ!",
-        "at12Hint": "ขณะนี้มีตัวเลือกหลายแบบสำหรับการระบุจำนวนชั่วโมง ทั้งภายในคำสั่ง {{slashAt}} (ผ่านตัวเลือก {{hourOptionName}} ที่มีระบบเติมคำอัตโนมัติแล้วในตอนนี้ รวมถึงตัวเลือกใหม่ {{hour12OptionName}}, {{amOptionName}} และ {{pmOptionName}}) และคำสั่งใหม่ {{slashAt12}}\nคุณสามารถเลือกใช้วิธีใดก็ได้ที่คุณสะดวกมากที่สุด ความนิยมของแต่ละวิธี (อ้างอิงจากข้อมูล Telemetry) จะเป็นตัวกำหนดว่าตัวเลือกใดจะถูกทำให้เป็นแบบถาวรในอนาคต"
+        "replyWithSpecificFormat": "Select a format below to receive it in a reply (for copying on touch devices)",
+        "incompleteTranslations": "Translations are incomplete",
+        "contributeTranslations": "Contribute",
+        "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
+        "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
+        "privacyPolicyLink": "Privacy Policy",
+        "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
+        "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
+        "feedbackWanted": "Feedback wanted!",
+        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
       }
     },
     "statistics": {
       "name": "statistics",
-      "description": "แสดงข้อมูลต่างๆ เกี่ยวกับบอท",
+      "description": "Displays various information about the bot",
       "options": {},
       "responses": {
-        "totalServerCount": "จำนวนเซิร์ฟเวอร์ที่บอทอยู่ทั้งหมด:",
-        "shardServerCount": "จำนวนเซิร์ฟเวอร์ที่บน Shard นี้ทั้งหมด:",
-        "uptime": "Shard เวลาเริ่มคือ:",
-        "shardCount": "จำนวน Shard:",
-        "shardNumber": "(สถิติเหล่านี้สร้างขึ้นโดย Shard ไอดี #{{shardId}})",
-        "noShards": "(บอทไม่ได้ใช้งาน Sharding)",
-        "serverInvite": "ลิ้งค์เซิร์ฟเวอร์สำหรับช่วยเหลือ:",
-        "totalUserCount": "จำนวนคนที่อยู่ในเซิร์ฟเวอร์ที่บอทอยู่:",
-        "supportedLanguages": "ภาษาที่รองรับ",
-        "crowdinProject": "ลิงก์ URL ของโปรเจกต์ใน Crowdin:"
+        "totalServerCount": "Total servers joined:",
+        "shardServerCount": "Servers on this shard:",
+        "uptime": "Shard startup time:",
+        "shardCount": "Number of shards:",
+        "shardNumber": "(These statistics were generated by shard #{{shardId}})",
+        "noShards": "(The bot is not currently using sharding)",
+        "serverInvite": "Support server invite URL:",
+        "totalUserCount": "Total users in joined servers:",
+        "supportedLanguages": "Supported languages:",
+        "crowdinProject": "Crowdin project URL:"
       }
     },
     "snowflake": {
-      "name": "ซะโนวเฟลค",
-      "description": "แสดงไวยากรณ์สำหรับการประทับเวลาของซะโนวเฟลค (ID ส่วนใหญ่ภายใน Discord)",
+      "name": "snowflake",
+      "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord)",
       "responses": {
-        "invalidSnowflake": "ซะโนวเฟลคที่ระบุนั้นมีความผิดพลาด"
+        "invalidSnowflake": "The specified Snowflake is invalid"
       },
       "options": {
         "value": {
-          "name": "ค่า",
-          "description": "เลขซะโนวเฟลค"
+          "name": "value",
+          "description": "The Snowflake number"
         }
       }
     },
     "Message Sent": {
-      "name": "ส่งข้อความแล้ว",
+      "name": "Message Sent",
       "responses": {
-        "targetMessage": "เวลาที่ส่งสำหรับข้อความต่อไปนี้: {{url}}"
+        "targetMessage": "Send timestamp for the following message: {{url}}"
       }
     },
     "Message Last Edited": {
-      "name": "ข้อความถูกแก้ไขเมื่อใด",
+      "name": "Message Last Edited",
       "responses": {
-        "targetMessage": "เวลาที่ถูกแก้ไขของข้อความนี้: {{url}}",
-        "notEdited": "ข้อความนี้ยังไม่ถูกแก้ที"
+        "targetMessage": "Last edit timestamp for the following message: {{url}}",
+        "notEdited": "This message has not been edited yet"
       }
     },
     "iso": {
       "name": "iso",
-      "description": "แสดงไวยากรณ์สำหรับเวลาในรูปแบบ ISO 8601",
+      "description": "Display the syntaxes for a specific ISO 8601 timestamp",
       "responses": {
-        "invalidIsoFormat": "ค่าที่ระบุไม่ตรงกับเวลามาตรฐานของ ISO 8601"
+        "invalidIsoFormat": "The provided value does not match the ISO 8601 standard"
       },
       "options": {
         "value": {
-          "name": "ค่า",
-          "description": "รูปแบบเวลาตามมาตรฐานของ ISO 8601"
+          "name": "value",
+          "description": "The ISO 8601 standard timestamp"
         }
       }
     },
     "Extract Timestamps": {
-      "name": "แยกประทับเวลา",
+      "name": "Extract Timestamps",
       "responses": {
-        "targetMessage": "การประทับเวลาทั้งหมดที่พบในข้อความต่อไปนี้: {{url}}",
-        "noTimestamps": "ข้อความนี้ไม่มีการประทับเวลาในรูปแบบ Discord"
+        "targetMessage": "All timestamps found in the following message: {{url}}",
+        "noTimestamps": "This message does not contain any timestamps in Discord's format"
       }
     },
     "settings": {
-      "name": "การตั้งค่า",
-      "description": "สร้างลิงก์เพื่อจัดการการตั้งค่าของคุณผ่านเว็บไซต์",
+      "name": "settings",
+      "description": "Create a link to manage your settings via the website",
       "responses": {
-        "linkCreated": "โปรดไปที่ลิงค์ด้านล่างเพื่อเข้าสู่ระบบเว็บไซต์ของบอทเพื่อเปลี่ยนการตั้งค่าของคุณโดยอัตโนมัติ\n<{{magicLink}}>\nลิงค์นี้จะหมดอายุ ณ {{expiresAt}} แต่คุณสามารถที่จะรันคำสั่งนี้เพื่อสร้างลิงค์ใหม่เสมอ หรือไปที่ลิงค์ <{{loginUrl}}> เพื่อเข้าสู่ระบบด้วยตนเอง แล้วไปที่ <{{settingsUrl}}> เพื่อเปลี่ยนการตั้งค่าของคุณ",
-        "failedToCreateLink": "ไม่สามารถสร้างลิงค์เพื่อเข้าสู่ระบบอัตโนมัติได้ คุณต้องไปที่ <{{loginUrl}}> และเข้าสู่ระบบโดยตนเอง และไปที่ <{{settingsUrl}}> เพื่อเปลี่ยนการตั้งค่าของคุณ"
+        "linkCreated": "Please visit the link below to be logged into the bot's website automatically in order to change your settings.\n<{{magicLink}}>\nThis link will expire {{expiresAt}} but you can always run this command to generate a new link, or visit <{{loginUrl}}> to log in manually, then go to <{{settingsUrl}}> to change your settings.",
+        "failedToCreateLink": "Could not generate a link to log you in automatically, please visit <{{loginUrl}}> and log in manually, then go to <{{settingsUrl}}> to change your settings."
       },
       "options": {},
       "components": {
-        "openSettingsButton": "การตั้งค่าบอท"
+        "openSettingsButton": "Bot Settings"
       }
     },
     "faq": {
@@ -340,44 +340,44 @@
       }
     },
     "at12": {
-      "name": "ณ12",
-      "description": "ระบุองค์ประกอบของค่าตราประทับเวลาอย่างละเอียด (โดยใช้ระบบเวลาแบบ 12 ชั่วโมง)",
+      "name": "at12",
+      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
       "responses": {
-        "amOrPmOnly": "คุณไม่สามารถระบุตัวเลือก am และ pm พร้อมกันได้ในเวลาเดียวกัน",
-        "meridiemRequired": "คุณต้องระบุตัวเลือก am หรือ pm อย่างใดอย่างหนึ่ง"
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option"
       },
       "options": {
         "year": {
-          "name": "ปี",
-          "description": "ระบุปี (ค่าเริ่มต้นคือปีปัจจุบัน)"
+          "name": "year",
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "เดือน",
-          "description": "ระบุเดือน (ค่าเริ่มต้นคือเดือนปัจจุบัน)"
+          "name": "month",
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "วัน",
-          "description": "ระบุวัน (ค่าเริ่มต้นคือวันนี้)"
+          "name": "day",
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "ชั่วโมง",
-          "description": "ระบุชั่วโมง (ค่าเริ่มต้นคือชั่วโมงนี้)"
+          "name": "hour",
+          "description": "Specify the hour (defaults to current hour)"
         },
         "minute": {
-          "name": "นาที",
-          "description": "ระบุนาที (ค่าเริ่มต้นคือนาทีนี้)"
+          "name": "minute",
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "วินาที",
-          "description": "ระบุวินาที (ค่าเริ่มต้นคือ 0)"
+          "name": "second",
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
-          "name": "เวลาก่อนเที่ยง",
-          "description": "เมื่อค่าเป็นจริง ชั่วโมงจะถูกตีความว่าเป็นช่วงเวลาก่อนเที่ยง (am — ก่อนเที่ยง)"
+          "name": "am",
+          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
         },
         "pm": {
-          "name": "เวลาหลังเที่ยง",
-          "description": "เมื่อค่าเป็นจริง ชั่วโมงจะถูกตีความว่าเป็นช่วงหลังเที่ยง (pm — หลังเที่ยง)"
+          "name": "pm",
+          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
         }
       }
     }

@@ -1,98 +1,98 @@
 {
   "commands": {
     "ago": {
-      "name": "há",
-      "description": "Especifique uma timestamp no passado em relação à hora atual",
+      "name": "ago",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "anos",
-          "description": "Quantos anos para subtrair da data atual"
+          "name": "years",
+          "description": "How many years to subtract from the current time"
         },
         "months": {
-          "name": "meses",
-          "description": "Quantos meses para subtrair da data atual"
+          "name": "months",
+          "description": "How many months to subtract from the current time"
         },
         "days": {
-          "name": "dias",
-          "description": "Quantos dias para subtrair da data atual"
+          "name": "days",
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
-          "name": "horas",
-          "description": "Quantas horas para subtrair da hora atual"
+          "name": "hours",
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
-          "name": "minutos",
-          "description": "Quantos minutos para subtrair da hora atual"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
-          "name": "segundos",
-          "description": "Quantos segundos para subtrair da hora atual"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
-      "name": "em",
-      "description": "Especifique uma timestamp no futuro em relação à hora atual",
+      "name": "in",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "anos",
-          "description": "Quantos anos para adicionar à data atual"
+          "name": "years",
+          "description": "How many years to add to the current time"
         },
         "months": {
-          "name": "meses",
-          "description": "Quantos meses para adicionar à data atual"
+          "name": "months",
+          "description": "How many months to add to the current time"
         },
         "days": {
-          "name": "dias",
-          "description": "Quantos dias para adicionar à data atual"
+          "name": "days",
+          "description": "How many days to add to the current time"
         },
         "hours": {
-          "name": "horas",
-          "description": "Quantas horas para adicionar à hora atual"
+          "name": "hours",
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
-          "name": "minutos",
-          "description": "Quantos minutos para adicionar à hora atual"
+          "name": "minutes",
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
-          "name": "segundos",
-          "description": "Quantos segundos para adicionar à hora atual"
+          "name": "seconds",
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
-      "name": "como",
-      "description": "Especifique os componentes exatos da timestamp (incluindo o fuso horário)",
+      "name": "at",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
-          "name": "ano",
-          "description": "Especifique o ano (o padrão é o ano atual)"
+          "name": "year",
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "mês",
-          "description": "Especifique o mês (o padrão é o mês atual)"
+          "name": "month",
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "dia",
-          "description": "Especifique o dia (o padrão é o dia atual)"
+          "name": "day",
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "hora",
-          "description": "Especifique a hora (o padrão é a hora atual)"
+          "name": "hour",
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
           "name": "hour12",
           "description": "Specify the hour using 12-hour clock (defaults to current hour)"
         },
         "minute": {
-          "name": "minuto",
-          "description": "Especifique o minuto (o padrão é o minuto atual)"
+          "name": "minute",
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "segundo",
-          "description": "Especifique o segundo (o padrão é 0)"
+          "name": "second",
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
@@ -113,138 +113,138 @@
       }
     },
     "add": {
-      "name": "adicionar",
-      "description": "Adicione um tempo para a timestamp UNIX especificada",
+      "name": "add",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
-          "name": "para",
-          "description": "A timestamp UNIX em segundos"
+          "name": "to",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "anos",
-          "description": "Quantos anos para adicionar à timestamp especificada"
+          "name": "years",
+          "description": "How many years to add to the specified timestamp"
         },
         "months": {
-          "name": "meses",
-          "description": "Quantos meses para adicionar à timestamp especificada"
+          "name": "months",
+          "description": "How many months to add to the specified timestamp"
         },
         "days": {
-          "name": "dias",
-          "description": "Quantos dias para adicionar à timestamp especificada"
+          "name": "days",
+          "description": "How many days to add to the specified timestamp"
         },
         "hours": {
-          "name": "horas",
-          "description": "Quantas horas para adicionar à timestamp especificada"
+          "name": "hours",
+          "description": "How many hours to add to the specified timestamp"
         },
         "minutes": {
-          "name": "minutos",
-          "description": "Quantos minutos para adicionar à timestamp especificada"
+          "name": "minutes",
+          "description": "How many minutes to add to the specified timestamp"
         },
         "seconds": {
-          "name": "segundos",
-          "description": "Quantos segundos para adicionar à timestamp especificada"
+          "name": "seconds",
+          "description": "How many seconds to add to the specified timestamp"
         }
       }
     },
     "subtract": {
-      "name": "subtrair",
-      "description": "Subtraia um tempo da timestamp UNIX especificada",
+      "name": "subtract",
+      "description": "Subtract some time from the specified UNIX timestamp",
       "responses": {},
       "options": {
         "from": {
-          "name": "de",
-          "description": "A timestamp UNIX em segundos"
+          "name": "from",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "anos",
-          "description": "Quantos anos para subtrair da timestamp especificada"
+          "name": "years",
+          "description": "How many years to subtract from the specified timestamp"
         },
         "months": {
-          "name": "meses",
-          "description": "Quantos meses para subtrair da timestamp especificada"
+          "name": "months",
+          "description": "How many months to subtract from the specified timestamp"
         },
         "days": {
-          "name": "dias",
-          "description": "Quantos dias para subtrair da timestamp especificada"
+          "name": "days",
+          "description": "How many days to subtract from the specified timestamp"
         },
         "hours": {
-          "name": "horas",
-          "description": "Quantas horas para subtrair da timestamp especificada"
+          "name": "hours",
+          "description": "How many hours to subtract from the specified timestamp"
         },
         "minutes": {
-          "name": "minutos",
-          "description": "Quantos minutos devem ser subtraídos do registro de data e hora especificado"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the specified timestamp"
         },
         "seconds": {
-          "name": "segundos",
-          "description": "Quantos segundos devem ser subtraídos do registro de data e hora especificado"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the specified timestamp"
         }
       }
     },
     "unix": {
       "name": "unix",
-      "description": "Mostra as sintaxes para uma timestamp UNIX específica",
+      "description": "Display the syntaxes for a specific UNIX timestamp",
       "responses": {},
       "options": {
         "value": {
-          "name": "valor",
-          "description": "A timestamp UNIX em segundos"
+          "name": "value",
+          "description": "The UNIX timestamp in seconds"
         }
       }
     },
     "global": {
       "responses": {
-        "invalidDate": "A data especificada é inválida (por exemplo: o dia fornecido não existe)",
-        "noComponentsCurrentTime": "Você deve especificar pelo menos um componente de tempo para mudar. Se você precisa da hora atual, use `/{{atCommand}}` sem especificar nenhum argumento",
-        "noComponentsUnix": "Você deve especificar pelo menos um componente de tempo para mudar. Se você quiser obter a sintaxe de um registro de data e hora UNIX, use `/{{unixCommand}}`",
-        "unexpectedError": "Ocorreu um erro inesperado ao processar essa interação",
+        "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
+        "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
+        "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
+        "unexpectedError": "There was an unexpected error while processing this interaction",
         "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
         "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {
-          "name": "formato",
-          "description": "Retorna apenas o formato especificado na resposta",
+          "name": "format",
+          "description": "Returns only the specified format in the response",
           "choices": {
-            "d": "data abreviada",
-            "D": "data por extenso",
-            "t": "hora abreviada",
-            "T": "hora por extenso",
-            "f": "data e hora",
-            "F": "dia da semana, data e hora",
+            "d": "short date",
+            "D": "long date",
+            "t": "short time",
+            "T": "long time",
+            "f": "date and time",
+            "F": "weekday, date and time",
             "s": "short date and short time",
             "S": "short date and long time",
-            "R": "relativo",
-            "all": "todos (padrão)"
+            "R": "relative",
+            "all": "all (default)"
           }
         },
         "columns": {
-          "name": "colunas",
-          "description": "Especifique quais colunas exibir na resposta retornada",
+          "name": "columns",
+          "description": "Specify which columns to display in the returned response",
           "choices": {
-            "both": "sintaxe e pré-visualização",
-            "preview": "apenas pré-visualização",
-            "syntax": "apenas sintaxe"
+            "both": "both syntax and preview",
+            "preview": "preview only",
+            "syntax": "syntax only"
           }
         },
         "ephemeral": {
-          "name": "efêmero",
-          "description": "Quando ativado, a resposta só será visível para você"
+          "name": "ephemeral",
+          "description": "When true the response will only be visible to you"
         },
         "header": {
-          "name": "cabeçalho",
-          "description": "Mostra a hora inicial (conforme interpretado pelo bot) em cima da resposta"
+          "name": "header",
+          "description": "Display the initial time (as interpreted by the bot) on top of the response"
         },
         "timezone": {
-          "name": "fuso horário",
-          "description": "Especifique o fuso horário (o padrão é GMT)"
+          "name": "timezone",
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {
-        "replyWithSpecificFormat": "Selecione um formato abaixo para recebê-lo em uma resposta (para copiar em dispositivos de toque)",
-        "incompleteTranslations": "As traduções estão incompletas",
-        "contributeTranslations": "Contribuir",
+        "replyWithSpecificFormat": "Select a format below to receive it in a reply (for copying on touch devices)",
+        "incompleteTranslations": "Translations are incomplete",
+        "contributeTranslations": "Contribute",
         "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
         "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
         "privacyPolicyLink": "Privacy Policy",
@@ -255,78 +255,78 @@
       }
     },
     "statistics": {
-      "name": "estatísticas",
-      "description": "Mostra várias informações sobre o bot",
+      "name": "statistics",
+      "description": "Displays various information about the bot",
       "options": {},
       "responses": {
-        "totalServerCount": "Total de servidores entrados:",
-        "shardServerCount": "Servidores neste fragmento:",
-        "uptime": "Tempo de inicialização do fragmento:",
-        "shardCount": "Número de fragmentos:",
-        "shardNumber": "(Estas estatísticas foram geradas pelo fragmento #{{shardId}})",
-        "noShards": "(O bot não está usando fragmentação no momento)",
-        "serverInvite": "Link do servidor de suporte:",
-        "totalUserCount": "Total de usuários em servidores entrados:",
-        "supportedLanguages": "Idiomas compatíveis:",
-        "crowdinProject": "URL do projeto Crowdin:"
+        "totalServerCount": "Total servers joined:",
+        "shardServerCount": "Servers on this shard:",
+        "uptime": "Shard startup time:",
+        "shardCount": "Number of shards:",
+        "shardNumber": "(These statistics were generated by shard #{{shardId}})",
+        "noShards": "(The bot is not currently using sharding)",
+        "serverInvite": "Support server invite URL:",
+        "totalUserCount": "Total users in joined servers:",
+        "supportedLanguages": "Supported languages:",
+        "crowdinProject": "Crowdin project URL:"
       }
     },
     "snowflake": {
       "name": "snowflake",
-      "description": "Exibir a sintaxe do registro de data e hora de um Snowflake (a maioria das IDs no Discord)",
+      "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord)",
       "responses": {
-        "invalidSnowflake": "O Snowflake especificado é inválido"
+        "invalidSnowflake": "The specified Snowflake is invalid"
       },
       "options": {
         "value": {
-          "name": "valor",
-          "description": "O número do Snowflake"
+          "name": "value",
+          "description": "The Snowflake number"
         }
       }
     },
     "Message Sent": {
-      "name": "Mensagem Enviada",
+      "name": "Message Sent",
       "responses": {
-        "targetMessage": "Enviar registro de data e hora para a seguinte mensagem: {{url}}"
+        "targetMessage": "Send timestamp for the following message: {{url}}"
       }
     },
     "Message Last Edited": {
-      "name": "Última Edição da Mensagem",
+      "name": "Message Last Edited",
       "responses": {
-        "targetMessage": "Registro de data e hora da última edição da mensagem a seguir: {{url}}",
-        "notEdited": "Esta mensagem não foi editada ainda"
+        "targetMessage": "Last edit timestamp for the following message: {{url}}",
+        "notEdited": "This message has not been edited yet"
       }
     },
     "iso": {
       "name": "iso",
-      "description": "Exibir as sintaxes para um registro de data e horar ISO 8601 específico",
+      "description": "Display the syntaxes for a specific ISO 8601 timestamp",
       "responses": {
-        "invalidIsoFormat": "O valor fornecido não corresponde com o padrão ISO 8601"
+        "invalidIsoFormat": "The provided value does not match the ISO 8601 standard"
       },
       "options": {
         "value": {
-          "name": "valor",
-          "description": "O carimbo de data e hora padrão ISO 8601"
+          "name": "value",
+          "description": "The ISO 8601 standard timestamp"
         }
       }
     },
     "Extract Timestamps": {
-      "name": "Extrair registros de data e hora",
+      "name": "Extract Timestamps",
       "responses": {
-        "targetMessage": "Todos os registros de data e hora encontrados na mensagem a seguir: {{url}}",
-        "noTimestamps": "Esta mensagem não contém nenhum registro de data e hora no formato do Discord"
+        "targetMessage": "All timestamps found in the following message: {{url}}",
+        "noTimestamps": "This message does not contain any timestamps in Discord's format"
       }
     },
     "settings": {
-      "name": "configurações",
-      "description": "Criar um link para gerenciar suas configurações através do site",
+      "name": "settings",
+      "description": "Create a link to manage your settings via the website",
       "responses": {
         "linkCreated": "Please visit the link below to be logged into the bot's website automatically in order to change your settings.\n<{{magicLink}}>\nThis link will expire {{expiresAt}} but you can always run this command to generate a new link, or visit <{{loginUrl}}> to log in manually, then go to <{{settingsUrl}}> to change your settings.",
-        "failedToCreateLink": "Não foi possível gerar um link para autenticá-lo automaticamente, visite <{{loginUrl}}> e faça o login manualmente, depois vá para <{{settingsUrl}}> para alterar suas configurações."
+        "failedToCreateLink": "Could not generate a link to log you in automatically, please visit <{{loginUrl}}> and log in manually, then go to <{{settingsUrl}}> to change your settings."
       },
       "options": {},
       "components": {
-        "openSettingsButton": "Configurações do Bot"
+        "openSettingsButton": "Bot Settings"
       }
     },
     "faq": {

@@ -1,332 +1,332 @@
 {
   "commands": {
     "ago": {
-      "name": "în urmă",
-      "description": "Specificați un marcaj temporal în trecut în raport cu ora curentă",
+      "name": "ago",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "ani",
-          "description": "Câți ani trebuie scăzuți din timpul curent"
+          "name": "years",
+          "description": "How many years to subtract from the current time"
         },
         "months": {
-          "name": "luni",
-          "description": "Câte luni se scad din ora actuală"
+          "name": "months",
+          "description": "How many months to subtract from the current time"
         },
         "days": {
-          "name": "zile",
-          "description": "Câte zile se scad din ora actuală"
+          "name": "days",
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
-          "name": "ore",
-          "description": "Câte ore se scad din ora curentă"
+          "name": "hours",
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
-          "name": "minute",
-          "description": "Câte minute se scad din ora curentă"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
-          "name": "secunde",
-          "description": "Câte secunde se scad din ora curentă"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
-      "name": "în",
-      "description": "Specificați un marcaj temporal în viitor în raport cu ora curentă",
+      "name": "in",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "ani",
-          "description": "Câți ani trebuie adăugați la timpul curent"
+          "name": "years",
+          "description": "How many years to add to the current time"
         },
         "months": {
-          "name": "luni",
-          "description": "Câte luni se adaugă la timpul curent"
+          "name": "months",
+          "description": "How many months to add to the current time"
         },
         "days": {
-          "name": "zile",
-          "description": "Câte zile se adaugă la ora actuală"
+          "name": "days",
+          "description": "How many days to add to the current time"
         },
         "hours": {
-          "name": "ore",
-          "description": "Câte ore se adaugă la ora actuală"
+          "name": "hours",
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
-          "name": "minute",
-          "description": "Câte minute se adaugă la ora curentă"
+          "name": "minutes",
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
-          "name": "secunde",
-          "description": "Câte secunde se adaugă la ora curentă"
+          "name": "seconds",
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
-      "name": "la",
-      "description": "Specificați componentele exacte ale timestamp-ului (inclusiv fusul orar)",
+      "name": "at",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
-          "name": "ani",
-          "description": "Precizați anul (implicit anul curent)"
+          "name": "year",
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "luna",
-          "description": "Specificați luna (valoarea implicită este luna curentă)"
+          "name": "month",
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "zi",
-          "description": "Precizați ziua (valoarea implicită este ziua curentă)"
+          "name": "day",
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "ora",
-          "description": "Specificați ora (valoarea implicită este ora curentă)"
+          "name": "hour",
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
-          "name": "ora12",
-          "description": "Specificați ora folosind ceasul de 12 ore (implicit este ora curentă)"
+          "name": "hour12",
+          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
         },
         "minute": {
           "name": "minute",
-          "description": "Specificați minutul (valoarea implicită este minutul curent)"
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "secunde",
-          "description": "Specificați secunda (valoarea implicită este 0)"
+          "name": "second",
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
-          "description": "Când este adevărat, ora trebuie să fie între 1 și 12 și va fi interpretată ca AM (ante meridiem)"
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
         },
         "pm": {
           "name": "pm",
-          "description": "Când este adevărat, ora trebuie să fie între 1 și 12 și va fi interpretată ca PM (post meridiem)"
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
         }
       },
       "responses": {
-        "amOrPmOnly": "Nu puteți specifica simultan opțiunile am și pm în același timp",
-        "meridiemRequired": "Trebuie să specificați opțiunea am sau pm atunci când utilizați opțiunea ora12",
-        "noAmOrPmWithMeridiem": "Nu puteți specifica opțiunile am sau pm atunci când meridiemul este furnizat în opțiunea oră",
-        "hourOrHour12Only": "Nu puteți specifica simultan opțiunile hour și ora12 în același timp",
-        "hourRange": "Când nu este specificat un meridiem, ora trebuie să fie un număr între 0 și 23",
-        "hour12Range": "Când se specifică un meridiem, ora trebuie să fie un număr între 1 și 12"
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
+        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
+        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
+        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
+        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
       }
     },
     "add": {
-      "name": "adaugă",
-      "description": "Adăugați ceva timp la timestamp-ul UNIX specificat",
+      "name": "add",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
-          "name": "la",
-          "description": "Timestamp UNIX în secunde"
+          "name": "to",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "ani",
-          "description": "Câți ani trebuie adăugați la data și ora specificate"
+          "name": "years",
+          "description": "How many years to add to the specified timestamp"
         },
         "months": {
-          "name": "luni",
-          "description": "Câte luni se adaugă la data și ora specificate"
+          "name": "months",
+          "description": "How many months to add to the specified timestamp"
         },
         "days": {
-          "name": "zile",
-          "description": "Câte zile se adaugă la data și ora specificate"
+          "name": "days",
+          "description": "How many days to add to the specified timestamp"
         },
         "hours": {
-          "name": "ore",
-          "description": "Câte ore se adaugă la data și ora specificate"
+          "name": "hours",
+          "description": "How many hours to add to the specified timestamp"
         },
         "minutes": {
-          "name": "minute",
-          "description": "Câte minute se adaugă la data și ora specificate"
+          "name": "minutes",
+          "description": "How many minutes to add to the specified timestamp"
         },
         "seconds": {
-          "name": "secunde",
-          "description": "Câte secunde se adaugă la data și ora specificate"
+          "name": "seconds",
+          "description": "How many seconds to add to the specified timestamp"
         }
       }
     },
     "subtract": {
-      "name": "se sustrage",
-      "description": "Sustrage o anumită perioadă de timp din timestamp-ul UNIX specificat",
+      "name": "subtract",
+      "description": "Subtract some time from the specified UNIX timestamp",
       "responses": {},
       "options": {
         "from": {
-          "name": "de la",
-          "description": "Timestamp UNIX în secunde"
+          "name": "from",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "ani",
-          "description": "Câți ani trebuie scăzuți din data și ora specificate"
+          "name": "years",
+          "description": "How many years to subtract from the specified timestamp"
         },
         "months": {
-          "name": "luni",
-          "description": "Câte luni se scad din data și ora specificate"
+          "name": "months",
+          "description": "How many months to subtract from the specified timestamp"
         },
         "days": {
-          "name": "zile",
-          "description": "Câte zile se scad din data și ora specificate"
+          "name": "days",
+          "description": "How many days to subtract from the specified timestamp"
         },
         "hours": {
-          "name": "ore",
-          "description": "Câte ore se scad din data și ora specificate"
+          "name": "hours",
+          "description": "How many hours to subtract from the specified timestamp"
         },
         "minutes": {
-          "name": "minute",
-          "description": "Câte minute se scad din data și ora specificate"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the specified timestamp"
         },
         "seconds": {
-          "name": "secunde",
-          "description": "Câte secunde se scad din data și ora specificate"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the specified timestamp"
         }
       }
     },
     "unix": {
       "name": "unix",
-      "description": "Afișarea sintaxelor pentru un anumit timestamp UNIX",
+      "description": "Display the syntaxes for a specific UNIX timestamp",
       "responses": {},
       "options": {
         "value": {
-          "name": "valoare",
-          "description": "Timestamp UNIX în secunde"
+          "name": "value",
+          "description": "The UNIX timestamp in seconds"
         }
       }
     },
     "global": {
       "responses": {
-        "invalidDate": "Data specificată nu este valabilă (de exemplu: ziua dată nu există)",
-        "noComponentsCurrentTime": "Trebuie să specificați cel puțin o componentă de timp care trebuie modificată. Dacă aveți nevoie de ora curentă, utilizați `/{{atCommand}}` fără să specificați niciun argument",
-        "noComponentsUnix": "Trebuie să specificați cel puțin o componentă de timp care trebuie modificată. Dacă doriți să obțineți sintaxa pentru un timestamp UNIX, utilizați `/{{unixCommand}}`",
-        "unexpectedError": "A apărut o eroare neașteptată în timpul procesării acestei interacțiuni",
-        "unsupportedTimezone": "Fusul orar furnizat ({{timezone}}) nu este acceptat",
-        "changeTimezoneSetting": "Modul în care sunt generate marcajele temporale pe server s-a schimbat recent. Dacă acest lucru funcționa înainte, poate fi necesar să actualizați setările utilizând comanda `/{{settingsCommand}}`."
+        "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
+        "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
+        "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
+        "unexpectedError": "There was an unexpected error while processing this interaction",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {
-          "name": "formatul",
-          "description": "Returnează numai formatul specificat în răspuns",
+          "name": "format",
+          "description": "Returns only the specified format in the response",
           "choices": {
-            "d": "data scurtă",
-            "D": "data lungă",
-            "t": "timp scurt",
-            "T": "timp lung",
-            "f": "data și simpu",
-            "F": "ziua săptămânii, data și ora",
-            "s": "termen scurt și timp scurt",
-            "S": "scurtă perioadă și lungă perioadă",
-            "R": "relativ",
-            "all": "toate (implicit)"
+            "d": "short date",
+            "D": "long date",
+            "t": "short time",
+            "T": "long time",
+            "f": "date and time",
+            "F": "weekday, date and time",
+            "s": "short date and short time",
+            "S": "short date and long time",
+            "R": "relative",
+            "all": "all (default)"
           }
         },
         "columns": {
-          "name": "coloane",
-          "description": "Specificați ce coloane trebuie afișate în răspunsul returnat",
+          "name": "columns",
+          "description": "Specify which columns to display in the returned response",
           "choices": {
-            "both": "atât sintaxa, cât și previzualizarea",
-            "preview": "doar previzualizare",
-            "syntax": "doar sintaxa"
+            "both": "both syntax and preview",
+            "preview": "preview only",
+            "syntax": "syntax only"
           }
         },
         "ephemeral": {
-          "name": "efemer",
-          "description": "Când este adevărat, răspunsul va fi vizibil doar pentru dumneavoastră"
+          "name": "ephemeral",
+          "description": "When true the response will only be visible to you"
         },
         "header": {
-          "name": "antet",
-          "description": "Afișați ora inițială (așa cum este interpretată de bot) în partea de sus a răspunsului"
+          "name": "header",
+          "description": "Display the initial time (as interpreted by the bot) on top of the response"
         },
         "timezone": {
-          "name": "fus orar",
-          "description": "Specificați fusul orar (valoarea implicită este GMT)"
+          "name": "timezone",
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {
-        "replyWithSpecificFormat": "Selectați un format mai jos pentru a-l primi într-un răspuns (pentru copiere pe dispozitive tactile)",
-        "incompleteTranslations": "Traducerile sunt incomplete",
-        "contributeTranslations": "Contribuiți",
-        "telemetryThankYou": "Vă mulțumim pentru contribuția cu date telemetrice, care ajută la dezvoltarea viitoare a botului. Consultați {{privacyPolicy}} pentru detalii.",
-        "telemetryInfoCount": "Aceasta este execuția nr. {{executionNumber}} pentru comanda {{command}} (de când am început să numărăm).",
-        "privacyPolicyLink": "Politica de confidențialitate",
-        "recordingTelemetry": "Se colectează date telemetrice pentru această comandă, rezultatele sunt în așteptare…",
-        "telemetryPlaceholder": "Restul acestui text este inclus doar pentru a împiedica modificarea excesivă a dimensiunii mesajului atunci când sunt disponibile rezultatele înregistrării telemetrice.",
-        "feedbackWanted": "Feedback dorit!",
-        "at12Hint": "Există acum mai multe opțiuni diferite pentru a specifica numărul de ore atât în cadrul comenzii {{slashAt}} (prin opțiunea existentă {{hourOptionName}}, care are acum completare automată, sau prin noile opțiuni {{hour12OptionName}}, {{amOptionName}} și {{pmOptionName}}), cât și în cadrul noii comenzi {{slashAt12}}. Utilizați opțiunea cu care vă simțiți mai confortabil. Popularitatea fiecărei metode (bazată pe datele telemetrice) va determina care dintre aceste opțiuni va deveni permanentă."
+        "replyWithSpecificFormat": "Select a format below to receive it in a reply (for copying on touch devices)",
+        "incompleteTranslations": "Translations are incomplete",
+        "contributeTranslations": "Contribute",
+        "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
+        "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
+        "privacyPolicyLink": "Privacy Policy",
+        "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
+        "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
+        "feedbackWanted": "Feedback wanted!",
+        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
       }
     },
     "statistics": {
-      "name": "statistici",
-      "description": "Afișează diverse informații despre bot",
+      "name": "statistics",
+      "description": "Displays various information about the bot",
       "options": {},
       "responses": {
-        "totalServerCount": "Total servere alăturate:",
-        "shardServerCount": "Serverele de pe acest shard:",
-        "uptime": "Ora de pornire a fragmentului:",
-        "shardCount": "Numărul de fragmente:",
-        "shardNumber": "(Aceste statistici au fost generate de către shard #{{shardId}})",
-        "noShards": "(Bot-ul nu folosește în prezent sharding)",
-        "serverInvite": "URL de invitație a serverului de suport:",
-        "totalUserCount": "Numărul total de utilizatori în serverele alăturate:",
-        "supportedLanguages": "Limbi acceptate:",
-        "crowdinProject": "URL-ul proiectului Crowdin:"
+        "totalServerCount": "Total servers joined:",
+        "shardServerCount": "Servers on this shard:",
+        "uptime": "Shard startup time:",
+        "shardCount": "Number of shards:",
+        "shardNumber": "(These statistics were generated by shard #{{shardId}})",
+        "noShards": "(The bot is not currently using sharding)",
+        "serverInvite": "Support server invite URL:",
+        "totalUserCount": "Total users in joined servers:",
+        "supportedLanguages": "Supported languages:",
+        "crowdinProject": "Crowdin project URL:"
       }
     },
     "snowflake": {
       "name": "snowflake",
-      "description": "Afișează sintaxa pentru marcajul de timp al unui Snowflake (majoritatea ID-urilor din Discord)",
+      "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord)",
       "responses": {
-        "invalidSnowflake": "Snowflake-ul specificat nu este valabil"
+        "invalidSnowflake": "The specified Snowflake is invalid"
       },
       "options": {
         "value": {
-          "name": "valoare",
-          "description": "Numarul Snowflake"
+          "name": "value",
+          "description": "The Snowflake number"
         }
       }
     },
     "Message Sent": {
-      "name": "Mesaj trimis",
+      "name": "Message Sent",
       "responses": {
-        "targetMessage": "Trimite marcajul de timp pentru următorul mesaj: {{url}}"
+        "targetMessage": "Send timestamp for the following message: {{url}}"
       }
     },
     "Message Last Edited": {
-      "name": "Ultimul mesaj editat",
+      "name": "Message Last Edited",
       "responses": {
-        "targetMessage": "Data și ora ultimei modificări pentru următorul mesaj: {{url}}",
-        "notEdited": "Acest mesaj nu a fost încă editat"
+        "targetMessage": "Last edit timestamp for the following message: {{url}}",
+        "notEdited": "This message has not been edited yet"
       }
     },
     "iso": {
       "name": "iso",
-      "description": "Afișați sintaxele pentru un anumit marcaj de timp ISO 8601",
+      "description": "Display the syntaxes for a specific ISO 8601 timestamp",
       "responses": {
-        "invalidIsoFormat": "Valoarea furnizată nu corespunde standardului ISO 8601"
+        "invalidIsoFormat": "The provided value does not match the ISO 8601 standard"
       },
       "options": {
         "value": {
-          "name": "valoarea",
-          "description": "Marca temporală standard ISO 8601"
+          "name": "value",
+          "description": "The ISO 8601 standard timestamp"
         }
       }
     },
     "Extract Timestamps": {
-      "name": "Extrageți marcajele de timp",
+      "name": "Extract Timestamps",
       "responses": {
-        "targetMessage": "Toate marcajele de timp găsite în următorul mesaj: {{url}}",
-        "noTimestamps": "Acest mesaj nu conține marcaje temporale în formatul Discord"
+        "targetMessage": "All timestamps found in the following message: {{url}}",
+        "noTimestamps": "This message does not contain any timestamps in Discord's format"
       }
     },
     "settings": {
-      "name": "setări",
-      "description": "Creați un link pentru a vă gestiona setările prin intermediul site-ului web",
+      "name": "settings",
+      "description": "Create a link to manage your settings via the website",
       "responses": {
-        "linkCreated": "Vă rugăm să vizitați linkul de mai jos pentru a vă autentifica automat pe site-ul bot pentru a vă schimba setările.\n<{{magicLink}}>\nAcest link va expira {{expiresAt}} dar puteți rula oricând această comandă pentru a genera un nou link, sau puteți vizita <{{loginUrl}}> pentru a vă autentifica manual, apoi mergeți la <{{settingsUrl}}> pentru a vă modifica setările.",
-        "failedToCreateLink": "Nu s-a putut genera un link care să vă logheze automat, vă rugăm să vizitați <{{loginUrl}}> și conectați-vă manual, apoi mergeți la <{{settingsUrl}}> pentru a vă modifica setările."
+        "linkCreated": "Please visit the link below to be logged into the bot's website automatically in order to change your settings.\n<{{magicLink}}>\nThis link will expire {{expiresAt}} but you can always run this command to generate a new link, or visit <{{loginUrl}}> to log in manually, then go to <{{settingsUrl}}> to change your settings.",
+        "failedToCreateLink": "Could not generate a link to log you in automatically, please visit <{{loginUrl}}> and log in manually, then go to <{{settingsUrl}}> to change your settings."
       },
       "options": {},
       "components": {
-        "openSettingsButton": "Setări Bot"
+        "openSettingsButton": "Bot Settings"
       }
     },
     "faq": {
@@ -340,44 +340,44 @@
       }
     },
     "at12": {
-      "name": "la12",
-      "description": "Specificați componentele exacte ale marcajului temporal (utilizând un ceas de 12 ore)",
+      "name": "at12",
+      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
       "responses": {
-        "amOrPmOnly": "Nu puteți specifica simultan opțiunile am și pm în același timp",
-        "meridiemRequired": "Trebuie să selectați opțiunea am sau pm"
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option"
       },
       "options": {
         "year": {
-          "name": "an",
-          "description": "Specificați anul (implicit este anul curent)"
+          "name": "year",
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "lună",
-          "description": "Specificați luna (implicit este luna curentă)"
+          "name": "month",
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "zi",
-          "description": "Specificați ziua (implicit este setată ziua curentă)"
+          "name": "day",
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "ora",
-          "description": "Specificați ora (implicit este ora curentă)"
+          "name": "hour",
+          "description": "Specify the hour (defaults to current hour)"
         },
         "minute": {
           "name": "minute",
-          "description": "Specificați minutul (implicit este minutul curent)"
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "secunde",
-          "description": "Specificați secunda (implicit 0)"
+          "name": "second",
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
-          "description": "Când este adevărat, ora va fi interpretată ca am (ante meridiem, înainte de prânz)"
+          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
         },
         "pm": {
           "name": "pm",
-          "description": "Când este adevărat, ora va fi interpretată ca pm (post meridiem, după amiază)"
+          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
         }
       }
     }

@@ -2,210 +2,210 @@
   "commands": {
     "ago": {
       "name": "ago",
-      "description": "Укажите временную метку в прошлом относительно текущего времени",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
           "name": "years",
-          "description": "Сколько лет нужно вычесть из текущего времени"
+          "description": "How many years to subtract from the current time"
         },
         "months": {
           "name": "months",
-          "description": "Сколько месяцев нужно вычесть из текущего времени"
+          "description": "How many months to subtract from the current time"
         },
         "days": {
           "name": "days",
-          "description": "Сколько дней нужно вычесть из текущего времени"
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
           "name": "hours",
-          "description": "Сколько часов нужно вычесть из текущего времени"
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Сколько минут нужно вычесть из текущего времени"
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Сколько секунд нужно вычесть из текущего времени"
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
       "name": "in",
-      "description": "Укажите временную метку в будущем относительно текущего времени",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
           "name": "years",
-          "description": "Сколько лет нужно прибавить к текущему времени"
+          "description": "How many years to add to the current time"
         },
         "months": {
           "name": "months",
-          "description": "Сколько месяцев нужно прибавить к текущему времени"
+          "description": "How many months to add to the current time"
         },
         "days": {
           "name": "days",
-          "description": "Сколько дней нужно прибавить к текущему времени"
+          "description": "How many days to add to the current time"
         },
         "hours": {
           "name": "hours",
-          "description": "Сколько часов нужно прибавить к текущему времени"
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Сколько минут нужно прибавить к текущему времени"
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Сколько секунд нужно прибавить к текущему времени"
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
       "name": "at",
-      "description": "Укажите точные компоненты временной метки (включая часовой пояс)",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
           "name": "year",
-          "description": "Укажите год (по умолчанию - текущий год)"
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
           "name": "month",
-          "description": "Укажите месяц (по умолчанию - текущий месяц)"
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
           "name": "day",
-          "description": "Укажите день (по умолчанию - текущий день)"
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
           "name": "hour",
-          "description": "Укажите час (по умолчанию - текущий час)"
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
           "name": "hour12",
-          "description": "Укажите час, используя 12-часовые часы (по умолчанию - текущий час)"
+          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
         },
         "minute": {
           "name": "minute",
-          "description": "Укажите минуту (по умолчанию используется текущая минута)"
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
           "name": "second",
-          "description": "Укажите секунду (по умолчанию 0)"
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
-          "description": "Если True, значение часа должно быть от 1 до 12 и оно будет интерпретироваться как AM (до полудня)"
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
         },
         "pm": {
           "name": "pm",
-          "description": "Если True, значение часа должно быть от 1 до 12 и оно будет интерпретировано как PM (после полудня)"
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
         }
       },
       "responses": {
-        "amOrPmOnly": "Нельзя указывать am и pm одновременно",
-        "meridiemRequired": "При использовании опции hour12 вы должны указать либо am, либо pm",
-        "noAmOrPmWithMeridiem": "Вы не можете указать опции am или pm, если полдень указан в опции hour",
-        "hourOrHour12Only": "Нельзя использовать hour and hour12 одновременно",
-        "hourRange": "Если полдень не указан, час должен быть числом от 0 до 23",
-        "hour12Range": "Если полдень указен, час должен быть числом от 1 до 12"
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
+        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
+        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
+        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
+        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
       }
     },
     "add": {
       "name": "add",
-      "description": "Добавить некоторое время к указанной временной метке UNIX",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
           "name": "to",
-          "description": "Временная метка UNIX в секундах"
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
           "name": "years",
-          "description": "Сколько лет нужно прибавить к указанной временной метке"
+          "description": "How many years to add to the specified timestamp"
         },
         "months": {
           "name": "months",
-          "description": "Сколько месяцев нужно прибавить к указанной временной метке"
+          "description": "How many months to add to the specified timestamp"
         },
         "days": {
           "name": "days",
-          "description": "Сколько дней нужно прибавить к указанной временной метке"
+          "description": "How many days to add to the specified timestamp"
         },
         "hours": {
           "name": "hours",
-          "description": "Сколько часов нужно прибавить к указанной временной метке"
+          "description": "How many hours to add to the specified timestamp"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Сколько минут нужно добавить к указанной метке времени"
+          "description": "How many minutes to add to the specified timestamp"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Сколько секунд нужно добавить к указанной метке времени"
+          "description": "How many seconds to add to the specified timestamp"
         }
       }
     },
     "subtract": {
       "name": "subtract",
-      "description": "Вычесть некоторое время из указанной временной метки UNIX",
+      "description": "Subtract some time from the specified UNIX timestamp",
       "responses": {},
       "options": {
         "from": {
           "name": "from",
-          "description": "Временная метка UNIX в секундах"
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
           "name": "years",
-          "description": "Сколько лет нужно вычесть из указанной временной метки"
+          "description": "How many years to subtract from the specified timestamp"
         },
         "months": {
           "name": "months",
-          "description": "Сколько месяцев нужно вычесть из указанной временной метки"
+          "description": "How many months to subtract from the specified timestamp"
         },
         "days": {
           "name": "days",
-          "description": "Сколько дней нужно вычесть из указанной метки времени"
+          "description": "How many days to subtract from the specified timestamp"
         },
         "hours": {
           "name": "hours",
-          "description": "Сколько часов нужно вычесть из указанной метки времени"
+          "description": "How many hours to subtract from the specified timestamp"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Сколько минут нужно вычесть из указанной метки времени"
+          "description": "How many minutes to subtract from the specified timestamp"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Сколько секунд нужно вычесть из указанной метки времени"
+          "description": "How many seconds to subtract from the specified timestamp"
         }
       }
     },
     "unix": {
       "name": "unix",
-      "description": "Отображение синтаксиса для конкретной временной метки UNIX",
+      "description": "Display the syntaxes for a specific UNIX timestamp",
       "responses": {},
       "options": {
         "value": {
           "name": "value",
-          "description": "Временная метка UNIX в секундах"
+          "description": "The UNIX timestamp in seconds"
         }
       }
     },
     "global": {
       "responses": {
-        "invalidDate": "Указанная дата недействительна (например: заданный день не существует)",
-        "noComponentsCurrentTime": "Необходимо указать изменение как минимум одной величины. Если вас интересует нынешнее время, используйте `/{{atCommand}}` без каких либо аргументов",
-        "noComponentsUnix": "Необходимо указать изменение как минимум одной величины. Если вас интересует синтаксис временной метки UNIX, используйте `/{{unixCommand}}`",
-        "unexpectedError": "При обработке этого действия произошла непредвиденная ошибка",
-        "unsupportedTimezone": "Указанный часовой пояс ({{timezone}}) не поддерживается",
-        "changeTimezoneSetting": "Способ генерации временных меток на сервере недавно изменился. Если раньше это работало, то возможно вам потребуется обновить настройки с помощью команды `/{{settingsCommand}}`."
+        "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
+        "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
+        "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
+        "unexpectedError": "There was an unexpected error while processing this interaction",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {
           "name": "format",
-          "description": "Возвращает только указанный формат в ответе",
+          "description": "Returns only the specified format in the response",
           "choices": {
             "d": "short date",
             "D": "long date",
@@ -216,7 +216,7 @@
             "s": "short date and short time",
             "S": "short date and long time",
             "R": "relative",
-            "all": "все (по умолчанию)"
+            "all": "all (default)"
           }
         },
         "columns": {
@@ -230,7 +230,7 @@
         },
         "ephemeral": {
           "name": "ephemeral",
-          "description": "Если значение true, ответ будет виден только Вам"
+          "description": "When true the response will only be visible to you"
         },
         "header": {
           "name": "header",
@@ -238,20 +238,20 @@
         },
         "timezone": {
           "name": "timezone",
-          "description": "Укажите часовой пояс (по умолчанию GMT)"
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {
-        "replyWithSpecificFormat": "Выберите формат ниже, чтобы получить его в ответе (для копирования на сенсорных устройствах)",
-        "incompleteTranslations": "Перевод не завершен",
-        "contributeTranslations": "Внести свой вклад",
-        "telemetryThankYou": "Благодарим за предоставление телеметрических данных, которые помогают в дальнейшей разработке бота. Подробнее см. в {{privacyPolicy}}.",
-        "telemetryInfoCount": "Это выполнение #{{executionNumber}} команды {{command}} (с момента начала счета).",
-        "privacyPolicyLink": "Политика конфиденциальности",
-        "recordingTelemetry": "Сбор телеметрии для этой команды в процессе, результаты будут доступны позже…",
-        "telemetryPlaceholder": "Остальной текст нужен лишь для того, чтобы сообщение не поменяло размер, после завершения сбора данных.",
-        "feedbackWanted": "Требуется ваше мнение!",
-        "at12Hint": "Теперь существует несколько вариантов указания часов как в команде {{slashAt}} (с помощью существующей опции {{hourOptionName}}, которая теперь имеет автозавершение или новых опций {{hour12OptionName}}, {{amOptionName}} и {{pmOptionName}}), так и в новой команде {{slashAt12}}. Используйте ту, с которой вам удобнее работать. От того, насколько популярным окажется каждый из методов (на основании данных телеметрии), будет зависеть, какая из этих опций станет постоянной."
+        "replyWithSpecificFormat": "Select a format below to receive it in a reply (for copying on touch devices)",
+        "incompleteTranslations": "Translations are incomplete",
+        "contributeTranslations": "Contribute",
+        "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
+        "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
+        "privacyPolicyLink": "Privacy Policy",
+        "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
+        "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
+        "feedbackWanted": "Feedback wanted!",
+        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
       }
     },
     "statistics": {
@@ -266,67 +266,67 @@
         "shardNumber": "(These statistics were generated by shard #{{shardId}})",
         "noShards": "(The bot is not currently using sharding)",
         "serverInvite": "Support server invite URL:",
-        "totalUserCount": "Всего пользователей на серверах:",
-        "supportedLanguages": "Поддерживаемые языки:",
-        "crowdinProject": "URL-адрес проекта Crowdin:"
+        "totalUserCount": "Total users in joined servers:",
+        "supportedLanguages": "Supported languages:",
+        "crowdinProject": "Crowdin project URL:"
       }
     },
     "snowflake": {
       "name": "snowflake",
-      "description": "Отобразить синтаксис временной метки типа Snowflake (большинство ID в Discord)",
+      "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord)",
       "responses": {
-        "invalidSnowflake": "Указанное значение Snowflake недействительно"
+        "invalidSnowflake": "The specified Snowflake is invalid"
       },
       "options": {
         "value": {
           "name": "value",
-          "description": "Число Snowflake"
+          "description": "The Snowflake number"
         }
       }
     },
     "Message Sent": {
-      "name": "Сообщение отправлено",
+      "name": "Message Sent",
       "responses": {
-        "targetMessage": "Временная метка отправки сообщения: {{url}}"
+        "targetMessage": "Send timestamp for the following message: {{url}}"
       }
     },
     "Message Last Edited": {
-      "name": "Последнее редактирование",
+      "name": "Message Last Edited",
       "responses": {
-        "targetMessage": "Временная метка последнего редактирования сообщения: {{url}}",
-        "notEdited": "Это сообщение ещё не редактировалось"
+        "targetMessage": "Last edit timestamp for the following message: {{url}}",
+        "notEdited": "This message has not been edited yet"
       }
     },
     "iso": {
       "name": "iso",
-      "description": "Показать синтаксис для конкретной временной метки ISO 8601",
+      "description": "Display the syntaxes for a specific ISO 8601 timestamp",
       "responses": {
-        "invalidIsoFormat": "Указанное значение не соответствует стандарту ISO 8601"
+        "invalidIsoFormat": "The provided value does not match the ISO 8601 standard"
       },
       "options": {
         "value": {
           "name": "value",
-          "description": "Временная метка стандарта ISO 8601"
+          "description": "The ISO 8601 standard timestamp"
         }
       }
     },
     "Extract Timestamps": {
-      "name": "Извлечь временные метки",
+      "name": "Extract Timestamps",
       "responses": {
-        "targetMessage": "Все временные метки, найденные в этом сообщении: {{url}}",
-        "noTimestamps": "Это сообщение не содержит временных меток в формате Discord"
+        "targetMessage": "All timestamps found in the following message: {{url}}",
+        "noTimestamps": "This message does not contain any timestamps in Discord's format"
       }
     },
     "settings": {
       "name": "settings",
-      "description": "Создать ссылку для управления настройками через веб-сайт",
+      "description": "Create a link to manage your settings via the website",
       "responses": {
-        "linkCreated": "Пожалуйста, перейдите по ссылке ниже, чтобы автоматически войти на сайт бота и изменить свои настройки.\n<{{magicLink}}>\nСрок действия этой ссылки истекает {{expiresAt}}. Эту команду можно выполнить повторно для создания новой ссылки, или посетить <{{loginUrl}}>, чтобы войти вручную, а затем перейти по ссылке <{{settingsUrl}}>, чтобы изменить настройки.",
-        "failedToCreateLink": "Не удалось сгенерировать ссылку для автоматического входа в аккаунт, пожалуйста, посетите <{{loginUrl}}> и войдите вручную, затем перейдите на <{{settingsUrl}}>, чтобы изменить свои настройки."
+        "linkCreated": "Please visit the link below to be logged into the bot's website automatically in order to change your settings.\n<{{magicLink}}>\nThis link will expire {{expiresAt}} but you can always run this command to generate a new link, or visit <{{loginUrl}}> to log in manually, then go to <{{settingsUrl}}> to change your settings.",
+        "failedToCreateLink": "Could not generate a link to log you in automatically, please visit <{{loginUrl}}> and log in manually, then go to <{{settingsUrl}}> to change your settings."
       },
       "options": {},
       "components": {
-        "openSettingsButton": "Настройки бота"
+        "openSettingsButton": "Bot Settings"
       }
     },
     "faq": {
@@ -341,43 +341,43 @@
     },
     "at12": {
       "name": "at12",
-      "description": "Укажите точные компоненты временной метки (используя 12-часовой формат)",
+      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
       "responses": {
-        "amOrPmOnly": "Нельзя указывать am и pm одновременно",
-        "meridiemRequired": "Вы должны указать вариант \"am\" или \"pm\""
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option"
       },
       "options": {
         "year": {
           "name": "year",
-          "description": "Укажите год (по умолчанию - текущий год)"
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
           "name": "month",
-          "description": "Укажите месяц (по умолчанию - текущий месяц)"
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
           "name": "day",
-          "description": "Укажите день (по умолчанию - текущий день)"
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
           "name": "hour",
-          "description": "Укажите час (по умолчанию - текущий час)"
+          "description": "Specify the hour (defaults to current hour)"
         },
         "minute": {
           "name": "minute",
-          "description": "Укажите минуту (по умолчанию - текущая минута)"
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
           "name": "second",
-          "description": "Укажите секунду (по умолчанию 0)"
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
-          "description": "Если True, час будет интерпретирован как am (ante meridiem, до полудня)"
+          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
         },
         "pm": {
           "name": "pm",
-          "description": "Если True, час будет интерпретирован как pm (post meridiem, после полудня)"
+          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
         }
       }
     }

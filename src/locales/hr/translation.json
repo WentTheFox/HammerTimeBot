@@ -1,98 +1,98 @@
 {
   "commands": {
     "ago": {
-      "name": "prije",
-      "description": "Navedite vremensku oznaku u prošlosti u odnosu na trenutno vrijeme",
+      "name": "ago",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "godina",
-          "description": "Koliko godina oduzeti od trenutnog vremena"
+          "name": "years",
+          "description": "How many years to subtract from the current time"
         },
         "months": {
-          "name": "mjeseci",
-          "description": "Koliko mjeseci oduzeti od trenutnog vremena"
+          "name": "months",
+          "description": "How many months to subtract from the current time"
         },
         "days": {
-          "name": "dani",
-          "description": "Koliko dana oduzeti od trenutnog vremena"
+          "name": "days",
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
-          "name": "sati",
-          "description": "Koliko sati treba oduzeti od trenutnog vremena"
+          "name": "hours",
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
-          "name": "minute",
-          "description": "Koliko minuta treba oduzeti od trenutnog vremena"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
-          "name": "sekunde",
-          "description": "Koliko sekundi treba oduzeti od trenutnog vremena"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
-      "name": "u",
-      "description": "Navedite vremensku oznaku u budućnosti u odnosu na trenutno vrijeme",
+      "name": "in",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "godina",
-          "description": "Koliko godina dodati sadašnjem vremenu"
+          "name": "years",
+          "description": "How many years to add to the current time"
         },
         "months": {
-          "name": "mjeseci",
-          "description": "Koliko mjeseci dodati trenutnom vremenu"
+          "name": "months",
+          "description": "How many months to add to the current time"
         },
         "days": {
-          "name": "dani",
-          "description": "Koliko dana dodati trenutnom vremenu"
+          "name": "days",
+          "description": "How many days to add to the current time"
         },
         "hours": {
-          "name": "sati",
-          "description": "Koliko sati dodati trenutnom vremenu"
+          "name": "hours",
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
-          "name": "minute",
-          "description": "Koliko minuta dodati trenutnom vremenu"
+          "name": "minutes",
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
-          "name": "sekunde",
-          "description": "Koliko sekundi dodati trenutnom vremenu"
+          "name": "seconds",
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
-      "name": "na",
-      "description": "Navedite točne komponente vremenske oznake (uključujući vremensku zonu)",
+      "name": "at",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
-          "name": "godina",
-          "description": "Navedite godinu (zadano na trenutnu godinu)"
+          "name": "year",
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "mjesec",
-          "description": "Navedite mjesec (zadano na trenutni mjesec)"
+          "name": "month",
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "dan",
-          "description": "Odredite dan (zadano na trenutni dan)"
+          "name": "day",
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "sat",
-          "description": "Navedite sat (zadano na trenutni sat)"
+          "name": "hour",
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
           "name": "hour12",
           "description": "Specify the hour using 12-hour clock (defaults to current hour)"
         },
         "minute": {
-          "name": "minuta",
-          "description": "Odredite minutu (zadano je trenutna minuta)"
+          "name": "minute",
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "sekunda",
-          "description": "Navedite drugi (zadano je 0)"
+          "name": "second",
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
@@ -113,91 +113,91 @@
       }
     },
     "add": {
-      "name": "dodaj",
-      "description": "Dodajte malo vremena navedenoj UNIX vremenskoj oznaci",
+      "name": "add",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
-          "name": "do",
-          "description": "UNIX vremenska oznaka u sekundama"
+          "name": "to",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "godine",
-          "description": "Koliko godina dodati navedenoj vremenskoj oznaci"
+          "name": "years",
+          "description": "How many years to add to the specified timestamp"
         },
         "months": {
-          "name": "mjeseci",
-          "description": "Koliko mjeseci dodati navedenoj vremenskoj oznaci"
+          "name": "months",
+          "description": "How many months to add to the specified timestamp"
         },
         "days": {
-          "name": "dani",
-          "description": "Koliko dana dodati navedenoj vremenskoj oznaci"
+          "name": "days",
+          "description": "How many days to add to the specified timestamp"
         },
         "hours": {
-          "name": "sati",
-          "description": "Koliko sati dodati navedenoj vremenskoj oznaci"
+          "name": "hours",
+          "description": "How many hours to add to the specified timestamp"
         },
         "minutes": {
-          "name": "minute",
-          "description": "Koliko minuta dodati navedenoj vremenskoj oznaci"
+          "name": "minutes",
+          "description": "How many minutes to add to the specified timestamp"
         },
         "seconds": {
-          "name": "sekunde",
-          "description": "Koliko sekundi dodati navedenoj vremenskoj oznaci"
+          "name": "seconds",
+          "description": "How many seconds to add to the specified timestamp"
         }
       }
     },
     "subtract": {
-      "name": "oduzeti",
-      "description": "Dodajte malo vremena navedenoj UNIX vremenskoj oznaci",
+      "name": "subtract",
+      "description": "Subtract some time from the specified UNIX timestamp",
       "responses": {},
       "options": {
         "from": {
-          "name": "od",
-          "description": "UNIX vremenska oznaka u sekundama"
+          "name": "from",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "godine",
-          "description": "Koliko godina treba oduzeti od navedene vremenske oznake"
+          "name": "years",
+          "description": "How many years to subtract from the specified timestamp"
         },
         "months": {
-          "name": "mjeseci",
-          "description": "Koliko mjeseci treba oduzeti od navedene vremenske oznake"
+          "name": "months",
+          "description": "How many months to subtract from the specified timestamp"
         },
         "days": {
-          "name": "dani",
-          "description": "Koliko dana treba oduzeti od navedene vremenske oznake"
+          "name": "days",
+          "description": "How many days to subtract from the specified timestamp"
         },
         "hours": {
-          "name": "sati",
-          "description": "Koliko sati treba oduzeti od navedene vremenske oznake"
+          "name": "hours",
+          "description": "How many hours to subtract from the specified timestamp"
         },
         "minutes": {
-          "name": "minute",
-          "description": "Koliko minuta treba oduzeti od navedene vremenske oznake"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the specified timestamp"
         },
         "seconds": {
-          "name": "sekunde",
-          "description": "Koliko sekundi treba oduzeti od navedene vremenske oznake"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the specified timestamp"
         }
       }
     },
     "unix": {
       "name": "unix",
-      "description": "Prikažite sintaksu za određenu UNIX vremensku oznaku",
+      "description": "Display the syntaxes for a specific UNIX timestamp",
       "responses": {},
       "options": {
         "value": {
-          "name": "vrijednost",
-          "description": "UNIX vremenska oznaka u sekundama"
+          "name": "value",
+          "description": "The UNIX timestamp in seconds"
         }
       }
     },
     "global": {
       "responses": {
-        "invalidDate": "Navedeni datum je nevažeći (na primjer: navedeni dan ne postoji)",
-        "noComponentsCurrentTime": "Morate navesti barem jednu vremensku komponentu za promjenu. Ako vam je potrebno trenutno vrijeme, koristite `/{{atCommand}}` bez navođenja argumenata",
-        "noComponentsUnix": "Morate navesti barem jednu vremensku komponentu za promjenu. Ako želite dobiti sintaksu za UNIX vremensku oznaku, koristite `/{{unixCommand}}`",
+        "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
+        "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
+        "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
         "unexpectedError": "There was an unexpected error while processing this interaction",
         "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
         "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
@@ -205,40 +205,40 @@
       "options": {
         "format": {
           "name": "format",
-          "description": "Vraća samo navedeni format u odgovoru",
+          "description": "Returns only the specified format in the response",
           "choices": {
-            "d": "kratki datum",
-            "D": "dugi datum",
-            "t": "kratko vrijeme",
-            "T": "duže vrijeme",
-            "f": "datum i vrijeme",
-            "F": "radni dan, datum i vrijeme",
+            "d": "short date",
+            "D": "long date",
+            "t": "short time",
+            "T": "long time",
+            "f": "date and time",
+            "F": "weekday, date and time",
             "s": "short date and short time",
             "S": "short date and long time",
-            "R": "relativno",
+            "R": "relative",
             "all": "all (default)"
           }
         },
         "columns": {
-          "name": "stupci",
-          "description": "Navedite koje stupce želite prikazati u vraćenom odgovoru",
+          "name": "columns",
+          "description": "Specify which columns to display in the returned response",
           "choices": {
-            "both": "zajedno sintaksu i pregled",
-            "preview": "pregled samo",
-            "syntax": "sintaksa samo"
+            "both": "both syntax and preview",
+            "preview": "preview only",
+            "syntax": "syntax only"
           }
         },
         "ephemeral": {
-          "name": "efemeran",
-          "description": "Kada je istinito, odgovor će biti vidljiv samo vama"
+          "name": "ephemeral",
+          "description": "When true the response will only be visible to you"
         },
         "header": {
-          "name": "zaglavlje",
-          "description": "Prikaži početno vrijeme (kako ga bot tumači) na vrhu odgovora"
+          "name": "header",
+          "description": "Display the initial time (as interpreted by the bot) on top of the response"
         },
         "timezone": {
-          "name": "vremenska zona",
-          "description": "Navedite vremensku zonu (zadano GMT)"
+          "name": "timezone",
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {
@@ -255,74 +255,74 @@
       }
     },
     "statistics": {
-      "name": "statistike",
-      "description": "Prikazuje razne informacije o botu",
+      "name": "statistics",
+      "description": "Displays various information about the bot",
       "options": {},
       "responses": {
-        "totalServerCount": "Ukupan broj pridruženih servera:",
-        "shardServerCount": "Poslužitelji na ovom shardu:",
-        "uptime": "Vrijeme pokretanja Sharda:",
-        "shardCount": "Broj sharda:",
-        "shardNumber": "(Ovu statistiku generirao je dio #{{shardId}})",
-        "noShards": "(Bot trenutno ne koristi sharding)",
-        "serverInvite": "URL poziva server za podršku:",
-        "totalUserCount": "Ukupan broj korisnika na pridruženim poslužiteljima:",
+        "totalServerCount": "Total servers joined:",
+        "shardServerCount": "Servers on this shard:",
+        "uptime": "Shard startup time:",
+        "shardCount": "Number of shards:",
+        "shardNumber": "(These statistics were generated by shard #{{shardId}})",
+        "noShards": "(The bot is not currently using sharding)",
+        "serverInvite": "Support server invite URL:",
+        "totalUserCount": "Total users in joined servers:",
         "supportedLanguages": "Supported languages:",
         "crowdinProject": "Crowdin project URL:"
       }
     },
     "snowflake": {
       "name": "snowflake",
-      "description": "Prikaži sintaksu za vremensku oznaku Snowflake (većina ID-ova unutar Discorda)",
+      "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord)",
       "responses": {
-        "invalidSnowflake": "Navedena Snowflake nije važeća"
+        "invalidSnowflake": "The specified Snowflake is invalid"
       },
       "options": {
         "value": {
-          "name": "vrijednost",
-          "description": "Broj snowflake"
+          "name": "value",
+          "description": "The Snowflake number"
         }
       }
     },
     "Message Sent": {
-      "name": "Poruka Poslana",
+      "name": "Message Sent",
       "responses": {
-        "targetMessage": "Pošalji vremensku oznaku za sljedeću poruku: {{url}}"
+        "targetMessage": "Send timestamp for the following message: {{url}}"
       }
     },
     "Message Last Edited": {
-      "name": "Poruka Uređena",
+      "name": "Message Last Edited",
       "responses": {
-        "targetMessage": "Vremenska oznaka zadnjeg uređivanja za sljedeću poruku: {{url}}",
-        "notEdited": "Ova poruka još nije uređena"
+        "targetMessage": "Last edit timestamp for the following message: {{url}}",
+        "notEdited": "This message has not been edited yet"
       }
     },
     "iso": {
       "name": "iso",
-      "description": "Prikaz sintakse za određenu vremensku oznaku ISO 8601",
+      "description": "Display the syntaxes for a specific ISO 8601 timestamp",
       "responses": {
-        "invalidIsoFormat": "Navedena vrijednost ne odgovara standardu ISO 8601"
+        "invalidIsoFormat": "The provided value does not match the ISO 8601 standard"
       },
       "options": {
         "value": {
-          "name": "vrijednost",
-          "description": "Standardna vremenska oznaka ISO 8601"
+          "name": "value",
+          "description": "The ISO 8601 standard timestamp"
         }
       }
     },
     "Extract Timestamps": {
-      "name": "Izdvoj vremenske oznake",
+      "name": "Extract Timestamps",
       "responses": {
-        "targetMessage": "Sve vremenske oznake pronađene u sljedećoj poruci: {{url}}",
-        "noTimestamps": "Ova poruka ne sadrži nikakve vremenske oznake u Discordovom formatu"
+        "targetMessage": "All timestamps found in the following message: {{url}}",
+        "noTimestamps": "This message does not contain any timestamps in Discord's format"
       }
     },
     "settings": {
-      "name": "postavke",
-      "description": "Izradite vezu za upravljanje svojim postavkama putem web stranice",
+      "name": "settings",
+      "description": "Create a link to manage your settings via the website",
       "responses": {
-        "linkCreated": "Posjetite donju poveznicu kako biste se automatski prijavili na web stranicu bota kako biste promijenili svoje postavke.\n<{{magicLink}}>\nOva veza će isteći {{expiresAt}}, ali uvijek možete pokrenuti ovu naredbu za generiranje nove veze ili posjetite <{{loginUrl}}> da se ručno prijavite, zatim idite na <{{settingsUrl}}> da promijenite svoje postavke.",
-        "failedToCreateLink": "Nije moguće generirati poveznicu za automatsku prijavu, posjetite <{{loginUrl}}> i prijavite se ručno, zatim idite na <{{settingsUrl}}> da biste promijenili svoje postavke."
+        "linkCreated": "Please visit the link below to be logged into the bot's website automatically in order to change your settings.\n<{{magicLink}}>\nThis link will expire {{expiresAt}} but you can always run this command to generate a new link, or visit <{{loginUrl}}> to log in manually, then go to <{{settingsUrl}}> to change your settings.",
+        "failedToCreateLink": "Could not generate a link to log you in automatically, please visit <{{loginUrl}}> and log in manually, then go to <{{settingsUrl}}> to change your settings."
       },
       "options": {},
       "components": {

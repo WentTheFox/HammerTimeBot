@@ -2,331 +2,331 @@
   "commands": {
     "ago": {
       "name": "ago",
-      "description": "Genereer een tijdsaanduiding in het verleden, relatief van de huidige tijd",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
           "name": "years",
-          "description": "Het aantal jaren om van de huidige tijd af te trekken"
+          "description": "How many years to subtract from the current time"
         },
         "months": {
           "name": "months",
-          "description": "Het aantal maanden om van de huidige tijd af te trekken"
+          "description": "How many months to subtract from the current time"
         },
         "days": {
           "name": "days",
-          "description": "Het aantal dagen om van de huidige tijd af te trekken"
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
           "name": "hours",
-          "description": "Het aantal uren om van de huidige tijd af te trekken"
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Het aantal minuten om van de huidige tijd af te trekken"
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Het aantal seconden om van de huidige tijd af te trekken"
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
       "name": "in",
-      "description": "Genereer een tijdsaanduiding in de toekomst, relatief van de huidige tijd",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
           "name": "years",
-          "description": "Het aantal jaren om aan de huidige tijd toe te voegen"
+          "description": "How many years to add to the current time"
         },
         "months": {
           "name": "months",
-          "description": "Het aantal maanden om aan de huidige tijd toe te voegen"
+          "description": "How many months to add to the current time"
         },
         "days": {
           "name": "days",
-          "description": "Het aantal dagen om aan de huidige tijd toe te voegen"
+          "description": "How many days to add to the current time"
         },
         "hours": {
           "name": "hours",
-          "description": "Het aantal uren om aan de huidige tijd toe te voegen"
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Het aantal minuten om aan de huidige tijd toe te voegen"
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Het aantal seconden om aan de huidige tijd toe te voegen"
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
       "name": "at",
-      "description": "Genereer een tijdsaanduiding aan de hand van exacte gegevens (inclusief de tijdzone)",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
           "name": "year",
-          "description": "Het jaar van de tijdstempel (standaard is het huidige jaar)"
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
           "name": "month",
-          "description": "De maand van de tijdstempel (standaard is de huidige maand)"
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
           "name": "day",
-          "description": "De dag van de tijdstempel (standaard is de huidige dag)"
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
           "name": "hour",
-          "description": "Het uur van de tijdstempel (standaard is het huidige uur)"
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
           "name": "hour12",
-          "description": "Geef het uur op in 12-uursklok formaat (standaard ingesteld op het huidige uur)"
+          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
         },
         "minute": {
           "name": "minute",
-          "description": "De minuut van de tijdstempel (standaard is de huidige minuut)"
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
           "name": "second",
-          "description": "De seconde van de tijdstempel (standaard is 0)"
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
-          "description": "Bij deze optie moet het uur tussen 1 en 12 liggen en wordt het geïnterpreteerd als AM"
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
         },
         "pm": {
           "name": "pm",
-          "description": "Bij deze optie moet het uur tussen 1 en 12 liggen en wordt het geïnterpreteerd als PM"
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
         }
       },
       "responses": {
-        "amOrPmOnly": "Je kan niet tegelijkertijd de opties 'am' en 'pm' opgeven",
-        "meridiemRequired": "Je moet de optie 'am' of 'pm' opgeven wanneer je de optie 'hour12' gebruikt",
-        "noAmOrPmWithMeridiem": "Je kunt de 'am' of 'pm' opties niet opgeven wanneer de meridiem is verstrekt in de urenoptie",
-        "hourOrHour12Only": "Je kan niet tegelijkertijd de opties 'am' en 'pm' opgeven",
-        "hourRange": "Wanneer er geen meridiem is opgegeven, moet het uur een getal tussen 0 en 23 zijn",
-        "hour12Range": "Wanneer er een meridiem is opgegeven, moet het uur een getal tussen 1 en 12 zijn"
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
+        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
+        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
+        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
+        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
       }
     },
     "add": {
       "name": "add",
-      "description": "Voeg tijd toe aan de opgegeven UNIX-tijdstempel",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
           "name": "to",
-          "description": "De UNIX-tijdstempel in seconden"
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
           "name": "years",
-          "description": "Het aantal jaren om aan de opgegeven tijdstempel toe te voegen"
+          "description": "How many years to add to the specified timestamp"
         },
         "months": {
           "name": "months",
-          "description": "Het aantal maanden om aan de opgegeven tijdstempel toe te voegen"
+          "description": "How many months to add to the specified timestamp"
         },
         "days": {
           "name": "days",
-          "description": "Het aantal dagen om aan de opgegeven tijdstempel toe te voegen"
+          "description": "How many days to add to the specified timestamp"
         },
         "hours": {
           "name": "hours",
-          "description": "Het aantal uren om aan de opgegeven tijdstempel toe te voegen"
+          "description": "How many hours to add to the specified timestamp"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Het aantal minuten om aan de opgegeven tijdstempel toe te voegen"
+          "description": "How many minutes to add to the specified timestamp"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Het aantal seconden om aan de opgegeven tijdstempel toe te voegen"
+          "description": "How many seconds to add to the specified timestamp"
         }
       }
     },
     "subtract": {
       "name": "subtract",
-      "description": "Trek tijd af van de opgegeven UNIX-tijdstempel",
+      "description": "Subtract some time from the specified UNIX timestamp",
       "responses": {},
       "options": {
         "from": {
           "name": "from",
-          "description": "De UNIX-tijdstempel in seconden"
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
           "name": "years",
-          "description": "Het aantal jaren om van de opgegeven tijdstempel af te trekken"
+          "description": "How many years to subtract from the specified timestamp"
         },
         "months": {
           "name": "months",
-          "description": "Het aantal maanden om van de opgegeven tijdstempel af te trekken"
+          "description": "How many months to subtract from the specified timestamp"
         },
         "days": {
           "name": "days",
-          "description": "Het aantal dagen om van de opgegeven tijdstempel af te trekken"
+          "description": "How many days to subtract from the specified timestamp"
         },
         "hours": {
           "name": "hours",
-          "description": "Het aantal uren om van de opgegeven tijdstempel af te trekken"
+          "description": "How many hours to subtract from the specified timestamp"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Het aantal minuten om van de opgegeven tijdstempel af te trekken"
+          "description": "How many minutes to subtract from the specified timestamp"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Het aantal seconden om van de opgegeven tijdstempel af te trekken"
+          "description": "How many seconds to subtract from the specified timestamp"
         }
       }
     },
     "unix": {
       "name": "unix",
-      "description": "Geef de tijdsaanduidingen weer voor de opgegeven UNIX-tijdstempel",
+      "description": "Display the syntaxes for a specific UNIX timestamp",
       "responses": {},
       "options": {
         "value": {
           "name": "value",
-          "description": "De UNIX-tijdstempel in seconden"
+          "description": "The UNIX timestamp in seconds"
         }
       }
     },
     "global": {
       "responses": {
-        "invalidDate": "De opgegeven datum is ongeldig (bijvoorbeeld: de opgegeven dag bestaat niet)",
-        "noComponentsCurrentTime": "U moet minstens één argument opgeven om te wijzigen. Als u de huidige tijd nodig hebt, gebruikt u `/{{atCommand}}` zonder argumenten op te geven",
-        "noComponentsUnix": "U moet minstens één argument opgeven om te wijzigen. Als u de syntaxis voor een UNIX-tijdstempel wilt krijgen, gebruik dan `/{{unixCommand}}`",
-        "unexpectedError": "Er is een onverwachte fout opgetreden bij het verwerken van deze interactie",
-        "unsupportedTimezone": "De opgegeven tijdzone ({{timezone}}) wordt niet ondersteund",
-        "changeTimezoneSetting": "De manier waarop tijdstempels op de server worden gegenereerd is onlangs veranderd. Als dit eerder wel werkte, werk dan de instellingen bij met het `/{{settingsCommand}}` command."
+        "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
+        "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
+        "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
+        "unexpectedError": "There was an unexpected error while processing this interaction",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {
           "name": "format",
-          "description": "Geeft alleen het opgegeven formaat terug in het antwoord",
+          "description": "Returns only the specified format in the response",
           "choices": {
-            "d": "verkorte datum notatie",
-            "D": "uitgeschreven datum",
-            "t": "uren en minuten",
-            "T": "uren, minuten en seconden",
-            "f": "datum en tijd",
-            "F": "dag, datum en tijd",
-            "s": "korte datum en korte tijd",
-            "S": "korte datum en lange tijd",
-            "R": "relatief",
-            "all": "alles (standaard)"
+            "d": "short date",
+            "D": "long date",
+            "t": "short time",
+            "T": "long time",
+            "f": "date and time",
+            "F": "weekday, date and time",
+            "s": "short date and short time",
+            "S": "short date and long time",
+            "R": "relative",
+            "all": "all (default)"
           }
         },
         "columns": {
           "name": "columns",
-          "description": "Geef aan welke kolommen moeten worden weergegeven in het antwoord",
+          "description": "Specify which columns to display in the returned response",
           "choices": {
-            "both": "syntaxis en voorbeeld",
-            "preview": "alleen een voorbeeld",
-            "syntax": "alleen de syntaxis"
+            "both": "both syntax and preview",
+            "preview": "preview only",
+            "syntax": "syntax only"
           }
         },
         "ephemeral": {
           "name": "ephemeral",
-          "description": "Indien true dan zal het antwoord alleen voor u zichtbaar zijn"
+          "description": "When true the response will only be visible to you"
         },
         "header": {
           "name": "header",
-          "description": "Geef de oorspronkelijke tijd (aangevuld met de standaardwaarden) bovenaan in het antwoord weer"
+          "description": "Display the initial time (as interpreted by the bot) on top of the response"
         },
         "timezone": {
           "name": "timezone",
-          "description": "De tijdzone van de tijdstempel (standaard is GMT)"
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {
-        "replyWithSpecificFormat": "Selecteer hieronder een formaat om het in een losstaand antwoord te ontvangen (makkelijker kopiëren op touchscreen apparaten)",
-        "incompleteTranslations": "Vertalingen zijn onvolledig",
-        "contributeTranslations": "Help mee",
-        "telemetryThankYou": "Bedankt voor het bijdragen van telemetriegegevens. Deze gegevens helpen bij de toekomstige ontwikkeling van de bot. Zie de {{privacyPolicy}} voor details.",
-        "telemetryInfoCount": "Dit is uitvoering #{{executionNumber}} voor het commando {{command}} (sinds we tellen).",
-        "privacyPolicyLink": "Privacybeleid",
-        "recordingTelemetry": "Telemetry wordt verzameld voor dit commando, de resultaten zijn in behandeling…",
-        "telemetryPlaceholder": "De rest van deze tekst is er alleen om te voorkomen dat de berichtgrootte te veel verandert wanneer de resultaten van de telemetrie-opname beschikbaar zijn.",
-        "feedbackWanted": "Feedback gevraagd!",
-        "at12Hint": "Er zijn nu verschillende opties om het aantal uren in het {{slashAt}} commando op te geven (via de bestaande {{hourOptionName}} optie die nu automatisch wordt aangevuld, of de nieuwe {{hour12OptionName}}, {{amOptionName}} en {{pmOptionName}} opties) en het nieuwe {{slashAt12}} commando. Gebruik welke je fijner vind. Hoe populair elke methode is (gebaseerd op de telemetriegegevens) zal bepalen welke van deze opties permanent zullen worden."
+        "replyWithSpecificFormat": "Select a format below to receive it in a reply (for copying on touch devices)",
+        "incompleteTranslations": "Translations are incomplete",
+        "contributeTranslations": "Contribute",
+        "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
+        "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
+        "privacyPolicyLink": "Privacy Policy",
+        "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
+        "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
+        "feedbackWanted": "Feedback wanted!",
+        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
       }
     },
     "statistics": {
       "name": "statistics",
-      "description": "Geeft verschillende informatie en statistieken over de bot weer",
+      "description": "Displays various information about the bot",
       "options": {},
       "responses": {
-        "totalServerCount": "Aantal gejoinde servers:",
-        "shardServerCount": "Servers op deze shard:",
-        "uptime": "Opstarttijd van de shard:",
-        "shardCount": "Aantal shards:",
-        "shardNumber": "(Deze statistieken zijn gegenereerd door shard #{{shardId}})",
-        "noShards": "(De bot maakt momenteel geen gebruik van sharding)",
-        "serverInvite": "Support server uitnodiging:",
-        "totalUserCount": "Totaal aantal gebruikers in gejoinde servers:",
-        "supportedLanguages": "Ondersteunde talen:",
+        "totalServerCount": "Total servers joined:",
+        "shardServerCount": "Servers on this shard:",
+        "uptime": "Shard startup time:",
+        "shardCount": "Number of shards:",
+        "shardNumber": "(These statistics were generated by shard #{{shardId}})",
+        "noShards": "(The bot is not currently using sharding)",
+        "serverInvite": "Support server invite URL:",
+        "totalUserCount": "Total users in joined servers:",
+        "supportedLanguages": "Supported languages:",
         "crowdinProject": "Crowdin project URL:"
       }
     },
     "snowflake": {
       "name": "snowflake",
-      "description": "Toon de syntaxis voor de tijdstempel van een Snowflake (de meeste ID's binnen Discord)",
+      "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord)",
       "responses": {
-        "invalidSnowflake": "De opgegeven Snowflake is ongeldig"
+        "invalidSnowflake": "The specified Snowflake is invalid"
       },
       "options": {
         "value": {
           "name": "value",
-          "description": "Het Snowflake nummer"
+          "description": "The Snowflake number"
         }
       }
     },
     "Message Sent": {
-      "name": "Tijd van het versturen",
+      "name": "Message Sent",
       "responses": {
-        "targetMessage": "De tijdstempel van het versturen van het volgende bericht: {{url}}"
+        "targetMessage": "Send timestamp for the following message: {{url}}"
       }
     },
     "Message Last Edited": {
-      "name": "Tijd van de laatste wijziging",
+      "name": "Message Last Edited",
       "responses": {
-        "targetMessage": "De tijdstempel van de laatste bewerking van het volgende bericht: {{url}}",
-        "notEdited": "Dit bericht is nog niet bewerkt"
+        "targetMessage": "Last edit timestamp for the following message: {{url}}",
+        "notEdited": "This message has not been edited yet"
       }
     },
     "iso": {
       "name": "iso",
-      "description": "Geef de syntax weer voor een opgegeven ISO 8601 tijdsaanduiding",
+      "description": "Display the syntaxes for a specific ISO 8601 timestamp",
       "responses": {
-        "invalidIsoFormat": "De ingevoerde waarde komt niet overeen met de ISO 8601 standaard"
+        "invalidIsoFormat": "The provided value does not match the ISO 8601 standard"
       },
       "options": {
         "value": {
           "name": "value",
-          "description": "De ISO 8601 standaard tijdstempel"
+          "description": "The ISO 8601 standard timestamp"
         }
       }
     },
     "Extract Timestamps": {
-      "name": "Krijg alle tijdstempels",
+      "name": "Extract Timestamps",
       "responses": {
-        "targetMessage": "Alle gevonden tijdstempels uit het volgende bericht: {{url}}",
-        "noTimestamps": "Dit bericht bevat geen tijdstempels in Discord's formaat"
+        "targetMessage": "All timestamps found in the following message: {{url}}",
+        "noTimestamps": "This message does not contain any timestamps in Discord's format"
       }
     },
     "settings": {
-      "name": "instellingen",
-      "description": "Maak een link om uw instellingen via de website te beheren",
+      "name": "settings",
+      "description": "Create a link to manage your settings via the website",
       "responses": {
-        "linkCreated": "Bezoek de onderstaande link om automatisch ingelogd te worden op de website van de bot om uw instellingen te wijzigen.\n<{{magicLink}}>\nDeze link zal verlopen {{expiresAt}} maar u kunt altijd dit commando opnieuw uitvoeren om een nieuwe link te genereren. Of bezoek <{{loginUrl}}> om handmatig in te loggen en ga dan naar <{{settingsUrl}}> om uw instellingen te wijzigen.",
-        "failedToCreateLink": "Er kon geen link geneerd worden om u automatisch aan te melden, bezoek <{{loginUrl}}> en log handmatig in, ga vervolgens naar <{{settingsUrl}}> om uw instellingen te wijzigen."
+        "linkCreated": "Please visit the link below to be logged into the bot's website automatically in order to change your settings.\n<{{magicLink}}>\nThis link will expire {{expiresAt}} but you can always run this command to generate a new link, or visit <{{loginUrl}}> to log in manually, then go to <{{settingsUrl}}> to change your settings.",
+        "failedToCreateLink": "Could not generate a link to log you in automatically, please visit <{{loginUrl}}> and log in manually, then go to <{{settingsUrl}}> to change your settings."
       },
       "options": {},
       "components": {
-        "openSettingsButton": "Bot instellingen"
+        "openSettingsButton": "Bot Settings"
       }
     },
     "faq": {
@@ -341,43 +341,43 @@
     },
     "at12": {
       "name": "at12",
-      "description": "Geef de exacte componenten van de tijdstempel op (met een 12-uursklok)",
+      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
       "responses": {
-        "amOrPmOnly": "Je kan niet tegelijkertijd de opties 'am' en 'pm' opgeven",
-        "meridiemRequired": "Je moet de optie 'am' of 'pm' opgeven"
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option"
       },
       "options": {
         "year": {
           "name": "year",
-          "description": "Het jaar van de tijdstempel (standaard is het huidige jaar)"
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
           "name": "month",
-          "description": "De maand van de tijdstempel (standaard is de huidige maand)"
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
           "name": "day",
-          "description": "De dag van de tijdstempel (standaard is de huidige dag)"
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
           "name": "hour",
-          "description": "Het uur van de tijdstempel (standaard is het huidige uur)"
+          "description": "Specify the hour (defaults to current hour)"
         },
         "minute": {
           "name": "minute",
-          "description": "De minuut van de tijdstempel (standaard is de huidige minuut)"
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
           "name": "second",
-          "description": "De seconde van de tijdstempel (standaard is 0)"
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
-          "description": "Bij deze optie wordt uur geïnterpreteerd als am (ante meridiem; voor de middag)"
+          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
         },
         "pm": {
           "name": "pm",
-          "description": "Bij deze optie wordt het uur geïnterpreteerd als pm (post meridiem; na de middag)"
+          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
         }
       }
     }

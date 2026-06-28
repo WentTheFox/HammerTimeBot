@@ -1,332 +1,332 @@
 {
   "commands": {
     "ago": {
-      "name": "前",
-      "description": "指定一个“一段时间以前”（相对当前时间）的时间戳",
+      "name": "ago",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "年",
-          "description": "要从当前时间减去多少年"
+          "name": "years",
+          "description": "How many years to subtract from the current time"
         },
         "months": {
-          "name": "月",
-          "description": "要从当前时间中减去多少个月"
+          "name": "months",
+          "description": "How many months to subtract from the current time"
         },
         "days": {
-          "name": "天",
-          "description": "要从当前时间减去多少天"
+          "name": "days",
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
-          "name": "小时",
-          "description": "要从当前时间中减去多少小时"
+          "name": "hours",
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
-          "name": "分钟",
-          "description": "要从当前时间中减去多少分钟"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
-          "name": "秒",
-          "description": "要从当前时间减去多少秒"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
-      "name": "后",
-      "description": "指定一个“一段时间以后”（相对当前时间）的时间戳",
+      "name": "in",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "年",
-          "description": "要从当前时间加上多少年"
+          "name": "years",
+          "description": "How many years to add to the current time"
         },
         "months": {
-          "name": "月",
-          "description": "要从当前时间中加上多少个月"
+          "name": "months",
+          "description": "How many months to add to the current time"
         },
         "days": {
-          "name": "天",
-          "description": "要从当前时间加上多少天"
+          "name": "days",
+          "description": "How many days to add to the current time"
         },
         "hours": {
-          "name": "小时",
-          "description": "要从当前时间中加上多少小时"
+          "name": "hours",
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
-          "name": "分钟",
-          "description": "要从当前时间中加上多少分钟"
+          "name": "minutes",
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
-          "name": "秒",
-          "description": "要从当前时间中加上多少秒"
+          "name": "seconds",
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
-      "name": "指定时间",
-      "description": "手动指定时间戳的各部分（包括时区）",
+      "name": "at",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
-          "name": "年",
-          "description": "指定年份（默认为当前年）"
+          "name": "year",
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "月",
-          "description": "指定月份（默认为当前月份）"
+          "name": "month",
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "日",
-          "description": "指定日期（默认为当前日期）"
+          "name": "day",
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "时",
-          "description": "指定时（默认为当前时）"
+          "name": "hour",
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
-          "name": "时（12小时制）",
-          "description": "指定时间戳的小时（12小时制）。默认为当前小时"
+          "name": "hour12",
+          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
         },
         "minute": {
-          "name": "分",
-          "description": "指定分（默认为当前分）"
+          "name": "minute",
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "秒",
-          "description": "指定秒（默认为 0）"
+          "name": "second",
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
-          "name": "上午",
-          "description": "若为True，“时”必须在1到12之间，并视作am（凌晨，早上，上午）的时间。“上午12时”为午夜"
+          "name": "am",
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
         },
         "pm": {
-          "name": "下午",
-          "description": "若为True，“时”必须在1到12之间，并视作pm（下午，傍晚，晚上）的时间。“下午12时”为正午"
+          "name": "pm",
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
         }
       },
       "responses": {
-        "amOrPmOnly": "不能同时指定上午和下午选项",
-        "meridiemRequired": "使用12小时制指定小时，必须同时选择“上午”或“下午”其一",
-        "noAmOrPmWithMeridiem": "小时已经带am或pm后缀时，不能再选择上午或下午选项",
-        "hourOrHour12Only": "不能同时指定小时和12小时制小时",
-        "hourRange": "未指定上午或下午时，小时必须在0到23之间",
-        "hour12Range": "指定上午或下午时，小时必须在1到12之间"
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
+        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
+        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
+        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
+        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
       }
     },
     "add": {
-      "name": "加",
-      "description": "指定 UNIX 时间戳，然后相对于该时间戳加上一段时间",
+      "name": "add",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
-          "name": "原时间戳",
-          "description": "UNIX 时间戳，单位为秒"
+          "name": "to",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "年",
-          "description": "要从指定时间戳加上多少年"
+          "name": "years",
+          "description": "How many years to add to the specified timestamp"
         },
         "months": {
-          "name": "月",
-          "description": "要从指定时间戳加上多少个月"
+          "name": "months",
+          "description": "How many months to add to the specified timestamp"
         },
         "days": {
-          "name": "天",
-          "description": "要从指定时间戳加上多少天"
+          "name": "days",
+          "description": "How many days to add to the specified timestamp"
         },
         "hours": {
-          "name": "小时",
-          "description": "要从指定时间戳加上多少个小时"
+          "name": "hours",
+          "description": "How many hours to add to the specified timestamp"
         },
         "minutes": {
-          "name": "分钟",
-          "description": "要从指定时间戳加上多少分钟"
+          "name": "minutes",
+          "description": "How many minutes to add to the specified timestamp"
         },
         "seconds": {
-          "name": "秒",
-          "description": "要从指定时间戳加上多少秒"
+          "name": "seconds",
+          "description": "How many seconds to add to the specified timestamp"
         }
       }
     },
     "subtract": {
-      "name": "减",
-      "description": "指定 UNIX 时间戳，然后相对于该时间戳减去一段时间",
+      "name": "subtract",
+      "description": "Subtract some time from the specified UNIX timestamp",
       "responses": {},
       "options": {
         "from": {
-          "name": "原时间戳",
-          "description": "UNIX 时间戳，单位为秒"
+          "name": "from",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "年",
-          "description": "要从指定时间戳减去多少年"
+          "name": "years",
+          "description": "How many years to subtract from the specified timestamp"
         },
         "months": {
-          "name": "月",
-          "description": "要从指定时间戳减去多少个月"
+          "name": "months",
+          "description": "How many months to subtract from the specified timestamp"
         },
         "days": {
-          "name": "天",
-          "description": "要从指定时间戳减去多少天"
+          "name": "days",
+          "description": "How many days to subtract from the specified timestamp"
         },
         "hours": {
-          "name": "小时",
-          "description": "要从指定时间戳减去多少小时"
+          "name": "hours",
+          "description": "How many hours to subtract from the specified timestamp"
         },
         "minutes": {
-          "name": "分钟",
-          "description": "要从指定时间戳减去多少分钟"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the specified timestamp"
         },
         "seconds": {
-          "name": "秒",
-          "description": "要从指定时间戳减去多少秒"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the specified timestamp"
         }
       }
     },
     "unix": {
       "name": "unix",
-      "description": "指定 UNIX 时间戳显示时间戳语法",
+      "description": "Display the syntaxes for a specific UNIX timestamp",
       "responses": {},
       "options": {
         "value": {
-          "name": "时间戳",
-          "description": "UNIX 时间戳，单位为秒"
+          "name": "value",
+          "description": "The UNIX timestamp in seconds"
         }
       }
     },
     "global": {
       "responses": {
-        "invalidDate": "指定的日期无效（例如：给定的日期不存在）",
-        "noComponentsCurrentTime": "您必须指定至少一个要更改的时间数值。若要显示当前时间，请不带任何参数使用 `/{{atCommand}}`。",
-        "noComponentsUnix": "您必须指定至少一个要更改的时间数值。若要获取某个UNIX时间戳的语法，请使用 `/{{unixCommand}}`。",
-        "unexpectedError": "处理您的请求时出现了未知错误",
-        "unsupportedTimezone": "不支持所提供的时区 ({{timezone}})",
-        "changeTimezoneSetting": "服务器上生成时间戳的方式最近发生了变化。如果以前可以使用，则可能需要使用 `/{{settingsCommand}}` 命令更新设置。"
+        "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
+        "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
+        "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
+        "unexpectedError": "There was an unexpected error while processing this interaction",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {
-          "name": "格式",
-          "description": "仅显示指定日期与时间格式的语法",
+          "name": "format",
+          "description": "Returns only the specified format in the response",
           "choices": {
-            "d": "短日期",
-            "D": "长日期",
-            "t": "短时间",
-            "T": "长时间",
-            "f": "日期与时间",
-            "F": "星期几，日期与时间",
-            "s": "短日期和短时间",
-            "S": "短日期和长时间",
-            "R": "相对",
-            "all": "全部（默认）"
+            "d": "short date",
+            "D": "long date",
+            "t": "short time",
+            "T": "long time",
+            "f": "date and time",
+            "F": "weekday, date and time",
+            "s": "short date and short time",
+            "S": "short date and long time",
+            "R": "relative",
+            "all": "all (default)"
           }
         },
         "columns": {
-          "name": "列",
-          "description": "指定要显示哪些列",
+          "name": "columns",
+          "description": "Specify which columns to display in the returned response",
           "choices": {
-            "both": "语法和预览",
-            "preview": "仅预览",
-            "syntax": "仅语法"
+            "both": "both syntax and preview",
+            "preview": "preview only",
+            "syntax": "syntax only"
           }
         },
         "ephemeral": {
-          "name": "仅自己可见",
-          "description": "如果设为 true，那么机器人的回应消息只有您可见"
+          "name": "ephemeral",
+          "description": "When true the response will only be visible to you"
         },
         "header": {
-          "name": "表头",
-          "description": "在回应的顶部显示指令作用于的原始时间"
+          "name": "header",
+          "description": "Display the initial time (as interpreted by the bot) on top of the response"
         },
         "timezone": {
-          "name": "时区",
-          "description": "指定时区（默认为 GMT）"
+          "name": "timezone",
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {
-        "replyWithSpecificFormat": "在下方选择一个格式，机器人会单独回复该格式的文本，以便于移动设备上复制。",
-        "incompleteTranslations": "翻译不完整",
-        "contributeTranslations": "贡献",
-        "telemetryThankYou": "感谢您贡献使用数据。您的数据将被用于机器人今后的开发。您可以在我们的 {{privacyPolicy}} 中查看详情。",
-        "telemetryInfoCount": "自我们开始计数以来，这是 {{command}} 命令的第 {{executionNumber}} 次执行。",
-        "privacyPolicyLink": "隐私权政策",
-        "recordingTelemetry": "我们仍在收集此命令的使用数据，正在等待结果…",
-        "telemetryPlaceholder": "剩下的这段文字只是为了填补空间，以避免使用数据收集完成后消息的显示大小变化过大。",
-        "feedbackWanted": "我们需要您的反馈！",
-        "at12Hint": "现在有多种方式指定您输入的时间戳是12小时制还是24小时制。您可以使用{{slashAt}}中的已有的{{hourOptionName}}选项（现在支持自动完成），或者新的{{hour12OptionName}}、{{amOptionName}}、{{pmOptionName}}选项，也可以使用新的{{slashAt12}}命令。您可以按照您的喜好选用。这些方式被采用的程度将决定哪一种方式会永久保留。"
+        "replyWithSpecificFormat": "Select a format below to receive it in a reply (for copying on touch devices)",
+        "incompleteTranslations": "Translations are incomplete",
+        "contributeTranslations": "Contribute",
+        "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
+        "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
+        "privacyPolicyLink": "Privacy Policy",
+        "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
+        "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
+        "feedbackWanted": "Feedback wanted!",
+        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
       }
     },
     "statistics": {
-      "name": "统计",
-      "description": "显示关于机器人的一些统计信息",
+      "name": "statistics",
+      "description": "Displays various information about the bot",
       "options": {},
       "responses": {
-        "totalServerCount": "已加入服务器数量：",
-        "shardServerCount": "本分机加入的服务器数量：",
-        "uptime": "分机启动时间：",
-        "shardCount": "分机数量：",
-        "shardNumber": "（这些数据由 {{shardId}} 号分机生成。）",
-        "noShards": "（本机器人当前未使用分机。）",
-        "serverInvite": "客服 Discord 服务器：",
-        "totalUserCount": "已加入的服务器总计的用户数：",
-        "supportedLanguages": "支持的语言：",
-        "crowdinProject": "Crowdin项目网址："
+        "totalServerCount": "Total servers joined:",
+        "shardServerCount": "Servers on this shard:",
+        "uptime": "Shard startup time:",
+        "shardCount": "Number of shards:",
+        "shardNumber": "(These statistics were generated by shard #{{shardId}})",
+        "noShards": "(The bot is not currently using sharding)",
+        "serverInvite": "Support server invite URL:",
+        "totalUserCount": "Total users in joined servers:",
+        "supportedLanguages": "Supported languages:",
+        "crowdinProject": "Crowdin project URL:"
       }
     },
     "snowflake": {
       "name": "snowflake",
-      "description": "显示某个Snowflake中时间的时间戳语法。Snowflake是Discord中大多数数字ID的格式。",
+      "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord)",
       "responses": {
-        "invalidSnowflake": "指定的Snowflake无效。"
+        "invalidSnowflake": "The specified Snowflake is invalid"
       },
       "options": {
         "value": {
-          "name": "值",
-          "description": "Snowflake的数值"
+          "name": "value",
+          "description": "The Snowflake number"
         }
       }
     },
     "Message Sent": {
-      "name": "消息发送时间",
+      "name": "Message Sent",
       "responses": {
-        "targetMessage": "下面是此消息的发送时间的时间戳： {{url}}"
+        "targetMessage": "Send timestamp for the following message: {{url}}"
       }
     },
     "Message Last Edited": {
-      "name": "消息最后编辑时间",
+      "name": "Message Last Edited",
       "responses": {
-        "targetMessage": "下面是此消息的最后编辑时间的时间戳： {{url}}",
-        "notEdited": "此消息尚未被编辑。"
+        "targetMessage": "Last edit timestamp for the following message: {{url}}",
+        "notEdited": "This message has not been edited yet"
       }
     },
     "iso": {
       "name": "iso",
-      "description": "指定 ISO 8601 时间戳显示时间戳语法",
+      "description": "Display the syntaxes for a specific ISO 8601 timestamp",
       "responses": {
-        "invalidIsoFormat": "输入的值不符合 ISO 8601 标准"
+        "invalidIsoFormat": "The provided value does not match the ISO 8601 standard"
       },
       "options": {
         "value": {
-          "name": "值",
-          "description": "符合 ISO 8601 标准的时间戳"
+          "name": "value",
+          "description": "The ISO 8601 standard timestamp"
         }
       }
     },
     "Extract Timestamps": {
-      "name": "提取时间戳",
+      "name": "Extract Timestamps",
       "responses": {
-        "targetMessage": "在这条消息中找到的所有时间戳如下：{{url}}",
-        "noTimestamps": "这条消息不包含任何 Discord 格式的时间戳"
+        "targetMessage": "All timestamps found in the following message: {{url}}",
+        "noTimestamps": "This message does not contain any timestamps in Discord's format"
       }
     },
     "settings": {
-      "name": "设置",
-      "description": "创建网页端调整设置的链接",
+      "name": "settings",
+      "description": "Create a link to manage your settings via the website",
       "responses": {
-        "linkCreated": "请使用下面的链接以自动登录机器人的网站并更改您的设置。\n<{{magicLink}}>\n该链接将于 {{expiresAt}} 过期，不过您可以随时使用本命令重新生成一个链接，或者访问 <{{loginUrl}}> 手动登录，然后访问 <{{settingsUrl}}> 更改您的设置。",
-        "failedToCreateLink": "无法为您创建自动登录的链接。请访问 <{{loginUrl}}> 手动登录，然后访问 <{{settingsUrl}}> 更改您的设置。"
+        "linkCreated": "Please visit the link below to be logged into the bot's website automatically in order to change your settings.\n<{{magicLink}}>\nThis link will expire {{expiresAt}} but you can always run this command to generate a new link, or visit <{{loginUrl}}> to log in manually, then go to <{{settingsUrl}}> to change your settings.",
+        "failedToCreateLink": "Could not generate a link to log you in automatically, please visit <{{loginUrl}}> and log in manually, then go to <{{settingsUrl}}> to change your settings."
       },
       "options": {},
       "components": {
-        "openSettingsButton": "机器人设置"
+        "openSettingsButton": "Bot Settings"
       }
     },
     "faq": {
@@ -340,44 +340,44 @@
       }
     },
     "at12": {
-      "name": "在（12小时制）",
-      "description": "用12小时制指定时间戳的每个部分",
+      "name": "at12",
+      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
       "responses": {
-        "amOrPmOnly": "不能同时指定上午和下午选项",
-        "meridiemRequired": "必须选择“上午”和“下午”中的一个"
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option"
       },
       "options": {
         "year": {
-          "name": "年",
-          "description": "指定年份，默认为当前年份"
+          "name": "year",
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "月",
-          "description": "指定月份，默认为当前月份"
+          "name": "month",
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "日",
-          "description": "指定日期，默认为当前日期"
+          "name": "day",
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "时",
-          "description": "指定小时，默认为当前小时"
+          "name": "hour",
+          "description": "Specify the hour (defaults to current hour)"
         },
         "minute": {
-          "name": "分",
-          "description": "指定分钟，默认为当前分钟"
+          "name": "minute",
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "秒",
-          "description": "指定秒钟，默认为0"
+          "name": "second",
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
-          "name": "上午",
-          "description": "若为True，小时视作am（凌晨，早上，上午）的时间。“上午12时”为午夜"
+          "name": "am",
+          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
         },
         "pm": {
-          "name": "下午",
-          "description": "若为True，小时视作pm（下午，傍晚，晚上）的时间。“下午12时”为正午"
+          "name": "pm",
+          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
         }
       }
     }

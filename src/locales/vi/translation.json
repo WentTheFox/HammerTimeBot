@@ -2,85 +2,85 @@
   "commands": {
     "ago": {
       "name": "ago",
-      "description": "Hiển thị định dạng thời gian cách thời điểm hiện tại một khoảng thời gian nhất định về quá khứ",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
           "name": "years",
-          "description": "Số năm để trừ đi kể từ thời điểm hiện tại"
+          "description": "How many years to subtract from the current time"
         },
         "months": {
           "name": "months",
-          "description": "Số tháng để trừ đi kể từ thời điểm hiện tại"
+          "description": "How many months to subtract from the current time"
         },
         "days": {
           "name": "days",
-          "description": "Số ngày để trừ đi kể từ thời điểm hiện tại"
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
           "name": "hours",
-          "description": "Số giờ để trừ đi kể từ thời điểm hiện tại"
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Số phút để trừ đi kể từ thời điểm hiện tại"
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Số giây để trừ đi kể từ thời điểm hiện tại"
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
       "name": "in",
-      "description": "Hiển thị định dạng thời gian cách thời điểm hiện tại một khoảng thời gian nhất định về tương lai",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
           "name": "years",
-          "description": "Số năm để cộng thêm vào thời điểm hiện tại"
+          "description": "How many years to add to the current time"
         },
         "months": {
           "name": "months",
-          "description": "Số tháng để cộng thêm vào thời điểm hiện tại"
+          "description": "How many months to add to the current time"
         },
         "days": {
           "name": "days",
-          "description": "Số ngày để cộng thêm vào thời điểm hiện tại"
+          "description": "How many days to add to the current time"
         },
         "hours": {
           "name": "hours",
-          "description": "Số giờ để cộng thêm vào thời điểm hiện tại"
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Số phút để cộng thêm vào thời điểm hiện tại"
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Số giây để cộng thêm vào thời điểm hiện tại"
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
       "name": "at",
-      "description": "Điền vào từng phần của định dạng thời gian (bao gồm cả múi giờ)",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
           "name": "year",
-          "description": "Năm (mặc định vào năm hiện tại)"
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
           "name": "month",
-          "description": "Tháng (mặc định vào tháng hiện tại)"
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
           "name": "day",
-          "description": "Ngày (mặc định vào ngày hiện tại)"
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
           "name": "hour",
-          "description": "Giờ (mặc định vào giờ hiện tại)"
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
           "name": "hour12",
@@ -88,11 +88,11 @@
         },
         "minute": {
           "name": "minute",
-          "description": "Phút (mặc định vào tháng hiện tại)"
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
           "name": "second",
-          "description": "Giây (mặc định về 0)"
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
@@ -114,219 +114,219 @@
     },
     "add": {
       "name": "add",
-      "description": "Thêm một số thời gian vào UNIX timestamp đã chỉ định",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
           "name": "to",
-          "description": "UNIX timestamp tính bằng giây"
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
           "name": "years",
-          "description": "Số năm để thêm vào timestamp đã chỉ định"
+          "description": "How many years to add to the specified timestamp"
         },
         "months": {
           "name": "months",
-          "description": "Số tháng để thêm vào timestamp đã chỉ định"
+          "description": "How many months to add to the specified timestamp"
         },
         "days": {
           "name": "days",
-          "description": "Số ngày để thêm vào timestamp đã chỉ định"
+          "description": "How many days to add to the specified timestamp"
         },
         "hours": {
           "name": "hours",
-          "description": "Số giờ để thêm vào timestamp đã chỉ định"
+          "description": "How many hours to add to the specified timestamp"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Số phút để thêm vào timestamp đã chỉ định"
+          "description": "How many minutes to add to the specified timestamp"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Số giây để thêm vào timestamp đã chỉ định"
+          "description": "How many seconds to add to the specified timestamp"
         }
       }
     },
     "subtract": {
       "name": "subtract",
-      "description": "Trừ đi một số thời gian từ UNIX timestamp đã chỉ định",
+      "description": "Subtract some time from the specified UNIX timestamp",
       "responses": {},
       "options": {
         "from": {
           "name": "from",
-          "description": "UNIX timestamp tính bằng giây"
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
           "name": "years",
-          "description": "Số năm để trừ đi từ timestamp đã chỉ định"
+          "description": "How many years to subtract from the specified timestamp"
         },
         "months": {
           "name": "months",
-          "description": "Số tháng để trừ đi từ timestamp đã chỉ định"
+          "description": "How many months to subtract from the specified timestamp"
         },
         "days": {
           "name": "days",
-          "description": "Số ngày để trừ đi từ timestamp đã chỉ định"
+          "description": "How many days to subtract from the specified timestamp"
         },
         "hours": {
           "name": "hours",
-          "description": "Số giờ để trừ đi từ timestamp đã chỉ định"
+          "description": "How many hours to subtract from the specified timestamp"
         },
         "minutes": {
           "name": "minutes",
-          "description": "Số phút để trừ đi từ timestamp đã chỉ định"
+          "description": "How many minutes to subtract from the specified timestamp"
         },
         "seconds": {
           "name": "seconds",
-          "description": "Số giây để trừ đi từ timestamp đã chỉ định"
+          "description": "How many seconds to subtract from the specified timestamp"
         }
       }
     },
     "unix": {
       "name": "unix",
-      "description": "Hiển thị cú pháp cho một UNIX timestamp cụ thể",
+      "description": "Display the syntaxes for a specific UNIX timestamp",
       "responses": {},
       "options": {
         "value": {
           "name": "value",
-          "description": "UNIX timestamp tính bằng giây"
+          "description": "The UNIX timestamp in seconds"
         }
       }
     },
     "global": {
       "responses": {
-        "invalidDate": "Ngày đã chỉ định không hợp lệ (ví dụ: ngày đã cho không tồn tại)",
-        "noComponentsCurrentTime": "Bạn phải chỉ định ít nhất một thành phần thời gian để thay đổi. Nếu bạn cần thời gian hiện tại, hãy sử dụng `/{{atCommand}}` mà không chỉ định bất kỳ đối số nào",
-        "noComponentsUnix": "Bạn phải chỉ định ít nhất một thành phần thời gian để thay đổi. Nếu bạn muốn lấy cú pháp cho một UNIX timestamp, hãy sử dụng `/{{unixCommand}}`",
-        "unexpectedError": "Đã xảy ra lỗi hiếm gặp trong quá trình xử lý câu lệnh",
+        "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
+        "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
+        "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
+        "unexpectedError": "There was an unexpected error while processing this interaction",
         "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
         "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {
           "name": "format",
-          "description": "Chỉ trả về định dạng cụ thể trong phản hồi",
+          "description": "Returns only the specified format in the response",
           "choices": {
-            "d": "ngày ngắn",
-            "D": "ngày dài",
-            "t": "thời gian ngắn",
-            "T": "thời gian dài",
-            "f": "ngày và thời gian",
-            "F": "thứ trong tuần, ngày và thời gian",
+            "d": "short date",
+            "D": "long date",
+            "t": "short time",
+            "T": "long time",
+            "f": "date and time",
+            "F": "weekday, date and time",
             "s": "short date and short time",
             "S": "short date and long time",
-            "R": "tương đối",
-            "all": "tất cả (mặc định)"
+            "R": "relative",
+            "all": "all (default)"
           }
         },
         "columns": {
           "name": "columns",
-          "description": "Chỉ định cột nào được hiển thị trong phản hồi trả về",
+          "description": "Specify which columns to display in the returned response",
           "choices": {
-            "both": "cả cú pháp và xem trước",
-            "preview": "chỉ xem trước",
-            "syntax": "chỉ cú pháp"
+            "both": "both syntax and preview",
+            "preview": "preview only",
+            "syntax": "syntax only"
           }
         },
         "ephemeral": {
           "name": "ephemeral",
-          "description": "Khi đúng, phản hồi chỉ hiển thị cho bạn"
+          "description": "When true the response will only be visible to you"
         },
         "header": {
           "name": "header",
-          "description": "Hiển thị thời gian ban đầu (được giải thích bởi bot) ở đầu phản hồi"
+          "description": "Display the initial time (as interpreted by the bot) on top of the response"
         },
         "timezone": {
           "name": "timezone",
-          "description": "Chỉ định múi giờ (mặc định là GMT)"
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {
-        "replyWithSpecificFormat": "Chọn một định dạng để được trả về trong một tin nhắn trả lời (để sao chép dễ dàng trên các thiết bị cảm ứng)",
-        "incompleteTranslations": "Các bản dịch chưa được hoàn thiện",
-        "contributeTranslations": "Đóng góp",
-        "telemetryThankYou": "Cảm ơn bạn đã cung cấp dữ liệu sử dụng. Dữ liệu được cung cấp sẽ hỗ trợ việc duy trì và phát triển ứng dụng trong tương lai. Vui lòng xem {{privacyPolicy}} để biết thêm thông tin chi tiết.",
-        "telemetryInfoCount": "Lệnh {{command}} đã được chạy {{executionNumber}} lần (kể từ khi số liệu bắt đầu được lưu trữ).",
-        "privacyPolicyLink": "Chính sách Quyền Riêng tư",
-        "recordingTelemetry": "Dữ liệu sử dụng đang được thu thập, đang chờ kết quả…",
-        "telemetryPlaceholder": "Phần còn lại của tin nhắn này chỉ có mục đích tránh thay đổi độ dài của tin nhắn quá nhiều khi dữ liệu sử dụng đã được thu thập và hiển thị.",
+        "replyWithSpecificFormat": "Select a format below to receive it in a reply (for copying on touch devices)",
+        "incompleteTranslations": "Translations are incomplete",
+        "contributeTranslations": "Contribute",
+        "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
+        "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
+        "privacyPolicyLink": "Privacy Policy",
+        "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
+        "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
         "feedbackWanted": "Feedback wanted!",
         "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
       }
     },
     "statistics": {
       "name": "statistics",
-      "description": "Hiển thị thông tin đa dạng về bot",
+      "description": "Displays various information about the bot",
       "options": {},
       "responses": {
-        "totalServerCount": "Tổng số máy chủ đã tham gia:",
-        "shardServerCount": "Các máy chủ trên shard này:",
-        "uptime": "Thời gian khởi động shard:",
-        "shardCount": "Số lượng shard:",
-        "shardNumber": "(Các thống kê này được tạo bởi shard #{{shardId}})",
-        "noShards": "(Bot hiện không sử dụng sharding)",
-        "serverInvite": "URL mời máy chủ hỗ trợ:",
-        "totalUserCount": "Tổng số người dùng trong các máy chủ đã tham gia:",
-        "supportedLanguages": "Các ngôn ngữ được hỗ trợ:",
-        "crowdinProject": "Đường dẫn đến dự án trên Crowdin:"
+        "totalServerCount": "Total servers joined:",
+        "shardServerCount": "Servers on this shard:",
+        "uptime": "Shard startup time:",
+        "shardCount": "Number of shards:",
+        "shardNumber": "(These statistics were generated by shard #{{shardId}})",
+        "noShards": "(The bot is not currently using sharding)",
+        "serverInvite": "Support server invite URL:",
+        "totalUserCount": "Total users in joined servers:",
+        "supportedLanguages": "Supported languages:",
+        "crowdinProject": "Crowdin project URL:"
       }
     },
     "snowflake": {
       "name": "snowflake",
-      "description": "Hiển thị cú pháp cho timestamp của một Snowflake (hầu hết các ID trong Discord)",
+      "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord)",
       "responses": {
-        "invalidSnowflake": "Snowflake đã chỉ định không hợp lệ"
+        "invalidSnowflake": "The specified Snowflake is invalid"
       },
       "options": {
         "value": {
           "name": "value",
-          "description": "Số Snowflake"
+          "description": "The Snowflake number"
         }
       }
     },
     "Message Sent": {
-      "name": "Tin nhắn đã gửi",
+      "name": "Message Sent",
       "responses": {
-        "targetMessage": "Gửi timestamp cho tin nhắn sau: {{url}}"
+        "targetMessage": "Send timestamp for the following message: {{url}}"
       }
     },
     "Message Last Edited": {
-      "name": "Thời gian sửa tin nhắn lần cuối",
+      "name": "Message Last Edited",
       "responses": {
-        "targetMessage": "Thời gian chỉnh sửa cuối cùng cho tin nhắn sau: {{url}}",
-        "notEdited": "Tin nhắn này chưa được chỉnh sửa"
+        "targetMessage": "Last edit timestamp for the following message: {{url}}",
+        "notEdited": "This message has not been edited yet"
       }
     },
     "iso": {
       "name": "iso",
-      "description": "Hiển thị cú pháp cho một ISO 8601 timestamp cụ thể",
+      "description": "Display the syntaxes for a specific ISO 8601 timestamp",
       "responses": {
-        "invalidIsoFormat": "Giá trị cung cấp không khớp với tiêu chuẩn ISO 8601"
+        "invalidIsoFormat": "The provided value does not match the ISO 8601 standard"
       },
       "options": {
         "value": {
           "name": "value",
-          "description": "ISO 8601 timestamp"
+          "description": "The ISO 8601 standard timestamp"
         }
       }
     },
     "Extract Timestamps": {
-      "name": "Trích xuất Timestamps",
+      "name": "Extract Timestamps",
       "responses": {
-        "targetMessage": "Tất cả các timestamp được tìm thấy trong tin nhắn sau: {{url}}",
-        "noTimestamps": "Tin nhắn này không chứa bất kỳ timestamp nào theo định dạng của Discord"
+        "targetMessage": "All timestamps found in the following message: {{url}}",
+        "noTimestamps": "This message does not contain any timestamps in Discord's format"
       }
     },
     "settings": {
       "name": "settings",
-      "description": "Khởi tạo một đường dẫn để quản lý các cài đặt trên trang web",
+      "description": "Create a link to manage your settings via the website",
       "responses": {
-        "linkCreated": "Vui lòng truy cập đường dẫn dưới đây để được tự động đăng nhập vào trang web và chỉnh sửa các cài đặt.\n<{{magicLink}}>\nĐường dẫn sẽ hết hạn vào {{expiresAt}} nhưng bạn có thể chạy lại câu lệnh để tạo đường dẫn mới, hoặc truy cập <{{loginUrl}}> để đăng nhập thủ công, sau đó đi đến <{{settingsUrl}}> để thay đổi các cài đặt.",
-        "failedToCreateLink": "Không thể khởi tạo đường dẫn để thực hiện đăng nhập tự động, vui lòng truy cập <{{loginUrl}}> và thực hiện đăng nhập thủ công, sau đó đi đến <{{settingsUrl}}> để thay đổi các cài đặt."
+        "linkCreated": "Please visit the link below to be logged into the bot's website automatically in order to change your settings.\n<{{magicLink}}>\nThis link will expire {{expiresAt}} but you can always run this command to generate a new link, or visit <{{loginUrl}}> to log in manually, then go to <{{settingsUrl}}> to change your settings.",
+        "failedToCreateLink": "Could not generate a link to log you in automatically, please visit <{{loginUrl}}> and log in manually, then go to <{{settingsUrl}}> to change your settings."
       },
       "options": {},
       "components": {
-        "openSettingsButton": "Cài đặt phần mềm"
+        "openSettingsButton": "Bot Settings"
       }
     },
     "faq": {

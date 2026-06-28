@@ -1,8 +1,8 @@
 {
   "commands": {
     "ago": {
-      "name": "前",
-      "description": "指定相對於當前時間過去的時間戳",
+      "name": "ago",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {

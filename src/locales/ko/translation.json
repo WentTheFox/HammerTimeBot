@@ -2,105 +2,105 @@
   "commands": {
     "ago": {
       "name": "ago",
-      "description": "현재 시간에서 특정 시간 전의 타임스탬프를 구할 수 있습니다.",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
           "name": "years",
-          "description": "현재 시간에서 뺄 년수"
+          "description": "How many years to subtract from the current time"
         },
         "months": {
           "name": "months",
-          "description": "현재 시간에서 뺄 달수"
+          "description": "How many months to subtract from the current time"
         },
         "days": {
           "name": "days",
-          "description": "현재 시간에서 뺄 일수"
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
           "name": "hours",
-          "description": "현재 시간에서 뺄 시간수"
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
           "name": "minutes",
-          "description": "현재 시간에서 뺄 분수"
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
           "name": "seconds",
-          "description": "현재 시간에서 뺄 초수"
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
       "name": "in",
-      "description": "현재 시간에서 특정 시간 후의 타임스탬프를 구할 수 있습니다.",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
           "name": "years",
-          "description": "현재 시간에 더할 년수"
+          "description": "How many years to add to the current time"
         },
         "months": {
           "name": "months",
-          "description": "현재 시간에 더할 달수"
+          "description": "How many months to add to the current time"
         },
         "days": {
           "name": "days",
-          "description": "현재 시간에 더할 일수"
+          "description": "How many days to add to the current time"
         },
         "hours": {
           "name": "hours",
-          "description": "현재 시간에 더할 시간수"
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
           "name": "minutes",
-          "description": "현재 시간에 더할 분수"
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
           "name": "seconds",
-          "description": "현재 시간에 더할 초수"
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
       "name": "at",
-      "description": "타임스탬프의 정확한 구성요소를 지정하세요(시간대를 포함하여)",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
           "name": "year",
-          "description": "특정 년도를 입력하세요 (기본으로 현재 년으로 설정됩니다)"
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
           "name": "month",
-          "description": "달을 입력해주세요 (현재 달이 기본적으로 설정됩니다)"
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
           "name": "day",
-          "description": "날짜를 입력하세요 (기본날짜는 오늘입니다.)"
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
           "name": "hour",
-          "description": "시간을 입력하세요 (기본으로 지금 시각이 설정됩니다)"
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
           "name": "hour12",
-          "description": "AM 또는 PM으로 시간을 지정합니다 (기본 값은 현재 시간)"
+          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
         },
         "minute": {
           "name": "minute",
-          "description": "분을 입력해주세요 (기본으로 현재 분으로 설정됩니다)"
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
           "name": "second",
-          "description": "초를 입력해주세요 (기본은 0입니다.)"
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
-          "description": "True인 경우, 1에서 12(시)까지만 지정할 수 있으며 오전으로 해석됩니다"
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
         },
         "pm": {
           "name": "pm",
-          "description": "True인 경우, 1에서 12(시)까지만 지정할 수 있으며 오후로 해석됩니다"
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
         }
       },
       "responses": {
@@ -114,135 +114,135 @@
     },
     "add": {
       "name": "add",
-      "description": "지정된 UNIX 타임스탬프에 시간 추가하기",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
           "name": "to",
-          "description": "초 단위의 UNIX 타임스탬프"
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
           "name": "years",
-          "description": "지정된 타임스탬프에 추가할 연도"
+          "description": "How many years to add to the specified timestamp"
         },
         "months": {
           "name": "months",
-          "description": "지정된 타임스탬프에 추가할 달"
+          "description": "How many months to add to the specified timestamp"
         },
         "days": {
           "name": "days",
-          "description": "지정된 타임스탬프에 추가할 날"
+          "description": "How many days to add to the specified timestamp"
         },
         "hours": {
           "name": "hours",
-          "description": "지정된 타임스탬프에 추가할 시간"
+          "description": "How many hours to add to the specified timestamp"
         },
         "minutes": {
           "name": "minutes",
-          "description": "지정된 타임스탬프에 추가할 분"
+          "description": "How many minutes to add to the specified timestamp"
         },
         "seconds": {
           "name": "seconds",
-          "description": "지정된 타임스탬프에 추가할 초"
+          "description": "How many seconds to add to the specified timestamp"
         }
       }
     },
     "subtract": {
       "name": "subtract",
-      "description": "지정된 UNIX 타임스탬프에서 시간을 빼기",
+      "description": "Subtract some time from the specified UNIX timestamp",
       "responses": {},
       "options": {
         "from": {
           "name": "from",
-          "description": "초 단위의 UNIX 타임스탬프"
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
           "name": "years",
-          "description": "현재 시간에서 뺄 년수"
+          "description": "How many years to subtract from the specified timestamp"
         },
         "months": {
           "name": "months",
-          "description": "현재 시간에서 뺄 달수"
+          "description": "How many months to subtract from the specified timestamp"
         },
         "days": {
           "name": "days",
-          "description": "현재 시간에서 뺄 일수"
+          "description": "How many days to subtract from the specified timestamp"
         },
         "hours": {
           "name": "hours",
-          "description": "현재 시간에서 뺄 시간수"
+          "description": "How many hours to subtract from the specified timestamp"
         },
         "minutes": {
           "name": "minutes",
-          "description": "현재 시간에서 뺄 분수"
+          "description": "How many minutes to subtract from the specified timestamp"
         },
         "seconds": {
           "name": "seconds",
-          "description": "현재 시간에서 뺄 초수"
+          "description": "How many seconds to subtract from the specified timestamp"
         }
       }
     },
     "unix": {
       "name": "unix",
-      "description": "특정 UNIX 타임스탬프에 대한 구문 표시",
+      "description": "Display the syntaxes for a specific UNIX timestamp",
       "responses": {},
       "options": {
         "value": {
           "name": "value",
-          "description": "초 단위의 UNIX 타임스탬프"
+          "description": "The UNIX timestamp in seconds"
         }
       }
     },
     "global": {
       "responses": {
-        "invalidDate": "입력하신 날짜가 유효하지 않습니다. (예: 년, 월, 일)",
-        "noComponentsCurrentTime": "변경할 시간 구성 요소를 하나 이상 지정해야 합니다. 현재 시간이 필요한 경우 인수를 지정하지 않고 `/{{atCommand}}`를 사용하세요.",
-        "noComponentsUnix": "변경할 시간 구성 요소를 하나 이상 지정해야 합니다. UNIX 타임스탬프의 구문을 가져오려면 `/{{unixCommand}}`를 사용하세요.",
-        "unexpectedError": "이 상호 작용을 처리하던 도중 알 수 없는 오류가 발생했습니다",
+        "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
+        "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
+        "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
+        "unexpectedError": "There was an unexpected error while processing this interaction",
         "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
         "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {
           "name": "format",
-          "description": "응답에서 지정된 형식만 반환 가능합니다.",
+          "description": "Returns only the specified format in the response",
           "choices": {
-            "d": "짧은 날짜",
-            "D": "긴 날짜",
-            "t": "짧은 시간",
-            "T": "긴 시간",
-            "f": "날짜 및 시간",
-            "F": "평일, 날짜 그리고 시간",
+            "d": "short date",
+            "D": "long date",
+            "t": "short time",
+            "T": "long time",
+            "f": "date and time",
+            "F": "weekday, date and time",
             "s": "short date and short time",
             "S": "short date and long time",
-            "R": "상대적",
+            "R": "relative",
             "all": "all (default)"
           }
         },
         "columns": {
           "name": "columns",
-          "description": "결과에서 반환할 정보",
+          "description": "Specify which columns to display in the returned response",
           "choices": {
-            "both": "형식과 미리보기",
-            "preview": "미리보기 전용",
-            "syntax": "형식 전용"
+            "both": "both syntax and preview",
+            "preview": "preview only",
+            "syntax": "syntax only"
           }
         },
         "ephemeral": {
           "name": "ephemeral",
-          "description": "true일 시, 결과는 당신에게만 보입니다"
+          "description": "When true the response will only be visible to you"
         },
         "header": {
           "name": "header",
-          "description": "결과 최상단에 자신이 설정한 시간을 표시"
+          "description": "Display the initial time (as interpreted by the bot) on top of the response"
         },
         "timezone": {
           "name": "timezone",
-          "description": "시간대를 입력해주세요 (GMT 기준)"
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {
-        "replyWithSpecificFormat": "답장으로 받을 형식을 선택하세요(터치 기기의 복사를 위함)",
+        "replyWithSpecificFormat": "Select a format below to receive it in a reply (for copying on touch devices)",
         "incompleteTranslations": "Translations are incomplete",
         "contributeTranslations": "Contribute",
         "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
@@ -256,73 +256,73 @@
     },
     "statistics": {
       "name": "statistics",
-      "description": "봇에 대한 여러가지 통계를 표시",
+      "description": "Displays various information about the bot",
       "options": {},
       "responses": {
-        "totalServerCount": "참가한 서버 수:",
-        "shardServerCount": "이 shard에 있는 서버 수:",
-        "uptime": "shard 시작 시간:",
-        "shardCount": "shard 수:",
-        "shardNumber": "(이 통계들은 {{shardId}}번 shard가 생생하였습니다)",
-        "noShards": "(이 봇은 현재 shard를 사용하고 있지 않습니다)",
-        "serverInvite": "지원 서버 링크:",
-        "totalUserCount": "참가한 서버의 사용자 합계:",
+        "totalServerCount": "Total servers joined:",
+        "shardServerCount": "Servers on this shard:",
+        "uptime": "Shard startup time:",
+        "shardCount": "Number of shards:",
+        "shardNumber": "(These statistics were generated by shard #{{shardId}})",
+        "noShards": "(The bot is not currently using sharding)",
+        "serverInvite": "Support server invite URL:",
+        "totalUserCount": "Total users in joined servers:",
         "supportedLanguages": "Supported languages:",
         "crowdinProject": "Crowdin project URL:"
       }
     },
     "snowflake": {
       "name": "snowflake",
-      "description": "스노우플레이크 타임스탬프 구문을 표시합니다. (Discord 내 대부분의 ID)",
+      "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord)",
       "responses": {
-        "invalidSnowflake": "지정한 스노우플레이크가 유효하지 않습니다."
+        "invalidSnowflake": "The specified Snowflake is invalid"
       },
       "options": {
         "value": {
-          "name": "값",
-          "description": "스노우플레이크 숫자"
+          "name": "value",
+          "description": "The Snowflake number"
         }
       }
     },
     "Message Sent": {
-      "name": "메시지 보내기",
+      "name": "Message Sent",
       "responses": {
-        "targetMessage": "다음 메시지에 대한 타임스탬프를 보냅니다: {{url}}"
+        "targetMessage": "Send timestamp for the following message: {{url}}"
       }
     },
     "Message Last Edited": {
-      "name": "메시지 마지막 수정",
+      "name": "Message Last Edited",
       "responses": {
-        "targetMessage": "다음 메시지의 마지막 수정 타임스탬프입니다: {{url}}",
-        "notEdited": "이 메시지는 아직 편집되지 않았습니다"
+        "targetMessage": "Last edit timestamp for the following message: {{url}}",
+        "notEdited": "This message has not been edited yet"
       }
     },
     "iso": {
       "name": "iso",
-      "description": "특정 ISO 8601 타임스탬프에 대한 구문 표시",
+      "description": "Display the syntaxes for a specific ISO 8601 timestamp",
       "responses": {
-        "invalidIsoFormat": "제공된 값이 ISO 8601의 표준과 일치하지 않습니다."
+        "invalidIsoFormat": "The provided value does not match the ISO 8601 standard"
       },
       "options": {
         "value": {
-          "name": "값",
-          "description": "ISO 8601 표준 타임스탬프"
+          "name": "value",
+          "description": "The ISO 8601 standard timestamp"
         }
       }
     },
     "Extract Timestamps": {
-      "name": "타임스탬프 추출하기",
+      "name": "Extract Timestamps",
       "responses": {
-        "targetMessage": "다음 메시지에서 모든 타임스탬프를 찾았습니다: {{url}}",
-        "noTimestamps": "이 메시지에는 Discord 형식의 타임스탬프가 포함되어 있지 않습니다."
+        "targetMessage": "All timestamps found in the following message: {{url}}",
+        "noTimestamps": "This message does not contain any timestamps in Discord's format"
       }
     },
     "settings": {
-      "name": "설정",
-      "description": "웹사이트를 통해 설정을 관리할 수 있는 링크를 만듭니다",
+      "name": "settings",
+      "description": "Create a link to manage your settings via the website",
       "responses": {
-        "linkCreated": "설정을 변경하려면 아래 링크를 방문해 봇 웹사이트에 자동으로 로그인하세요.\n<{{magicLink}}>\n이 링크는 {{expiresAt}} 에 만료되지만 언제든지 이 명령을 실행하여 새 링크를 생성하거나 <{{loginUrl}}>을 방문해 수동으로 로그인한 다음 <{{settingsUrl}}>(으)로 이동하여 설정을 변경할 수 있습니다.",
-        "failedToCreateLink": "자동 로그인 링크를 생성할 수 없습니다. <{{loginUrl}}>(으)로 이동해 수동으로 로그인한 후 <{{settingsUrl}}>(으)로 이동해 설정을 변경하세요."
+        "linkCreated": "Please visit the link below to be logged into the bot's website automatically in order to change your settings.\n<{{magicLink}}>\nThis link will expire {{expiresAt}} but you can always run this command to generate a new link, or visit <{{loginUrl}}> to log in manually, then go to <{{settingsUrl}}> to change your settings.",
+        "failedToCreateLink": "Could not generate a link to log you in automatically, please visit <{{loginUrl}}> and log in manually, then go to <{{settingsUrl}}> to change your settings."
       },
       "options": {},
       "components": {
@@ -373,11 +373,11 @@
         },
         "am": {
           "name": "am",
-          "description": "True를 입력하면 시간은 오전 (정오 이전) 으로 해석됩니다"
+          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
         },
         "pm": {
           "name": "pm",
-          "description": "True를 입력하면 시간은 오후 (정오 이후) 로 해석됩니다"
+          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
         }
       }
     }

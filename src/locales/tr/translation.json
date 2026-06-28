@@ -1,332 +1,332 @@
 {
   "commands": {
     "ago": {
-      "name": "geçmiş",
-      "description": "Geçerli zamana göre geçmişte bir zaman damgası belirtin",
+      "name": "ago",
+      "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "yıl",
-          "description": "Geçerli zamandan kaç yıl çıkarılacağı"
+          "name": "years",
+          "description": "How many years to subtract from the current time"
         },
         "months": {
-          "name": "ay",
-          "description": "Geçerli zamandan kaç ay çıkarılacağı"
+          "name": "months",
+          "description": "How many months to subtract from the current time"
         },
         "days": {
-          "name": "gün",
-          "description": "Geçerli zamandan kaç gün çıkarılacağı"
+          "name": "days",
+          "description": "How many days to subtract from the current time"
         },
         "hours": {
-          "name": "saat",
-          "description": "Geçerli saatten kaç saat çıkarılacağı"
+          "name": "hours",
+          "description": "How many hours to subtract from the current time"
         },
         "minutes": {
-          "name": "dakika",
-          "description": "Geçerli saatten kaç dakika çıkarılacağı"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the current time"
         },
         "seconds": {
-          "name": "saniye",
-          "description": "Geçerli saatten kaç saniye çıkarılacağı"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the current time"
         }
       }
     },
     "in": {
-      "name": "şuradan",
-      "description": "Geçerli zamana göre gelecekte bir zaman damgası belirtin",
+      "name": "in",
+      "description": "Specify a timestamp in the future relative to the current time",
       "responses": {},
       "options": {
         "years": {
-          "name": "yıl",
-          "description": "Geçerli zamana kaç yıl ekleneceği"
+          "name": "years",
+          "description": "How many years to add to the current time"
         },
         "months": {
-          "name": "ay",
-          "description": "Geçerli zamana kaç ay ekleneceği"
+          "name": "months",
+          "description": "How many months to add to the current time"
         },
         "days": {
-          "name": "gün",
-          "description": "Geçerli zamana kaç gün ekleneceği"
+          "name": "days",
+          "description": "How many days to add to the current time"
         },
         "hours": {
-          "name": "saat",
-          "description": "Geçerli saate kaç saat ekleneceği"
+          "name": "hours",
+          "description": "How many hours to add to the current time"
         },
         "minutes": {
-          "name": "dakika",
-          "description": "Geçerli saate kaç dakika ekleneceği"
+          "name": "minutes",
+          "description": "How many minutes to add to the current time"
         },
         "seconds": {
-          "name": "saniye",
-          "description": "Geçerli saate kaç saniye ekleneceği"
+          "name": "seconds",
+          "description": "How many seconds to add to the current time"
         }
       }
     },
     "at": {
-      "name": "şurada",
-      "description": "Zaman damgasının tam bileşenlerini belirtin (saat dilimi dahil olmak üzere)",
+      "name": "at",
+      "description": "Specify the exact components of the timestamp (including the timezone)",
       "options": {
         "year": {
-          "name": "yıl",
-          "description": "Yılı belirtin (varsayılan olarak geçerli yıl kullanılır)"
+          "name": "year",
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "ay",
-          "description": "Ayı belirtin (varsayılan olarak geçerli ay kullanılır)"
+          "name": "month",
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "gün",
-          "description": "Günü belirtin (varsayılan olarak geçerli gün kullanılır)"
+          "name": "day",
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "saat",
-          "description": "Saati belirtin (varsayılan olarak geçerli saat kullanılır)"
+          "name": "hour",
+          "description": "Specify the hour (defaults to current hour)"
         },
         "hour12": {
-          "name": "saat12",
-          "description": "Saati 12 saatlik saat sistemini kullanarak belirtin (varsayılan olarak geçerli saat kullanılır)"
+          "name": "hour12",
+          "description": "Specify the hour using 12-hour clock (defaults to current hour)"
         },
         "minute": {
-          "name": "dakika",
-          "description": "Dakikayı belirtin (varsayılan olarak geçerli dakika kullanılır)"
+          "name": "minute",
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "saniye",
-          "description": "Saniyeyi belirtin (varsayılan olarak 0 kullanılır)"
+          "name": "second",
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
-          "description": "True olduğunda, saat 1 ile 12 arasında olmalı ve ÖÖ (öğleden önce) olarak yorumlanacaktır"
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
         },
         "pm": {
           "name": "pm",
-          "description": "True olduğunda, saat 1 ile 12 arasında olmalı ve ÖS (öğleden sonra) olarak yorumlanacaktır"
+          "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
         }
       },
       "responses": {
-        "amOrPmOnly": "Aynı anda hem am hem de pm seçeneklerini belirtemezsiniz",
-        "meridiemRequired": "saat12 seçeneğini kullanırken am ya da pm seçeneğini belirtmelisiniz",
-        "noAmOrPmWithMeridiem": "Saat seçeneğinde am/pm belirtilmişken, ayrıca am ya da pm seçeneklerini kullanamazsınız",
-        "hourOrHour12Only": "Aynı anda hem saat hem de saat12 seçeneklerini belirtemezsiniz",
-        "hourRange": "Bir meridiem (am/pm) belirtilmediğinde, saat 0 ile 23 arasında bir sayı olmalıdır",
-        "hour12Range": "Bir meridiem (am/pm) belirtildiğinde, saat 1 ile 12 arasında bir sayı olmalıdır"
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option when using the hour12 option",
+        "noAmOrPmWithMeridiem": "You can't specify the am or pm options when the meridiem is provided in the hour option",
+        "hourOrHour12Only": "You can't specify both hour and hour12 options at the same time",
+        "hourRange": "When a meridiem is not specified, hour must be a number between 0 and 23",
+        "hour12Range": "When a meridiem is specified, hour must be a number between 1 and 12"
       }
     },
     "add": {
-      "name": "ekle",
-      "description": "Belirtilen UNIX zaman damgasına zaman ekleyin",
+      "name": "add",
+      "description": "Add some time to the specified UNIX timestamp",
       "responses": {},
       "options": {
         "to": {
-          "name": "şuna",
-          "description": "Saniye cinsinden UNIX zaman damgası"
+          "name": "to",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "yıl",
-          "description": "Belirtilen zaman damgasına kaç yıl ekleneceği"
+          "name": "years",
+          "description": "How many years to add to the specified timestamp"
         },
         "months": {
-          "name": "ay",
-          "description": "Belirtilen zaman damgasına kaç ay ekleneceği"
+          "name": "months",
+          "description": "How many months to add to the specified timestamp"
         },
         "days": {
-          "name": "gün",
-          "description": "Belirtilen zaman damgasına kaç gün ekleneceği"
+          "name": "days",
+          "description": "How many days to add to the specified timestamp"
         },
         "hours": {
-          "name": "saat",
-          "description": "Belirtilen zaman damgasına kaç saat ekleneceği"
+          "name": "hours",
+          "description": "How many hours to add to the specified timestamp"
         },
         "minutes": {
-          "name": "dakika",
-          "description": "Belirtilen zaman damgasına kaç dakika ekleneceği"
+          "name": "minutes",
+          "description": "How many minutes to add to the specified timestamp"
         },
         "seconds": {
-          "name": "saniye",
-          "description": "Belirtilen zaman damgasına kaç saniye ekleneceği"
+          "name": "seconds",
+          "description": "How many seconds to add to the specified timestamp"
         }
       }
     },
     "subtract": {
-      "name": "çıkar",
-      "description": "Belirtilen UNIX zaman damgasından zaman çıkartın",
+      "name": "subtract",
+      "description": "Subtract some time from the specified UNIX timestamp",
       "responses": {},
       "options": {
         "from": {
-          "name": "şundan",
-          "description": "Saniye cinsinden UNIX zaman damgası"
+          "name": "from",
+          "description": "The UNIX timestamp in seconds"
         },
         "years": {
-          "name": "yıl",
-          "description": "Belirtilen zaman damgasından kaç yıl çıkarılacağı"
+          "name": "years",
+          "description": "How many years to subtract from the specified timestamp"
         },
         "months": {
-          "name": "ay",
-          "description": "Belirtilen zaman damgasından kaç ay çıkarılacağı"
+          "name": "months",
+          "description": "How many months to subtract from the specified timestamp"
         },
         "days": {
-          "name": "gün",
-          "description": "Belirtilen zaman damgasından kaç gün çıkarılacağı"
+          "name": "days",
+          "description": "How many days to subtract from the specified timestamp"
         },
         "hours": {
-          "name": "saat",
-          "description": "Belirtilen zaman damgasından kaç saat çıkarılacağı"
+          "name": "hours",
+          "description": "How many hours to subtract from the specified timestamp"
         },
         "minutes": {
-          "name": "dakika",
-          "description": "Belirtilen zaman damgasından kaç dakika çıkarılacağı"
+          "name": "minutes",
+          "description": "How many minutes to subtract from the specified timestamp"
         },
         "seconds": {
-          "name": "saniye",
-          "description": "Belirtilen zaman damgasından kaç saniye çıkarılacağı"
+          "name": "seconds",
+          "description": "How many seconds to subtract from the specified timestamp"
         }
       }
     },
     "unix": {
       "name": "unix",
-      "description": "Belirli bir UNIX zaman damgası için söz dizimlerini görüntüle",
+      "description": "Display the syntaxes for a specific UNIX timestamp",
       "responses": {},
       "options": {
         "value": {
-          "name": "değer",
-          "description": "Saniye cinsinden UNIX zaman damgası"
+          "name": "value",
+          "description": "The UNIX timestamp in seconds"
         }
       }
     },
     "global": {
       "responses": {
-        "invalidDate": "Belirtilen tarih geçersizdir (örneğin: verilen gün mevcut değil)",
-        "noComponentsCurrentTime": "Değiştirmek için en az bir zaman bileşeni belirtmelisiniz. Geçerli saate ihtiyacınız varsa, herhangi bir argüman belirtmeden `/{{atCommand}}` kullanın",
-        "noComponentsUnix": "Değiştirmek için en az bir zaman bileşeni belirtmelisiniz. UNIX zaman damgası için sözdizimini almak istiyorsanız, `/{{unixCommand}}`",
-        "unexpectedError": "Bu etkileşimi işlerken beklenmeyen bir hata oluştu",
-        "unsupportedTimezone": "Sağlanan zaman dilimi ({{timezone}}) desteklenmiyor",
-        "changeTimezoneSetting": "Sunucuda zaman damgalarının oluşturulma şekli yakın zamanda değişti. Bu daha önce çalışıyorduysa, `/{{settingsCommand}}` komutunu kullanarak ayarlarınızı güncellemeniz gerekebilir."
+        "invalidDate": "The specified date is invalid (for example: the given day does not exist)",
+        "noComponentsCurrentTime": "You must specify at least one time component to change. If you need the current time, use `/{{atCommand}}` without specifying any arguments",
+        "noComponentsUnix": "You must specify at least one time component to change. If you want to get the syntax for a UNIX timestamp, use `/{{unixCommand}}`",
+        "unexpectedError": "There was an unexpected error while processing this interaction",
+        "unsupportedTimezone": "The provided timezone ({{timezone}}) is not supported",
+        "changeTimezoneSetting": "The way timestamps are generated on the server has recently changed. If this worked before, you may need to update your settings using the `/{{settingsCommand}}` command."
       },
       "options": {
         "format": {
-          "name": "biçim",
-          "description": "Yanıtta yalnızca belirtilen biçimi çıktı verir",
+          "name": "format",
+          "description": "Returns only the specified format in the response",
           "choices": {
-            "d": "kısa tarih",
-            "D": "uzun tarih",
-            "t": "kısa zaman",
-            "T": "uzun zaman",
-            "f": "tarih ve zaman",
-            "F": "haftanın günü, tarih ve saat",
-            "s": "kısa tarih ve kısa zaman",
-            "S": "kısa tarih ve uzun zaman",
-            "R": "göreceli",
-            "all": "tümü (varsayılan)"
+            "d": "short date",
+            "D": "long date",
+            "t": "short time",
+            "T": "long time",
+            "f": "date and time",
+            "F": "weekday, date and time",
+            "s": "short date and short time",
+            "S": "short date and long time",
+            "R": "relative",
+            "all": "all (default)"
           }
         },
         "columns": {
-          "name": "sütunlar",
-          "description": "Yanıtta hangi sütunların görüntüleneceğini belirtin",
+          "name": "columns",
+          "description": "Specify which columns to display in the returned response",
           "choices": {
-            "both": "hem sözdizimi hem de önizleme",
-            "preview": "sadece önizleme",
-            "syntax": "sadece sözdizimi"
+            "both": "both syntax and preview",
+            "preview": "preview only",
+            "syntax": "syntax only"
           }
         },
         "ephemeral": {
-          "name": "geçici",
-          "description": "True olduğunda yanıt yalnızca size görünür"
+          "name": "ephemeral",
+          "description": "When true the response will only be visible to you"
         },
         "header": {
-          "name": "başlık",
-          "description": "Yanıtın üstünde ilk zamanı (bot tarafından yorumlandığı şekliyle) görüntüleyin"
+          "name": "header",
+          "description": "Display the initial time (as interpreted by the bot) on top of the response"
         },
         "timezone": {
-          "name": "zaman-dilimi",
-          "description": "Saat dilimini belirtin (varsayılan olarak GMT kullanılır)"
+          "name": "timezone",
+          "description": "Specify the timezone (defaults to GMT)"
         }
       },
       "components": {
-        "replyWithSpecificFormat": "Yanıt olarak almak için aşağıdaki biçimlerden birini seçin (mobil cihazlarda kopyalamak için)",
-        "incompleteTranslations": "Çeviriler tamamlanmadı",
-        "contributeTranslations": "Katkıda Bulun",
-        "telemetryThankYou": "Telemetri verilerine katkıda bulunduğunuz için teşekkür ederiz, bu veriler botun gelecekteki gelişimine yardımcı olur. Ayrıntılar için {{privacyPolicy}} bölümüne bakın.",
-        "telemetryInfoCount": "Bu, {{command}} komutu için #{{executionNumber}} numaralı çalıştırmadır (saymaya başladığımızdan beri).",
-        "privacyPolicyLink": "Gizlilik Politikası",
-        "recordingTelemetry": "Bu komut için telemetri toplanıyor, sonuçlar bekleniyor…",
-        "telemetryPlaceholder": "Bu metnin geri kalanı, yalnızca telemetri kaydı sonuçları mevcut olduğunda mesaj boyutunun çok fazla değişmesini önlemek amacıyla buradadır.",
-        "feedbackWanted": "Geri bildiriminiz bekleniyor!",
-        "at12Hint": "Artık saati belirtmek için hem {{slashAt}} komutu içinde (otomatik tamamlama özelliğine sahip mevcut {{hourOptionName}} seçeneği veya yeni {{hour12OptionName}}, {{amOptionName}} ve {{pmOptionName}} seçenekleri aracılığıyla) hem de yeni {{slashAt12}} komutuyla çeşitli seçenekler bulunmaktadır. Kendinizi hangisiyle daha rahat hissediyorsanız onu kullanın. Hangi yöntemin ne kadar popüler olduğu (telemetri verilerine göre) bu seçeneklerden hangilerinin kalıcı olacağını belirleyecektir."
+        "replyWithSpecificFormat": "Select a format below to receive it in a reply (for copying on touch devices)",
+        "incompleteTranslations": "Translations are incomplete",
+        "contributeTranslations": "Contribute",
+        "telemetryThankYou": "Thank you for contributing telemetry data, which helps the bot's future development. See the {{privacyPolicy}} for details.",
+        "telemetryInfoCount": "This is execution #{{executionNumber}} for the {{command}} command (since we started counting).",
+        "privacyPolicyLink": "Privacy Policy",
+        "recordingTelemetry": "Telemetry is being collected for this command, results are pending…",
+        "telemetryPlaceholder": "The rest of this text is only here to prevent the message size from changing too much when the results of the telemetry recording are available.",
+        "feedbackWanted": "Feedback wanted!",
+        "at12Hint": "There are now several different options to specify the number of hours both within the {{slashAt}} command (via the existing {{hourOptionName}} option which now has autocompletion, or the new {{hour12OptionName}}, {{amOptionName}} and {{pmOptionName}} options) and the new {{slashAt12}} command. Use whichever you are more comfortable with. How popular each method is (based on the telemetry data) will determine which of these options will become permanent."
       }
     },
     "statistics": {
-      "name": "istatistikler",
-      "description": "Bot hakkında bilgi verir",
+      "name": "statistics",
+      "description": "Displays various information about the bot",
       "options": {},
       "responses": {
-        "totalServerCount": "Toplam katılınan sunucu sayısı:",
-        "shardServerCount": "Bu parçadaki sunucular:",
-        "uptime": "Parça başlatma süresi:",
-        "shardCount": "Parça sayısı:",
-        "shardNumber": "(Bu istatistikler shard #{{shardId}} tarafından oluşturulmuştur)",
-        "noShards": "(Bot şu anda parçalama methodunu kullanmıyor)",
-        "serverInvite": "Destek sunucusu davet URL'si:",
-        "totalUserCount": "Botun hizmet verdiği toplam kişi sayısı:",
-        "supportedLanguages": "Desteklenen diller:",
-        "crowdinProject": "Crowdin proje URL'si:"
+        "totalServerCount": "Total servers joined:",
+        "shardServerCount": "Servers on this shard:",
+        "uptime": "Shard startup time:",
+        "shardCount": "Number of shards:",
+        "shardNumber": "(These statistics were generated by shard #{{shardId}})",
+        "noShards": "(The bot is not currently using sharding)",
+        "serverInvite": "Support server invite URL:",
+        "totalUserCount": "Total users in joined servers:",
+        "supportedLanguages": "Supported languages:",
+        "crowdinProject": "Crowdin project URL:"
       }
     },
     "snowflake": {
       "name": "snowflake",
-      "description": "Snowflake için zaman damgası sözdizimlerini görüntüleme (Discord içindeki çoğu ID için)",
+      "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord)",
       "responses": {
-        "invalidSnowflake": "Belirtilen Snowflake geçersiz"
+        "invalidSnowflake": "The specified Snowflake is invalid"
       },
       "options": {
         "value": {
-          "name": "değer",
-          "description": "Snowflake numarası"
+          "name": "value",
+          "description": "The Snowflake number"
         }
       }
     },
     "Message Sent": {
-      "name": "Mesaj gönderildi",
+      "name": "Message Sent",
       "responses": {
-        "targetMessage": "Şu mesaj için tüm zaman damgaları: {{url}}"
+        "targetMessage": "Send timestamp for the following message: {{url}}"
       }
     },
     "Message Last Edited": {
-      "name": "Mesajın Son Düzenleme Tarihi",
+      "name": "Message Last Edited",
       "responses": {
-        "targetMessage": "Şu mesaj için tüm son düzenleme zaman damgaları: {{url}}",
-        "notEdited": "Bu mesaj henüz düzenlenmedi"
+        "targetMessage": "Last edit timestamp for the following message: {{url}}",
+        "notEdited": "This message has not been edited yet"
       }
     },
     "iso": {
       "name": "iso",
-      "description": "Belirli bir ISO 8601 zaman damgası için sözdizimlerini görüntüle",
+      "description": "Display the syntaxes for a specific ISO 8601 timestamp",
       "responses": {
-        "invalidIsoFormat": "Sağlanan değer ISO 8601 standardıyla eşleşmiyor"
+        "invalidIsoFormat": "The provided value does not match the ISO 8601 standard"
       },
       "options": {
         "value": {
-          "name": "değer",
-          "description": "ISO 8601 standart zaman damgası"
+          "name": "value",
+          "description": "The ISO 8601 standard timestamp"
         }
       }
     },
     "Extract Timestamps": {
-      "name": "Zaman Damgalarını Çıkart",
+      "name": "Extract Timestamps",
       "responses": {
-        "targetMessage": "Şu mesajda bulunan tüm zaman damgaları: {{url}}",
-        "noTimestamps": "Bu mesaj Discord'un formatında herhangi bir zaman damgası içermiyor"
+        "targetMessage": "All timestamps found in the following message: {{url}}",
+        "noTimestamps": "This message does not contain any timestamps in Discord's format"
       }
     },
     "settings": {
-      "name": "ayarlar",
-      "description": "Ayarlarınızı site üzerinden yönetmek için bir link oluşturun",
+      "name": "settings",
+      "description": "Create a link to manage your settings via the website",
       "responses": {
-        "linkCreated": "Ayarlarınızı değiştirmek ve otomatik olarak botun sitesinde oturum açmak için lütfen aşağıdaki linki ziyaret edin.\n<{{magicLink}}>\nBu link {{expiresAt}} 'te geçerliliğini yitirecek ama bu komutu her zaman yeni bir link oluşturmak için çalıştırabilirsin, ya da <{{loginUrl}}> 'i ziyaret ederek manuel olarak oturum açın, sonra da <{{settingsUrl}}> ile ayarlarınızı değiştirin.",
-        "failedToCreateLink": "Oturum açabilmeniz için bir link oluşturulamadı, lütfen <{{loginUrl}}> 'i ziyaret ederek manuel oturum açın, sonra <{{settingsUrl}}> 'e giderek ayarlarınızı değiştirin."
+        "linkCreated": "Please visit the link below to be logged into the bot's website automatically in order to change your settings.\n<{{magicLink}}>\nThis link will expire {{expiresAt}} but you can always run this command to generate a new link, or visit <{{loginUrl}}> to log in manually, then go to <{{settingsUrl}}> to change your settings.",
+        "failedToCreateLink": "Could not generate a link to log you in automatically, please visit <{{loginUrl}}> and log in manually, then go to <{{settingsUrl}}> to change your settings."
       },
       "options": {},
       "components": {
-        "openSettingsButton": "Bot Ayarları"
+        "openSettingsButton": "Bot Settings"
       }
     },
     "faq": {
@@ -340,44 +340,44 @@
       }
     },
     "at12": {
-      "name": "şurada12",
-      "description": "Zaman damgasının tam bileşenlerini belirtin (12 saatlik saat sistemini kullanarak)",
+      "name": "at12",
+      "description": "Specify the exact components of the timestamp (using a 12-hour clock)",
       "responses": {
-        "amOrPmOnly": "Aynı anda hem am hem de pm seçeneklerini belirtemezsiniz",
-        "meridiemRequired": "am ya da pm seçeneğinden birini belirtmelisiniz"
+        "amOrPmOnly": "You can't specify both am and pm options at the same time",
+        "meridiemRequired": "You must provide either the am or pm option"
       },
       "options": {
         "year": {
-          "name": "yıl",
-          "description": "Yılı belirtin (varsayılan olarak geçerli yıl kullanılır)"
+          "name": "year",
+          "description": "Specify the year (defaults to current year)"
         },
         "month": {
-          "name": "ay",
-          "description": "Ayı belirtin (varsayılan olarak geçerli ay kullanılır)"
+          "name": "month",
+          "description": "Specify the month (defaults to current month)"
         },
         "day": {
-          "name": "gün",
-          "description": "Günü belirtin (varsayılan olarak geçerli gün kullanılır)"
+          "name": "day",
+          "description": "Specify the day (defaults to current day)"
         },
         "hour": {
-          "name": "saat",
-          "description": "Saati belirtin (varsayılan olarak geçerli saat kullanılır)"
+          "name": "hour",
+          "description": "Specify the hour (defaults to current hour)"
         },
         "minute": {
-          "name": "dakika",
-          "description": "Dakikayı belirtin (varsayılan olarak geçerli dakika kullanılır)"
+          "name": "minute",
+          "description": "Specify the minute (defaults to current minute)"
         },
         "second": {
-          "name": "saniye",
-          "description": "Saniyeyi belirtin (varsayılan olarak 0 kullanılır)"
+          "name": "second",
+          "description": "Specify the second (defaults to 0)"
         },
         "am": {
           "name": "am",
-          "description": "True olduğunda, saat ÖÖ (öğleden önce) olarak yorumlanacaktır"
+          "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
         },
         "pm": {
           "name": "pm",
-          "description": "True olduğunda, saat ÖS (öğleden sonra) olarak yorumlanacaktır"
+          "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
         }
       }
     }

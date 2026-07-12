@@ -3,6 +3,7 @@ import { BotMessageComponent, BotMessageComponentType } from '../types/bot-inter
 import { proposalComponentHandler } from './component-handlers/proposal.component-handler.js';
 
 export const approveProposalComponent: BotMessageComponent = {
+  id: BotMessageComponentType.APPROVE_PROPOSAL,
   getDefinition: (t, customEmojiIds, idSuffix) => ({
     type: ComponentType.Button,
     custom_id: `${BotMessageComponentType.APPROVE_PROPOSAL}:${idSuffix}`,

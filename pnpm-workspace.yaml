@@ -1,4 +1,6 @@
 minimumReleaseAge: 20160
+minimumReleaseAgeExclude:
+  - '@wentthefox-org/discord-bot-framework'
 
 allowBuilds:
   bufferutil: true

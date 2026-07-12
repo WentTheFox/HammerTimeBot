@@ -1,4 +1,4 @@
-import { BotChatInputCommand } from '../types/bot-interaction.js';
+import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
 import { adjustDate, TimeMap } from '../utils/time.js';
 import { InCommandOptionName } from '../types/localization.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
@@ -10,12 +10,16 @@ import { TZDate } from '@date-fns/tz';
 import { interactionReply } from '../utils/interaction-reply.js';
 
 export const inCommand: BotChatInputCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.ChatInput,
-    ...getLocalizedObject('description', (lng) => t('commands.in.description', { lng })),
-    ...getLocalizedObject('name', (lng) => t('commands.in.name', { lng })),
-    options: getInOptions(t),
-  }),
+  name: BotChatInputCommandName.IN,
+  getDefinition: (t) => {
+    if (!t) throw new Error('Missing translation function');
+    return {
+      type: ApplicationCommandType.ChatInput,
+      ...getLocalizedObject('description', (lng) => t('commands.in.description', { lng })),
+      ...getLocalizedObject('name', (lng) => t('commands.in.name', { lng })),
+      options: getInOptions(t),
+    };
+  },
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const { t } = context;

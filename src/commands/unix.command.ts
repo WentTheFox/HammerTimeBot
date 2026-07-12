@@ -1,4 +1,4 @@
-import { BotChatInputCommand } from '../types/bot-interaction.js';
+import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
 import { UnixCommandOptionName } from '../types/localization.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
@@ -7,12 +7,16 @@ import { ApplicationCommandType } from 'discord-api-types/v10';
 import { TZDate } from '@date-fns/tz';
 
 export const unixCommand: BotChatInputCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.ChatInput,
-    ...getLocalizedObject('description', (lng) => t('commands.unix.description', { lng })),
-    ...getLocalizedObject('name', (lng) => t('commands.unix.name', { lng })),
-    options: getUnixCommandOptions(t),
-  }),
+  name: BotChatInputCommandName.UNIX,
+  getDefinition: (t) => {
+    if (!t) throw new Error('Missing translation function');
+    return {
+      type: ApplicationCommandType.ChatInput,
+      ...getLocalizedObject('description', (lng) => t('commands.unix.description', { lng })),
+      ...getLocalizedObject('name', (lng) => t('commands.unix.name', { lng })),
+      options: getUnixCommandOptions(t),
+    };
+  },
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const value = interaction.options.getInteger(UnixCommandOptionName.VALUE, true);

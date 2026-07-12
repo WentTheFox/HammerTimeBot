@@ -1,4 +1,4 @@
-import { BotChatInputCommand } from '../types/bot-interaction.js';
+import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
 import { constrain, convertHour12To24, getGmtTimezoneValue, gmtZoneRegex } from '../utils/time.js';
 import { At12CommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
@@ -12,22 +12,18 @@ import { setDate, setHours, setMilliseconds, setMinutes, setMonth, setSeconds, s
 import { TimezoneError } from '../classes/timezone-error.js';
 
 export const at12Command: BotChatInputCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.ChatInput,
-    ...getLocalizedObject('description', (lng) => t('commands.at12.description', { lng })),
-    ...getLocalizedObject('name', (lng) => t('commands.at12.name', { lng })),
-    options: getAt12Options(t),
-  }),
-  async autocomplete(interaction) {
-    const focusedOption = interaction.options.getFocused(true);
-
-    switch (focusedOption.name) {
-      case GlobalCommandOptionName.TIMEZONE:
-        await handleTimezoneAutocomplete(interaction);
-        break;
-      default:
-        throw new Error(`Unknown autocomplete option ${focusedOption.name}`);
-    }
+  name: BotChatInputCommandName.AT12,
+  getDefinition: (t) => {
+    if (!t) throw new Error('Missing translation function');
+    return {
+      type: ApplicationCommandType.ChatInput,
+      ...getLocalizedObject('description', (lng) => t('commands.at12.description', { lng })),
+      ...getLocalizedObject('name', (lng) => t('commands.at12.name', { lng })),
+      options: getAt12Options(t),
+    };
+  },
+  autocomplete: {
+    [GlobalCommandOptionName.TIMEZONE]: handleTimezoneAutocomplete,
   },
   async handle(interaction, context) {
     const settings = await context.getSettings();

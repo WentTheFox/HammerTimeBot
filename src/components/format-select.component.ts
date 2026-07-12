@@ -35,6 +35,7 @@ const getSyntaxReplyContent = (interaction: MessageComponentInteraction): string
 };
 
 export const formatSelectComponent: BotMessageComponent = {
+  id: BotMessageComponentType.FORMAT_SELECT,
   getDefinition: (t, customEmojiIds) => ({
     type: ComponentType.StringSelect,
     custom_id: BotMessageComponentType.FORMAT_SELECT,

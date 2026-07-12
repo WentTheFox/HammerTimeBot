@@ -1,7 +1,7 @@
 import { createClient } from './utils/client.js';
 import { initI18next } from './constants/locales.js';
 import { getEmojiIdMap } from './utils/get-emoji-id-map.js';
-import { Logger } from './classes/logger.js';
+import { Logger } from '@wentthefox-org/discord-bot-framework/logger';
 import { getCommandIdMap } from './utils/get-command-id-map.js';
 
 (async () => {

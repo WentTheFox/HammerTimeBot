@@ -14,6 +14,9 @@ importers:
       '@discordjs/rest':
         specifier: ^2.6.1
         version: 2.6.1
+      '@wentthefox-org/discord-bot-framework':
+        specifier: ^0.2.4
+        version: 0.2.4(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))
       bufferutil:
         specifier: ^4.0.9
         version: 4.1.0
@@ -59,6 +62,9 @@ importers:
       utf-8-validate:
         specifier: ^6.0.5
         version: 6.0.6
+      zod:
+        specifier: ^4.1.13
+        version: 4.4.3
     devDependencies:
       '@eslint/compat':
         specifier: ^2.0.0
@@ -897,6 +903,27 @@ packages:
   '@vladfrangu/async_event_emitter@2.4.7':
     resolution: {integrity: sha512-Xfe6rpCTxSxfbswi/W/Pz7zp1WWSNn4A0eW4mLkQUewCrXXtMj31lCg+iQyTkh/CkusZSq9eDflu7tjEDXUY6g==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+
+  '@wentthefox-org/discord-bot-framework@0.2.4':
+    resolution: {integrity: sha512-DaCNUYKzvjaZdbtIpawZw4AmKyMXqPPYYkmzG6kLI6XglzVD+IGB9zOqOeEjIu5HqdbMWiO3p0C7969ya9bKAQ==}
+    engines: {node: 24.x, pnpm: '>=11'}
+    peerDependencies:
+      '@discordjs/rest': ^2.6.1
+      '@prisma/adapter-pg': ^7.0.0
+      '@prisma/client': ^7.0.0
+      discord-api-types: ^0.38.43
+      discord.js: ^14.26.2
+      i18next: ^25.8.6
+      i18next-fs-backend: ^2.6.1
+    peerDependenciesMeta:
+      '@prisma/adapter-pg':
+        optional: true
+      '@prisma/client':
+        optional: true
+      i18next:
+        optional: true
+      i18next-fs-backend:
+        optional: true
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -2857,6 +2884,9 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
+  zod@4.4.3:
+    resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
+
 snapshots:
 
   '@acemir/cssom@0.9.31': {}
@@ -3521,6 +3551,18 @@ snapshots:
       tinyrainbow: 3.1.0
 
   '@vladfrangu/async_event_emitter@2.4.7': {}
+
+  '@wentthefox-org/discord-bot-framework@0.2.4(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))':
+    dependencies:
+      '@discordjs/rest': 2.6.1
+      discord-api-types: 0.38.43
+      discord.js: 14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+      dotenv: 17.3.1
+      shell-escape: 0.2.0
+      zod: 4.4.3
+    optionalDependencies:
+      i18next: 25.10.5(typescript@5.9.3)
+      i18next-fs-backend: 2.6.1
 
   acorn-jsx@5.3.2(acorn@8.16.0):
     dependencies:
@@ -5750,3 +5792,5 @@ snapshots:
       yargs-parser: 21.1.1
 
   yocto-queue@0.1.0: {}
+
+  zod@4.4.3: {}

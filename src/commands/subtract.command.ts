@@ -1,4 +1,4 @@
-import { BotChatInputCommand } from '../types/bot-interaction.js';
+import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
 import { adjustDate, TimeMap } from '../utils/time.js';
 import { SubtractCommandOptionName } from '../types/localization.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
@@ -10,12 +10,16 @@ import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 
 export const subtractCommand: BotChatInputCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.ChatInput,
-    ...getLocalizedObject('description', (lng) => t('commands.subtract.description', { lng })),
-    ...getLocalizedObject('name', (lng) => t('commands.subtract.name', { lng })),
-    options: getSubtractOptions(t),
-  }),
+  name: BotChatInputCommandName.SUBTRACT,
+  getDefinition: (t) => {
+    if (!t) throw new Error('Missing translation function');
+    return {
+      type: ApplicationCommandType.ChatInput,
+      ...getLocalizedObject('description', (lng) => t('commands.subtract.description', { lng })),
+      ...getLocalizedObject('name', (lng) => t('commands.subtract.name', { lng })),
+      options: getSubtractOptions(t),
+    };
+  },
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const { t } = context;

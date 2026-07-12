@@ -1,5 +1,5 @@
 import { getSnowflakeCommandOptions } from '../options/snowflake.options.js';
-import { BotChatInputCommand } from '../types/bot-interaction.js';
+import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
 import { SnowflakeCommandOptionName } from '../types/localization.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
@@ -10,12 +10,16 @@ import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 
 export const snowflakeCommand: BotChatInputCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.ChatInput,
-    ...getLocalizedObject('description', (lng) => t('commands.snowflake.description', { lng })),
-    ...getLocalizedObject('name', (lng) => t('commands.snowflake.name', { lng })),
-    options: getSnowflakeCommandOptions(t),
-  }),
+  name: BotChatInputCommandName.SNOWFLAKE,
+  getDefinition: (t) => {
+    if (!t) throw new Error('Missing translation function');
+    return {
+      type: ApplicationCommandType.ChatInput,
+      ...getLocalizedObject('description', (lng) => t('commands.snowflake.description', { lng })),
+      ...getLocalizedObject('name', (lng) => t('commands.snowflake.name', { lng })),
+      options: getSnowflakeCommandOptions(t),
+    };
+  },
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const { t } = context;

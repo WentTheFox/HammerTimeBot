@@ -1,5 +1,6 @@
-import { env } from '../env.js';
 import { IValidation } from 'typia';
+import { ApiAuthType, ApiClient, ApiHttpException } from '@wentthefox-org/discord-bot-framework/api-client';
+import { env } from '../env.js';
 import { LoggerContext } from '../types/bot-interaction.js';
 
 export interface BackendApiRequest<T> {
@@ -26,40 +27,36 @@ export const backendApiRequest = async <T>(
   { logger }: LoggerContext,
   params: BackendApiRequest<T>,
 ): Promise<BackendApiResponse<T>> => {
-  let responseText: string | undefined;
-  let r: Response | undefined;
-  const requestUrl = `${env.API_URL}/api${params.path}`;
-
-  const { failOnInvalidResponse = true } = params;
+  const apiClient = new ApiClient(logger, {
+    baseUrl: `${env.API_URL}/api`,
+    authentication: { type: ApiAuthType.AUTHORIZATION_HEADER, getValue: () => env.API_TOKEN },
+  });
 
   try {
-    r = await fetch(requestUrl, {
-      method: params.method ?? 'GET',
-      headers: {
-        Authorization: `Bearer ${env.API_TOKEN}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: typeof params.body !== 'undefined' ? JSON.stringify(params.body) : undefined,
+    const result = await apiClient.request<T>({
+      path: params.path,
+      method: params.method,
+      body: params.body,
+      validator: params.validator,
+      failOnInvalidResponse: params.failOnInvalidResponse,
     });
-
-    responseText = await r.text();
-    if (!r.ok) {
-      throw new Error(`fetch ${requestUrl}: ${r.status} ${r.statusText}\n${responseText}`);
-    }
+    return {
+      responseText: result.responseText,
+      response: result.response,
+      validation: result.validation as IValidation<T>,
+      ok: result.ok,
+      status: result.status,
+    };
   } catch (e) {
-    logger.error('Failed API request:', e);
-  }
-
-  const response = responseText && r?.headers.get('content-type') === 'application/json' ? JSON.parse(responseText) : responseText;
-  const validation = params.validator(response);
-  if (!validation.success) {
-    const errorMessage = `fetch ${requestUrl}: Validation failed\n${responseText}\n${['', ...validation.errors.map(err => JSON.stringify(err))].join('\n- ')}`;
-    if (failOnInvalidResponse) {
-      throw new Error(errorMessage);
+    if (e instanceof ApiHttpException) {
+      return {
+        responseText: undefined,
+        response: undefined as T,
+        validation: { success: false, errors: [] } as unknown as IValidation<T>,
+        ok: false,
+        status: e.status,
+      };
     }
-    logger.warn(errorMessage);
+    throw e;
   }
-
-  return { responseText, response, validation, ok: r?.ok ?? false, status: r?.status ?? NaN };
 };

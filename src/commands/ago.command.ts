@@ -1,4 +1,4 @@
-import { BotChatInputCommand } from '../types/bot-interaction.js';
+import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
 import { adjustDate, TimeMap } from '../utils/time.js';
 import { AgoCommandOptionName } from '../types/localization.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
@@ -10,12 +10,16 @@ import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 
 export const agoCommand: BotChatInputCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.ChatInput,
-    ...getLocalizedObject('description', (lng) => t('commands.ago.description', { lng })),
-    ...getLocalizedObject('name', (lng) => t('commands.ago.name', { lng })),
-    options: getAgoOptions(t),
-  }),
+  name: BotChatInputCommandName.AGO,
+  getDefinition: (t) => {
+    if (!t) throw new Error('Missing translation function');
+    return {
+      type: ApplicationCommandType.ChatInput,
+      ...getLocalizedObject('description', (lng) => t('commands.ago.description', { lng })),
+      ...getLocalizedObject('name', (lng) => t('commands.ago.name', { lng })),
+      options: getAgoOptions(t),
+    };
+  },
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const { t } = context;

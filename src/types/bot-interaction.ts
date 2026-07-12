@@ -1,23 +1,18 @@
-import {
-  ApplicationCommandOptionType,
-  ApplicationCommandType,
-  RESTPostAPIChatInputApplicationCommandsJSONBody,
-} from 'discord-api-types/v10';
-import type {
-  APIMessageComponent,
-  AutocompleteInteraction,
-  BaseInteraction,
-  ChatInputCommandInteraction,
-  MessageComponentInteraction,
-  RESTPostAPIContextMenuApplicationCommandsJSONBody,
-} from 'discord.js';
-import { MessageContextMenuCommandInteraction } from 'discord.js';
+import { ApplicationCommandOptionType } from 'discord-api-types/v10';
+import type { APIMessageComponent } from 'discord.js';
 import { i18n, TFunction } from 'i18next';
-import { BotMessageComponentCustomId } from '../utils/interactions/message-components.js';
+import {
+  NamedChatInputCommand,
+  NamedComponent,
+  NamedContextMenuCommand,
+} from '@wentthefox-org/discord-bot-framework/interactions';
 import { SettingsValue } from '../utils/settings.js';
 
 import { ILogger } from './logger-types.js';
 
+// Single declared source of truth for every valid command/component name -
+// also used as the `name`/`id` field on each command/component object
+// itself, which is what the framework's registries key off of.
 export const enum BotChatInputCommandName {
   ADD = 'add',
   AGO = 'ago',
@@ -66,41 +61,15 @@ export interface InteractionContext extends Omit<InteractionHandlerContext, 'i18
 
 export type UserInteractionContext = InteractionContext & UserSettingsContext;
 
-export type InteractionHandler<T extends BaseInteraction> = (
-  interaction: T,
-  context: UserInteractionContext,
-  resourceId?: string,
-) => void | Promise<void>;
+export type BotChatInputCommand = NamedChatInputCommand<UserInteractionContext, BotChatInputCommandName, TFunction>;
 
-export interface BotChatInputCommand {
-  registerCondition?: () => boolean;
-  getDefinition: (t: TFunction) => RESTPostAPIChatInputApplicationCommandsJSONBody;
-  handle: InteractionHandler<ChatInputCommandInteraction & {
-    commandName: BotChatInputCommandName
-  }>;
-  autocomplete?: InteractionHandler<AutocompleteInteraction & {
-    commandName: BotChatInputCommandName
-  }>;
-}
+export type BotMessageContextMenuCommand = NamedContextMenuCommand<UserInteractionContext, BotMessageContextMenuCommandName, TFunction>;
 
-export interface BotMessageContextMenuCommand {
-  getDefinition: (t: TFunction) => Omit<RESTPostAPIContextMenuApplicationCommandsJSONBody, 'type'> & {
-    type: ApplicationCommandType.Message
-  };
-  handle: InteractionHandler<MessageContextMenuCommandInteraction & {
-    commandName: BotMessageContextMenuCommandName
-  }>;
-}
-
-export type BotMessageComponentHandler = InteractionHandler<MessageComponentInteraction & {
-  customId: BotMessageComponentCustomId
-}>;
 export type BotMessageComponentDefinitionGetter = (t: TFunction, emojiIdMap: Record<string, string>, idSuffix?: string) => APIMessageComponent;
 
-export interface BotMessageComponent {
+export type BotMessageComponent = NamedComponent<UserInteractionContext, BotMessageComponentType> & {
   getDefinition: BotMessageComponentDefinitionGetter;
-  handle: BotMessageComponentHandler;
-}
+};
 
 export interface IntegerOptionMetadata {
   type: ApplicationCommandOptionType.Integer;

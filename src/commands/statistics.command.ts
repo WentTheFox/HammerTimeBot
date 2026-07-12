@@ -1,4 +1,4 @@
-import { BotChatInputCommand } from '../types/bot-interaction.js';
+import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
 import { getStatisticsCommandOptions } from '../options/statistics.options.js';
@@ -10,12 +10,16 @@ import { getProcessStartTs } from '../utils/get-process-start-ts.js';
 import { DiscordjsErrorCodes } from 'discord.js';
 
 export const statisticsCommand: BotChatInputCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.ChatInput,
-    ...getLocalizedObject('description', (lng) => t('commands.statistics.description', { lng })),
-    ...getLocalizedObject('name', (lng) => t('commands.statistics.name', { lng })),
-    options: getStatisticsCommandOptions(t),
-  }),
+  name: BotChatInputCommandName.STATISTICS,
+  getDefinition: (t) => {
+    if (!t) throw new Error('Missing translation function');
+    return {
+      type: ApplicationCommandType.ChatInput,
+      ...getLocalizedObject('description', (lng) => t('commands.statistics.description', { lng })),
+      ...getLocalizedObject('name', (lng) => t('commands.statistics.name', { lng })),
+      options: getStatisticsCommandOptions(t),
+    };
+  },
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const ephemeral = isEphemeralResponse(interaction, settings);

@@ -1,4 +1,4 @@
-import { BotMessageContextMenuCommand } from '../types/bot-interaction.js';
+import { BotMessageContextMenuCommand, BotMessageContextMenuCommandName } from '../types/bot-interaction.js';
 import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { getSyntaxReplyOptions } from '../utils/reply-with-syntax.js';
 import { ApplicationCommandType, ComponentType, MessageFlags } from 'discord-api-types/v10';
@@ -6,11 +6,18 @@ import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 
 export const messageSentCommand: BotMessageContextMenuCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.Message,
-    ...getLocalizedObject('name', (lng) => t('commands.Message Sent.name', { lng }), true, false),
-  }),
+  name: BotMessageContextMenuCommandName.MESSAGE_SENT,
+  getDefinition: (t) => {
+    if (!t) throw new Error('Missing translation function');
+    return {
+      type: ApplicationCommandType.Message,
+      ...getLocalizedObject('name', (lng) => t('commands.Message Sent.name', { lng }), true, false),
+    };
+  },
   async handle(interaction, context) {
+    if (!interaction.isMessageContextMenuCommand()) {
+      throw new Error('Expected message context menu interaction');
+    }
     const settings = await context.getSettings();
     const { t } = context;
     const messageTarget = t('commands.Message Sent.responses.targetMessage', { replace: { url: interaction.targetMessage.url } });

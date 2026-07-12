@@ -3,7 +3,7 @@ import { createTFunction } from './interaction-handlers/create-t-function.js';
 import { reformatCommandNamesInContent } from './interaction-reply.js';
 import { Locale } from 'discord-api-types/v10';
 import { initI18next } from '../constants/locales.js';
-import { DevNullLogger } from '../classes/dev-null-logger.js';
+import { DevNullLogger } from '@wentthefox-org/discord-bot-framework/logger';
 
 describe('reformatCommandNamesInContent', async () => {
   const t = createTFunction({

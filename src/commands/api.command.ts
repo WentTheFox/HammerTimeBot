@@ -7,6 +7,7 @@ import { emoji } from '../utils/messaging.js';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
 
 export const apiCommand: BotChatInputCommand = {
+  name: BotChatInputCommandName.API,
   registerCondition: () => env.LOCAL,
   getDefinition: () => ({
     name: BotChatInputCommandName.API,

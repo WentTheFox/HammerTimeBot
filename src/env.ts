@@ -17,4 +17,6 @@ export const env = defineEnv({
   API_TOKEN: z.string().min(1),
   /** Server ID used to resolve role mentions in FAQ entries. Optional. */
   SUPPORT_SERVER_ID: z.string().optional().default(''),
+  /** Discord webhook URL logs of warn level and above are fanned out to. Optional. */
+  DISCORD_LOG_WEBHOOK_URL: z.string().optional().default(''),
 });

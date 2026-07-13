@@ -22,7 +22,7 @@
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
     "@discordjs/rest": "^2.6.1",
-    "@wentthefox-org/discord-bot-framework": "^0.2.4",
+    "@wentthefox-org/discord-bot-framework": "^1.0.0",
     "bufferutil": "^4.0.9",
     "concurrently": "^9.2.1",
     "date-fns": "^4.1.0",

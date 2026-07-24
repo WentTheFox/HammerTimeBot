@@ -7,7 +7,7 @@ import {
   MessageComponentInteraction,
   RepliableInteraction,
 } from 'discord.js';
-import { handleInteractionError as frameworkHandleInteractionError } from '@wentthefox-org/discord-bot-framework/interactions';
+import { handleInteractionError as frameworkHandleInteractionError } from '@went.tf/discord-bot-framework/interactions';
 import { EmojiCharacters } from '../../constants/emoji-characters.js';
 import { UserInteractionContext } from '../../types/bot-interaction.js';
 import { interactionReply } from '../interaction-reply.js';

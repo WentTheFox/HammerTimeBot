@@ -1,1 +1,1 @@
-export type { LogMethod, NestableLogger as ILogger } from '@wentthefox-org/discord-bot-framework/logger';
+export type { LogMethod, NestableLogger as ILogger } from '@went.tf/discord-bot-framework/logger';

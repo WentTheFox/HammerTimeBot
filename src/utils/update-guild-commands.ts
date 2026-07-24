@@ -8,7 +8,7 @@ import {
   RESTPutAPIApplicationCommandsResult,
   RESTPutAPIApplicationGuildCommandsResult,
 } from 'discord-api-types/v10';
-import { buildApplicationCommandsBody, createCommandRegistrar } from '@wentthefox-org/discord-bot-framework/commands';
+import { buildApplicationCommandsBody, createCommandRegistrar } from '@went.tf/discord-bot-framework/commands';
 import { env } from '../env.js';
 import { rest } from './rest.js';
 import { InteractionContext, LoggerContext } from '../types/bot-interaction.js';

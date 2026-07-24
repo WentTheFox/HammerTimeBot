@@ -1,5 +1,5 @@
 {
-  "name": "hammertimebot",
+  "name": "@went.tf/hammertimebot",
   "version": "1.0.0",
   "description": "Discord bot version of https://hammertime.cyou using slash commands",
   "author": "WentTheFox <WentTheFox@protonmail.com> (https://github.com/WentTheFox)",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
     "@discordjs/rest": "^2.6.1",
-    "@wentthefox-org/discord-bot-framework": "^1.0.0",
+    "@went.tf/discord-bot-framework": "^1.2.0",
     "bufferutil": "^4.0.9",
     "concurrently": "^9.2.1",
     "date-fns": "^4.1.0",

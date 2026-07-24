@@ -1,7 +1,7 @@
 import { MessageFlags } from 'discord-api-types/v10';
 import { userMention } from 'discord.js';
 import typia from 'typia';
-import { ComponentHandler } from '@wentthefox-org/discord-bot-framework/interactions';
+import { ComponentHandler } from '@went.tf/discord-bot-framework/interactions';
 import { EmojiCharacters } from '../../constants/emoji-characters.js';
 import { UserInteractionContext } from '../../types/bot-interaction.js';
 import { backendApiRequest } from '../../utils/backend-api-request.js';

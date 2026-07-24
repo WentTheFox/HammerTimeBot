@@ -14,9 +14,9 @@ importers:
       '@discordjs/rest':
         specifier: ^2.6.1
         version: 2.6.1
-      '@wentthefox-org/discord-bot-framework':
-        specifier: ^1.0.0
-        version: 1.0.0(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))
+      '@went.tf/discord-bot-framework':
+        specifier: ^1.2.0
+        version: 1.2.0(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))
       bufferutil:
         specifier: ^4.0.9
         version: 4.1.0
@@ -907,8 +907,8 @@ packages:
     resolution: {integrity: sha512-Xfe6rpCTxSxfbswi/W/Pz7zp1WWSNn4A0eW4mLkQUewCrXXtMj31lCg+iQyTkh/CkusZSq9eDflu7tjEDXUY6g==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
 
-  '@wentthefox-org/discord-bot-framework@1.0.0':
-    resolution: {integrity: sha512-DF7Db/rfKVYZLM2jhGXY2sZtGFhf/mK37fE9w8vJo+PrJTPhhudxBpD7b/Lz8iml78dao2wIuNC+rVl60PyUjA==}
+  '@went.tf/discord-bot-framework@1.2.0':
+    resolution: {integrity: sha512-HW+gBlmGWrHu8tn4U9imfO1Gz/l1B7QiwfZSDvOPaIg5K/+UKMDFi57JWqtekZCr6ZhAFWJoLooCFTs0t5+SWQ==}
     engines: {node: 24.x, pnpm: '>=11'}
     peerDependencies:
       '@discordjs/rest': ^2.6.1
@@ -3645,7 +3645,7 @@ snapshots:
 
   '@vladfrangu/async_event_emitter@2.4.7': {}
 
-  '@wentthefox-org/discord-bot-framework@1.0.0(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))':
+  '@went.tf/discord-bot-framework@1.2.0(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))':
     dependencies:
       '@discordjs/rest': 2.6.1
       discord-api-types: 0.38.43

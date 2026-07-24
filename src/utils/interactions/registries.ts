@@ -2,7 +2,7 @@ import {
   createChatInputCommandRegistry,
   createComponentRegistry,
   createContextMenuCommandRegistry,
-} from '@wentthefox-org/discord-bot-framework/interactions';
+} from '@went.tf/discord-bot-framework/interactions';
 import { addCommand } from '../../commands/add.command.js';
 import { agoCommand } from '../../commands/ago.command.js';
 import { at12Command } from '../../commands/at12.command.js';

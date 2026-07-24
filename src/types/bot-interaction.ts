@@ -5,7 +5,7 @@ import {
   NamedChatInputCommand,
   NamedComponent,
   NamedContextMenuCommand,
-} from '@wentthefox-org/discord-bot-framework/interactions';
+} from '@went.tf/discord-bot-framework/interactions';
 import { SettingsValue } from '../utils/settings.js';
 
 import { ILogger } from './logger-types.js';

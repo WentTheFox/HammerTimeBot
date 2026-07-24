@@ -1,4 +1,4 @@
-import { createLogger } from '@wentthefox-org/discord-bot-framework/logger';
+import { createLogger } from '@went.tf/discord-bot-framework/logger';
 import { env } from '../env.js';
 import { ILogger } from '../types/logger-types.js';
 

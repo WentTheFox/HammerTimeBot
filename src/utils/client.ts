@@ -1,13 +1,13 @@
 import { Client, InteractionType, MessageFlags } from 'discord.js';
-import { createBotClient } from '@wentthefox-org/discord-bot-framework/client';
-import { getGitData } from '@wentthefox-org/discord-bot-framework/utils';
+import { createBotClient } from '@went.tf/discord-bot-framework/client';
+import { getGitData } from '@went.tf/discord-bot-framework/utils';
 import {
   dispatchAutocomplete,
   dispatchChatInputCommand,
   dispatchComponent,
   dispatchContextMenu,
   OnDispatchError,
-} from '@wentthefox-org/discord-bot-framework/interactions';
+} from '@went.tf/discord-bot-framework/interactions';
 import { env } from '../env.js';
 import { InteractionHandlerContext, UserInteractionContext } from '../types/bot-interaction.js';
 

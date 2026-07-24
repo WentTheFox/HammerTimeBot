@@ -1,4 +1,4 @@
-import { boolFromString, defineEnv } from '@wentthefox-org/discord-bot-framework/env';
+import { boolFromString, defineEnv } from '@went.tf/discord-bot-framework/env';
 import { z } from 'zod';
 
 /**

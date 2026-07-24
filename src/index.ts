@@ -1,6 +1,6 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { createShardManager } from '@wentthefox-org/discord-bot-framework/client';
+import { createShardManager } from '@went.tf/discord-bot-framework/client';
 import { env } from './env.js';
 import { syncStartupData } from './utils/sync-startup-data.js';
 import { createAppLogger } from './utils/create-app-logger.js';

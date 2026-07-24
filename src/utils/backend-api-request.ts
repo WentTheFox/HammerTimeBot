@@ -1,5 +1,5 @@
 import { IValidation } from 'typia';
-import { ApiAuthType, ApiClient, ApiHttpException } from '@wentthefox-org/discord-bot-framework/api-client';
+import { ApiAuthType, ApiClient, ApiHttpException } from '@went.tf/discord-bot-framework/api-client';
 import { env } from '../env.js';
 import { LoggerContext } from '../types/bot-interaction.js';
 

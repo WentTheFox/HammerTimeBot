@@ -1,0 +1,319 @@
+{
+  "$schema": "./commands.schema.json",
+  "commands": [
+    {
+      "type": "CHAT_INPUT",
+      "name": "ago",
+      "options": [
+        { "type": "INTEGER", "name": "years", "min_value": 1 },
+        { "type": "INTEGER", "name": "months", "min_value": 1 },
+        { "type": "INTEGER", "name": "days", "min_value": 1 },
+        { "type": "INTEGER", "name": "hours", "min_value": 1 },
+        { "type": "INTEGER", "name": "minutes", "min_value": 1 },
+        { "type": "NUMBER", "name": "seconds", "min_value": 0.001 },
+        { "type": "STRING", "name": "format", "choices": [
+          { "name": "short date", "value": "d" },
+          { "name": "date and time", "value": "f" },
+          { "name": "short time", "value": "t" },
+          { "name": "long date", "value": "D" },
+          { "name": "weekday, date and time", "value": "F" },
+          { "name": "short date and short time", "value": "s" },
+          { "name": "short date and long time", "value": "S" },
+          { "name": "relative", "value": "R" },
+          { "name": "long time", "value": "T" },
+          { "name": "all (default)", "value": "all" }
+        ] },
+        { "type": "BOOLEAN", "name": "header" },
+        { "type": "STRING", "name": "columns", "choices": [
+          { "name": "both syntax and preview", "value": "both" },
+          { "name": "preview only", "value": "preview" },
+          { "name": "syntax only", "value": "syntax" }
+        ] },
+        { "type": "BOOLEAN", "name": "ephemeral" }
+      ]
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "in",
+      "options": [
+        { "type": "INTEGER", "name": "years", "min_value": 1 },
+        { "type": "INTEGER", "name": "months", "min_value": 1 },
+        { "type": "INTEGER", "name": "days", "min_value": 1 },
+        { "type": "INTEGER", "name": "hours", "min_value": 1 },
+        { "type": "INTEGER", "name": "minutes", "min_value": 1 },
+        { "type": "NUMBER", "name": "seconds", "min_value": 0.001 },
+        { "type": "STRING", "name": "format", "choices": [
+          { "name": "short date", "value": "d" },
+          { "name": "date and time", "value": "f" },
+          { "name": "short time", "value": "t" },
+          { "name": "long date", "value": "D" },
+          { "name": "weekday, date and time", "value": "F" },
+          { "name": "short date and short time", "value": "s" },
+          { "name": "short date and long time", "value": "S" },
+          { "name": "relative", "value": "R" },
+          { "name": "long time", "value": "T" },
+          { "name": "all (default)", "value": "all" }
+        ] },
+        { "type": "BOOLEAN", "name": "header" },
+        { "type": "STRING", "name": "columns", "choices": [
+          { "name": "both syntax and preview", "value": "both" },
+          { "name": "preview only", "value": "preview" },
+          { "name": "syntax only", "value": "syntax" }
+        ] },
+        { "type": "BOOLEAN", "name": "ephemeral" }
+      ]
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "at",
+      "options": [
+        { "type": "INTEGER", "name": "year" },
+        { "type": "INTEGER", "name": "month", "min_value": 1, "max_value": 12 },
+        { "type": "INTEGER", "name": "day", "min_value": 1, "max_value": 31 },
+        { "type": "STRING", "name": "hour", "autocomplete": true },
+        { "type": "INTEGER", "name": "hour12", "min_value": 1, "max_value": 12 },
+        { "type": "BOOLEAN", "name": "am" },
+        { "type": "BOOLEAN", "name": "pm" },
+        { "type": "INTEGER", "name": "minute", "min_value": 0, "max_value": 59 },
+        { "type": "NUMBER", "name": "second", "min_value": 0, "max_value": 59.999 },
+        { "type": "STRING", "name": "timezone", "min_length": 3, "autocomplete": true },
+        { "type": "STRING", "name": "format", "choices": [
+          { "name": "short date", "value": "d" },
+          { "name": "date and time", "value": "f" },
+          { "name": "short time", "value": "t" },
+          { "name": "long date", "value": "D" },
+          { "name": "weekday, date and time", "value": "F" },
+          { "name": "short date and short time", "value": "s" },
+          { "name": "short date and long time", "value": "S" },
+          { "name": "relative", "value": "R" },
+          { "name": "long time", "value": "T" },
+          { "name": "all (default)", "value": "all" }
+        ] },
+        { "type": "BOOLEAN", "name": "header" },
+        { "type": "STRING", "name": "columns", "choices": [
+          { "name": "both syntax and preview", "value": "both" },
+          { "name": "preview only", "value": "preview" },
+          { "name": "syntax only", "value": "syntax" }
+        ] },
+        { "type": "BOOLEAN", "name": "ephemeral" }
+      ]
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "at12",
+      "options": [
+        { "type": "INTEGER", "name": "year" },
+        { "type": "INTEGER", "name": "month", "min_value": 1, "max_value": 12 },
+        { "type": "INTEGER", "name": "day", "min_value": 1, "max_value": 31 },
+        { "type": "INTEGER", "name": "hour", "min_value": 1, "max_value": 12 },
+        { "type": "BOOLEAN", "name": "am" },
+        { "type": "BOOLEAN", "name": "pm" },
+        { "type": "INTEGER", "name": "minute", "min_value": 0, "max_value": 59 },
+        { "type": "NUMBER", "name": "second", "min_value": 0, "max_value": 59.999 },
+        { "type": "STRING", "name": "timezone", "min_length": 3, "autocomplete": true },
+        { "type": "STRING", "name": "format", "choices": [
+          { "name": "short date", "value": "d" },
+          { "name": "date and time", "value": "f" },
+          { "name": "short time", "value": "t" },
+          { "name": "long date", "value": "D" },
+          { "name": "weekday, date and time", "value": "F" },
+          { "name": "short date and short time", "value": "s" },
+          { "name": "short date and long time", "value": "S" },
+          { "name": "relative", "value": "R" },
+          { "name": "long time", "value": "T" },
+          { "name": "all (default)", "value": "all" }
+        ] },
+        { "type": "BOOLEAN", "name": "header" },
+        { "type": "STRING", "name": "columns", "choices": [
+          { "name": "both syntax and preview", "value": "both" },
+          { "name": "preview only", "value": "preview" },
+          { "name": "syntax only", "value": "syntax" }
+        ] },
+        { "type": "BOOLEAN", "name": "ephemeral" }
+      ]
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "add",
+      "options": [
+        { "type": "NUMBER", "name": "to", "required": true },
+        { "type": "INTEGER", "name": "years", "min_value": 1 },
+        { "type": "INTEGER", "name": "months", "min_value": 1 },
+        { "type": "INTEGER", "name": "days", "min_value": 1 },
+        { "type": "INTEGER", "name": "hours", "min_value": 1 },
+        { "type": "INTEGER", "name": "minutes", "min_value": 1 },
+        { "type": "NUMBER", "name": "seconds", "min_value": 0.001 },
+        { "type": "STRING", "name": "format", "choices": [
+          { "name": "short date", "value": "d" },
+          { "name": "date and time", "value": "f" },
+          { "name": "short time", "value": "t" },
+          { "name": "long date", "value": "D" },
+          { "name": "weekday, date and time", "value": "F" },
+          { "name": "short date and short time", "value": "s" },
+          { "name": "short date and long time", "value": "S" },
+          { "name": "relative", "value": "R" },
+          { "name": "long time", "value": "T" },
+          { "name": "all (default)", "value": "all" }
+        ] },
+        { "type": "BOOLEAN", "name": "header" },
+        { "type": "STRING", "name": "columns", "choices": [
+          { "name": "both syntax and preview", "value": "both" },
+          { "name": "preview only", "value": "preview" },
+          { "name": "syntax only", "value": "syntax" }
+        ] },
+        { "type": "BOOLEAN", "name": "ephemeral" }
+      ]
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "subtract",
+      "options": [
+        { "type": "NUMBER", "name": "from", "required": true },
+        { "type": "INTEGER", "name": "years", "min_value": 1 },
+        { "type": "INTEGER", "name": "months", "min_value": 1 },
+        { "type": "INTEGER", "name": "days", "min_value": 1 },
+        { "type": "INTEGER", "name": "hours", "min_value": 1 },
+        { "type": "INTEGER", "name": "minutes", "min_value": 1 },
+        { "type": "NUMBER", "name": "seconds", "min_value": 0.001 },
+        { "type": "STRING", "name": "format", "choices": [
+          { "name": "short date", "value": "d" },
+          { "name": "date and time", "value": "f" },
+          { "name": "short time", "value": "t" },
+          { "name": "long date", "value": "D" },
+          { "name": "weekday, date and time", "value": "F" },
+          { "name": "short date and short time", "value": "s" },
+          { "name": "short date and long time", "value": "S" },
+          { "name": "relative", "value": "R" },
+          { "name": "long time", "value": "T" },
+          { "name": "all (default)", "value": "all" }
+        ] },
+        { "type": "BOOLEAN", "name": "header" },
+        { "type": "STRING", "name": "columns", "choices": [
+          { "name": "both syntax and preview", "value": "both" },
+          { "name": "preview only", "value": "preview" },
+          { "name": "syntax only", "value": "syntax" }
+        ] },
+        { "type": "BOOLEAN", "name": "ephemeral" }
+      ]
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "unix",
+      "options": [
+        { "type": "INTEGER", "name": "value", "required": true },
+        { "type": "STRING", "name": "format", "choices": [
+          { "name": "short date", "value": "d" },
+          { "name": "date and time", "value": "f" },
+          { "name": "short time", "value": "t" },
+          { "name": "long date", "value": "D" },
+          { "name": "weekday, date and time", "value": "F" },
+          { "name": "short date and short time", "value": "s" },
+          { "name": "short date and long time", "value": "S" },
+          { "name": "relative", "value": "R" },
+          { "name": "long time", "value": "T" },
+          { "name": "all (default)", "value": "all" }
+        ] },
+        { "type": "BOOLEAN", "name": "header" },
+        { "type": "STRING", "name": "columns", "choices": [
+          { "name": "both syntax and preview", "value": "both" },
+          { "name": "preview only", "value": "preview" },
+          { "name": "syntax only", "value": "syntax" }
+        ] },
+        { "type": "BOOLEAN", "name": "ephemeral" }
+      ]
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "iso",
+      "options": [
+        { "type": "STRING", "name": "value", "required": true, "min_length": 10, "max_length": 25 },
+        { "type": "STRING", "name": "timezone", "min_length": 3, "autocomplete": true },
+        { "type": "STRING", "name": "format", "choices": [
+          { "name": "short date", "value": "d" },
+          { "name": "date and time", "value": "f" },
+          { "name": "short time", "value": "t" },
+          { "name": "long date", "value": "D" },
+          { "name": "weekday, date and time", "value": "F" },
+          { "name": "short date and short time", "value": "s" },
+          { "name": "short date and long time", "value": "S" },
+          { "name": "relative", "value": "R" },
+          { "name": "long time", "value": "T" },
+          { "name": "all (default)", "value": "all" }
+        ] },
+        { "type": "BOOLEAN", "name": "header" },
+        { "type": "STRING", "name": "columns", "choices": [
+          { "name": "both syntax and preview", "value": "both" },
+          { "name": "preview only", "value": "preview" },
+          { "name": "syntax only", "value": "syntax" }
+        ] },
+        { "type": "BOOLEAN", "name": "ephemeral" }
+      ]
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "snowflake",
+      "options": [
+        { "type": "STRING", "name": "value", "required": true, "min_length": 1 },
+        { "type": "STRING", "name": "format", "choices": [
+          { "name": "short date", "value": "d" },
+          { "name": "date and time", "value": "f" },
+          { "name": "short time", "value": "t" },
+          { "name": "long date", "value": "D" },
+          { "name": "weekday, date and time", "value": "F" },
+          { "name": "short date and short time", "value": "s" },
+          { "name": "short date and long time", "value": "S" },
+          { "name": "relative", "value": "R" },
+          { "name": "long time", "value": "T" },
+          { "name": "all (default)", "value": "all" }
+        ] },
+        { "type": "BOOLEAN", "name": "header" },
+        { "type": "STRING", "name": "columns", "choices": [
+          { "name": "both syntax and preview", "value": "both" },
+          { "name": "preview only", "value": "preview" },
+          { "name": "syntax only", "value": "syntax" }
+        ] },
+        { "type": "BOOLEAN", "name": "ephemeral" }
+      ]
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "statistics",
+      "options": [
+        { "type": "BOOLEAN", "name": "ephemeral" }
+      ]
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "settings"
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "faq",
+      "options": [
+        { "type": "STRING", "name": "topic", "required": true, "autocomplete": true },
+        { "type": "BOOLEAN", "name": "ephemeral" }
+      ]
+    },
+    {
+      "type": "CHAT_INPUT",
+      "name": "api",
+      "description": "Perform actions related to the API",
+      "options": [
+        { "type": "SUBCOMMAND", "name": "update-bot-commands", "description": "Update bot command data in the API" },
+        { "type": "SUBCOMMAND", "name": "update-bot-timezones", "description": "Update bot timezone data in the API" }
+      ]
+    },
+    {
+      "type": "MESSAGE",
+      "name": "Message Sent"
+    },
+    {
+      "type": "MESSAGE",
+      "name": "Message Last Edited"
+    },
+    {
+      "type": "MESSAGE",
+      "name": "Extract Timestamps"
+    }
+  ]
+}

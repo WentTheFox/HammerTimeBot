@@ -1,4 +1,3 @@
-import { ApplicationCommandOptionType } from 'discord-api-types/v10';
 import type { APIMessageComponent } from 'discord.js';
 import { i18n, TFunction } from 'i18next';
 import {
@@ -61,31 +60,12 @@ export interface InteractionContext extends Omit<InteractionHandlerContext, 'i18
 
 export type UserInteractionContext = InteractionContext & UserSettingsContext;
 
-export type BotChatInputCommand = NamedChatInputCommand<UserInteractionContext, BotChatInputCommandName, TFunction>;
+export type BotChatInputCommand = NamedChatInputCommand<UserInteractionContext, BotChatInputCommandName>;
 
-export type BotMessageContextMenuCommand = NamedContextMenuCommand<UserInteractionContext, BotMessageContextMenuCommandName, TFunction>;
+export type BotMessageContextMenuCommand = NamedContextMenuCommand<UserInteractionContext, BotMessageContextMenuCommandName>;
 
 export type BotMessageComponentDefinitionGetter = (t: TFunction, emojiIdMap: Record<string, string>, idSuffix?: string) => APIMessageComponent;
 
 export type BotMessageComponent = NamedComponent<UserInteractionContext, BotMessageComponentType> & {
   getDefinition: BotMessageComponentDefinitionGetter;
 };
-
-export interface IntegerOptionMetadata {
-  type: ApplicationCommandOptionType.Integer;
-  min_value?: number;
-  max_value?: number;
-}
-
-export interface NumberOptionMetadata {
-  type: ApplicationCommandOptionType.Number;
-  min_value?: number;
-  max_value?: number;
-}
-
-export interface StringOptionMetadata {
-  type: ApplicationCommandOptionType.String;
-  min_length?: number;
-  max_length?: number;
-  autocomplete?: boolean;
-}

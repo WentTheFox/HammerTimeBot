@@ -1,25 +1,14 @@
 import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
 import { adjustDate, TimeMap } from '../utils/time.js';
 import { AgoCommandOptionName } from '../types/localization.js';
-import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
-import { getAgoOptions } from '../options/ago.options.js';
 import { atLeastOneNonZeroKey } from '../utils/at-least-one-non-zero-key.js';
-import { ApplicationCommandType, MessageFlags } from 'discord-api-types/v10';
+import { MessageFlags } from 'discord-api-types/v10';
 import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 
 export const agoCommand: BotChatInputCommand = {
   name: BotChatInputCommandName.AGO,
-  getDefinition: (t) => {
-    if (!t) throw new Error('Missing translation function');
-    return {
-      type: ApplicationCommandType.ChatInput,
-      ...getLocalizedObject('description', (lng) => t('commands.ago.description', { lng })),
-      ...getLocalizedObject('name', (lng) => t('commands.ago.name', { lng })),
-      options: getAgoOptions(t),
-    };
-  },
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const { t } = context;

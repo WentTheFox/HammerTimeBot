@@ -1,10 +1,8 @@
 import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
 import { constrain, getGmtTimezoneValue, gmtZoneRegex, processMixedHourParameters } from '../utils/time.js';
 import { AtCommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
-import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
-import { getAtOptions } from '../options/at.options.js';
-import { ApplicationCommandType, MessageFlags } from 'discord-api-types/v10';
+import { MessageFlags } from 'discord-api-types/v10';
 import { findTimezoneOptionValue, handleHourAutocomplete, handleTimezoneAutocomplete } from '../utils/messaging.js';
 import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
@@ -13,15 +11,6 @@ import { TimezoneError } from '../classes/timezone-error.js';
 
 export const atCommand: BotChatInputCommand = {
   name: BotChatInputCommandName.AT,
-  getDefinition: (t) => {
-    if (!t) throw new Error('Missing translation function');
-    return {
-      type: ApplicationCommandType.ChatInput,
-      ...getLocalizedObject('description', (lng) => t('commands.at.description', { lng })),
-      ...getLocalizedObject('name', (lng) => t('commands.at.name', { lng })),
-      options: getAtOptions(t),
-    };
-  },
   autocomplete: {
     [GlobalCommandOptionName.TIMEZONE]: handleTimezoneAutocomplete,
     [AtCommandOptionName.HOUR]: handleHourAutocomplete,

@@ -1,0 +1,46 @@
+{
+  "$defs": {
+    "chatInputEntry": {
+      "allOf": [
+        { "$ref": "./node_modules/@went.tf/discord-bot-framework/build/commands/schema/chat-input-command.json" },
+        {
+          "properties": {
+            "name": {
+              "enum": ["add", "ago", "at", "at12", "api", "faq", "in", "iso", "settings", "snowflake", "statistics", "subtract", "unix"]
+            }
+          }
+        }
+      ]
+    },
+    "contextMenuEntry": {
+      "allOf": [
+        { "$ref": "./node_modules/@went.tf/discord-bot-framework/build/commands/schema/context-menu-command.json" },
+        {
+          "properties": {
+            "name": {
+              "enum": ["Message Sent", "Message Last Edited", "Extract Timestamps"]
+            }
+          }
+        }
+      ]
+    },
+    "entry": {
+      "oneOf": [
+        { "$ref": "#/$defs/chatInputEntry" },
+        { "$ref": "#/$defs/contextMenuEntry" }
+      ]
+    }
+  },
+  "oneOf": [
+    { "type": "array", "items": { "$ref": "#/$defs/entry" } },
+    {
+      "type": "object",
+      "properties": {
+        "$schema": { "type": "string" },
+        "commands": { "type": "array", "items": { "$ref": "#/$defs/entry" } }
+      },
+      "required": ["commands"],
+      "additionalProperties": false
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import {
   createChatInputCommandRegistry,
   createComponentRegistry,
   createContextMenuCommandRegistry,
+  RegistryName,
 } from '@went.tf/discord-bot-framework/interactions';
 import { addCommand } from '../../commands/add.command.js';
 import { agoCommand } from '../../commands/ago.command.js';
@@ -50,3 +51,6 @@ export const componentRegistry = createComponentRegistry([
   approveProposalComponent,
   rejectProposalComponent,
 ]);
+
+export type BotChatInputCommandName = RegistryName<typeof chatInputCommandRegistry>;
+export type BotMessageContextMenuCommandName = RegistryName<typeof contextMenuCommandRegistry>;

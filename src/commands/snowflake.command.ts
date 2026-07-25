@@ -1,4 +1,4 @@
-import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
+import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { SnowflakeCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
 import snowflakeToUnix from '../utils/snowflake.js';
@@ -8,7 +8,7 @@ import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 
 export const snowflakeCommand: BotChatInputCommand = {
-  name: BotChatInputCommandName.SNOWFLAKE,
+  name: 'snowflake',
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const { t } = context;

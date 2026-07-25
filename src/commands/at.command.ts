@@ -1,4 +1,4 @@
-import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
+import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { constrain, getGmtTimezoneValue, gmtZoneRegex, processMixedHourParameters } from '../utils/time.js';
 import { AtCommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
@@ -10,7 +10,7 @@ import { setDate, setHours, setMilliseconds, setMinutes, setMonth, setSeconds, s
 import { TimezoneError } from '../classes/timezone-error.js';
 
 export const atCommand: BotChatInputCommand = {
-  name: BotChatInputCommandName.AT,
+  name: 'at',
   autocomplete: {
     [GlobalCommandOptionName.TIMEZONE]: handleTimezoneAutocomplete,
     [AtCommandOptionName.HOUR]: handleHourAutocomplete,

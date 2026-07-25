@@ -2,7 +2,7 @@
   "$defs": {
     "chatInputEntry": {
       "allOf": [
-        { "$ref": "./node_modules/@went.tf/discord-bot-framework/build/commands/schema/chat-input-command.json" },
+        { "$ref": "../node_modules/@went.tf/discord-bot-framework/build/commands/schema/chat-input-command.json" },
         {
           "properties": {
             "name": {
@@ -14,7 +14,7 @@
     },
     "contextMenuEntry": {
       "allOf": [
-        { "$ref": "./node_modules/@went.tf/discord-bot-framework/build/commands/schema/context-menu-command.json" },
+        { "$ref": "../node_modules/@went.tf/discord-bot-framework/build/commands/schema/context-menu-command.json" },
         {
           "properties": {
             "name": {

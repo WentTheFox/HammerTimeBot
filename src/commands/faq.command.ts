@@ -1,6 +1,6 @@
 import { MessageFlags } from 'discord-api-types/v10';
 import { FAQ_ENTRIES, FaqEntryKey } from '../faq/faq-entries.generated.js';
-import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
+import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { FaqCommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
 import { truncateText } from '../utils/messaging.js';
 
@@ -9,7 +9,7 @@ const formatFaqIdentifier = (identifier: number) => String(identifier)
   .replace(/0{2}$/, '');
 
 export const faqCommand: BotChatInputCommand = {
-  name: BotChatInputCommandName.FAQ,
+  name: 'faq',
   autocomplete: {
     async [FaqCommandOptionName.TOPIC](interaction) {
       const query = interaction.options.getFocused().trim().toLowerCase();

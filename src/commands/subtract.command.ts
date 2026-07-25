@@ -1,4 +1,4 @@
-import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
+import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { adjustDate, TimeMap } from '../utils/time.js';
 import { SubtractCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
@@ -8,7 +8,7 @@ import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 
 export const subtractCommand: BotChatInputCommand = {
-  name: BotChatInputCommandName.SUBTRACT,
+  name: 'subtract',
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const { t } = context;

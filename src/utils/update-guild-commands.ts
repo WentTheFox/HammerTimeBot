@@ -18,13 +18,13 @@ import {
   CommandsFile,
 } from '@went.tf/discord-bot-framework/commands/schema';
 import { createCommandLocalizer } from '@went.tf/discord-bot-framework/i18n';
-import commandsSchemaRaw from '../../commands.schema.json' with { type: 'json' };
-import commandsData from '../../commands.json' with { type: 'json' };
+import commandsSchemaRaw from '../commands.schema.json' with { type: 'json' };
+import commandsData from '../commands.json' with { type: 'json' };
 import { env } from '../env.js';
 import { rest } from './rest.js';
 import { getLocalizedObject } from './get-localized-object.js';
 import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from '../constants/locales.js';
-import { BotMessageContextMenuCommandName, InteractionContext, LoggerContext } from '../types/bot-interaction.js';
+import { InteractionContext, LoggerContext } from '../types/bot-interaction.js';
 import { GlobalCommandOptionName } from '../types/localization.js';
 import { updateBotCommandsInApi } from './backend-api-data-updaters.js';
 import { chatInputCommandRegistry, contextMenuCommandRegistry } from './interactions/registries.js';
@@ -76,11 +76,7 @@ const toGlobalOptionPath = (path: readonly string[]): readonly string[] =>
     ? ['commands', 'global', 'options', path[3], path[4]]
     : path;
 
-const CONTEXT_MENU_NAMES = new Set<string>([
-  BotMessageContextMenuCommandName.MESSAGE_SENT,
-  BotMessageContextMenuCommandName.MESSAGE_LAST_EDITED,
-  BotMessageContextMenuCommandName.EXTRACT_TIMESTAMPS,
-]);
+const CONTEXT_MENU_NAMES = new Set<string>(contextMenuCommandRegistry.names);
 
 const buildCommandsBody = (t: InteractionContext['t']): BotCommands => {
   const localizer = createCommandLocalizer({ locales: SUPPORTED_LANGUAGES, baseLocale: DEFAULT_LANGUAGE, t });

@@ -1,4 +1,4 @@
-import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
+import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { adjustDate, TimeMap } from '../utils/time.js';
 import { InCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
@@ -8,7 +8,7 @@ import { TZDate } from '@date-fns/tz';
 import { interactionReply } from '../utils/interaction-reply.js';
 
 export const inCommand: BotChatInputCommand = {
-  name: BotChatInputCommandName.IN,
+  name: 'in',
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const { t } = context;

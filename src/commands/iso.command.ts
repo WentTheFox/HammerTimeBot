@@ -1,4 +1,4 @@
-import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
+import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { GlobalCommandOptionName, IsoCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
 import { MessageFlags } from 'discord-api-types/v10';
@@ -9,7 +9,7 @@ import { isValid } from 'date-fns';
 import { TimezoneError } from '../classes/timezone-error.js';
 
 export const isoCommand: BotChatInputCommand = {
-  name: BotChatInputCommandName.ISO,
+  name: 'iso',
   autocomplete: {
     [GlobalCommandOptionName.TIMEZONE]: handleTimezoneAutocomplete,
   },

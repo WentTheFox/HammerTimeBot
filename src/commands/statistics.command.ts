@@ -1,4 +1,4 @@
-import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
+import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
 import { EPHEMERAL_OPTION_DEFAULT_VALUE, getBareNumberFormatter, isEphemeralResponse } from '../utils/messaging.js';
 import { env } from '../env.js';
@@ -8,7 +8,7 @@ import { getProcessStartTs } from '../utils/get-process-start-ts.js';
 import { DiscordjsErrorCodes } from 'discord.js';
 
 export const statisticsCommand: BotChatInputCommand = {
-  name: BotChatInputCommandName.STATISTICS,
+  name: 'statistics',
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const ephemeral = isEphemeralResponse(interaction, settings);

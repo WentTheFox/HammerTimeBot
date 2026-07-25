@@ -1,4 +1,4 @@
-import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
+import { BotChatInputCommand } from '../types/bot-interaction.js';
 import {
   APIMessageTopLevelComponent,
   ButtonStyle,
@@ -17,7 +17,7 @@ interface LoginLinkResponse {
 }
 
 export const settingsCommand: BotChatInputCommand = {
-  name: BotChatInputCommandName.SETTINGS,
+  name: 'settings',
   async handle(interaction, context) {
     const messageFlags = MessageFlags.Ephemeral | MessageFlags.IsComponentsV2;
     await interaction.deferReply({ flags: messageFlags });

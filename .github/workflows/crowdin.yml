@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
-      - uses: crowdin/github-action@e0c8f73cdc0fafde9396e056c5038217000a32d1 # v2.16.4
+      - uses: crowdin/github-action@8f01d54f70f1713ee3f09d82c2bbb2daeac28689 # v2.17.1
         with:
           upload_sources: true
           download_translations: true

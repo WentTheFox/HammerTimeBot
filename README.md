@@ -39,7 +39,9 @@ English and Hungarian translations have been included, so no translators will be
 - 🇨🇳 Chinese Simplified
   - [Hoshub](https://crowdin.com/profile/Hoshub)
   - [User670](https://crowdin.com/profile/User670)
-- 🇹🇼 ChineseTW: [Jckcr](https://crowdin.com/profile/jckcr)
+- 🇹🇼 ChineseTW
+  - [Jckcr](https://crowdin.com/profile/jckcr)
+  - [神風神鵝 エホバ神魔狼](https://crowdin.com/profile/lalauya1122)
 - 🇭🇷 Croatian: [Volvone](https://github.com/volvone)
 - 🇨🇿 Czech
   - [Blurplix](https://crowdin.com/profile/Blurplix)
@@ -87,8 +89,10 @@ English and Hungarian translations have been included, so no translators will be
 - 🇷🇺 Russian
   - [Artiom Boyko](https://crowdin.com/profile/Ajno)
   - [cfif126](https://crowdin.com/profile/cfif126)
+  - [dimkakartinka](https://crowdin.com/profile/dimkakartinka)
   - [Nikita Sharikov](https://crowdin.com/profile/Aligatoor)
   - [Vladimir](https://crowdin.com/profile/bill876)
+  - [Артем](https://crowdin.com/profile/artenovis9020)
 - 🇪🇸 Spanish
   - [Its Me Lol](https://crowdin.com/profile/ServiceAide)
   - [Street Dog](https://crowdin.com/profile/streetdog.arg)
@@ -107,6 +111,7 @@ English and Hungarian translations have been included, so no translators will be
 - 🇺🇦 Ukrainian
   - [DmitroMeow](https://crowdin.com/profile/DmitroMeow)
   - [GameHacker](https://crowdin.com/profile/GameHacker)
+  - [Артем](https://crowdin.com/profile/artenovis9020)
   - [Кухарчук Ярослав](https://crowdin.com/profile/Gamer_Yaroslaw)
 - 🇻🇳 Vietnamese
   - [Quan](https://crowdin.com/profile/quanonthecob)

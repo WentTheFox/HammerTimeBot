@@ -226,6 +226,10 @@
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17322000/medium/b117bdf14a784a7620ff69aeb53036de.jpeg",
       "fullName": "Hvalomi"
     },
+    "17344432": {
+      "username": "dimkakartinka",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17344432/medium/9184ba9ff1dbff45877fac7949e0144c_default.png"
+    },
     "17372204": {
       "username": "smillle",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17372204/medium/90fb3a134c7782ca49dff2de6f0dc337.jpeg",
@@ -255,6 +259,16 @@
       "username": "Orange_1006",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17660166/medium/31a9672afef81938820200b502e357c3.png",
       "fullName": "오렌지"
+    },
+    "17804643": {
+      "username": "artenovis9020",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17804643/medium/e1386f1b0db35da655e08680e0d4241f.png",
+      "fullName": "Артем"
+    },
+    "17829725": {
+      "username": "lalauya1122",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17829725/medium/46211e236c0fe5265b9bda2228f3f0a9.jpeg",
+      "fullName": "神風神鵝 エホバ神魔狼"
     }
   },
   "languages": {
@@ -485,12 +499,14 @@
       "translatorIds": [
         "15276232",
         "17136840",
+        "17804643",
+        "17344432",
         "13911943",
         "12500432"
       ],
       "progress": {
-        "approval": 98,
-        "translation": 98
+        "approval": 100,
+        "translation": 100
       }
     },
     "sv-SE": {
@@ -524,12 +540,13 @@
     "uk": {
       "translatorIds": [
         "15276044",
+        "17804643",
         "17111570",
         "17096866"
       ],
       "progress": {
-        "approval": 72,
-        "translation": 72
+        "approval": 97,
+        "translation": 99
       }
     },
     "vi": {
@@ -554,11 +571,12 @@
     },
     "zh-TW": {
       "translatorIds": [
-        "15258052"
+        "15258052",
+        "17829725"
       ],
       "progress": {
-        "approval": 1,
-        "translation": 1
+        "approval": 71,
+        "translation": 71
       }
     }
   }

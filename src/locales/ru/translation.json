@@ -213,8 +213,8 @@
             "T": "long time",
             "f": "date and time",
             "F": "weekday, date and time",
-            "s": "short date and short time",
-            "S": "short date and long time",
+            "s": "короткая дата и короткое время",
+            "S": "короткая дата и длинное время",
             "R": "relative",
             "all": "все (по умолчанию)"
           }
@@ -330,12 +330,12 @@
       }
     },
     "faq": {
-      "name": "faq",
-      "description": "Get answers to frequently asked questions",
+      "name": "ЧаВо",
+      "description": "Получите ответы на часто задаваемые вопросы",
       "options": {
         "topic": {
-          "name": "topic",
-          "description": "The FAQ topic to display"
+          "name": "тема",
+          "description": "Отобразить тему частых вопросов"
         }
       }
     },

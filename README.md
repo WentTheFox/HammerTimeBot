@@ -2,7 +2,7 @@
 
 Discord bot written in Node.js (using [discord.js](https://www.npmjs.com/package/discord.js)) for [HammerTime]
 
-[HammerTime]: https://github.com/DJDavid98/HammerTime
+[HammerTime]: https://github.com/WentTheFox/HammerTime
 
 ```
 $ sudo npm install -g pm2

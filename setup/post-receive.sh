@@ -44,5 +44,5 @@ else
   echo "$ npm run sync-commands"
   npm run sync-commands
   echo "# Gracefully respawning shards on PID $CURRENT_PID via SIGUSR2"
-  kill -SIGUSR2 "$CURRENT_PID"
+  kill -s USR2 "$CURRENT_PID"
 fi

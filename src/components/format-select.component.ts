@@ -63,6 +63,7 @@ export const formatSelectComponent: BotMessageComponent = {
       await interaction.editReply({
         content,
       });
+      return;
     }
 
     await interaction.reply({

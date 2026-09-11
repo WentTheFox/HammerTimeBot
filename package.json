@@ -2,7 +2,7 @@
   "name": "hammertimebot",
   "version": "1.0.0",
   "description": "Discord bot version of https://hammertime.cyou using slash commands",
-  "author": "DJDavid98 <djdavid98@protonmail.com> (https://github.com/DJDavid98)",
+  "author": "WentTheFox <WentTheFox@protonmail.com> (https://github.com/WentTheFox)",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,6 +12,7 @@
     "build": "pnpm run generate-faq && tsc",
     "build:clean": "rimraf build",
     "start": "node --enable-source-maps ./build/src/index.js",
+    "sync-commands": "node --enable-source-maps ./build/src/sync-commands-cli.js",
     "generate-translation-credits": "tsx ./utils/translation-credits",
     "start:dev": "pnpm run build:clean && pnpm run build && pnpm run start",
     "test": "vitest",

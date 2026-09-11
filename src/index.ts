@@ -3,38 +3,13 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { env } from './env.js';
 import { Logger } from './classes/logger.js';
-import { updateBotTimezonesInApi, updateCommands, updateFaqEntriesInApi } from './utils/backend-api-data-updaters.js';
-import { InteractionHandlerContext } from './types/bot-interaction.js';
-import { ILogger } from './types/logger-types.js';
-import { initI18next } from './constants/locales.js';
-import { getEmojiIdMap } from './utils/get-emoji-id-map.js';
-import { getCommandIdMap } from './utils/get-command-id-map.js';
+import { syncStartupData } from './utils/sync-startup-data.js';
 
 // This file is the main entry point that starts the bot
 
-async function startupCommandsUpdate(parentLogger: ILogger): Promise<void> {
-  const logger = parentLogger.nest('startupCommandsUpdate');
-  logger.log('Updating…');
-  const i18next = await initI18next(logger);
-  const context: InteractionHandlerContext = {
-    commandIdMap: await getCommandIdMap({ logger }),
-    logger,
-    emojiIdMap: await getEmojiIdMap({ logger }),
-    i18next,
-  };
-
-  await Promise.all([
-    updateCommands(context),
-    updateBotTimezonesInApi(context),
-    updateFaqEntriesInApi(context),
-  ]);
-
-  logger.log('Completed.');
-}
-
 (async function createShards() {
   const logger = new Logger('ShardingManager');
-  await startupCommandsUpdate(logger);
+  await syncStartupData(logger);
 
   const currentFolder = dirname(fileURLToPath(import.meta.url));
   const botScriptPath = `${currentFolder}/bot.js`;
@@ -62,4 +37,39 @@ async function startupCommandsUpdate(parentLogger: ILogger): Promise<void> {
     });
   });
   await manager.spawn();
+
+  registerGracefulRespawnTrigger(manager, logger);
 })();
+
+/**
+ * SIGUSR2 is sent by the deploy hook after a fresh build lands on disk, so a deploy can pick up
+ * shard-side code changes by respawning shards one at a time instead of killing the whole
+ * process (which would take every shard down for the entire respawn duration, ~2 minutes with
+ * our current shard count). This does NOT reload this file (src/index.ts) or its own
+ * dependencies, only what each shard process (bot.js) imports fresh on respawn - the deploy hook
+ * still falls back to a full `pm2 restart` when index.ts, package.json or the lockfile change.
+ */
+function registerGracefulRespawnTrigger(manager: ShardingManager, logger: Logger): void {
+  let respawnInProgress = false;
+
+  process.on('SIGUSR2', () => {
+    if (respawnInProgress) {
+      logger.warn('Received SIGUSR2 while a respawn was already in progress, ignoring');
+      return;
+    }
+
+    respawnInProgress = true;
+    logger.log('Received SIGUSR2, gracefully respawning all shards…');
+    const start = Date.now();
+    manager.respawnAll()
+      .then(() => {
+        logger.log(`All shards respawned in ${Date.now() - start}ms`);
+      })
+      .catch((e) => {
+        logger.error('Failed to respawn all shards', e);
+      })
+      .finally(() => {
+        respawnInProgress = false;
+      });
+  });
+}

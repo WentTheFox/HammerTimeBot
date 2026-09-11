@@ -1,11 +1,12 @@
 import { MessageFlags } from 'discord-api-types/v10';
 import { userMention } from 'discord.js';
 import typia from 'typia';
+import { ComponentHandler } from '@went.tf/discord-bot-framework/interactions';
 import { EmojiCharacters } from '../../constants/emoji-characters.js';
-import { BotMessageComponentHandler } from '../../types/bot-interaction.js';
+import { UserInteractionContext } from '../../types/bot-interaction.js';
 import { backendApiRequest } from '../../utils/backend-api-request.js';
 
-export const proposalComponentHandler = (decision: 'approve' | 'reject'): BotMessageComponentHandler => async (interaction, context, resourceId) => {
+export const proposalComponentHandler = (decision: 'approve' | 'reject'): ComponentHandler<UserInteractionContext> => async (interaction, context, resourceId) => {
   if (!interaction.isButton()) {
     throw new Error('Bot interaction expected');
   }

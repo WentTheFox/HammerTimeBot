@@ -13,10 +13,11 @@ import {
 } from '../types/bot-interaction.js';
 import { TelemetryResponse } from './add-telemetry-note-to-reply.js';
 import { backendApiRequest } from './backend-api-request.js';
-import { BotCommandItem, BotCommands } from './get-application-commands.js';
 import { getProcessStartTs } from './get-process-start-ts.js';
 import { resolveFaqMentions } from './resolve-faq-mentions.js';
 import {
+  BotCommandItem,
+  BotCommands,
   cleanGlobalCommands,
   getAuthorizedServers,
   updateGlobalCommands,

@@ -13,7 +13,6 @@ import {
 import { TimezoneError } from '../classes/timezone-error.js';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
 import {
-  BotMessageComponentType,
   InteractionContext,
   InteractionHandlerContext,
   LoggerContext,
@@ -227,16 +226,6 @@ export const findTextComponentContentsRecursively = (components: TopLevelCompone
 
 export const emoji = (context: Pick<InteractionHandlerContext, 'emojiIdMap'>, name: string, animated = false): string => {
   return `<${animated ? 'a' : ''}:${name}:${context.emojiIdMap[name]}>`;
-};
-
-interface CustomIdSegments {
-  customId: BotMessageComponentType,
-  resourceId: string | undefined;
-}
-
-export const getCustomIdSegments = (customIdInput: string): CustomIdSegments => {
-  const [customId, resourceId] = customIdInput.split(/:/);
-  return { customId: customId as BotMessageComponentType, resourceId };
 };
 
 export const truncateText = (text: string, maxLength: number) =>

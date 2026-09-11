@@ -1,8 +1,6 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
-import { getLocalizedObject } from '../utils/get-localized-object.js';
 import {
   APIMessageTopLevelComponent,
-  ApplicationCommandType,
   ButtonStyle,
   ComponentType,
   MessageFlags
@@ -19,11 +17,7 @@ interface LoginLinkResponse {
 }
 
 export const settingsCommand: BotChatInputCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.ChatInput,
-    ...getLocalizedObject('description', (lng) => t('commands.settings.description', { lng })),
-    ...getLocalizedObject('name', (lng) => t('commands.settings.name', { lng })),
-  }),
+  name: 'settings',
   async handle(interaction, context) {
     const messageFlags = MessageFlags.Ephemeral | MessageFlags.IsComponentsV2;
     await interaction.deferReply({ flags: messageFlags });

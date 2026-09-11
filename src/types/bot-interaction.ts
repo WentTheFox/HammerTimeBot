@@ -1,45 +1,20 @@
-import {
-  ApplicationCommandOptionType,
-  ApplicationCommandType,
-  RESTPostAPIChatInputApplicationCommandsJSONBody,
-} from 'discord-api-types/v10';
-import type {
-  APIMessageComponent,
-  AutocompleteInteraction,
-  BaseInteraction,
-  ChatInputCommandInteraction,
-  MessageComponentInteraction,
-  RESTPostAPIContextMenuApplicationCommandsJSONBody,
-} from 'discord.js';
-import { MessageContextMenuCommandInteraction } from 'discord.js';
+import type { APIMessageComponent } from 'discord.js';
 import { i18n, TFunction } from 'i18next';
-import { BotMessageComponentCustomId } from '../utils/interactions/message-components.js';
+import {
+  NamedChatInputCommand,
+  NamedComponent,
+  NamedContextMenuCommand,
+} from '@went.tf/discord-bot-framework/interactions';
 import { SettingsValue } from '../utils/settings.js';
 
 import { ILogger } from './logger-types.js';
 
-export const enum BotChatInputCommandName {
-  ADD = 'add',
-  AGO = 'ago',
-  AT = 'at',
-  IN = 'in',
-  ISO = 'iso',
-  SNOWFLAKE = 'snowflake',
-  STATISTICS = 'statistics',
-  SUBTRACT = 'subtract',
-  UNIX = 'unix',
-  SETTINGS = 'settings',
-  API = 'api',
-  AT12 = 'at12',
-  FAQ = 'faq',
-}
-
-export const enum BotMessageContextMenuCommandName {
-  MESSAGE_SENT = 'Message Sent',
-  MESSAGE_LAST_EDITED = 'Message Last Edited',
-  EXTRACT_TIMESTAMPS = 'Extract Timestamps',
-}
-
+// Chat-input/context-menu command names are declared exactly twice: as the
+// `name` field on each command's commands.json entry, and as the `name`/`id`
+// field on its registry object here (both must already agree - the framework
+// throws at build time otherwise). Nothing else defines them again; consumers
+// that need the full name union (e.g. types/localization.ts) derive it via
+// `RegistryName<typeof chatInputCommandRegistry>` in utils/interactions/registries.ts.
 export const enum BotMessageComponentType {
   FORMAT_SELECT = 'format-select',
   APPROVE_PROPOSAL = 'approve-proposal',
@@ -66,57 +41,12 @@ export interface InteractionContext extends Omit<InteractionHandlerContext, 'i18
 
 export type UserInteractionContext = InteractionContext & UserSettingsContext;
 
-export type InteractionHandler<T extends BaseInteraction> = (
-  interaction: T,
-  context: UserInteractionContext,
-  resourceId?: string,
-) => void | Promise<void>;
+export type BotChatInputCommand = NamedChatInputCommand<UserInteractionContext>;
 
-export interface BotChatInputCommand {
-  registerCondition?: () => boolean;
-  getDefinition: (t: TFunction) => RESTPostAPIChatInputApplicationCommandsJSONBody;
-  handle: InteractionHandler<ChatInputCommandInteraction & {
-    commandName: BotChatInputCommandName
-  }>;
-  autocomplete?: InteractionHandler<AutocompleteInteraction & {
-    commandName: BotChatInputCommandName
-  }>;
-}
+export type BotMessageContextMenuCommand = NamedContextMenuCommand<UserInteractionContext>;
 
-export interface BotMessageContextMenuCommand {
-  getDefinition: (t: TFunction) => Omit<RESTPostAPIContextMenuApplicationCommandsJSONBody, 'type'> & {
-    type: ApplicationCommandType.Message
-  };
-  handle: InteractionHandler<MessageContextMenuCommandInteraction & {
-    commandName: BotMessageContextMenuCommandName
-  }>;
-}
-
-export type BotMessageComponentHandler = InteractionHandler<MessageComponentInteraction & {
-  customId: BotMessageComponentCustomId
-}>;
 export type BotMessageComponentDefinitionGetter = (t: TFunction, emojiIdMap: Record<string, string>, idSuffix?: string) => APIMessageComponent;
 
-export interface BotMessageComponent {
+export type BotMessageComponent = NamedComponent<UserInteractionContext, BotMessageComponentType> & {
   getDefinition: BotMessageComponentDefinitionGetter;
-  handle: BotMessageComponentHandler;
-}
-
-export interface IntegerOptionMetadata {
-  type: ApplicationCommandOptionType.Integer;
-  min_value?: number;
-  max_value?: number;
-}
-
-export interface NumberOptionMetadata {
-  type: ApplicationCommandOptionType.Number;
-  min_value?: number;
-  max_value?: number;
-}
-
-export interface StringOptionMetadata {
-  type: ApplicationCommandOptionType.String;
-  min_length?: number;
-  max_length?: number;
-  autocomplete?: boolean;
-}
+};

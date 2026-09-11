@@ -1,9 +1,7 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { GlobalCommandOptionName, IsoCommandOptionName } from '../types/localization.js';
-import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
-import { ApplicationCommandType, MessageFlags } from 'discord-api-types/v10';
-import { getIsoCommandOptions } from '../options/iso.options.js';
+import { MessageFlags } from 'discord-api-types/v10';
 import { findTimezoneOptionValue, handleTimezoneAutocomplete } from '../utils/messaging.js';
 import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
@@ -11,22 +9,9 @@ import { isValid } from 'date-fns';
 import { TimezoneError } from '../classes/timezone-error.js';
 
 export const isoCommand: BotChatInputCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.ChatInput,
-    ...getLocalizedObject('description', (lng) => t('commands.iso.description', { lng })),
-    ...getLocalizedObject('name', (lng) => t('commands.iso.name', { lng })),
-    options: getIsoCommandOptions(t),
-  }),
-  async autocomplete(interaction) {
-    const focusedOption = interaction.options.getFocused(true);
-
-    switch (focusedOption.name) {
-      case GlobalCommandOptionName.TIMEZONE:
-        await handleTimezoneAutocomplete(interaction);
-        break;
-      default:
-        throw new Error(`Unknown autocomplete option ${focusedOption.name}`);
-    }
+  name: 'iso',
+  autocomplete: {
+    [GlobalCommandOptionName.TIMEZONE]: handleTimezoneAutocomplete,
   },
   async handle(interaction, context) {
     const settings = await context.getSettings();

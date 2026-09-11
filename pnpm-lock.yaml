@@ -15,8 +15,8 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1
       '@went.tf/discord-bot-framework':
-        specifier: ^2.3.0
-        version: 2.3.0(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))
+        specifier: ^2.4.0
+        version: 2.4.0(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))
       ajv:
         specifier: ^8.20.0
         version: 8.20.0
@@ -910,8 +910,8 @@ packages:
     resolution: {integrity: sha512-Xfe6rpCTxSxfbswi/W/Pz7zp1WWSNn4A0eW4mLkQUewCrXXtMj31lCg+iQyTkh/CkusZSq9eDflu7tjEDXUY6g==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
 
-  '@went.tf/discord-bot-framework@2.3.0':
-    resolution: {integrity: sha512-2AeUJG1SeuI5w2m1otfZySO4md+RsewI/SVYAMHelChnrp/8/1t0w9pORBq2ztvvfPPhYqs2lQKtiURiCMaJBA==}
+  '@went.tf/discord-bot-framework@2.4.0':
+    resolution: {integrity: sha512-keEhYrWfuDHdLlgF54TdypMLXWNKMTqPmWbjO9D95Urw0vzAlJudFWGS/wXbNUqrZvuioaadBYStjcyzq4R0TA==}
     engines: {node: 24.x, pnpm: '>=11'}
     peerDependencies:
       '@discordjs/rest': ^2.6.1
@@ -1127,6 +1127,7 @@ packages:
 
   charm@0.1.2:
     resolution: {integrity: sha512-syedaZ9cPe7r3hoQA9twWYKu5AIyCswN5+szkmPBe9ccdLrj4bYaCnLVPTLd2kgVRc7+zoX4tyPgRnFKCj5YjQ==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
@@ -1477,6 +1478,7 @@ packages:
   eslint@9.39.4:
     resolution: {integrity: sha512-XoMjdBOwe/esVgEvLmNsD3IRHkm7fbKIUGvrleloJXUZgDHig2IPWNniv+GwjyJXzuNqVjlr5+4yVUZjycJwfQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -3657,7 +3659,7 @@ snapshots:
 
   '@vladfrangu/async_event_emitter@2.4.7': {}
 
-  '@went.tf/discord-bot-framework@2.3.0(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))':
+  '@went.tf/discord-bot-framework@2.4.0(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))':
     dependencies:
       '@discordjs/rest': 2.6.1
       ajv: 8.20.0

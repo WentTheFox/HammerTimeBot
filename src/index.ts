@@ -17,5 +17,6 @@ import { createAppLogger } from './utils/create-app-logger.js';
     botScriptPath,
     logger,
     beforeSpawn: () => syncStartupData(logger),
+    gracefulRespawnSignal: 'SIGUSR2',
   });
 })();

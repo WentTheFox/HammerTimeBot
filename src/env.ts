@@ -14,7 +14,8 @@ export const env = defineEnv({
   UA_STRING: z.string().min(1),
   DISCORD_INVITE_URL: z.string().min(1),
   API_URL: z.string().min(1),
-  API_TOKEN: z.string().min(1),
+  /** SledgeHammerTime backend auth token. Optional: unset means backend API calls run unauthenticated (and fail server-side, which is handled). */
+  API_TOKEN: z.string().optional().default(''),
   /** Server ID used to resolve role mentions in FAQ entries. Optional. */
   SUPPORT_SERVER_ID: z.string().optional().default(''),
   /** Discord webhook URL logs of warn level and above are fanned out to. Optional. */

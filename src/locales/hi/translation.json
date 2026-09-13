@@ -1,7 +1,7 @@
 {
   "commands": {
     "ago": {
-      "name": "ago",
+      "name": "पहले",
       "description": "Specify a timestamp in the past relative to the current time",
       "responses": {},
       "options": {

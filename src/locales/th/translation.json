@@ -213,8 +213,8 @@
             "T": "ระยะเวลารูปแบบยาว",
             "f": "วันและเวลา",
             "F": "วันธรรมดา วันที่และเวลา",
-            "s": "short date and short time",
-            "S": "short date and long time",
+            "s": "วันและเวลาแบบสั้น",
+            "S": "วันรูปแบบสั้นและเวลารูปแบบยาว",
             "R": "อิงเวลา",
             "all": "ทั้งหมด (ค่าเริ่มต้น)"
           }
@@ -330,12 +330,12 @@
       }
     },
     "faq": {
-      "name": "faq",
-      "description": "Get answers to frequently asked questions",
+      "name": "คำถามที่พบบ่อย",
+      "description": "ดูคำตอบสำหรับคำถามที่มักถูกถาม",
       "options": {
         "topic": {
-          "name": "topic",
-          "description": "The FAQ topic to display"
+          "name": "หัวข้อ",
+          "description": "หัวข้อคำถามที่พบบ่อย ที่ต้องการจะแสดง"
         }
       }
     },

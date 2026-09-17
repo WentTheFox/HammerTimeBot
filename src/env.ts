@@ -11,6 +11,8 @@ export const env = defineEnv({
   DISCORD_PUBLIC_KEY: z.string().optional().default(''),
   /** Port the webhook HTTP Interactions endpoint (src/webhook.ts) listens on. */
   WEBHOOK_PORT: z.coerce.number().optional().default(3939),
+  /** Enables discord-bot-framework's verboseSignatureDiagnostics for src/webhook.ts. */
+  WEBHOOK_VERBOSE_DIAGNOSTICS: boolFromString().default(false),
   CROWDIN_PROJECT_IDENTIFIER: z.string().optional().default(''),
   LOCAL: boolFromString().default(false),
   DEBUG_I18N: boolFromString().default(false),

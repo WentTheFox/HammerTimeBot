@@ -265,6 +265,7 @@
         "shardCount": "Liczba shardów:",
         "shardNumber": "(Te statystyki zostały wygenerowane przez shard #{{shardId}})",
         "noShards": "(Bot obecnie nie używa shardingu)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "Zaproszenie na serwer wsparcia:",
         "totalUserCount": "Łączna ilość użytkownikach na serwerach:",
         "supportedLanguages": "Wspierane języki:",

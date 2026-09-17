@@ -265,6 +265,7 @@
         "shardCount": "Parça sayısı:",
         "shardNumber": "(Bu istatistikler shard #{{shardId}} tarafından oluşturulmuştur)",
         "noShards": "(Bot şu anda parçalama methodunu kullanmıyor)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "Destek sunucusu davet URL'si:",
         "totalUserCount": "Botun hizmet verdiği toplam kişi sayısı:",
         "supportedLanguages": "Desteklenen diller:",

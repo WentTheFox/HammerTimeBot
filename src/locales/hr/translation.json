@@ -265,6 +265,7 @@
         "shardCount": "Broj sharda:",
         "shardNumber": "(Ovu statistiku generirao je dio #{{shardId}})",
         "noShards": "(Bot trenutno ne koristi sharding)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "URL poziva server za podršku:",
         "totalUserCount": "Ukupan broj korisnika na pridruženim poslužiteljima:",
         "supportedLanguages": "Supported languages:",

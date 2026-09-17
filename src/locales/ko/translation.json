@@ -265,6 +265,7 @@
         "shardCount": "shard 수:",
         "shardNumber": "(이 통계들은 {{shardId}}번 shard가 생생하였습니다)",
         "noShards": "(이 봇은 현재 shard를 사용하고 있지 않습니다)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "지원 서버 링크:",
         "totalUserCount": "참가한 서버의 사용자 합계:",
         "supportedLanguages": "Supported languages:",

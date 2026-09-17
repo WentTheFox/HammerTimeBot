@@ -265,6 +265,7 @@
         "shardCount": "分片數量：",
         "shardNumber": "（這些統計數據由分片 #{{shardId}} 產生）",
         "noShards": "（該機器人目前尚未採用分片技術）",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "支援伺服器邀請連結：",
         "totalUserCount": "已加入伺服器的總使用者數：",
         "supportedLanguages": "支援的語言：",

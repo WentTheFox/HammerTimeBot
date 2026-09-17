@@ -265,6 +265,7 @@
         "shardCount": "Antall skjær:",
         "shardNumber": "(Disse statistikkene ble generert av skjær #{{shardId}})",
         "noShards": "(Boten bruker for øyeblikket ikke skjær)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "URL for invitasjon til support server:",
         "totalUserCount": "Totalt antall brukere på tilkoblede servere:",
         "supportedLanguages": "Støttede språk:",

@@ -265,6 +265,7 @@
         "shardCount": "Numărul de fragmente:",
         "shardNumber": "(Aceste statistici au fost generate de către shard #{{shardId}})",
         "noShards": "(Bot-ul nu folosește în prezent sharding)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "URL de invitație a serverului de suport:",
         "totalUserCount": "Numărul total de utilizatori în serverele alăturate:",
         "supportedLanguages": "Limbi acceptate:",

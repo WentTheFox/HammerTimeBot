@@ -265,6 +265,7 @@
         "shardCount": "Počet střepů:",
         "shardNumber": "(Tyto statistiky byly vygenerovány střepem #{{shardId}})",
         "noShards": "(Bot v současné době nepoužívá rozštěpení databáze)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "URL pozvánka na server podpory:",
         "totalUserCount": "Celkový počet uživatelů na připojených serverech:",
         "supportedLanguages": "Počet podporovaných jazyků:",

@@ -265,6 +265,7 @@
         "shardCount": "Número de fragmentos:",
         "shardNumber": "(Estas estatísticas foram geradas pelo fragmento #{{shardId}})",
         "noShards": "(O bot não está usando fragmentação no momento)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "Link do servidor de suporte:",
         "totalUserCount": "Total de usuários em servidores entrados:",
         "supportedLanguages": "Idiomas compatíveis:",

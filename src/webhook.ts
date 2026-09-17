@@ -1,4 +1,5 @@
 import { createServer, IncomingMessage } from 'node:http';
+import { createHash } from 'node:crypto';
 import {
   createWebhookOnlyClient,
   handleWebhookInteractionRequest,
@@ -140,9 +141,12 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
         // Signature-rejection diagnostics (source IP, user-agent, header presence, lengths) are
         // logged by handleWebhookInteractionRequest itself as of discord-bot-framework 2.7.0 -
         // passing headers is what enables that, no app-level wrapping needed here anymore.
+        const signature = req.headers['x-signature-ed25519'] as string | undefined;
+        const timestamp = req.headers['x-signature-timestamp'] as string | undefined;
+
         const { status, body } = await handleWebhookInteractionRequest({
-          signature: req.headers['x-signature-ed25519'] as string | undefined,
-          timestamp: req.headers['x-signature-timestamp'] as string | undefined,
+          signature,
+          timestamp,
           rawBody,
           headers: Object.fromEntries(
             Object.entries(req.headers).map(([key, value]) => [key, Array.isArray(value) ? value.join(', ') : value]),
@@ -152,6 +156,25 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
           logger,
           onInteraction,
         });
+
+        if (status === 401) {
+          // TEMPORARY: the framework's own diagnostic
+          // deliberately excludes the signature/timestamp/body since a genuine failing request
+          // could carry real user data - but every failure seen so far has had a bodyLength
+          // matching Discord's own PING validation payload (753 bytes), never a real command, so
+          // logging the exact bytes here is safe enough for this investigation. Only the `type`/
+          // `id` fields are logged if the body parses as JSON, not the full payload. Remove once
+          // the cause is understood.
+          let parsedTypeAndId: unknown;
+          try {
+            const parsed = JSON.parse(rawBody.toString('utf8')) as { type?: unknown; id?: unknown };
+            parsedTypeAndId = { type: parsed.type, id: parsed.id };
+          } catch {
+            parsedTypeAndId = 'unparseable';
+          }
+          const bodyHash = createHash('sha256').update(rawBody).digest('hex');
+          logger.warn(`[TEMP diagnostics] signature=${signature} timestamp=${timestamp} bodyHash=${bodyHash} bodyLength=${rawBody.length} parsed=${JSON.stringify(parsedTypeAndId)}`);
+        }
 
         res.writeHead(status, { 'Content-Type': 'application/json' }).end(JSON.stringify(body));
       })

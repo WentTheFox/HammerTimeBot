@@ -265,6 +265,7 @@
         "shardCount": "Määrä shardeja:",
         "shardNumber": "(Nämä tilastot luotiin shardilla #{{shardId}})",
         "noShards": "(Botti ei tällä hetkellä käytä shardingia)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "Tukipalvelimen kutsun URL-osoite:",
         "totalUserCount": "Käyttäjiä yhteensä liitytyillä palvelimilla:",
         "supportedLanguages": "Tuetut kielet:",

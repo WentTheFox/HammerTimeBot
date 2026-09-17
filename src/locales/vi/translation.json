@@ -265,6 +265,7 @@
         "shardCount": "Số lượng shard:",
         "shardNumber": "(Các thống kê này được tạo bởi shard #{{shardId}})",
         "noShards": "(Bot hiện không sử dụng sharding)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "URL mời máy chủ hỗ trợ:",
         "totalUserCount": "Tổng số người dùng trong các máy chủ đã tham gia:",
         "supportedLanguages": "Các ngôn ngữ được hỗ trợ:",

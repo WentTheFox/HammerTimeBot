@@ -265,6 +265,7 @@
         "shardCount": "Numero di frammenti:",
         "shardNumber": "(Queste statistiche sono state generate dal frammento #{{shardId}})",
         "noShards": "(Il bot non sta attualmente usando frammenti)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "URL di invito del server di supporto:",
         "totalUserCount": "Numeri totale utenti nei server in cui il bot si trova:",
         "supportedLanguages": "Lingue supportate:",

@@ -265,6 +265,7 @@
         "shardCount": "Szilánkok száma:",
         "shardNumber": "(Ezeket a statisztikákat a(z) {{shardId}}. szilánk generálta)",
         "noShards": "(A bot jelenleg nem használ szilánkokat)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "Támogatási szerver meghívó URL:",
         "totalUserCount": "A szerverek összes felhasználója:",
         "supportedLanguages": "Támogatott nyelvek:",

@@ -265,6 +265,7 @@
         "shardCount": "Jumlah pecahan:",
         "shardNumber": "(Statistik ini dihasilkan oleh pecahan #{{shardId}})",
         "noShards": "(Bot saat ini tidak menggunakan sharding)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "Mendukung URL undangan server:",
         "totalUserCount": "Total pengguna di server yang bergabung:",
         "supportedLanguages": "Bahasa yang didukung:",

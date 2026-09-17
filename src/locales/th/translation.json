@@ -265,6 +265,7 @@
         "shardCount": "จำนวน Shard:",
         "shardNumber": "(สถิติเหล่านี้สร้างขึ้นโดย Shard ไอดี #{{shardId}})",
         "noShards": "(บอทไม่ได้ใช้งาน Sharding)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "ลิ้งค์เซิร์ฟเวอร์สำหรับช่วยเหลือ:",
         "totalUserCount": "จำนวนคนที่อยู่ในเซิร์ฟเวอร์ที่บอทอยู่:",
         "supportedLanguages": "ภาษาที่รองรับ",

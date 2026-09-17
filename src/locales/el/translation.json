@@ -265,6 +265,7 @@
         "shardCount": "Αριθμός τεμαχίων:",
         "shardNumber": "(Αυτά τα στατιστικά δημιουργήθηκαν από το τεμάχιο #{{shardId}})",
         "noShards": "(Το bot δεν χρησιμοποιεί επί του παρόντος τεμάχια)",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "Σύνδεσμος Διακομιστή Υποστήριξης:",
         "totalUserCount": "Σύνολο χρηστών σε συνδεδεμένους διακομιστές:",
         "supportedLanguages": "Υποστηριζόμενες γλώσσες:",

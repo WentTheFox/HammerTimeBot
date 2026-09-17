@@ -265,6 +265,7 @@
         "shardCount": "分机数量：",
         "shardNumber": "（这些数据由 {{shardId}} 号分机生成。）",
         "noShards": "（本机器人当前未使用分机。）",
+        "noShardsWebhookMode": "(This instance is running on a non-gateway HTTP interactions endpoint, so it has no shards)",
         "serverInvite": "客服 Discord 服务器：",
         "totalUserCount": "已加入的服务器总计的用户数：",
         "supportedLanguages": "支持的语言：",

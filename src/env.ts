@@ -7,6 +7,10 @@ import { z } from 'zod';
 export const env = defineEnv({
   DISCORD_BOT_TOKEN: z.string().min(1),
   DISCORD_CLIENT_ID: z.string().min(1),
+  /** Ed25519 application public key (hex), from the Discord developer portal - only used by the webhook entrypoint (src/webhook.ts). */
+  DISCORD_PUBLIC_KEY: z.string().optional().default(''),
+  /** Port the webhook HTTP Interactions endpoint (src/webhook.ts) listens on. */
+  WEBHOOK_PORT: z.coerce.number().optional().default(3939),
   CROWDIN_PROJECT_IDENTIFIER: z.string().optional().default(''),
   LOCAL: boolFromString().default(false),
   DEBUG_I18N: boolFromString().default(false),

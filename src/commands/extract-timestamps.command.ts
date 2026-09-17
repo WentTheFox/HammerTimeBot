@@ -1,6 +1,5 @@
 import { BotMessageContextMenuCommand } from '../types/bot-interaction.js';
-import { getLocalizedObject } from '../utils/get-localized-object.js';
-import { ApplicationCommandType, ComponentType, MessageFlags } from 'discord-api-types/v10';
+import { ComponentType, MessageFlags } from 'discord-api-types/v10';
 import { extractTimestampsFromStrings } from '../utils/extract-timestamps-from-strings.js';
 import { RESPONSE_FORMATTERS } from '../utils/time.js';
 import { ResponseColumnChoices } from '../types/localization.js';
@@ -8,11 +7,11 @@ import { interactionReply } from '../utils/interaction-reply.js';
 import { findEmbedsTextFields, findTextComponentContentsRecursively } from '../utils/messaging.js';
 
 export const extractTimestampsCommand: BotMessageContextMenuCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.Message,
-    ...getLocalizedObject('name', (lng) => t('commands.Extract Timestamps.name', { lng }), true, false),
-  }),
+  name: 'Extract Timestamps',
   async handle(interaction, context) {
+    if (!interaction.isMessageContextMenuCommand()) {
+      throw new Error('Expected message context menu interaction');
+    }
     const { t } = context;
     const messageTarget = t('commands.Extract Timestamps.responses.targetMessage', { replace: { url: interaction.targetMessage.url } });
     const contentPrefix = `${messageTarget}\n\n`;

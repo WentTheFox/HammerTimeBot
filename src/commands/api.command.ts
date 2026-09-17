@@ -1,5 +1,4 @@
-import { BotChatInputCommand, BotChatInputCommandName } from '../types/bot-interaction.js';
-import { getApiCommandOptions } from '../options/api.options.js';
+import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { env } from '../env.js';
 import { ApiCommandOptionName } from '../types/localization.js';
 import { updateBotTimezonesInApi, updateCommandsFromInteraction } from '../utils/backend-api-data-updaters.js';
@@ -7,12 +6,8 @@ import { emoji } from '../utils/messaging.js';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
 
 export const apiCommand: BotChatInputCommand = {
+  name: 'api',
   registerCondition: () => env.LOCAL,
-  getDefinition: () => ({
-    name: BotChatInputCommandName.API,
-    description: 'Perform actions related to the API',
-    options: getApiCommandOptions(),
-  }),
   async handle(interaction, context) {
     const subcommand = interaction.options.getSubcommand(true);
     const loadingEmoji = emoji(context, 'loading', true);

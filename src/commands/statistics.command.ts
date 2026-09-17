@@ -1,21 +1,14 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
-import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
-import { getStatisticsCommandOptions } from '../options/statistics.options.js';
 import { EPHEMERAL_OPTION_DEFAULT_VALUE, getBareNumberFormatter, isEphemeralResponse } from '../utils/messaging.js';
 import { env } from '../env.js';
-import { ApplicationCommandType, MessageFlags } from 'discord-api-types/v10';
+import { MessageFlags } from 'discord-api-types/v10';
 import { CROWDIN_PROJECT_URL, SUPPORTED_LANGUAGES } from '../constants/locales.js';
 import { getProcessStartTs } from '../utils/get-process-start-ts.js';
 import { DiscordjsErrorCodes } from 'discord.js';
 
 export const statisticsCommand: BotChatInputCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.ChatInput,
-    ...getLocalizedObject('description', (lng) => t('commands.statistics.description', { lng })),
-    ...getLocalizedObject('name', (lng) => t('commands.statistics.name', { lng })),
-    options: getStatisticsCommandOptions(t),
-  }),
+  name: 'statistics',
   async handle(interaction, context) {
     const settings = await context.getSettings();
     const ephemeral = isEphemeralResponse(interaction, settings);

@@ -1,4 +1,6 @@
 minimumReleaseAge: 20160
+minimumReleaseAgeExclude:
+  - '@went.tf/discord-bot-framework'
 
 allowBuilds:
   bufferutil: true

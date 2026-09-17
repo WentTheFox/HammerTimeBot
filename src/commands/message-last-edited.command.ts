@@ -1,16 +1,15 @@
 import { BotMessageContextMenuCommand } from '../types/bot-interaction.js';
-import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { getSyntaxReplyOptions } from '../utils/reply-with-syntax.js';
-import { ApplicationCommandType, ComponentType, MessageFlags } from 'discord-api-types/v10';
+import { ComponentType, MessageFlags } from 'discord-api-types/v10';
 import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 
 export const messageLastEditedCommand: BotMessageContextMenuCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.Message,
-    ...getLocalizedObject('name', (lng) => t('commands.Message Last Edited.name', { lng }), true, false),
-  }),
+  name: 'Message Last Edited',
   async handle(interaction, context) {
+    if (!interaction.isMessageContextMenuCommand()) {
+      throw new Error('Expected message context menu interaction');
+    }
     const settings = await context.getSettings();
     const { t } = context;
     const messageTarget = t('commands.Message Last Edited.responses.targetMessage', { replace: { url: interaction.targetMessage.url } });

@@ -1,9 +1,6 @@
 import { APIApplicationCommand, APIApplicationCommandOption } from 'discord-api-types/v10';
-import {
-  BotChatInputCommandName,
-  BotMessageComponentType,
-  BotMessageContextMenuCommandName,
-} from './bot-interaction.js';
+import { BotMessageComponentType } from './bot-interaction.js';
+import type { BotMessageContextMenuCommandName } from '../utils/interactions/registries.js';
 import { MessageTimestampFormat } from '../classes/message-timestamp.js';
 
 export const enum GlobalCommandOptionName {
@@ -97,18 +94,18 @@ export const enum FaqCommandOptionName {
 }
 
 interface CommandOptionsMap {
-  [BotChatInputCommandName.IN]: InCommandOptionName,
-  [BotChatInputCommandName.AGO]: AgoCommandOptionName,
-  [BotChatInputCommandName.AT]: AtCommandOptionName,
-  [BotChatInputCommandName.ADD]: AddCommandOptionName,
-  [BotChatInputCommandName.SUBTRACT]: SubtractCommandOptionName,
-  [BotChatInputCommandName.UNIX]: UnixCommandOptionName,
-  [BotChatInputCommandName.ISO]: IsoCommandOptionName,
-  [BotChatInputCommandName.STATISTICS]: never,
-  [BotChatInputCommandName.AT12]: At12CommandOptionName,
-  [BotChatInputCommandName.FAQ]: FaqCommandOptionName,
-  [BotMessageContextMenuCommandName.MESSAGE_SENT]: never,
-  [BotMessageContextMenuCommandName.MESSAGE_LAST_EDITED]: never,
+  in: InCommandOptionName,
+  ago: AgoCommandOptionName,
+  at: AtCommandOptionName,
+  add: AddCommandOptionName,
+  subtract: SubtractCommandOptionName,
+  unix: UnixCommandOptionName,
+  iso: IsoCommandOptionName,
+  statistics: never,
+  at12: At12CommandOptionName,
+  faq: FaqCommandOptionName,
+  'Message Sent': never,
+  'Message Last Edited': never,
 }
 
 export const enum GlobalCommandResponse {
@@ -150,25 +147,25 @@ export const enum At12CommandResponse {
 
 interface CommandResponsesMap {
   global: GlobalCommandResponse,
-  [BotChatInputCommandName.IN]: never,
-  [BotChatInputCommandName.AGO]: never,
-  [BotChatInputCommandName.AT]: never,
-  [BotChatInputCommandName.ADD]: never,
-  [BotChatInputCommandName.SUBTRACT]: never,
-  [BotChatInputCommandName.UNIX]: never,
-  [BotChatInputCommandName.ISO]: IsoCommandResponse,
-  [BotChatInputCommandName.STATISTICS]: never,
-  [BotChatInputCommandName.SNOWFLAKE]: SnowflakeCommandResponse,
-  [BotChatInputCommandName.AT12]: At12CommandResponse,
-  [BotChatInputCommandName.FAQ]: never,
-  [BotMessageContextMenuCommandName.MESSAGE_SENT]: MessageSentCommandResponse,
-  [BotMessageContextMenuCommandName.MESSAGE_LAST_EDITED]: MessageLastEditedCommandResponse,
-  [BotMessageContextMenuCommandName.EXTRACT_TIMESTAMPS]: ExtractTimestampsCommandResponse,
+  in: never,
+  ago: never,
+  at: never,
+  add: never,
+  subtract: never,
+  unix: never,
+  iso: IsoCommandResponse,
+  statistics: never,
+  snowflake: SnowflakeCommandResponse,
+  at12: At12CommandResponse,
+  faq: never,
+  'Message Sent': MessageSentCommandResponse,
+  'Message Last Edited': MessageLastEditedCommandResponse,
+  'Extract Timestamps': ExtractTimestampsCommandResponse,
 }
 
 interface ComponentsMap {
   global: [BotMessageComponentType.FORMAT_SELECT],
-  [BotChatInputCommandName.SETTINGS]: ['openSettingsButton'],
+  settings: ['openSettingsButton'],
 }
 
 export const enum ResponseColumnChoices {

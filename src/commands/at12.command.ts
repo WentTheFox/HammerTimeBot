@@ -1,33 +1,18 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { constrain, convertHour12To24, getGmtTimezoneValue, gmtZoneRegex } from '../utils/time.js';
 import { At12CommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
-import { getLocalizedObject } from '../utils/get-localized-object.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
-import { ApplicationCommandType, MessageFlags } from 'discord-api-types/v10';
+import { MessageFlags } from 'discord-api-types/v10';
 import { findTimezoneOptionValue, handleTimezoneAutocomplete } from '../utils/messaging.js';
 import { interactionReply } from '../utils/interaction-reply.js';
-import { getAt12Options } from '../options/at12.options.js';
 import { TZDate } from '@date-fns/tz';
 import { setDate, setHours, setMilliseconds, setMinutes, setMonth, setSeconds, setYear } from 'date-fns';
 import { TimezoneError } from '../classes/timezone-error.js';
 
 export const at12Command: BotChatInputCommand = {
-  getDefinition: (t) => ({
-    type: ApplicationCommandType.ChatInput,
-    ...getLocalizedObject('description', (lng) => t('commands.at12.description', { lng })),
-    ...getLocalizedObject('name', (lng) => t('commands.at12.name', { lng })),
-    options: getAt12Options(t),
-  }),
-  async autocomplete(interaction) {
-    const focusedOption = interaction.options.getFocused(true);
-
-    switch (focusedOption.name) {
-      case GlobalCommandOptionName.TIMEZONE:
-        await handleTimezoneAutocomplete(interaction);
-        break;
-      default:
-        throw new Error(`Unknown autocomplete option ${focusedOption.name}`);
-    }
+  name: 'at12',
+  autocomplete: {
+    [GlobalCommandOptionName.TIMEZONE]: handleTimezoneAutocomplete,
   },
   async handle(interaction, context) {
     const settings = await context.getSettings();

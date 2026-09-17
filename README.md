@@ -13,6 +13,32 @@ $ npm build
 $ pm2 start pm2.json
 ```
 
+## Webhook deployment
+
+`src/webhook.ts` is an alternative entrypoint that receives interactions over Discord's HTTP
+Interactions Endpoint instead of the gateway (`src/index.ts`), so it needs no gateway/shard
+connection at all. `pm2.json` starts it alongside the gateway process (`HammerTimeBot:Webhook`) -
+running both processes at once is safe at the infrastructure level, but **setting an Interactions
+Endpoint URL on the application in the Discord Developer Portal is what actually switches interaction
+delivery over** - once set, Discord stops sending `INTERACTION_CREATE` over the gateway entirely (this
+is an all-or-nothing switch per application, not selective by interaction type), so the gateway
+process's interaction handling goes idle at that point even though the process itself keeps running.
+Don't set that URL against production until you're confident in the webhook path.
+
+One-time production server setup:
+
+1. `deploy/nginx/` → symlink the config into `/etc/nginx/sites-available/` and
+   `/etc/nginx/sites-enabled/`, matching how this project's other nginx configs are laid out on that
+   host.
+2. Expand (or issue) a cert covering the webhook subdomain, e.g. via `certbot --expand`.
+3. `sudo nginx -t && sudo systemctl reload nginx`
+4. Set `DISCORD_PUBLIC_KEY` (the app's Ed25519 public key, from the Developer Portal) and optionally
+   `WEBHOOK_PORT` (defaults to `3939`) in the server's `.env`.
+5. `pm2 start pm2.json` (or `pm2 restart pm2.json` if already running) to bring up
+   `HammerTimeBot:Webhook` alongside the existing gateway process.
+6. Once confident locally/in staging, set the Interactions Endpoint URL to the webhook subdomain's
+   URL in the Developer Portal - this is the actual cutover step (see above).
+
 ## Translation
 
 New language contributions are welcome! They are handled through [Crowdin]. If you don't see your language listed, that

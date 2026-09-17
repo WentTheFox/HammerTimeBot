@@ -162,20 +162,20 @@ export interface WebhookDeliveryRecord {
   occurred_at: string;
 }
 
-export const sendWebhookDeliveries = async (context: LoggerContext, deliveries: WebhookDeliveryRecord[]): Promise<boolean> => {
-  const logger = context.logger.nest('sendWebhookDeliveries').muteMethods(['debug', 'info']);
-  logger.debug(`Sending ${deliveries.length} webhook delivery record(s)…`);
+export const sendWebhookDelivery = async (context: LoggerContext, record: WebhookDeliveryRecord): Promise<boolean> => {
+  const logger = context.logger.nest('sendWebhookDelivery').muteMethods(['debug', 'info']);
+  logger.debug('Sending webhook delivery record…', record);
   const result = await backendApiRequest({ logger }, {
     path: '/webhook-deliveries',
     method: 'POST',
-    body: { deliveries },
+    body: record,
     validator: typia.createValidate<Record<string, unknown>>(),
     failOnInvalidResponse: false,
   });
   if (result.ok) {
-    logger.info(`Successfully sent ${deliveries.length} webhook delivery record(s)`);
+    logger.info('Successfully sent webhook delivery record');
   } else {
-    logger.warn(`Failed to send webhook delivery records (status ${result.status})`);
+    logger.warn(`Failed to send webhook delivery record (status ${result.status})`);
   }
 
   return result.ok;

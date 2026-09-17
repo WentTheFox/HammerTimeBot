@@ -26,30 +26,11 @@ fi
 echo "$ $CMD_NPM_BUILD"
 eval $CMD_NPM_BUILD
 
-# A full restart re-runs src/index.ts's startup command sync itself, and is required whenever
-# index.ts (the ShardingManager process) or its dependency set may have changed, since respawning
-# shards alone leaves the already-running manager process on its old in-memory code.
-if echo "$CHANGED_FILES" | grep -qE "^(pnpm-lock\.yaml|package\.json|src/index\.ts)$"; then
-  NEEDS_FULL_RESTART=1
-else
-  NEEDS_FULL_RESTART=0
-fi
+echo "$ npm run sync-commands"
+npm run sync-commands
 
-CURRENT_PID=$(pm2 pid HammerTimeBot 2>/dev/null)
-
-if [ "$NEEDS_FULL_RESTART" = "1" ] || ! echo "$CURRENT_PID" | grep -qE "^[0-9]+$"; then
-  echo "$ pm2 restart pm2.json"
-  pm2 restart pm2.json
-else
-  echo "$ npm run sync-commands"
-  npm run sync-commands
-  echo "# Gracefully respawning shards on PID $CURRENT_PID via SIGUSR2"
-  kill -s USR2 "$CURRENT_PID"
-  # The webhook process (src/webhook.ts) has no shards/SIGUSR2 respawn of its own - it's a single
-  # process with no persistent connections to drain, so a plain restart is cheap and always safe
-  # here, unlike the gateway process's graceful path above.
-  if pm2 describe "HammerTimeBot:Webhook" > /dev/null 2>&1; then
-    echo "$ pm2 restart HammerTimeBot:Webhook"
-    pm2 restart "HammerTimeBot:Webhook"
-  fi
-fi
+# The webhook process (src/webhook.ts) has no shards/gateway connection to gracefully drain - it's
+# a single stateless process, so a plain restart on every deploy is cheap and always safe, unlike
+# the old gateway process's graceful SIGUSR2 shard-respawn dance this replaced.
+echo "$ pm2 restart pm2.json"
+pm2 restart pm2.json

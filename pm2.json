@@ -1,12 +1,6 @@
 {
   "apps": [
     {
-      "name": "HammerTimeBot",
-      "script": "build/src/index.js",
-      "log_date_format": "YYYY-MM-DD HH:mm:ss Z",
-      "source_map_support": true
-    },
-    {
       "name": "HammerTimeBot:Webhook",
       "script": "build/src/webhook.js",
       "log_date_format": "YYYY-MM-DD HH:mm:ss Z",

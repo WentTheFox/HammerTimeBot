@@ -5,7 +5,7 @@ import { env } from '../env.js';
 import { MessageFlags } from 'discord-api-types/v10';
 import { CROWDIN_PROJECT_URL, SUPPORTED_LANGUAGES } from '../constants/locales.js';
 import { getProcessStartTs } from '../utils/get-process-start-ts.js';
-import { DiscordjsErrorCodes } from 'discord.js';
+import { getGuildCount } from '../utils/get-guild-count.js';
 
 export const statisticsCommand: BotChatInputCommand = {
   name: 'statistics',
@@ -19,26 +19,14 @@ export const statisticsCommand: BotChatInputCommand = {
     const shardStartTs = new MessageTimestamp(getProcessStartTs());
     const numberFormatter = getBareNumberFormatter(interaction, context);
 
-    const shardServersJoined = interaction.client.guilds.cache.size;
     let totalServersJoined: number | null = null;
     try {
-      const guildsCacheSizes = await shard?.fetchClientValues('guilds.cache.size');
-      totalServersJoined = typeof guildsCacheSizes !== 'undefined'
-        ? guildsCacheSizes.reduce(
-          (acc: number, guildCount) => typeof guildCount === 'number' ? acc + guildCount : acc,
-          0,
-        )
-        : shardServersJoined;
+      totalServersJoined = await getGuildCount(interaction.client.rest, context.logger);
     } catch (e) {
-      if (typeof e === 'object' && e !== null && 'code' in e && e.code === DiscordjsErrorCodes.ShardingInProcess) {
-        // Ignore error, this stat will be skipped
-      } else {
-        throw e;
-      }
+      context.logger.error('Failed to fetch guild count', e);
     }
 
     const totalServerCount = totalServersJoined !== null ? `**${t('commands.statistics.responses.totalServerCount')}** ${numberFormatter.format(totalServersJoined)}` : null;
-    const shardServerCount = shard ? `**${t('commands.statistics.responses.shardServerCount')}** ${numberFormatter.format(shardServersJoined)}` : null;
     const uptime = `**${t('commands.statistics.responses.uptime')}** ${shardStartTs.toString(MessageTimestampFormat.RELATIVE)}`;
     const shardCount = shard ? `**${t('commands.statistics.responses.shardCount')}** ${numberFormatter.format(shard.count)}` : null;
     const noShardsReasonKey = context.isWebhookMode
@@ -51,7 +39,6 @@ export const statisticsCommand: BotChatInputCommand = {
 
     const content = [
       totalServerCount,
-      shardServerCount,
       uptime,
       shardCount,
       '',

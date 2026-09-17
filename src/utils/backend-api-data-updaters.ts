@@ -1,5 +1,5 @@
 import type { APIApplicationCommand, APIApplicationCommandOption } from 'discord-api-types/v10';
-import { ChatInputCommandInteraction, Client, ContextMenuCommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction, ContextMenuCommandInteraction } from 'discord.js';
 import { filledBar } from 'string-progressbar';
 import typia from 'typia';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
@@ -13,7 +13,6 @@ import {
 } from '../types/bot-interaction.js';
 import { TelemetryResponse } from './add-telemetry-note-to-reply.js';
 import { backendApiRequest } from './backend-api-request.js';
-import { getProcessStartTs } from './get-process-start-ts.js';
 import { resolveFaqMentions } from './resolve-faq-mentions.js';
 import {
   BotCommandItem,
@@ -157,31 +156,29 @@ export const updateCommands = async (context: InteractionHandlerContext): Promis
   await updateCommandsFromInteraction({ ...restContext, t, logger });
 };
 
-export const updateShardStats = async (context: LoggerContext, client: Client, shardId: number) => {
-  const logger = context.logger.nest('updateShardStats').muteMethods(['debug', 'info']);
-  const serverCount = client.guilds.cache.size;
-  const memberCount = client.guilds.cache.reduce((members, guild) => {
-    if (members === null) return null;
-    const count = guild.approximateMemberCount ?? guild.memberCount;
-    return typeof count === 'number' && !isNaN(count) ? members + count : null;
-  }, 0 as number | null);
-  const startedAt = getProcessStartTs().toISOString();
+export interface WebhookDeliveryRecord {
+  status_code: number;
+  duration_ms: number;
+  occurred_at: string;
+}
 
-  const body = {
-    id: shardId,
-    server_count: serverCount,
-    member_count: memberCount,
-    started_at: startedAt,
-  };
-  logger.debug('Shard statistics collected:', body);
-  await backendApiRequest({ logger }, {
-    path: '/shard-statistics',
+export const sendWebhookDeliveries = async (context: LoggerContext, deliveries: WebhookDeliveryRecord[]): Promise<boolean> => {
+  const logger = context.logger.nest('sendWebhookDeliveries').muteMethods(['debug', 'info']);
+  logger.debug(`Sending ${deliveries.length} webhook delivery record(s)…`);
+  const result = await backendApiRequest({ logger }, {
+    path: '/webhook-deliveries',
     method: 'POST',
-    body,
+    body: { deliveries },
     validator: typia.createValidate<Record<string, unknown>>(),
     failOnInvalidResponse: false,
   });
-  logger.info('Successfully updated shard statistics');
+  if (result.ok) {
+    logger.info(`Successfully sent ${deliveries.length} webhook delivery record(s)`);
+  } else {
+    logger.warn(`Failed to send webhook delivery records (status ${result.status})`);
+  }
+
+  return result.ok;
 };
 
 export const sendCommandTelemetry = async (context: LoggerContext & UserSettingsContext, interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction): Promise<TelemetryResponse | undefined | null> => {

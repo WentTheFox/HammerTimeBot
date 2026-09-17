@@ -11,15 +11,13 @@ import {
 import { env } from '../env.js';
 import { InteractionHandlerContext, UserInteractionContext } from '../types/bot-interaction.js';
 
-import { sendCommandTelemetry, updateShardStats } from './backend-api-data-updaters.js';
+import { sendCommandTelemetry } from './backend-api-data-updaters.js';
 import { addTelemetryNoteToReply } from './add-telemetry-note-to-reply.js';
 import { buildUserInteractionContext } from './build-user-interaction-context.js';
 import { handleInteractionError } from './interaction-handlers/handle-interaction-error.js';
 import { interactionReply } from './interaction-reply.js';
 import { chatInputCommandRegistry, componentRegistry, contextMenuCommandRegistry } from './interactions/registries.js';
 import { getUserIdentifier, stringifyChannelName, stringifyGuildName, stringifyOptionsData } from './messaging.js';
-
-const FIVE_MINUTES_MS = 5 * 60 * 1e3;
 
 const handleReady = (context: InteractionHandlerContext) => async (client: Client<true>) => {
   const { logger } = context;
@@ -31,30 +29,6 @@ const handleReady = (context: InteractionHandlerContext) => async (client: Clien
     .then(({ hash }) => `version ${hash}`)
     .catch(() => 'an unknown version');
   clientUser.setActivity(versionString);
-
-  const startupPromises: Promise<void>[] = [];
-
-  const statsUpdate = async () => {
-    const currentShardIds = client.shard?.ids ?? [];
-    if (currentShardIds.length === 0) return;
-
-    try {
-      await Promise.all(currentShardIds.map(async (shardId) => {
-        await updateShardStats(context, client, shardId);
-      }));
-    } catch (e) {
-      logger.error('Failed to update shard statistics:', e);
-    }
-  };
-  startupPromises.push(statsUpdate());
-
-  // Wait for startup actions
-  await Promise.all(startupPromises);
-
-  // Set up scheduled calls
-  setInterval(() => {
-    void statsUpdate();
-  }, FIVE_MINUTES_MS);
 };
 
 const onError: OnDispatchError<UserInteractionContext> = async (interaction, context) => {

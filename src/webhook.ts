@@ -25,6 +25,7 @@ import { chatInputCommandRegistry, componentRegistry, contextMenuCommandRegistry
 import { sendCommandTelemetry } from './utils/backend-api-data-updaters.js';
 import { addTelemetryNoteToReply } from './utils/add-telemetry-note-to-reply.js';
 import { getUserIdentifier } from './utils/messaging.js';
+import { recordWebhookDelivery, startWebhookDeliveryTracker } from './utils/webhook-delivery-tracker.js';
 
 // This is the HTTP Interactions Endpoint entrypoint - the webhook-mode counterpart to bot.ts, which
 // gets its interactions over the gateway instead. No ShardingManager here: webhook mode has no
@@ -49,6 +50,7 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
 
   logger.log('Creating webhook-only client');
   const client = createWebhookOnlyClient({ token: env.DISCORD_BOT_TOKEN });
+  startWebhookDeliveryTracker(context);
 
   const onError: OnDispatchError<UserInteractionContext> = async (interaction, dispatchContext) => {
     await handleInteractionError(interaction as Parameters<typeof handleInteractionError>[0], dispatchContext);
@@ -135,6 +137,8 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
       return;
     }
 
+    const deliveryStartedAt = new Date();
+
     readRawBody(req)
       .then(async (rawBody) => {
         // Signature-rejection diagnostics (source IP, user-agent, header presence, lengths,
@@ -156,10 +160,20 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
         });
 
         res.writeHead(status, { 'Content-Type': 'application/json' }).end(JSON.stringify(body));
+        recordWebhookDelivery(context, {
+          status_code: status,
+          duration_ms: Date.now() - deliveryStartedAt.getTime(),
+          occurred_at: deliveryStartedAt.toISOString(),
+        });
       })
       .catch((e: unknown) => {
         logger.error('Failed to handle webhook interaction request', e);
         res.writeHead(500).end();
+        recordWebhookDelivery(context, {
+          status_code: 500,
+          duration_ms: Date.now() - deliveryStartedAt.getTime(),
+          occurred_at: deliveryStartedAt.toISOString(),
+        });
       });
   });
 

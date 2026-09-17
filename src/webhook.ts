@@ -137,26 +137,21 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
 
     readRawBody(req)
       .then(async (rawBody) => {
-        const signature = req.headers['x-signature-ed25519'] as string | undefined;
-        const timestamp = req.headers['x-signature-timestamp'] as string | undefined;
-
+        // Signature-rejection diagnostics (source IP, user-agent, header presence, lengths) are
+        // logged by handleWebhookInteractionRequest itself as of discord-bot-framework 2.7.0 -
+        // passing headers is what enables that, no app-level wrapping needed here anymore.
         const { status, body } = await handleWebhookInteractionRequest({
-          signature,
-          timestamp,
+          signature: req.headers['x-signature-ed25519'] as string | undefined,
+          timestamp: req.headers['x-signature-timestamp'] as string | undefined,
           rawBody,
+          headers: Object.fromEntries(
+            Object.entries(req.headers).map(([key, value]) => [key, Array.isArray(value) ? value.join(', ') : value]),
+          ),
         }, {
           publicKey: env.DISCORD_PUBLIC_KEY,
           logger,
           onInteraction,
         });
-
-        if (status === 401) {
-          // handleWebhookInteractionRequest already logs the rejection itself - this adds the
-          // context needed to tell a real (but somehow invalid) Discord request apart from the
-          // internet-background-noise scanner traffic every public endpoint gets, without logging
-          // the raw body (which can contain real user/guild data on a genuine interaction).
-          logger.warn(`[SignatureFailureDetail] ip=${req.headers['cf-connecting-ip'] ?? req.headers['x-real-ip'] ?? req.socket.remoteAddress} userAgent=${JSON.stringify(req.headers['user-agent'])} hasSignature=${signature !== undefined} hasTimestamp=${timestamp !== undefined} sigLength=${signature?.length ?? 0} bodyLength=${rawBody.length}`);
-        }
 
         res.writeHead(status, { 'Content-Type': 'application/json' }).end(JSON.stringify(body));
       })

@@ -45,7 +45,7 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
     getEmojiIdMap({ logger }),
     getCommandIdMap({ logger }),
   ]);
-  const context: InteractionHandlerContext = { i18next, emojiIdMap, commandIdMap, logger };
+  const context: InteractionHandlerContext = { i18next, emojiIdMap, commandIdMap, logger, isWebhookMode: true };
 
   logger.log('Creating webhook-only client');
   const client = createWebhookOnlyClient({ token: env.DISCORD_BOT_TOKEN });

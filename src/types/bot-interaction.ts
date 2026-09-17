@@ -33,6 +33,8 @@ export interface InteractionHandlerContext extends LoggerContext {
   i18next: i18n;
   emojiIdMap: Record<string, string>;
   commandIdMap: Record<string, string | undefined>;
+  /** True in src/webhook.ts (no gateway/shard connection at all), false in src/bot.ts. */
+  isWebhookMode: boolean;
 }
 
 export interface InteractionContext extends Omit<InteractionHandlerContext, 'i18next'> {

@@ -41,7 +41,10 @@ export const statisticsCommand: BotChatInputCommand = {
     const shardServerCount = shard ? `**${t('commands.statistics.responses.shardServerCount')}** ${numberFormatter.format(shardServersJoined)}` : null;
     const uptime = `**${t('commands.statistics.responses.uptime')}** ${shardStartTs.toString(MessageTimestampFormat.RELATIVE)}`;
     const shardCount = shard ? `**${t('commands.statistics.responses.shardCount')}** ${numberFormatter.format(shard.count)}` : null;
-    const footer = `*${shard ? t('commands.statistics.responses.shardNumber', { replace: { shardId: shard?.ids.join(', ') } }) : t('commands.statistics.responses.noShards')}*`;
+    const noShardsReasonKey = context.isWebhookMode
+      ? 'commands.statistics.responses.noShardsWebhookMode'
+      : 'commands.statistics.responses.noShards';
+    const footer = `*${shard ? t('commands.statistics.responses.shardNumber', { replace: { shardId: shard?.ids.join(', ') } }) : t(noShardsReasonKey)}*`;
     const serverInvite = `**${t('commands.statistics.responses.serverInvite')}** ${env.DISCORD_INVITE_URL}`;
     const supportedLanguages = `**${t('commands.statistics.responses.supportedLanguages')}** ${SUPPORTED_LANGUAGES.length}`;
     const crowdinProject = `**${t('commands.statistics.responses.crowdinProject')}** <${CROWDIN_PROJECT_URL}>`;

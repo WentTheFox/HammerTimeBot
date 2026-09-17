@@ -13,5 +13,5 @@ import { getCommandIdMap } from './utils/get-command-id-map.js';
   ]);
 
   logger.log('Creating client');
-  await createClient({ i18next, emojiIdMap, commandIdMap, logger });
+  await createClient({ i18next, emojiIdMap, commandIdMap, logger, isWebhookMode: false });
 })();

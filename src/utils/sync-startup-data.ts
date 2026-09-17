@@ -20,6 +20,7 @@ export async function syncStartupData(parentLogger: ILogger): Promise<void> {
     logger,
     emojiIdMap: await getEmojiIdMap({ logger }),
     i18next,
+    isWebhookMode: false,
   };
 
   await Promise.all([

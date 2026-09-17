@@ -3,6 +3,12 @@ name: Crowdin Sync
 on:
   push:
     branches: [ main ]
+    paths:
+      # Only source (English) string changes actually need a Crowdin re-sync - a push that
+      # doesn't touch these was spamming a new "New Crowdin translations" commit/PR-notify on
+      # every deploy-related push, since i18n_main gets rebased onto main's new tip regardless
+      # of whether anything translatable actually changed.
+      - 'src/locales/en-US/**'
   schedule:
     - cron: '0 9 * * 1'
   workflow_dispatch:

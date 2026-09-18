@@ -11,6 +11,16 @@ export const env = defineEnv({
   DISCORD_PUBLIC_KEY: z.string().optional().default(''),
   /** Port the webhook HTTP Interactions endpoint (src/webhook.ts) listens on. */
   WEBHOOK_PORT: z.coerce.number().optional().default(3939),
+  /**
+   * Long random URL-safe token the webhook entrypoint (src/webhook.ts) requires as the request
+   * path (e.g. `/<token>`), instead of serving interactions on `/`. Set this as the Interactions
+   * Endpoint URL on the Discord developer portal (`https://<host>/<token>`). Purely obscurity, not
+   * a substitute for Ed25519 signature verification - it just keeps internet-scanner/health-check
+   * noise (which will never know the path) out of the "invalid signature" logs, so those logs stay
+   * meaningful for actual signature problems. Generate with `openssl rand -base64url 32` or
+   * `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"`.
+   */
+  WEBHOOK_PATH_SECRET: z.string().min(1),
   /** Enables discord-bot-framework's verboseSignatureDiagnostics for src/webhook.ts. */
   WEBHOOK_VERBOSE_DIAGNOSTICS: boolFromString().default(false),
   CROWDIN_PROJECT_IDENTIFIER: z.string().optional().default(''),

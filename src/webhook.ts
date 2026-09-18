@@ -129,8 +129,13 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
     throw new Error(`Unhandled interaction of type ${interaction.type}`);
   };
 
+  const webhookPath = `/${env.WEBHOOK_PATH_SECRET}`;
+
   const server = createServer((req, res) => {
-    if (req.method !== 'POST') {
+    // The path itself is the "is this actually Discord" check - keeps internet-scanner/health-check
+    // noise that will never know the secret path out of the signature-rejection logs. See
+    // WEBHOOK_PATH_SECRET's doc comment in env.ts.
+    if (req.method !== 'POST' || req.url !== webhookPath) {
       res.writeHead(404).end();
       return;
     }

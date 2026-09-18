@@ -32,12 +32,15 @@ One-time production server setup:
    host.
 2. Expand (or issue) a cert covering the webhook subdomain, e.g. via `certbot --expand`.
 3. `sudo nginx -t && sudo systemctl reload nginx`
-4. Set `DISCORD_PUBLIC_KEY` (the app's Ed25519 public key, from the Developer Portal) and optionally
-   `WEBHOOK_PORT` (defaults to `3939`) in the server's `.env`.
+4. Set `DISCORD_PUBLIC_KEY` (the app's Ed25519 public key, from the Developer Portal),
+   `WEBHOOK_PATH_SECRET` (a long random URL-safe token - see its doc comment in `src/env.ts` for how
+   to generate one), and optionally `WEBHOOK_PORT` (defaults to `3939`) in the server's `.env`.
 5. `pm2 start pm2.json` (or `pm2 restart pm2.json` if already running) to bring up
    `HammerTimeBot:Webhook` alongside the existing gateway process.
-6. Once confident locally/in staging, set the Interactions Endpoint URL to the webhook subdomain's
-   URL in the Developer Portal - this is the actual cutover step (see above).
+6. Once confident locally/in staging, set the Interactions Endpoint URL to
+   `https://<webhook subdomain>/<WEBHOOK_PATH_SECRET>` in the Developer Portal - this is the actual
+   cutover step (see above). The endpoint only serves interactions at that secret path (anything else,
+   including `/`, 404s) so scanner/health-check noise never reaches signature verification.
 
 ## Translation
 

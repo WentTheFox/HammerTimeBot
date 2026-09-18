@@ -169,6 +169,19 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
           verboseSignatureDiagnostics: env.WEBHOOK_VERBOSE_DIAGNOSTICS,
         });
 
+        // TEMPORARY - diagnosing the recurring 753-byte/type:1 signature-rejection pattern from
+        // Discord's own IPs (see chat history). Only fires on an actual signature rejection (401),
+        // never for a request that verified fine, and logs the raw body itself (nothing else here
+        // does - verboseSignatureDiagnostics deliberately stops at a hash) so it can be manually
+        // re-verified against DISCORD_PUBLIC_KEY offline. Remove once that's root-caused.
+        if (status === 401) {
+          logger.warn('[TEMP-DEBUG] Raw body for signature-rejected request', {
+            signature: req.headers['x-signature-ed25519'],
+            timestamp: req.headers['x-signature-timestamp'],
+            rawBody: rawBody.toString('utf8'),
+          });
+        }
+
         res.writeHead(status, { 'Content-Type': 'application/json' }).end(JSON.stringify(body));
         // Fire-and-forget: don't hold up the actual Discord response on this.
         void sendWebhookDelivery(context, {

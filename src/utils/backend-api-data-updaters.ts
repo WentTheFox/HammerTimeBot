@@ -209,31 +209,40 @@ export const sendWebhookDelivery = async (context: LoggerContext, record: Webhoo
 
 export const sendCommandTelemetry = async (context: LoggerContext & UserSettingsContext, interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction): Promise<TelemetryResponse | undefined | null> => {
   const logger = context.logger.nest('sendCommandTelemetry').muteMethods(['info', 'debug']);
-  logger.debug('Obtaining user consent…');
-  const settings = await context.getSettings();
-  if (!settings.telemetry) {
-    logger.debug('User consent revoked, skip sending telemetry');
-    return null;
-  }
-  logger.info('Sending command telemetry…');
-  const body = {
-    locale: interaction.locale,
-    commandId: interaction.commandId,
-    options: interaction.options.data.map(option => ({
-      name: option.name,
-      type: option.type,
-    })),
-  };
-  const result = await backendApiRequest(context, {
-    path: '/command-telemetry',
-    method: 'POST',
-    body,
-    validator: typia.createValidate<TelemetryResponse>(),
-    failOnInvalidResponse: false,
-  });
-  if (result.ok) {
-    logger.log('Successfully sent command telemetry');
-  }
+  // Call sites use this void-fired (fire-and-forget, no .catch()), so it must never reject - hit in
+  // practice: getSettings() briefly returning undefined instead of its documented fallback (fixed
+  // separately) turned `settings.telemetry` into an unhandled rejection here. try/catch as a second
+  // line of defense against whatever the next surprise from an external call turns out to be.
+  try {
+    logger.debug('Obtaining user consent…');
+    const settings = await context.getSettings();
+    if (!settings.telemetry) {
+      logger.debug('User consent revoked, skip sending telemetry');
+      return null;
+    }
+    logger.info('Sending command telemetry…');
+    const body = {
+      locale: interaction.locale,
+      commandId: interaction.commandId,
+      options: interaction.options.data.map(option => ({
+        name: option.name,
+        type: option.type,
+      })),
+    };
+    const result = await backendApiRequest(context, {
+      path: '/command-telemetry',
+      method: 'POST',
+      body,
+      validator: typia.createValidate<TelemetryResponse>(),
+      failOnInvalidResponse: false,
+    });
+    if (result.ok) {
+      logger.log('Successfully sent command telemetry');
+    }
 
-  return result?.response;
+    return result?.response;
+  } catch (error) {
+    logger.warn('Failed to send command telemetry', error);
+    return undefined;
+  }
 };

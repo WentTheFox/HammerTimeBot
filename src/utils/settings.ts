@@ -52,11 +52,22 @@ export const getSettings = async (
   // that's on Discord's 3s response-time budget.
   const startedAt = Date.now();
   try {
-    const { response, responseText } = await backendApiRequest(context, {
+    const { ok, status, response, responseText } = await backendApiRequest(context, {
       path: `/settings/${userId}`,
       validator: typia.createValidate<SettingsValue>(),
       timeoutMs: 1000,
     });
+
+    if (!ok) {
+      // backendApiRequest only throws for non-HTTP failures (network error, timeout) - an actual
+      // HTTP error status (hit in practice: a 503 while the backend was mid-deploy) resolves
+      // normally with response: undefined instead, so this needs its own check rather than relying
+      // on the catch below. Missing this previously let `undefined` through as if it were a real
+      // SettingsValue, which crashed the first caller that read a property off it.
+      logger.error(`Falling back to default settings for user ${userId} after ${Date.now() - startedAt}ms (status ${status})`);
+      return defaultSettings;
+    }
+
     logger.debug(`Fetched settings for user ${userId} in ${Date.now() - startedAt}ms`);
 
     if (env.LOCAL) {

@@ -71,8 +71,15 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
         onError,
       });
 
+      // sendCommandTelemetry never rejects on its own, but addTelemetryNoteToReply's own REST
+      // call (interaction.editReply()) isn't similarly guarded - this is void-fired with no other
+      // handler, so an unhandled rejection here would otherwise depend on Node's default behavior
+      // rather than anything this codebase controls.
       void sendCommandTelemetry(userInteractionContext, interaction)
-        .then((telemetryResponse) => addTelemetryNoteToReply(userInteractionContext, interaction, telemetryResponse));
+        .then((telemetryResponse) => addTelemetryNoteToReply(userInteractionContext, interaction, telemetryResponse))
+        .catch((error: unknown) => {
+          interactionLogger.error('Failed to add telemetry note to reply', error);
+        });
       return;
     }
 
@@ -114,8 +121,15 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
         onError,
       });
 
+      // sendCommandTelemetry never rejects on its own, but addTelemetryNoteToReply's own REST
+      // call (interaction.editReply()) isn't similarly guarded - this is void-fired with no other
+      // handler, so an unhandled rejection here would otherwise depend on Node's default behavior
+      // rather than anything this codebase controls.
       void sendCommandTelemetry(userInteractionContext, interaction)
-        .then((telemetryResponse) => addTelemetryNoteToReply(userInteractionContext, interaction, telemetryResponse));
+        .then((telemetryResponse) => addTelemetryNoteToReply(userInteractionContext, interaction, telemetryResponse))
+        .catch((error: unknown) => {
+          interactionLogger.error('Failed to add telemetry note to reply', error);
+        });
       return;
     }
 

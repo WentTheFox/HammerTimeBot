@@ -52,14 +52,18 @@ export const updateBotCommandsInApi = async (parentContext: LoggerContext, input
   logger.log('Updating…');
   const resultWithOptions = augmentResultWithOptions(input, result);
   try {
-    await backendApiRequest({ logger }, {
+    const response = await backendApiRequest({ logger }, {
       path: '/bot-commands',
       method: 'PUT',
       validator: typia.createValidate<unknown[]>(),
       body: resultWithOptions,
     });
 
-    logger.log('Successful');
+    if (response.ok) {
+      logger.log('Successful');
+    } else {
+      logger.warn(`Failed (status ${response.status})`);
+    }
   } catch (error) {
     logger.warn('Failed', error);
   }
@@ -78,7 +82,7 @@ export const updateFaqEntriesInApi = async (parentContext: LoggerContext): Promi
       entries.map((e) => e.content),
       logger,
     );
-    await backendApiRequest({ logger }, {
+    const response = await backendApiRequest({ logger }, {
       path: '/faq-entries',
       method: 'PUT',
       validator: typia.createValidate<unknown>(),
@@ -94,7 +98,11 @@ export const updateFaqEntriesInApi = async (parentContext: LoggerContext): Promi
         guild_id: env.SUPPORT_SERVER_ID,
       },
     });
-    logger.log('Successful');
+    if (response.ok) {
+      logger.log('Successful');
+    } else {
+      logger.warn(`Failed (status ${response.status})`);
+    }
   } catch (error) {
     logger.warn('Failed', error);
   }
@@ -105,14 +113,18 @@ export const updateBotTimezonesInApi = async (parentContext: LoggerContext): Pro
   const context = { ...parentContext, logger };
   logger.log('Updating…');
   try {
-    await backendApiRequest(context, {
+    const response = await backendApiRequest(context, {
       path: '/bot-timezones',
       method: 'PUT',
       validator: typia.createValidate<unknown>(),
       body: { timezones: Intl.supportedValuesOf('timeZone') },
     });
 
-    logger.log('Successful');
+    if (response.ok) {
+      logger.log('Successful');
+    } else {
+      logger.warn(`Failed (status ${response.status})`);
+    }
   } catch (error) {
     logger.warn('Failed', error);
   }

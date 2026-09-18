@@ -4,3 +4,4 @@ config.js
 /build
 /coverage
 /crowdin_report.json5
+/sync-commands.log

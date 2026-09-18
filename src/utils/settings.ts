@@ -46,11 +46,18 @@ export const getSettings = async (
     return defaultSettings;
   }
 
+  // Timed and logged either way (not just on failure) so we actually have production latency
+  // samples to look at next time this comes up - see backend-api-request.ts's timeoutMs doc for why
+  // 1s: nothing here previously bounded how long a hung settings fetch could block an interaction
+  // that's on Discord's 3s response-time budget.
+  const startedAt = Date.now();
   try {
     const { response, responseText } = await backendApiRequest(context, {
       path: `/settings/${userId}`,
       validator: typia.createValidate<SettingsValue>(),
+      timeoutMs: 1000,
     });
+    logger.debug(`Fetched settings for user ${userId} in ${Date.now() - startedAt}ms`);
 
     if (env.LOCAL) {
       logger.debug(`Fetched settings for user ${userId}: ${responseText}`);
@@ -58,7 +65,7 @@ export const getSettings = async (
 
     return response;
   } catch (e) {
-    logger.error('Falling back to default settings due to request error', e);
+    logger.error(`Falling back to default settings for user ${userId} after ${Date.now() - startedAt}ms due to request error`, e);
     return defaultSettings;
   }
 };

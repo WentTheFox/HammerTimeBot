@@ -18,6 +18,15 @@ export interface BackendApiRequest<T> {
    * most callers here run inline with a user-facing interaction and shouldn't sit through retries.
    */
   retry?: RetryOptions;
+  /**
+   * Aborts the request after this many milliseconds (per attempt, if combined with `retry`).
+   * ApiClient/fetch have no timeout of their own - Node's fetch defaults are on the order of
+   * minutes, nowhere close to useful for a caller on the clock. Off by default; only worth setting
+   * where the caller already has a fallback for failure and a real deadline (e.g. getSettings inside
+   * Discord's 3s interaction-response budget) - a bare fetch failure and a timeout both just throw,
+   * so this doesn't change error handling, only how long a hung request is allowed to block it.
+   */
+  timeoutMs?: number;
 }
 
 export interface BackendApiResponse<T> {
@@ -32,11 +41,16 @@ export const backendApiRequest = async <T>(
   { logger }: LoggerContext,
   params: BackendApiRequest<T>,
 ): Promise<BackendApiResponse<T>> => {
+  const { timeoutMs } = params;
+  const fetchImpl: typeof fetch | undefined = timeoutMs
+    ? (input, init) => fetch(input, { ...init, signal: AbortSignal.timeout(timeoutMs) })
+    : undefined;
+
   const apiClient = new ApiClient(logger, {
     baseUrl: `${env.API_URL}/api`,
     authentication: { type: ApiAuthType.AUTHORIZATION_HEADER, getValue: () => env.API_TOKEN },
     retry: params.retry,
-  });
+  }, fetchImpl);
 
   try {
     const result = await apiClient.request<T>({

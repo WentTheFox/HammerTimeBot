@@ -26,9 +26,8 @@ import { sendCommandTelemetry, sendWebhookDelivery } from './utils/backend-api-d
 import { addTelemetryNoteToReply } from './utils/add-telemetry-note-to-reply.js';
 import { getUserIdentifier } from './utils/messaging.js';
 
-// This is the HTTP Interactions Endpoint entrypoint - the webhook-mode counterpart to bot.ts, which
-// gets its interactions over the gateway instead. No ShardingManager here: webhook mode has no
-// gateway connection to shard, so concurrency is whatever the process/PM2/nginx in front of it
+// This is the bot's only entry point: an HTTP Interactions Endpoint, not a gateway connection, so
+// there's no ShardingManager here - concurrency is whatever the process/PM2/nginx in front of it
 // provides instead. See CLAUDE.md's ./webhook entry in discord-bot-framework for why this exists.
 
 const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((resolve, reject) => {

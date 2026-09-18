@@ -15,15 +15,14 @@ $ pm2 start pm2.json
 
 ## Webhook deployment
 
-`src/webhook.ts` is an alternative entrypoint that receives interactions over Discord's HTTP
-Interactions Endpoint instead of the gateway (`src/index.ts`), so it needs no gateway/shard
-connection at all. `pm2.json` starts it alongside the gateway process (`HammerTimeBot:Webhook`) -
-running both processes at once is safe at the infrastructure level, but **setting an Interactions
-Endpoint URL on the application in the Discord Developer Portal is what actually switches interaction
-delivery over** - once set, Discord stops sending `INTERACTION_CREATE` over the gateway entirely (this
-is an all-or-nothing switch per application, not selective by interaction type), so the gateway
-process's interaction handling goes idle at that point even though the process itself keeps running.
-Don't set that URL against production until you're confident in the webhook path.
+`src/webhook.ts` is the bot's only entry point (`npm start`/`pm2.json`'s `HammerTimeBot:Webhook`) -
+it receives interactions over Discord's HTTP Interactions Endpoint rather than a gateway connection,
+so there's no ShardingManager/gateway mode to speak of. **Setting an Interactions Endpoint URL on the
+application in the Discord Developer Portal is what actually switches interaction delivery over** -
+once set, Discord stops sending `INTERACTION_CREATE` over the gateway entirely for that application,
+which is why this needs to be a real HTTP server rather than something that only starts reacting once
+you're sure: there's no dual-running fallback. Don't set that URL against production until you're
+confident in the webhook path (test it against a dev subdomain / secondary application first).
 
 One-time production server setup:
 
@@ -36,7 +35,7 @@ One-time production server setup:
    `WEBHOOK_PATH_SECRET` (a long random URL-safe token - see its doc comment in `src/env.ts` for how
    to generate one), and optionally `WEBHOOK_PORT` (defaults to `3939`) in the server's `.env`.
 5. `pm2 start pm2.json` (or `pm2 restart pm2.json` if already running) to bring up
-   `HammerTimeBot:Webhook` alongside the existing gateway process.
+   `HammerTimeBot:Webhook`.
 6. Once confident locally/in staging, set the Interactions Endpoint URL to
    `https://<webhook subdomain>/<WEBHOOK_PATH_SECRET>` in the Developer Portal - this is the actual
    cutover step (see above). The endpoint only serves interactions at that secret path (anything else,

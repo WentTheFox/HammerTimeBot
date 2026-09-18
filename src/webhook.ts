@@ -25,6 +25,7 @@ import { chatInputCommandRegistry, componentRegistry, contextMenuCommandRegistry
 import { sendCommandTelemetry, sendWebhookDelivery } from './utils/backend-api-data-updaters.js';
 import { addTelemetryNoteToReply } from './utils/add-telemetry-note-to-reply.js';
 import { getUserIdentifier } from './utils/messaging.js';
+import { trackFirstAckTimestamp } from './utils/track-first-ack-timestamp.js';
 
 // This is the bot's only entry point: an HTTP Interactions Endpoint, not a gateway connection, so
 // there's no ShardingManager here - concurrency is whatever the process/PM2/nginx in front of it
@@ -53,8 +54,9 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
     await handleInteractionError(interaction as Parameters<typeof handleInteractionError>[0], dispatchContext);
   };
 
-  const onInteraction = async (data: APIInteraction) => {
+  const createOnInteraction = (ackTiming: { ackedAt?: number }) => async (data: APIInteraction) => {
     const interaction = interactionFromWebhookPayload(client, data);
+    trackFirstAckTimestamp(interaction, ackTiming);
     const userInteractionContext = await buildUserInteractionContext(interaction, context);
     const { logger: interactionLogger } = userInteractionContext;
 
@@ -140,6 +142,12 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
     }
 
     const deliveryStartedAt = new Date();
+    // Populated by trackFirstAckTimestamp the moment the interaction's reply/deferReply/etc.
+    // resolves (a real REST call to Discord, independent of this response) - see its doc comment.
+    // Falls back to "whenever we're done" for requests that never get that far (signature
+    // rejections, a Ping, an error before any reply) so duration_ms still means something for those.
+    const ackTiming: { ackedAt?: number } = {};
+    const durationMs = () => (ackTiming.ackedAt ?? Date.now()) - deliveryStartedAt.getTime();
 
     readRawBody(req)
       .then(async (rawBody) => {
@@ -157,7 +165,7 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
         }, {
           publicKey: env.DISCORD_PUBLIC_KEY,
           logger,
-          onInteraction,
+          onInteraction: createOnInteraction(ackTiming),
           verboseSignatureDiagnostics: env.WEBHOOK_VERBOSE_DIAGNOSTICS,
         });
 
@@ -165,7 +173,7 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
         // Fire-and-forget: don't hold up the actual Discord response on this.
         void sendWebhookDelivery(context, {
           status_code: status,
-          duration_ms: Date.now() - deliveryStartedAt.getTime(),
+          duration_ms: durationMs(),
           occurred_at: deliveryStartedAt.toISOString(),
         });
       })
@@ -174,7 +182,7 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
         res.writeHead(500).end();
         void sendWebhookDelivery(context, {
           status_code: 500,
-          duration_ms: Date.now() - deliveryStartedAt.getTime(),
+          duration_ms: durationMs(),
           occurred_at: deliveryStartedAt.toISOString(),
         });
       });

@@ -177,25 +177,34 @@ export interface WebhookDeliveryRecord {
 export const sendWebhookDelivery = async (context: LoggerContext, record: WebhookDeliveryRecord): Promise<boolean> => {
   const logger = context.logger.nest('sendWebhookDelivery').muteMethods(['debug', 'info']);
   logger.debug('Sending webhook delivery record…', record);
-  const result = await backendApiRequest({ logger }, {
-    path: '/webhook-deliveries',
-    method: 'POST',
-    body: record,
-    validator: typia.createValidate<Record<string, unknown>>(),
-    failOnInvalidResponse: false,
-    // This is fire-and-forget from the caller's side (webhook.ts never awaits it), so it's fine to
-    // sit through a full backoff - covers the backend briefly 503ing while SledgeHammerTime itself
-    // is mid-deploy. 6 attempts x initialDelayMs 2000, doubling, is exactly 2/4/8/16/32s between
-    // attempts (ApiClient's default shouldRetry already covers 5xx/429).
-    retry: { maxAttempts: 6, initialDelayMs: 2000 },
-  });
-  if (result.ok) {
-    logger.info('Successfully sent webhook delivery record');
-  } else {
-    logger.warn(`Failed to send webhook delivery record (status ${result.status})`);
-  }
+  // Stats reporting must never take the webhook handler down with it - webhook.ts calls this
+  // `void`-fired (fire-and-forget, no .catch()), and backendApiRequest only converts HTTP-status
+  // failures to a non-throwing result, so anything else (DNS failure, connection reset, etc.) would
+  // otherwise escape as an unhandled rejection and crash the whole process over a stats hiccup.
+  try {
+    const result = await backendApiRequest({ logger }, {
+      path: '/webhook-deliveries',
+      method: 'POST',
+      body: record,
+      validator: typia.createValidate<Record<string, unknown>>(),
+      failOnInvalidResponse: false,
+      // Fire-and-forget from the caller's side too, so it's fine to sit through a full backoff -
+      // covers the backend briefly 503ing while SledgeHammerTime itself is mid-deploy. 6 attempts x
+      // initialDelayMs 2000, doubling, is exactly 2/4/8/16/32s between attempts (ApiClient's default
+      // shouldRetry already covers 5xx/429).
+      retry: { maxAttempts: 6, initialDelayMs: 2000 },
+    });
+    if (result.ok) {
+      logger.info('Successfully sent webhook delivery record');
+    } else {
+      logger.warn(`Failed to send webhook delivery record (status ${result.status})`);
+    }
 
-  return result.ok;
+    return result.ok;
+  } catch (error) {
+    logger.warn('Failed to send webhook delivery record', error);
+    return false;
+  }
 };
 
 export const sendCommandTelemetry = async (context: LoggerContext & UserSettingsContext, interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction): Promise<TelemetryResponse | undefined | null> => {

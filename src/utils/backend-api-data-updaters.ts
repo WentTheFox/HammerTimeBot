@@ -23,6 +23,18 @@ import {
   updateGuildCommands,
 } from './update-guild-commands.js';
 
+/**
+ * Retry config for backend calls that are never on the clock for an interaction reply - either
+ * running in the detached background deploy hook (sync-commands-cli.ts), or from a command that
+ * already sent its own ack via reply()/deferReply() before doing this slow work (see
+ * track-first-ack-timestamp.ts's doc comment: that ack is a real, independent REST call, so a
+ * retry here only delays the follow-up edit, not any interaction deadline). 6 attempts x
+ * initialDelayMs 2000, doubling, is exactly 2/4/8/16/32s between attempts - covers the backend
+ * briefly 503ing while SledgeHammerTime itself is mid-deploy (ApiClient's default shouldRetry
+ * already covers 5xx/429).
+ */
+const BACKGROUND_SYNC_RETRY = { maxAttempts: 6, initialDelayMs: 2000 };
+
 type MinimalAPIApplicationCommand =
   Pick<APIApplicationCommand, 'id' | 'name' | 'name_localizations' | 'description' | 'description_localizations' | 'type'>
   & {
@@ -57,6 +69,7 @@ export const updateBotCommandsInApi = async (parentContext: LoggerContext, input
       method: 'PUT',
       validator: typia.createValidate<unknown[]>(),
       body: resultWithOptions,
+      retry: BACKGROUND_SYNC_RETRY,
     });
 
     if (response.ok) {
@@ -97,6 +110,7 @@ export const updateFaqEntriesInApi = async (parentContext: LoggerContext): Promi
         roles,
         guild_id: env.SUPPORT_SERVER_ID,
       },
+      retry: BACKGROUND_SYNC_RETRY,
     });
     if (response.ok) {
       logger.log('Successful');
@@ -118,6 +132,7 @@ export const updateBotTimezonesInApi = async (parentContext: LoggerContext): Pro
       method: 'PUT',
       validator: typia.createValidate<unknown>(),
       body: { timezones: Intl.supportedValuesOf('timeZone') },
+      retry: BACKGROUND_SYNC_RETRY,
     });
 
     if (response.ok) {
@@ -188,11 +203,7 @@ export const sendWebhookDelivery = async (context: LoggerContext, record: Webhoo
       body: record,
       validator: typia.createValidate<Record<string, unknown>>(),
       failOnInvalidResponse: false,
-      // Fire-and-forget from the caller's side too, so it's fine to sit through a full backoff -
-      // covers the backend briefly 503ing while SledgeHammerTime itself is mid-deploy. 6 attempts x
-      // initialDelayMs 2000, doubling, is exactly 2/4/8/16/32s between attempts (ApiClient's default
-      // shouldRetry already covers 5xx/429).
-      retry: { maxAttempts: 6, initialDelayMs: 2000 },
+      retry: BACKGROUND_SYNC_RETRY,
     });
     if (result.ok) {
       logger.info('Successfully sent webhook delivery record');

@@ -1,5 +1,5 @@
 import { IValidation } from 'typia';
-import { ApiAuthType, ApiClient, ApiHttpException } from '@went.tf/discord-bot-framework/api-client';
+import { ApiAuthType, ApiClient, ApiHttpException, RetryOptions } from '@went.tf/discord-bot-framework/api-client';
 import { env } from '../env.js';
 import { LoggerContext } from '../types/bot-interaction.js';
 
@@ -13,6 +13,11 @@ export interface BackendApiRequest<T> {
    * @default true
    */
   failOnInvalidResponse?: boolean;
+  /**
+   * Retries (with exponential backoff) on 5xx/429 - see ApiClient's RetryOptions. Off by default;
+   * most callers here run inline with a user-facing interaction and shouldn't sit through retries.
+   */
+  retry?: RetryOptions;
 }
 
 export interface BackendApiResponse<T> {
@@ -30,6 +35,7 @@ export const backendApiRequest = async <T>(
   const apiClient = new ApiClient(logger, {
     baseUrl: `${env.API_URL}/api`,
     authentication: { type: ApiAuthType.AUTHORIZATION_HEADER, getValue: () => env.API_TOKEN },
+    retry: params.retry,
   });
 
   try {

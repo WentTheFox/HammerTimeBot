@@ -26,7 +26,6 @@ import { sendCommandTelemetry, sendWebhookDelivery } from './utils/backend-api-d
 import { addTelemetryNoteToReply } from './utils/add-telemetry-note-to-reply.js';
 import { getUserIdentifier } from './utils/messaging.js';
 import { trackFirstAckTimestamp } from './utils/track-first-ack-timestamp.js';
-import { isDiscordSignatureConformanceCheck } from './utils/is-discord-signature-conformance-check.js';
 
 // This is the bot's only entry point: an HTTP Interactions Endpoint, not a gateway connection, so
 // there's no ShardingManager here - concurrency is whatever the process/PM2/nginx in front of it
@@ -155,13 +154,10 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
         // Signature-rejection diagnostics (source IP, user-agent, header presence, lengths,
         // and - when WEBHOOK_VERBOSE_DIAGNOSTICS is set - the exact signature/timestamp, a
         // body hash, and type/id if the body parses as JSON) are logged by
-        // handleWebhookInteractionRequest itself as of discord-bot-framework 2.7.0/2.8.0. Muted for
-        // Discord's own recurring signature-conformance check (see its doc comment) - still gets
-        // rejected exactly the same, just without the expected, recurring WARN/DEBUG noise.
-        const requestLogger = isDiscordSignatureConformanceCheck(rawBody, env.DISCORD_CLIENT_ID)
-          ? logger.muteMethods(['warn', 'debug'])
-          : logger;
-
+        // handleWebhookInteractionRequest itself as of discord-bot-framework 2.7.0/2.8.0.
+        // muteKnownConformanceCheckLogs (default true, as of 2.10.0) quiets that log for Discord's
+        // own recurring signature-conformance check - still gets rejected exactly the same, just
+        // without the expected, recurring WARN/DEBUG noise. applicationId narrows the match further.
         const { status, body } = await handleWebhookInteractionRequest({
           signature: req.headers['x-signature-ed25519'] as string | undefined,
           timestamp: req.headers['x-signature-timestamp'] as string | undefined,
@@ -171,7 +167,8 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
           ),
         }, {
           publicKey: env.DISCORD_PUBLIC_KEY,
-          logger: requestLogger,
+          applicationId: env.DISCORD_CLIENT_ID,
+          logger,
           onInteraction: createOnInteraction(ackTiming),
           verboseSignatureDiagnostics: env.WEBHOOK_VERBOSE_DIAGNOSTICS,
         });

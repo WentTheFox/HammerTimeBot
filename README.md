@@ -75,7 +75,7 @@ English and Hungarian translations have been included, so no translators will be
   - [Blurplix](https://crowdin.com/profile/Blurplix)
   - [klauny](https://crowdin.com/profile/klauny)
 - 🇳🇱 Dutch: [Jesse](https://crowdin.com/profile/Jessuh)
-- 🇫🇮 Finnish: [lihaisapossu](https://crowdin.com/profile/lihaisapossu)
+- 🇫🇮 Finnish: [nicohele](https://crowdin.com/profile/nicohele)
 - 🇫🇷 French
   - [Cookie Kiro](https://crowdin.com/profile/Cookikui)
   - [Hvalomi](https://crowdin.com/profile/hvalomi)

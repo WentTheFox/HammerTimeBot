@@ -22,7 +22,7 @@
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
     "@discordjs/rest": "^2.6.1",
-    "@went.tf/discord-bot-framework": "^2.10.0",
+    "@went.tf/discord-bot-framework": "^2.10.1",
     "ajv": "^8.20.0",
     "bufferutil": "^4.0.9",
     "concurrently": "^9.2.1",

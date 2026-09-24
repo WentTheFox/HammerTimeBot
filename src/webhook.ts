@@ -12,6 +12,7 @@ import {
   OnDispatchError,
 } from '@went.tf/discord-bot-framework/interactions';
 import { APIInteraction, InteractionType, MessageFlags } from 'discord-api-types/v10';
+import { RESTEvents } from '@discordjs/rest';
 import { env } from './env.js';
 import { initI18next } from './constants/locales.js';
 import { getEmojiIdMap } from './utils/get-emoji-id-map.js';
@@ -26,6 +27,7 @@ import { sendCommandTelemetry, sendWebhookDelivery } from './utils/backend-api-d
 import { addTelemetryNoteToReply } from './utils/add-telemetry-note-to-reply.js';
 import { getUserIdentifier } from './utils/messaging.js';
 import { trackFirstAckTimestamp } from './utils/track-first-ack-timestamp.js';
+import { describeSlowWebhookDelivery, WebhookDeliveryTiming } from './utils/describe-slow-webhook-delivery.js';
 
 // This is the bot's only entry point: an HTTP Interactions Endpoint, not a gateway connection, so
 // there's no ShardingManager here - concurrency is whatever the process/PM2/nginx in front of it
@@ -49,14 +51,27 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
 
   logger.log('Creating webhook-only client');
   const client = createWebhookOnlyClient({ token: env.DISCORD_BOT_TOKEN });
+  // A rate-limit wait on the interaction-callback route would otherwise be invisible - it just shows
+  // up as a slow reply()/respond(). Deliberately not logging `url`/`majorParameter`, which can carry
+  // an interaction token.
+  client.rest.on(RESTEvents.RateLimited, ({ method, route, scope, global, retryAfter, sublimitTimeout }) => {
+    logger.warn(`REST rate limited: ${method.toUpperCase()} ${route} (scope=${scope}, global=${global}), retryAfter=${retryAfter}ms, sublimitTimeout=${sublimitTimeout}ms`);
+  });
 
   const onError: OnDispatchError<UserInteractionContext> = async (interaction, dispatchContext) => {
     await handleInteractionError(interaction as Parameters<typeof handleInteractionError>[0], dispatchContext);
   };
 
-  const createOnInteraction = (ackTiming: { ackedAt?: number }) => async (data: APIInteraction) => {
+  const createOnInteraction = (timing: WebhookDeliveryTiming) => async (data: APIInteraction) => {
     const interaction = interactionFromWebhookPayload(client, data);
-    trackFirstAckTimestamp(interaction, ackTiming);
+    timing.interactionId = interaction.id;
+    timing.interactionCreatedAt = interaction.createdTimestamp;
+    timing.interactionDescription = [
+      InteractionType[interaction.type],
+      'commandName' in interaction ? `/${interaction.commandName}` : undefined,
+      'customId' in interaction ? `customId=${interaction.customId}` : undefined,
+    ].filter(Boolean).join(' ');
+    trackFirstAckTimestamp(interaction, timing);
     const userInteractionContext = await buildUserInteractionContext(interaction, context);
     const { logger: interactionLogger } = userInteractionContext;
 
@@ -156,12 +171,25 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
     }
 
     const deliveryStartedAt = new Date();
-    // Populated by trackFirstAckTimestamp the moment the interaction's reply/deferReply/etc.
-    // resolves (a real REST call to Discord, independent of this response) - see its doc comment.
-    // Falls back to "whenever we're done" for requests that never get that far (signature
-    // rejections, a Ping, an error before any reply) so duration_ms still means something for those.
-    const ackTiming: { ackedAt?: number } = {};
-    const durationMs = () => (ackTiming.ackedAt ?? Date.now()) - deliveryStartedAt.getTime();
+    const signatureTimestamp = Number(req.headers['x-signature-timestamp']);
+    // ackedAt is populated by trackFirstAckTimestamp the moment the interaction's
+    // reply/deferReply/etc. resolves (a real REST call to Discord, independent of this response) -
+    // see its doc comment. Falls back to "whenever we're done" for requests that never get that far
+    // (signature rejections, a Ping, an error before any reply) so duration_ms still means something
+    // for those. The rest of this is only for the slow-delivery breakdown logged below.
+    const timing: WebhookDeliveryTiming = {
+      receivedAt: deliveryStartedAt.getTime(),
+      finishedAt: NaN,
+      signedAtSeconds: Number.isFinite(signatureTimestamp) ? signatureTimestamp : undefined,
+    };
+    const durationMs = () => (timing.ackedAt ?? Date.now()) - deliveryStartedAt.getTime();
+    const logIfSlow = () => {
+      timing.finishedAt = Date.now();
+      const slowDeliveryMessage = describeSlowWebhookDelivery(timing);
+      if (slowDeliveryMessage) {
+        logger.nest(`Interaction#${timing.interactionId}`).warn(slowDeliveryMessage);
+      }
+    };
 
     readRawBody(req)
       .then(async (rawBody) => {
@@ -183,11 +211,12 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
           publicKey: env.DISCORD_PUBLIC_KEY,
           applicationId: env.DISCORD_CLIENT_ID,
           logger,
-          onInteraction: createOnInteraction(ackTiming),
+          onInteraction: createOnInteraction(timing),
           verboseSignatureDiagnostics: env.WEBHOOK_VERBOSE_DIAGNOSTICS,
         });
 
         res.writeHead(status, { 'Content-Type': 'application/json' }).end(JSON.stringify(body));
+        logIfSlow();
         // Fire-and-forget: don't hold up the actual Discord response on this.
         void sendWebhookDelivery(context, {
           status_code: status,
@@ -198,6 +227,7 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
       .catch((e: unknown) => {
         logger.error('Failed to handle webhook interaction request', e);
         res.writeHead(500).end();
+        logIfSlow();
         void sendWebhookDelivery(context, {
           status_code: 500,
           duration_ms: durationMs(),

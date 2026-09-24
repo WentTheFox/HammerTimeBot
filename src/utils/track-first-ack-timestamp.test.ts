@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { trackFirstAckTimestamp } from './track-first-ack-timestamp.js';
+import { AckTiming, trackFirstAckTimestamp } from './track-first-ack-timestamp.js';
 
 describe('trackFirstAckTimestamp', () => {
   it('records a timestamp once an ack method resolves', async () => {
@@ -43,6 +43,37 @@ describe('trackFirstAckTimestamp', () => {
 
     await expect(interaction.reply()).rejects.toThrow('nope');
     expect(ackTiming.ackedAt).toBeUndefined();
+  });
+
+  it('records when the first ack call started and settled, even if it rejects', async () => {
+    let rejectCall: (e: Error) => void = () => undefined;
+    const interaction = { respond: vi.fn(() => new Promise((_, reject) => { rejectCall = reject; })) };
+    const ackTiming: AckTiming = {};
+    trackFirstAckTimestamp(interaction, ackTiming);
+
+    const call = interaction.respond();
+    expect(ackTiming.ackCalledAt).toBeTypeOf('number');
+    expect(ackTiming.ackSettledAt).toBeUndefined();
+
+    rejectCall(new Error('Unknown interaction'));
+    await expect(call).rejects.toThrow('Unknown interaction');
+    expect(ackTiming.ackSettledAt).toBeGreaterThanOrEqual(ackTiming.ackCalledAt!);
+    expect(ackTiming.ackedAt).toBeUndefined();
+  });
+
+  it('keeps the first ack call timings even if a later ack method is also called', async () => {
+    const interaction = {
+      deferReply: vi.fn().mockResolvedValue(undefined),
+      reply: vi.fn().mockResolvedValue(undefined),
+    };
+    const ackTiming: AckTiming = {};
+    trackFirstAckTimestamp(interaction, ackTiming);
+
+    await interaction.deferReply();
+    const { ackCalledAt, ackSettledAt } = ackTiming;
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    await interaction.reply();
+    expect(ackTiming).toMatchObject({ ackCalledAt, ackSettledAt });
   });
 
   it('leaves methods that do not exist on the interaction alone', () => {

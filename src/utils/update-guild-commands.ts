@@ -21,7 +21,7 @@ import { createCommandLocalizer } from '@went.tf/discord-bot-framework/i18n';
 import commandsSchemaRaw from '../commands.schema.json' with { type: 'json' };
 import commandsData from '../commands.json' with { type: 'json' };
 import { env } from '../env.js';
-import { rest } from './rest.js';
+import { commandRegistrationRest } from './rest.js';
 import { getLocalizedObject } from './get-localized-object.js';
 import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from '../constants/locales.js';
 import { InteractionContext, LoggerContext } from '../types/bot-interaction.js';
@@ -78,7 +78,7 @@ const toGlobalOptionPath = (path: readonly string[]): readonly string[] =>
 
 const CONTEXT_MENU_NAMES = new Set<string>(contextMenuCommandRegistry.names);
 
-const buildCommandsBody = (t: InteractionContext['t']): BotCommands => {
+export const buildCommandsBody = (t: InteractionContext['t']): BotCommands => {
   const localizer = createCommandLocalizer({ locales: SUPPORTED_LANGUAGES, baseLocale: DEFAULT_LANGUAGE, t });
   const sanitizeName = (value: string) => value.toLowerCase().replace(/[\s（）.]/g, '-').replace(/-+$/, '');
   const localizeNames = (path: readonly string[]) => {
@@ -110,8 +110,8 @@ const buildCommandsBody = (t: InteractionContext['t']): BotCommands => {
   return body;
 };
 
-const createRegistrar = (logger: LoggerContext['logger']) => createCommandRegistrar({
-  rest,
+export const createRegistrar = (logger: LoggerContext['logger']) => createCommandRegistrar({
+  rest: commandRegistrationRest,
   applicationId: env.DISCORD_CLIENT_ID,
   logger,
 });

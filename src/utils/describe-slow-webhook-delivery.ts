@@ -17,6 +17,11 @@ export interface WebhookDeliveryTiming extends AckTiming {
    * network hop or a slow handler.
    */
   signedAtSeconds?: number;
+  /**
+   * The request's CF-Ray header - its suffix is the Cloudflare data center (IATA code) that received
+   * the request from Discord, and the whole ID can be looked up in Cloudflare's logs.
+   */
+  cfRay?: string;
   interactionId?: string;
   /** Interaction snowflake's creation time, i.e. when Discord's 3s deadline started ticking */
   interactionCreatedAt?: number;
@@ -60,6 +65,7 @@ export function describeSlowWebhookDelivery(timing: WebhookDeliveryTiming): stri
     ackCallPhase,
     `received→finished ${ms(receivedAt, finishedAt)}`,
   ];
+  if (timing.cfRay) phases.push(`cf-ray=${timing.cfRay}`);
   const description = timing.interactionDescription ? ` (${timing.interactionDescription})` : '';
 
   return `Slow webhook delivery${description}, ${ackOutcome} ${totalMs}ms after creation: ${phases.join(', ')}`;

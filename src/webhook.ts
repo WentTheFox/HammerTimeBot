@@ -181,6 +181,7 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
       receivedAt: deliveryStartedAt.getTime(),
       finishedAt: NaN,
       signedAtSeconds: Number.isFinite(signatureTimestamp) ? signatureTimestamp : undefined,
+      cfRay: typeof req.headers['cf-ray'] === 'string' ? req.headers['cf-ray'] : undefined,
     };
     const durationMs = () => (timing.ackedAt ?? Date.now()) - deliveryStartedAt.getTime();
     const logIfSlow = () => {

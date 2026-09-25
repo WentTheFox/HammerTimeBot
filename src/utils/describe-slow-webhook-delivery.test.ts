@@ -67,6 +67,15 @@ describe('describeSlowWebhookDelivery', () => {
     })).toContain('ack call failed after 3895ms');
   });
 
+  it('includes the CF-Ray header when present', () => {
+    expect(describeSlowWebhookDelivery({
+      interactionCreatedAt: createdAt,
+      receivedAt: createdAt + 3000,
+      finishedAt: createdAt + 3500,
+      cfRay: '8c1a2b3c4d5e6f70-IAD',
+    })).toMatch(/, cf-ray=8c1a2b3c4d5e6f70-IAD$/);
+  });
+
   it('reports when no ack method was ever called', () => {
     expect(describeSlowWebhookDelivery({
       interactionCreatedAt: createdAt,

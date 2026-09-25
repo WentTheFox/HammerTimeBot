@@ -35,6 +35,13 @@ export const addTelemetryNoteToReply = async (
     return;
   }
 
+  // Nothing to fetch for an interaction that was never acknowledged (e.g. it expired before the
+  // handler's reply went through) - fetchReply() would just fail with Unknown Webhook (10015).
+  if (!interaction.replied && !interaction.deferred) {
+    logger.info('Interaction was never acknowledged, not adding telemetry note');
+    return;
+  }
+
   logger.debug('Adding telemetry note to reply…');
   let reply;
   try {

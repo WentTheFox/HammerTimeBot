@@ -1,11 +1,5 @@
 import { AckTiming } from './track-first-ack-timestamp.js';
 
-/**
- * Discord's hard deadline for acknowledging an interaction is 3s from its creation - anything past
- * this is already cutting it close, so it gets logged before it turns into an outright expiry.
- */
-export const SLOW_WEBHOOK_DELIVERY_THRESHOLD_MS = 2000;
-
 export interface WebhookDeliveryTiming extends AckTiming {
   /** When this server started handling the HTTP request */
   receivedAt: number;
@@ -33,8 +27,11 @@ const ms = (from: number | undefined, to: number | undefined): string =>
   from === undefined || to === undefined ? '?' : `${to - from}ms`;
 
 /**
- * Builds a phase-by-phase breakdown for a webhook delivery that was acknowledged too slowly (or not
- * at all), or returns null for one that was fine / isn't an interaction (Ping, signature rejection).
+ * Builds a phase-by-phase breakdown for a webhook delivery whose first ack call didn't succeed (the
+ * interaction expired, or Discord rejected the callback), or returns null for one that was
+ * acknowledged / isn't an interaction (Ping, signature rejection). A late but successful ack isn't
+ * reported: the creation timestamp is measured against Discord's clock, not the deadline Discord
+ * actually enforces, so acks well past 3s "after creation" routinely succeed and aren't a problem.
  *
  * The phases, in order: Discord creating the interaction → Discord sending it (signature
  * timestamp) → this server receiving it → the handler calling an ack method → that REST call to
@@ -45,9 +42,11 @@ export function describeSlowWebhookDelivery(timing: WebhookDeliveryTiming): stri
   const { interactionCreatedAt: createdAt, receivedAt, ackCalledAt, ackSettledAt, ackedAt, finishedAt } = timing;
   if (createdAt === undefined) return null;
 
+  const firstAckSucceeded = ackedAt !== undefined && ackSettledAt !== undefined && ackedAt <= ackSettledAt;
+  if (firstAckSucceeded) return null;
+
   const ackOutcome = ackedAt !== undefined ? 'acknowledged' : 'NOT acknowledged';
   const totalMs = (ackedAt ?? finishedAt) - createdAt;
-  if (ackedAt !== undefined && totalMs <= SLOW_WEBHOOK_DELIVERY_THRESHOLD_MS) return null;
 
   let ackCallPhase: string;
   if (ackCalledAt === undefined) {

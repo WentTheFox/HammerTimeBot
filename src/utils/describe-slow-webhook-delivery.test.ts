@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { describeSlowWebhookDelivery, SLOW_WEBHOOK_DELIVERY_THRESHOLD_MS } from './describe-slow-webhook-delivery.js';
+import { describeSlowWebhookDelivery } from './describe-slow-webhook-delivery.js';
 
 const createdAt = 1_790_000_000_000;
 
@@ -8,7 +8,7 @@ describe('describeSlowWebhookDelivery', () => {
     expect(describeSlowWebhookDelivery({ receivedAt: createdAt, finishedAt: createdAt + 60_000 })).toBeNull();
   });
 
-  it('returns null for an interaction acknowledged within the threshold', () => {
+  it('returns null for an interaction acknowledged quickly', () => {
     expect(describeSlowWebhookDelivery({
       interactionCreatedAt: createdAt,
       receivedAt: createdAt + 100,
@@ -20,16 +20,16 @@ describe('describeSlowWebhookDelivery', () => {
     })).toBeNull();
   });
 
-  it('flags an interaction acknowledged past the threshold', () => {
-    const ackedAt = createdAt + SLOW_WEBHOOK_DELIVERY_THRESHOLD_MS + 1;
+  it('returns null for an interaction acknowledged late, as long as the ack succeeded', () => {
     expect(describeSlowWebhookDelivery({
       interactionCreatedAt: createdAt,
-      receivedAt: createdAt + 100,
-      ackCalledAt: createdAt + 110,
-      ackSettledAt: ackedAt,
-      ackedAt,
-      finishedAt: ackedAt,
-    })).toContain('acknowledged 2001ms after creation');
+      signedAtSeconds: createdAt / 1000 + 2.515,
+      receivedAt: createdAt + 3611,
+      ackCalledAt: createdAt + 3694,
+      ackSettledAt: createdAt + 4050,
+      ackedAt: createdAt + 4050,
+      finishedAt: createdAt + 4051,
+    })).toBeNull();
   });
 
   it('breaks down a late delivery by Discord', () => {

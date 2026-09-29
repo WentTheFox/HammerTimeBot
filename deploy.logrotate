@@ -36,3 +36,33 @@
 	delaycompress
 	copytruncate
 }
+
+# nginx's access and error logs for the bot's vhost. They used to sit in the
+# system-wide /var/log/nginx, which the distro rotates for 52 days; here the
+# same retention as the webhook process applies. Their own directory, so it
+# can be group-writable for www-data (who writes them) without making the
+# pm2 directory above it insecure for logrotate.
+@WORKTREE@/logs/nginx/access.log {
+	su www-data www-data
+	daily
+	rotate 29
+	maxage 30
+	missingok
+	notifempty
+	compress
+	delaycompress
+	copytruncate
+}
+
+# Error log: no command data, so the Log Data section's 14 days applies.
+@WORKTREE@/logs/nginx/error.log {
+	su www-data www-data
+	daily
+	rotate 13
+	maxage 14
+	missingok
+	notifempty
+	compress
+	delaycompress
+	copytruncate
+}

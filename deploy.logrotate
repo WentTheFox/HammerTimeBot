@@ -1,0 +1,38 @@
+# Log retention for git-deploy-toolkit (installed on each deploy; see its
+# docs/logrotate.md).
+#
+# Retention follows the privacy policy this bot's Terms and Privacy.md points
+# to (the SledgeHammerTime site's legal page, lang/en/legal.php): "The Bot
+# records Command executions for debugging purposes ... This data is stored on
+# the Project server for up to 30 days". The webhook process's output is where
+# those records end up, so it is kept for at most 30 days.
+# With `daily`, `rotate 29` keeps today's file plus 29 rotated ones, so
+# nothing is older than 30 days. `maxage 30` is a second, independent cap.
+#
+# sync-commands.log (appended by deploy.conf) holds no per-user data; it is
+# kept for two weeks. Both are owned by the deploy user.
+
+@WORKTREE@/logs/pm2-webhook-out.log
+@WORKTREE@/logs/pm2-webhook-error.log {
+	su chisel chisel
+	daily
+	rotate 29
+	maxage 30
+	missingok
+	notifempty
+	compress
+	delaycompress
+	copytruncate
+}
+
+@WORKTREE@/sync-commands.log {
+	su chisel chisel
+	daily
+	rotate 13
+	maxage 14
+	missingok
+	notifempty
+	compress
+	delaycompress
+	copytruncate
+}

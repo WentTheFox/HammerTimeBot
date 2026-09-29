@@ -4,6 +4,9 @@
       "name": "HammerTimeBot:Webhook",
       "script": "build/src/webhook.js",
       "log_date_format": "YYYY-MM-DD HH:mm:ss Z",
+      "out_file": "logs/pm2-webhook-out.log",
+      "error_file": "logs/pm2-webhook-error.log",
+      "merge_logs": true,
       "source_map_support": true
     }
   ]

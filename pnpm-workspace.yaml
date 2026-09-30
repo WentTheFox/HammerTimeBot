@@ -2,9 +2,22 @@ minimumReleaseAge: 20160
 minimumReleaseAgeExclude:
   - '@went.tf/discord-bot-framework'
 
-# concurrently's lockfile entry kept shell-quote on 1.8.3 (GHSA: quote() newline escaping, fixed in 1.8.4)
+# Transitive dependencies held on versions with open Dependabot alerts by their parents' pinned/locked
+# ranges (e.g. discord.js pins undici exactly). Each override stays within the currently resolved major.
 overrides:
   shell-quote: '^1.8.4'
+  'undici@6': '^6.28.1'
+  'undici@7': '^7.29.1'
+  fast-uri: '^3.1.8'
+  'ws@7': '^7.5.11'
+  'ws@8': '^8.21.0'
+  systeminformation: '^5.31.7'
+  js-yaml: '^4.3.2'
+  ip-address: '^10.3.1'
+  form-data: '^2.5.6'
+  'brace-expansion@1': '^1.1.16'
+  'brace-expansion@5': '^5.0.11'
+  basic-ftp: '^5.3.1'
 
 allowBuilds:
   bufferutil: true

@@ -13,7 +13,6 @@ import {
 } from '@went.tf/discord-bot-framework/interactions';
 import { APIInteraction, InteractionType, MessageFlags } from 'discord-api-types/v10';
 import { RESTEvents } from '@discordjs/rest';
-import { ClientUser } from 'discord.js';
 import { env } from './env.js';
 import { initI18next } from './constants/locales.js';
 import { getEmojiIdMap } from './utils/get-emoji-id-map.js';
@@ -51,13 +50,7 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
   const context: InteractionHandlerContext = { i18next, emojiIdMap, commandIdMap, logger, isWebhookMode: true };
 
   logger.log('Creating webhook-only client');
-  const client = createWebhookOnlyClient({ token: env.DISCORD_BOT_TOKEN });
-  // Without a gateway READY, `client.user` stays null, and discord.js dereferences it while building a
-  // message that carries one of the bot's own reactions (`me: true`) - that crashed message context
-  // menu commands ("Cannot read properties of null (reading 'id')") on such messages.
-  // The constructor is `protected` in the typings only (same cast as the framework's interaction construction).
-  const ClientUserCtor = ClientUser as unknown as new (client: unknown, data: { id: string }) => ClientUser;
-  client.user = new ClientUserCtor(client, { id: env.DISCORD_CLIENT_ID });
+  const client = createWebhookOnlyClient({ token: env.DISCORD_BOT_TOKEN, applicationId: env.DISCORD_CLIENT_ID });
   // A rate-limit wait on the interaction-callback route would otherwise be invisible - it just shows
   // up as a slow reply()/respond(). Deliberately not logging `url`/`majorParameter`, which can carry
   // an interaction token.

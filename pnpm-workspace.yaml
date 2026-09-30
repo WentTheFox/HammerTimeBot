@@ -2,6 +2,10 @@ minimumReleaseAge: 20160
 minimumReleaseAgeExclude:
   - '@went.tf/discord-bot-framework'
 
+# concurrently's lockfile entry kept shell-quote on 1.8.3 (GHSA: quote() newline escaping, fixed in 1.8.4)
+overrides:
+  shell-quote: '^1.8.4'
+
 allowBuilds:
   bufferutil: true
   esbuild: true

@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  shell-quote: ^1.8.4
+
 importers:
 
   .:
@@ -16,7 +19,7 @@ importers:
         version: 2.6.1
       '@went.tf/discord-bot-framework':
         specifier: ^2.10.6
-        version: 2.10.6(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))
+        version: 2.10.6(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.8)(i18next@25.10.5(typescript@5.9.3))
       ajv:
         specifier: ^8.20.0
         version: 8.20.0
@@ -42,8 +45,8 @@ importers:
         specifier: ^25.8.6
         version: 25.10.5(typescript@5.9.3)
       i18next-fs-backend:
-        specifier: ^2.6.1
-        version: 2.6.1
+        specifier: ^2.6.8
+        version: 2.6.8
       js-levenshtein:
         specifier: ^1.1.6
         version: 1.1.6
@@ -1742,8 +1745,8 @@ packages:
     resolution: {integrity: sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==}
     engines: {node: '>= 14'}
 
-  i18next-fs-backend@2.6.1:
-    resolution: {integrity: sha512-eYWTX7QT7kJ0sZyCPK6x1q+R63zvNKv2D6UdbMf15A8vNb2ZLyw4NNNZxPFwXlIv/U+oUtg8SakW6ZgJZcoqHQ==}
+  i18next-fs-backend@2.6.8:
+    resolution: {integrity: sha512-6w7An//zrZgwOrniDl0E3jXTPQayMexFnksuHrBA3dTyFbpbmmkKfPoI6SgaKq5gH5jXMzqrQpzN10jlKj6n7Q==}
 
   i18next@25.10.5:
     resolution: {integrity: sha512-jRnF7eRNsdcnh7AASSgaU3lj/8lJZuHkfsouetnLEDH0xxE1vVi7qhiJ9RhdSPUyzg4ltb7P7aXsFlTk9sxL2w==}
@@ -2489,8 +2492,8 @@ packages:
   shell-escape@0.2.0:
     resolution: {integrity: sha512-uRRBT2MfEOyxuECseCZd28jC1AJ8hmqqneWQ4VWUTgCAFvb3wKU1jLqj6egC4Exrr88ogg3dp+zroH4wJuaXzw==}
 
-  shell-quote@1.8.3:
-    resolution: {integrity: sha512-ObmnIF4hXNg1BqhnHmgbDETF8dLPCggZWBjkQfhZpbszZnYur5DUljTcCHii5LC3J5E0yeO/1LIMyH+UvHQgyw==}
+  shell-quote@1.10.0:
+    resolution: {integrity: sha512-w1aiOKwKuRgtwAReIIj89puqg+I7GvX4IbLrvmhXbzQsj1+Zwi4VO3+fa6ZF91TWSjIxoEkKnMeHcLEODK5ZXA==}
     engines: {node: '>= 0.4'}
 
   shimmer@1.2.1:
@@ -3659,7 +3662,7 @@ snapshots:
 
   '@vladfrangu/async_event_emitter@2.4.7': {}
 
-  '@went.tf/discord-bot-framework@2.10.6(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.1)(i18next@25.10.5(typescript@5.9.3))':
+  '@went.tf/discord-bot-framework@2.10.6(@discordjs/rest@2.6.1)(discord-api-types@0.38.43)(discord.js@14.26.2(bufferutil@4.1.0)(utf-8-validate@6.0.6))(i18next-fs-backend@2.6.8)(i18next@25.10.5(typescript@5.9.3))':
     dependencies:
       '@discordjs/rest': 2.6.1
       ajv: 8.20.0
@@ -3673,7 +3676,7 @@ snapshots:
       zod: 4.4.3
     optionalDependencies:
       i18next: 25.10.5(typescript@5.9.3)
-      i18next-fs-backend: 2.6.1
+      i18next-fs-backend: 2.6.8
 
   acorn-jsx@5.3.2(acorn@8.16.0):
     dependencies:
@@ -3949,7 +3952,7 @@ snapshots:
     dependencies:
       chalk: 4.1.2
       rxjs: 7.8.2
-      shell-quote: 1.8.3
+      shell-quote: 1.10.0
       supports-color: 8.1.1
       tree-kill: 1.2.2
       yargs: 17.7.2
@@ -4612,7 +4615,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  i18next-fs-backend@2.6.1: {}
+  i18next-fs-backend@2.6.8: {}
 
   i18next@25.10.5(typescript@5.9.3):
     dependencies:
@@ -5481,7 +5484,7 @@ snapshots:
 
   shell-escape@0.2.0: {}
 
-  shell-quote@1.8.3: {}
+  shell-quote@1.10.0: {}
 
   shimmer@1.2.1: {}
 

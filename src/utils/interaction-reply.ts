@@ -12,6 +12,7 @@ import {
 import { getTranslationCompletionData } from '../../utils/helpers/crowdin-types.js';
 import { env } from '../env.js';
 import { LANGUAGES } from '../constants/language-config.js';
+import { TFunction } from 'i18next';
 import { filledBar } from 'string-progressbar';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
 
@@ -57,10 +58,18 @@ export const createCommandMention = (commandName: string, {
   return `\`/${translatedCommandName === tKey ? commandName : translatedCommandName}\``;
 };
 
+/** Primary language that a function created by `i18next.getFixedT()` translates into */
+const getTFunctionLanguage = (t: TFunction, fallback: string): string => {
+  const { lng, lngs } = t as TFunction & { lng?: string, lngs?: string[] };
+  return lng ?? lngs?.[0] ?? fallback;
+};
+
 export const addIncompleteTranslationsFooter = ({ t }: Pick<InteractionContext, 't'>, interaction: CommandInteraction | ChatInputCommandInteraction | ContextMenuCommandInteraction | MessageComponentInteraction, options: InteractionReplyOptionsWithComponents): InteractionReplyOptionsWithComponents => {
-  const translationCompletionData = getTranslationCompletionData(interaction.locale);
+  // The message may not be in the user's locale (e.g. public replies use the server's locale), so report on the language actually used
+  const language = getTFunctionLanguage(t, interaction.locale) as keyof typeof LANGUAGES;
+  const translationCompletionData = getTranslationCompletionData(language);
   if (typeof translationCompletionData?.approval === 'number' && translationCompletionData.approval < 100 && env.CROWDIN_PROJECT_IDENTIFIER) {
-    const crowdinLocale = LANGUAGES[interaction.locale].crowdinLocale ?? interaction.locale;
+    const crowdinLocale = LANGUAGES[language]?.crowdinLocale ?? language;
     options.components = [
       ...options.components,
       {

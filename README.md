@@ -33,7 +33,8 @@ One-time production server setup:
 3. `sudo nginx -t && sudo systemctl reload nginx`
 4. Set `DISCORD_PUBLIC_KEY` (the app's Ed25519 public key, from the Developer Portal),
    `WEBHOOK_PATH_SECRET` (a long random URL-safe token - see its doc comment in `src/env.ts` for how
-   to generate one), and optionally `WEBHOOK_PORT` (defaults to `3939`) in the server's `.env`.
+   to generate one), and optionally `WEBHOOK_PORT` (defaults to `3939`) and `WEBHOOK_HOST` (defaults to
+   `127.0.0.1`, so only the reverse proxy in front of it can reach the endpoint) in the server's `.env`.
 5. `pm2 start pm2.json` (or `pm2 restart pm2.json` if already running) to bring up
    `HammerTimeBot:Webhook`.
 6. Once confident locally/in staging, set the Interactions Endpoint URL to

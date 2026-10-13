@@ -12,6 +12,12 @@ export const env = defineEnv({
   /** Port the webhook HTTP Interactions endpoint (src/webhook.ts) listens on. */
   WEBHOOK_PORT: z.coerce.number().optional().default(3939),
   /**
+   * Address the webhook HTTP Interactions endpoint (src/webhook.ts) binds to. Loopback by default, so the
+   * reverse proxy in front of it is the only way in; without a host Node listens on every interface and the
+   * port is reachable from the internet directly, skipping the proxy's TLS and request rules.
+   */
+  WEBHOOK_HOST: z.string().min(1).optional().default('127.0.0.1'),
+  /**
    * Long random URL-safe token the webhook entrypoint (src/webhook.ts) requires as the request
    * path (e.g. `/<token>`), instead of serving interactions on `/`. Set this as the Interactions
    * Endpoint URL on the Discord developer portal (`https://<host>/<token>`). Purely obscurity, not

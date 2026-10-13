@@ -237,7 +237,7 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
       });
   });
 
-  server.listen(env.WEBHOOK_PORT, () => {
-    logger.log(`Listening on port ${env.WEBHOOK_PORT}`);
+  server.listen(env.WEBHOOK_PORT, env.WEBHOOK_HOST, () => {
+    logger.log(`Listening on ${env.WEBHOOK_HOST}:${env.WEBHOOK_PORT}`);
   });
 })();

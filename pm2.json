@@ -7,7 +7,10 @@
       "out_file": "logs/pm2-webhook-out.log",
       "error_file": "logs/pm2-webhook-error.log",
       "merge_logs": true,
-      "source_map_support": true
+      "source_map_support": true,
+      "env": {
+        "NODE_OPTIONS": "--use-openssl-ca"
+      }
     }
   ]
 }

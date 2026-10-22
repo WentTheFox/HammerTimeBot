@@ -1077,6 +1077,16 @@
               }
             }
           },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
           "503": {
             "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
             "content": {
@@ -1146,6 +1156,16 @@
           },
           "403": {
             "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1231,6 +1251,16 @@
               }
             }
           },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
           "503": {
             "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
             "content": {
@@ -1300,6 +1330,16 @@
           },
           "403": {
             "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1385,6 +1425,16 @@
               }
             }
           },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
           "503": {
             "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
             "content": {
@@ -1454,6 +1504,16 @@
           },
           "403": {
             "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1539,6 +1599,16 @@
               }
             }
           },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
           "503": {
             "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
             "content": {
@@ -1608,6 +1678,16 @@
           },
           "403": {
             "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1693,6 +1773,16 @@
               }
             }
           },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
           "503": {
             "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
             "content": {
@@ -1742,6 +1832,16 @@
           },
           "403": {
             "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1825,6 +1925,16 @@
               }
             }
           },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
           "503": {
             "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
             "content": {
@@ -1874,6 +1984,16 @@
           },
           "403": {
             "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.",
             "content": {
               "application/json": {
                 "schema": {

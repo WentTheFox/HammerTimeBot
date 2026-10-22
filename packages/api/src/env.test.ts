@@ -5,7 +5,30 @@ describe('loadEnv', () => {
   const valid = { LARAVEL_URL: 'https://hammertime.cyou', INTERNAL_API_SECRET: 'a-long-enough-secret' };
 
   it('applies the defaults', () => {
-    expect(loadEnv(valid)).toEqual({ ...valid, HOST: '127.0.0.1', PORT: 3010, KEY_CACHE_TTL_SECONDS: 30 });
+    expect(loadEnv(valid)).toEqual({
+      ...valid,
+      HOST: '127.0.0.1',
+      PORT: 3010,
+      KEY_CACHE_TTL_SECONDS: 30,
+      RATE_LIMIT_PER_MINUTE: 60,
+      RATE_LIMIT_BURST: undefined,
+      AUTH_FAILURES_PER_MINUTE: 20,
+      CLIENT_IP_HEADER: undefined,
+    });
+  });
+
+  it('reads the rate limits', () => {
+    expect(loadEnv({ ...valid, RATE_LIMIT_PER_MINUTE: '120', RATE_LIMIT_BURST: '10', AUTH_FAILURES_PER_MINUTE: '5', CLIENT_IP_HEADER: 'X-Real-IP' }))
+      .toMatchObject({ RATE_LIMIT_PER_MINUTE: 120, RATE_LIMIT_BURST: 10, AUTH_FAILURES_PER_MINUTE: 5, CLIENT_IP_HEADER: 'X-Real-IP' });
+  });
+
+  it('can turn the rate limits off, and treats an empty client address header as not set', () => {
+    expect(loadEnv({ ...valid, RATE_LIMIT_PER_MINUTE: '0', AUTH_FAILURES_PER_MINUTE: '0', CLIENT_IP_HEADER: '' }))
+      .toMatchObject({ RATE_LIMIT_PER_MINUTE: 0, AUTH_FAILURES_PER_MINUTE: 0, CLIENT_IP_HEADER: undefined });
+  });
+
+  it('rejects a burst that is not at least one', () => {
+    expect(() => loadEnv({ ...valid, RATE_LIMIT_BURST: '0' })).toThrow(/RATE_LIMIT_BURST/);
   });
 
   it('can turn the key cache off', () => {

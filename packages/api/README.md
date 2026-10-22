@@ -28,6 +28,21 @@ An MCP client is configured with the URL of `/mcp` and the header, for example:
 { "mcpServers": { "hammertime": { "type": "http", "url": "https://<host>/mcp", "headers": { "Authorization": "Bearer htk_..." } } } }
 ```
 
+## Rate limits
+
+Each key may make `RATE_LIMIT_PER_MINUTE` requests (60) on average, with a burst of half of that, across the REST endpoints
+and `/mcp` together. The bot's service key is limited per Discord account it acts for, so one noisy user cannot use up what
+the others get. Every response of an authenticated request carries `RateLimit-Limit`, `RateLimit-Remaining` and
+`RateLimit-Reset`, and a refused one is a `429` with `Retry-After` (seconds). `/health` and the documentation are not limited.
+
+A client address that fails to authenticate `AUTH_FAILURES_PER_MINUTE` times (20) is turned away with a `429` until it has waited,
+before anything is looked up, so a flood of made-up keys does not each cost the Laravel app a lookup. Even a good key from that
+address waits, which can catch innocent users behind a shared address, so keep the number generous.
+
+Behind a reverse proxy every client has the proxy's address, so they would all count as one. Set `CLIENT_IP_HEADER` to a header
+the proxy sets to the client's address **and overwrites** (nginx: `proxy_set_header X-Real-IP $remote_addr;`), otherwise anyone
+could pick the address they are counted under. The limits are kept in memory, per process, and nothing runs in the background.
+
 ## Where the data lives
 
 Nothing is stored here. The Laravel app (SledgeHammerTime) owns keys, settings and telemetry, and this service talks to its

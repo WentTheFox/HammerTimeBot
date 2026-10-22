@@ -1,9 +1,11 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
-import { authenticate, errorBody, ResolvedKey } from './auth.js';
+import { errorBody, ResolvedKey } from './auth.js';
 import { Backend, BackendError, Scope } from './backend.js';
 import { commandNames, commandRequestSchemas, commandSummaries } from './generated/commands.js';
+import { guard } from './guard.js';
+import type { RateLimits } from './rate-limit.js';
 import { runCommand } from './run-command.js';
 import type { ErrorBody, TimestampBody } from './schemas.js';
 import { SettingsPatch, SettingsPatchSchema } from './settings-schema.js';
@@ -11,6 +13,7 @@ import { API_VERSION } from './version.js';
 
 export interface McpDependencies {
   backend: Backend;
+  limits: RateLimits;
   /** Injectable for tests */
   now?: () => number;
   telemetryTimeoutMs?: number;
@@ -116,18 +119,30 @@ const createServer = (key: ResolvedKey, { backend, now = Date.now, telemetryTime
  * The MCP endpoint (Streamable HTTP), with the same API keys as the REST endpoints. A key acts as the one Discord
  * account it was created for, so the bot's service key, which names the account per request, is not accepted here.
  */
-export const createMcpHandler = (dependencies: McpDependencies) => async (request: Request): Promise<Response> => {
-  const authentication = await authenticate(dependencies.backend, request.headers, { allowServiceKeys: false });
-  if (!authentication.ok) {
-    return Response.json(authentication.body, { status: authentication.status, headers: authentication.headers });
+export const createMcpHandler = (dependencies: McpDependencies) => async (request: Request, socketAddress?: string): Promise<Response> => {
+  const guarded = await guard({
+    backend: dependencies.backend,
+    limits: dependencies.limits,
+    request,
+    socketAddress,
+    allowServiceKeys: false,
+  });
+  if (!guarded.ok) {
+    return Response.json(guarded.body, { status: guarded.status, headers: guarded.headers });
   }
 
-  const server = createServer(authentication.key, dependencies);
+  const server = createServer(guarded.key, dependencies);
   // Stateless, and answers with plain JSON: nothing is kept between requests, so there is nothing to clean up later
   const transport = new WebStandardStreamableHTTPServerTransport({ enableJsonResponse: true });
   await server.connect(transport);
   try {
-    return await transport.handleRequest(request);
+    const response = await transport.handleRequest(request);
+    // A new response, the transport's headers are not necessarily ours to change
+    const headers = new Headers(response.headers);
+    for (const [name, value] of Object.entries(guarded.headers)) {
+      headers.set(name, value);
+    }
+    return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
   } finally {
     await transport.close();
     await server.close();

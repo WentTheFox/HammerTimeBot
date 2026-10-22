@@ -1,9 +1,12 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
-import type { MiddlewareHandler } from 'hono';
-import { authenticate, errorBody, ResolvedKey } from './auth.js';
+import type { Context, MiddlewareHandler } from 'hono';
+import { getConnInfo } from '@hono/node-server/conninfo';
+import { errorBody, ResolvedKey } from './auth.js';
 import { Backend, BackendError, RequestSource, Scope } from './backend.js';
+import { guard } from './guard.js';
 import { createMcpHandler } from './mcp.js';
+import { createRateLimits, RateLimits } from './rate-limit.js';
 import { commandNames, commandRequestSchemas, commandSummaries } from './generated/commands.js';
 import { runCommand } from './run-command.js';
 import { ErrorSchema, HealthSchema, KeyInfoSchema, TimestampSchema } from './schemas.js';
@@ -15,6 +18,8 @@ export interface AppDependencies {
   /** Injectable for tests */
   now?: () => number;
   telemetryTimeoutMs?: number;
+  /** Defaults to the standard limits */
+  limits?: RateLimits;
 }
 
 export interface AppEnv {
@@ -34,10 +39,11 @@ const json = <T extends z.ZodType>(schema: T, description: string) => ({
 const authResponses = {
   401: json(ErrorSchema, 'The API key is missing, unknown, revoked or expired'),
   403: json(ErrorSchema, 'The API key does not have the scope this endpoint needs'),
+  429: json(ErrorSchema, 'Too many requests for this key (or too many failed attempts from this address), wait the number of seconds in Retry-After. Every response carries RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset.'),
   503: json(ErrorSchema, 'The service is read-only while it is being deployed, retry after the number of seconds in Retry-After'),
 };
 
-export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000 }: AppDependencies) => {
+export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000, limits = createRateLimits({ now }) }: AppDependencies) => {
   const app = new OpenAPIHono<AppEnv>({
     defaultHook: (result, c) => {
       if (!result.success) {
@@ -71,18 +77,30 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000 }
     return c.json(errorBody('internal_error', 'Something went wrong'), 500);
   });
 
+  /** The address of the connection, which is only known when running as a server */
+  const socketAddress = (c: Context): string | undefined => {
+    try {
+      return getConnInfo(c).remote.address;
+    } catch {
+      return undefined;
+    }
+  };
+
   const requireScope = (scope: (method: string) => Scope): MiddlewareHandler<AppEnv> => async (c, next) => {
-    const authentication = await authenticate(backend, c.req.raw.headers);
-    if (!authentication.ok) {
-      return c.json(authentication.body, authentication.status, authentication.headers);
+    const guarded = await guard({ backend, limits, request: c.req.raw, socketAddress: socketAddress(c) });
+    if (!guarded.ok) {
+      return c.json(guarded.body, guarded.status, guarded.headers);
+    }
+    for (const [name, value] of Object.entries(guarded.headers)) {
+      c.header(name, value);
     }
 
     const needed = scope(c.req.method);
-    if (!authentication.key.scopes.includes(needed)) {
+    if (!guarded.key.scopes.includes(needed)) {
       return c.json(errorBody('forbidden', `The API key needs the ${needed} scope`), 403);
     }
 
-    c.set('key', authentication.key);
+    c.set('key', guarded.key);
     await next();
   };
 
@@ -208,8 +226,8 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000 }
   app.get('/', swaggerUI({ url: '/generated/api-docs.json' }));
 
   // The MCP endpoint is not REST, so it is not part of the OpenAPI document
-  const mcp = createMcpHandler({ backend, now, telemetryTimeoutMs });
-  app.all('/mcp', (c) => mcp(c.req.raw));
+  const mcp = createMcpHandler({ backend, limits, now, telemetryTimeoutMs });
+  app.all('/mcp', (c) => mcp(c.req.raw, socketAddress(c)));
 
   return app;
 };

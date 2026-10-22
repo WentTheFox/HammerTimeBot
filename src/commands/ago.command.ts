@@ -1,39 +1,27 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
-import { adjustDate, TimeMap , atLeastOneNonZeroKey } from '@went.tf/hammertime-core';
+import { isCommandError, resolveAgo } from '@went.tf/hammertime-core';
 import { AgoCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
-import { MessageFlags } from 'discord-api-types/v10';
-import { interactionReply } from '../utils/interaction-reply.js';
-import { TZDate } from '@date-fns/tz';
+import { replyWithCommandError } from '../utils/command-error.js';
 
 export const agoCommand: BotChatInputCommand = {
   name: 'ago',
   async handle(interaction, context) {
     const settings = await context.getSettings();
-    const { t } = context;
-    const options: TimeMap = {
-      years: interaction.options.getInteger(AgoCommandOptionName.YEARS_AGO),
-      months: interaction.options.getInteger(AgoCommandOptionName.MONTHS_AGO),
-      days: interaction.options.getInteger(AgoCommandOptionName.DAYS_AGO),
-      hours: interaction.options.getInteger(AgoCommandOptionName.HOURS_AGO),
-      minutes: interaction.options.getInteger(AgoCommandOptionName.MINUTES_AGO),
-      seconds: interaction.options.getNumber(AgoCommandOptionName.SECONDS_AGO),
-    };
-
-    if (!atLeastOneNonZeroKey(options)) {
-      await interactionReply(context, interaction, {
-        content: t('commands.global.responses.noComponentsCurrentTime', {
-          atCommand: 'at',
-        }),
-        flags: MessageFlags.Ephemeral,
-      });
+    const { options } = interaction;
+    const result = resolveAgo({
+      years: options.getInteger(AgoCommandOptionName.YEARS_AGO),
+      months: options.getInteger(AgoCommandOptionName.MONTHS_AGO),
+      days: options.getInteger(AgoCommandOptionName.DAYS_AGO),
+      hours: options.getInteger(AgoCommandOptionName.HOURS_AGO),
+      minutes: options.getInteger(AgoCommandOptionName.MINUTES_AGO),
+      seconds: options.getNumber(AgoCommandOptionName.SECONDS_AGO),
+    });
+    if (isCommandError(result)) {
+      await replyWithCommandError(context, interaction, settings, result);
       return;
     }
 
-    // Fixed value for relative timestamps
-    const timezone = 'UTC';
-    const localDate = adjustDate(options, 'subtract', TZDate.tz(timezone));
-
-    await replyWithSyntax({ localDate, interaction, context, timezone, settings });
+    await replyWithSyntax({ localDate: result.date, interaction, context, settings, timezone: result.timezone });
   },
 };

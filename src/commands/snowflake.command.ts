@@ -1,33 +1,19 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { SnowflakeCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
-import { snowflakeToUnix , SnowflakeError } from '@went.tf/hammertime-core';
-import { MessageFlags } from 'discord-api-types/v10';
-import { interactionReply } from '../utils/interaction-reply.js';
-import { TZDate } from '@date-fns/tz';
+import { isCommandError, resolveSnowflake } from '@went.tf/hammertime-core';
+import { replyWithCommandError } from '../utils/command-error.js';
 
 export const snowflakeCommand: BotChatInputCommand = {
   name: 'snowflake',
   async handle(interaction, context) {
     const settings = await context.getSettings();
-    const { t } = context;
-    const snowflake = interaction.options.getString(SnowflakeCommandOptionName.VALUE, true);
-    let unixValue;
-    try {
-      unixValue = snowflakeToUnix(snowflake);
-    } catch (e) {
-      if (e instanceof SnowflakeError) {
-        await interactionReply(context, interaction, {
-          content: t('commands.snowflake.responses.invalidSnowflake'),
-          flags: MessageFlags.Ephemeral,
-        });
-        return;
-      }
-
-      throw e;
+    const result = resolveSnowflake({ value: interaction.options.getString(SnowflakeCommandOptionName.VALUE, true) });
+    if (isCommandError(result)) {
+      await replyWithCommandError(context, interaction, settings, result);
+      return;
     }
-    const localDate = TZDate.tz('UTC', unixValue * 1e3);
 
-    await replyWithSyntax({ localDate, interaction, context, settings, timezone: undefined });
+    await replyWithSyntax({ localDate: result.date, interaction, context, settings, timezone: result.timezone });
   },
 };

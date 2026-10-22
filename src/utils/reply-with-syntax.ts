@@ -1,4 +1,4 @@
-import { MessageTimestamp , formattedResponse, supportedFormats , getExactTimePrefix } from '@went.tf/hammertime-core';
+import { isCommandError, renderTimestamp } from '@went.tf/hammertime-core';
 import {
   ChatInputCommandInteraction,
   ComponentType,
@@ -16,7 +16,6 @@ import { InteractionContext } from '../types/bot-interaction.js';
 import { addIncompleteTranslationsFooter, createCommandMention } from './interaction-reply.js';
 import { getTelemetryPlaceholder } from './add-telemetry-note-to-reply.js';
 import { TZDate } from '@date-fns/tz';
-import { isValid } from 'date-fns';
 
 type HandledInteractions = ChatInputCommandInteraction | ContextMenuCommandInteraction;
 
@@ -69,25 +68,20 @@ export const getSyntaxReplyOptions = async ({
   usingAtHoursOnly = false,
 }: SyntaxReplyOptions): Promise<InteractionReplyOptions> => {
   const { t, emojiIdMap } = context;
-  if (!isValid(localDate)) {
+  const syntaxInteraction = mapCommandInteractionToSyntaxInteraction(interaction, settings);
+  const rendered = renderTimestamp(localDate, timezone, {
+    columns: syntaxInteraction.columns,
+    format: syntaxInteraction.format,
+    header: syntaxInteraction.header,
+  }, settings);
+  if (isCommandError(rendered)) {
     return {
-      content: t('commands.global.responses.invalidDate'),
+      content: t(rendered.error),
       flags: MessageFlags.Ephemeral,
     };
   }
 
-  const syntaxInteraction = mapCommandInteractionToSyntaxInteraction(interaction, settings);
-
-  const ts = new MessageTimestamp(localDate);
-  const formatInput = MessageTimestamp.isValidFormat(syntaxInteraction.format) ? syntaxInteraction.format : null;
-  const formats = formatInput ? [formatInput] : supportedFormats;
-  const singleFormatReply = formatInput && settings?.formatMinimalReply;
-
-  const columns = singleFormatReply ? ResponseColumnChoices.PREVIEW_ONLY : (syntaxInteraction.columns ?? ResponseColumnChoices.BOTH);
-  const addHeader = !(singleFormatReply) && (syntaxInteraction.header ?? true);
-  const header = addHeader && getExactTimePrefix(localDate, timezone);
-  const table = formattedResponse(ts, formats, columns as ResponseColumnChoices, !formatInput && (settings?.boldPreview ?? null));
-  const content: string | undefined = `${header ? `${header}\n` : ''}${table}`;
+  const { content, singleFormat: formatInput, minimalReply: singleFormatReply } = rendered;
   const shouldReplyBeEphemeral = syntaxInteraction.ephemeral ?? EPHEMERAL_OPTION_DEFAULT_VALUE;
 
   if (singleFormatReply) {

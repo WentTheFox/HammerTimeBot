@@ -1,12 +1,9 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { GlobalCommandOptionName, IsoCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
-import { MessageFlags } from 'discord-api-types/v10';
-import { findTimezoneOptionValue, handleTimezoneAutocomplete } from '../utils/messaging.js';
-import { interactionReply } from '../utils/interaction-reply.js';
-import { TZDate } from '@date-fns/tz';
-import { isValid } from 'date-fns';
-import { TimezoneError } from '@went.tf/hammertime-core';
+import { handleTimezoneAutocomplete } from '../utils/messaging.js';
+import { isCommandError, resolveIso } from '@went.tf/hammertime-core';
+import { replyWithCommandError } from '../utils/command-error.js';
 
 export const isoCommand: BotChatInputCommand = {
   name: 'iso',
@@ -15,22 +12,15 @@ export const isoCommand: BotChatInputCommand = {
   },
   async handle(interaction, context) {
     const settings = await context.getSettings();
-    const { t } = context;
-    const value = interaction.options.getString(IsoCommandOptionName.VALUE, true);
-    const timezone = await findTimezoneOptionValue(context, interaction, settings);
-    if (timezone instanceof TimezoneError) {
+    const result = resolveIso({
+      value: interaction.options.getString(IsoCommandOptionName.VALUE, true),
+      timezone: interaction.options.getString(GlobalCommandOptionName.TIMEZONE),
+    }, settings);
+    if (isCommandError(result)) {
+      await replyWithCommandError(context, interaction, settings, result);
       return;
     }
 
-    const localDate = TZDate.tz(timezone, value);
-    if (!isValid(localDate)) {
-      await interactionReply(context, interaction, {
-        content: t('commands.iso.responses.invalidIsoFormat'),
-        flags: MessageFlags.Ephemeral,
-      });
-      return;
-    }
-
-    await replyWithSyntax({ localDate, interaction, context, settings, timezone });
+    await replyWithSyntax({ localDate: result.date, interaction, context, settings, timezone: result.timezone });
   },
 };

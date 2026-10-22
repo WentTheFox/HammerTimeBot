@@ -4,6 +4,8 @@ export * from './get-exact-time-prefix.js';
 export * from './hour-parameters.js';
 export * from './message-timestamp.js';
 export * from './numbers.js';
+export * from './render.js';
+export * from './resolvers.js';
 export * from './settings.js';
 export * from './snowflake-error.js';
 export { default as snowflakeToUnix } from './snowflake.js';

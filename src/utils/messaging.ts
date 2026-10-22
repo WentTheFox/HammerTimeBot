@@ -1,4 +1,3 @@
-import { MessageFlags } from 'discord-api-types/v10';
 import {
   ApplicationCommandOptionType,
   AutocompleteInteraction,
@@ -22,10 +21,8 @@ import {
   InteractionContext,
   InteractionHandlerContext,
   LoggerContext,
-  UserInteractionContext,
 } from '../types/bot-interaction.js';
 import { AtCommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
-import { interactionReply } from './interaction-reply.js';
 import { SettingsValue } from './settings.js';
 
 type UserFriendCode = `@${string}` | `${string}#${string}`;
@@ -108,30 +105,6 @@ export const getBareNumberFormatter = (interaction: Pick<CommandInteraction, 'lo
     numberFormatterCache[interaction.locale] = numberFormatter;
   }
   return numberFormatter;
-};
-
-/**
- * Normally this is able to always return some kind of value, so if we get null the code flow should be terminated
- */
-export const findTimezoneOptionValue = async (context: UserInteractionContext, interaction: ChatInputCommandInteraction, settings: SettingsValue): Promise<string | TimezoneError> => {
-  // When option is not provided, fall back to user's timezone setting
-  const timezoneInput = interaction.options.getString(GlobalCommandOptionName.TIMEZONE) ?? settings.timezone;
-  let timezone = 'GMT';
-  if (timezoneInput) {
-    try {
-      timezone = findTimezone(timezoneInput)[0];
-    } catch (e) {
-      if (!(e instanceof TimezoneError)) {
-        throw e;
-      }
-      await interactionReply(context, interaction, {
-        content: getUnsupportedTimezoneErrorMessage(timezoneInput, context, settings),
-        flags: MessageFlags.Ephemeral,
-      });
-      return e;
-    }
-  }
-  return timezone;
 };
 
 export const getUnsupportedTimezoneErrorMessage = (timezone: string, { t }: Pick<InteractionContext, 't'>, settings: SettingsValue): string => {

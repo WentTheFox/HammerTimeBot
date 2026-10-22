@@ -1,45 +1,28 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
-import { adjustDate, TimeMap , atLeastOneNonZeroKey } from '@went.tf/hammertime-core';
+import { isCommandError, resolveAdd } from '@went.tf/hammertime-core';
 import { AddCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
-import { MessageFlags } from 'discord-api-types/v10';
-import { interactionReply } from '../utils/interaction-reply.js';
-import { TZDate } from '@date-fns/tz';
+import { replyWithCommandError } from '../utils/command-error.js';
 
 export const addCommand: BotChatInputCommand = {
   name: 'add',
   async handle(interaction, context) {
     const settings = await context.getSettings();
-    const { t } = context;
-    const to = interaction.options.getNumber(AddCommandOptionName.TO, true);
-    const now = TZDate.tz('UTC', to * 1e3);
-    const options: TimeMap = {
-      years: interaction.options.getInteger(AddCommandOptionName.ADD_YEARS),
-      months: interaction.options.getInteger(AddCommandOptionName.ADD_MONTHS),
-      days: interaction.options.getInteger(AddCommandOptionName.ADD_DAYS),
-      hours: interaction.options.getInteger(AddCommandOptionName.ADD_HOURS),
-      minutes: interaction.options.getInteger(AddCommandOptionName.ADD_MINUTES),
-      seconds: interaction.options.getNumber(AddCommandOptionName.ADD_SECONDS),
-    };
-
-    if (!atLeastOneNonZeroKey(options)) {
-      await interactionReply(context, interaction, {
-        content: t('commands.global.responses.noComponentsUnix', {
-          unixCommand: 'unix',
-        }),
-        flags: MessageFlags.Ephemeral,
-      });
+    const { options } = interaction;
+    const result = resolveAdd({
+      to: options.getNumber(AddCommandOptionName.TO, true),
+      years: options.getInteger(AddCommandOptionName.ADD_YEARS),
+      months: options.getInteger(AddCommandOptionName.ADD_MONTHS),
+      days: options.getInteger(AddCommandOptionName.ADD_DAYS),
+      hours: options.getInteger(AddCommandOptionName.ADD_HOURS),
+      minutes: options.getInteger(AddCommandOptionName.ADD_MINUTES),
+      seconds: options.getNumber(AddCommandOptionName.ADD_SECONDS),
+    });
+    if (isCommandError(result)) {
+      await replyWithCommandError(context, interaction, settings, result);
       return;
     }
 
-    const localDate = adjustDate(options, 'add', now);
-
-    await replyWithSyntax({
-      localDate,
-      interaction,
-      context,
-      settings,
-      timezone: undefined,
-    });
+    await replyWithSyntax({ localDate: result.date, interaction, context, settings, timezone: result.timezone });
   },
 };

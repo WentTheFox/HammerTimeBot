@@ -1,19 +1,9 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
-import {
-  constrain,
-  getGmtTimezoneValue,
-  gmtZoneRegex,
-  isHourParameterError,
-  processMixedHourParameters,
-  TimezoneError,
-} from '@went.tf/hammertime-core';
+import { isCommandError, resolveAt } from '@went.tf/hammertime-core';
 import { AtCommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
-import { MessageFlags } from 'discord-api-types/v10';
-import { findTimezoneOptionValue, handleHourAutocomplete, handleTimezoneAutocomplete } from '../utils/messaging.js';
-import { interactionReply } from '../utils/interaction-reply.js';
-import { TZDate } from '@date-fns/tz';
-import { setDate, setHours, setMilliseconds, setMinutes, setMonth, setSeconds, setYear } from 'date-fns';
+import { handleHourAutocomplete, handleTimezoneAutocomplete } from '../utils/messaging.js';
+import { replyWithCommandError } from '../utils/command-error.js';
 
 export const atCommand: BotChatInputCommand = {
   name: 'at',
@@ -23,59 +13,31 @@ export const atCommand: BotChatInputCommand = {
   },
   async handle(interaction, context) {
     const settings = await context.getSettings();
-    const { t } = context;
-    const year = interaction.options.getInteger(AtCommandOptionName.YEAR);
-    const month = interaction.options.getInteger(AtCommandOptionName.MONTH);
-    const date = interaction.options.getInteger(AtCommandOptionName.DATE);
-    const hourStr = interaction.options.getString(AtCommandOptionName.HOUR);
-    const hour12 = interaction.options.getInteger(AtCommandOptionName.HOUR12);
-    const minute = interaction.options.getInteger(AtCommandOptionName.MINUTE) ?? settings.defaultAtMinute;
-    const second = interaction.options.getNumber(AtCommandOptionName.SECOND) ?? settings.defaultAtSecond;
-    const am = interaction.options.getBoolean(AtCommandOptionName.AM);
-    const pm = interaction.options.getBoolean(AtCommandOptionName.PM);
-
-    const hour = processMixedHourParameters({ settings, hourStr, hour12, am, pm });
-    if (isHourParameterError(hour)) {
-      await interactionReply(context, interaction, {
-        content: t(hour.error),
-        flags: MessageFlags.Ephemeral,
-      });
+    const { options } = interaction;
+    const result = resolveAt({
+      year: options.getInteger(AtCommandOptionName.YEAR),
+      month: options.getInteger(AtCommandOptionName.MONTH),
+      day: options.getInteger(AtCommandOptionName.DATE),
+      hour: options.getString(AtCommandOptionName.HOUR),
+      hour12: options.getInteger(AtCommandOptionName.HOUR12),
+      minute: options.getInteger(AtCommandOptionName.MINUTE),
+      second: options.getNumber(AtCommandOptionName.SECOND),
+      am: options.getBoolean(AtCommandOptionName.AM),
+      pm: options.getBoolean(AtCommandOptionName.PM),
+      timezone: options.getString(GlobalCommandOptionName.TIMEZONE),
+    }, settings);
+    if (isCommandError(result)) {
+      await replyWithCommandError(context, interaction, settings, result);
       return;
     }
 
-    const timezone = await findTimezoneOptionValue(context, interaction, settings);
-    if (timezone instanceof TimezoneError) {
-      return;
-    }
-
-    let localDate: TZDate;
-    try {
-      if (gmtZoneRegex.test(timezone)) {
-        const utcOffset = getGmtTimezoneValue(timezone, 0);
-        localDate = TZDate.tz(utcOffset.toString());
-      } else {
-        localDate = TZDate.tz(timezone);
-      }
-      localDate = setMilliseconds(localDate, 0);
-      if (year !== null) localDate = setYear(localDate, constrain(year, 0, 275759));
-      if (month !== null) localDate = setMonth(localDate, constrain(month - 1, 0, 11));
-      if (date !== null) localDate = setDate(localDate, constrain(date, 1, 31));
-      if (hour !== null) localDate = setHours(localDate, constrain(hour, 0, 23));
-      if (minute !== null) localDate = setMinutes(localDate, constrain(minute, 0, 59));
-      if (second !== null) localDate = setSeconds(localDate, constrain(second, 0, 59));
-    } catch (e) {
-      if (e instanceof RangeError && e.message === 'Invalid date') {
-        await interactionReply(context, interaction, {
-          content: t('commands.global.responses.invalidDate'),
-          flags: MessageFlags.Ephemeral,
-        });
-        return;
-      }
-
-      throw e;
-    }
-
-    const usingAtHoursOnly = (hourStr !== null && !/[ap]m$/.test(hourStr)) && am == null && pm === null;
-    await replyWithSyntax({ localDate, interaction, context, timezone, settings, usingAtHoursOnly });
+    await replyWithSyntax({
+      localDate: result.date,
+      interaction,
+      context,
+      timezone: result.timezone,
+      settings,
+      usingAtHoursOnly: result.usingAtHoursOnly,
+    });
   },
 };

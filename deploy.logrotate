@@ -69,3 +69,28 @@
 	delaycompress
 	copytruncate
 }
+
+# nginx's logs for the API's vhost (packages/api/nginx/api.hammertime.cyou.conf): the same retention as the bot's.
+@WORKTREE@/logs/nginx/api-access.log {
+	su www-data www-data
+	daily
+	rotate 29
+	maxage 30
+	missingok
+	notifempty
+	compress
+	delaycompress
+	copytruncate
+}
+
+@WORKTREE@/logs/nginx/api-error.log {
+	su www-data www-data
+	daily
+	rotate 13
+	maxage 14
+	missingok
+	notifempty
+	compress
+	delaycompress
+	copytruncate
+}

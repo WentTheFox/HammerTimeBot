@@ -80,8 +80,8 @@ node --env-file=.env.api packages/api/dist/src/server.js
 ```
 
 On the server pm2 runs it (`HammerTimeBot:Api` in `pm2.json`), but only when `.env.api` exists, see `deploy.conf`. Deploy the
-Laravel app first, since this service calls its internal endpoints. A reverse proxy has to put it on a hostname, it
-listens on `127.0.0.1:3010`.
+Laravel app first, since this service calls its internal endpoints. It listens on `127.0.0.1:3010` only, so nginx has to proxy it
+to a hostname: `nginx/api.hammertime.cyou.conf` is the vhost, with the one-time setup in its header.
 
 ## Tests
 

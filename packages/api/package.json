@@ -1,0 +1,33 @@
+{
+  "name": "@went.tf/hammertime-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Public REST API and MCP server for HammerTime",
+  "author": "WentTheFox <WentTheFox@protonmail.com> (https://github.com/WentTheFox)",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "generate": "tsx scripts/generate.ts",
+    "openapi:sync": "tsx scripts/openapi-sync.ts",
+    "build": "tsc -p tsconfig.json",
+    "build:clean": "rimraf dist",
+    "start": "node --enable-source-maps ./dist/src/server.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.3",
+    "@hono/swagger-ui": "^0.6.1",
+    "@hono/zod-openapi": "^1.6.3",
+    "@went.tf/hammertime-core": "workspace:*",
+    "hono": "^4.13.13",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.13",
+    "@went.tf/discord-bot-framework": "^2.10.6",
+    "ajv": "^8.20.0",
+    "tsx": "^4.20.6",
+    "typescript": "~5.9.3",
+    "vitest": "^4.0.12"
+  }
+}

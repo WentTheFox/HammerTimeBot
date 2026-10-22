@@ -1,0 +1,1922 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "HammerTime API",
+    "version": "0.1",
+    "description": "Generate Discord timestamps and manage the settings of the HammerTime bot. Every timestamp endpoint is the bot command of the same name."
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Current Host"
+    }
+  ],
+  "tags": [
+    {
+      "name": "timestamps",
+      "description": "Bot commands as endpoints"
+    },
+    {
+      "name": "settings",
+      "description": "The bot settings of the account"
+    },
+    {
+      "name": "keys",
+      "description": "About the API key in use"
+    },
+    {
+      "name": "server info",
+      "description": "Service status"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "An API key created on the HammerTime website, sent as `Authorization: Bearer <key>`"
+      }
+    },
+    "schemas": {
+      "Timestamp": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "add",
+              "ago",
+              "at",
+              "at12",
+              "in",
+              "iso",
+              "snowflake",
+              "subtract",
+              "unix"
+            ]
+          },
+          "unix": {
+            "type": "integer",
+            "description": "UNIX timestamp in seconds"
+          },
+          "timezone": {
+            "type": "string",
+            "nullable": true,
+            "description": "The timezone the input was interpreted in, null for commands that have none"
+          },
+          "header": {
+            "type": "string",
+            "nullable": true,
+            "description": "The exact time as interpreted, null when the header is turned off"
+          },
+          "content": {
+            "type": "string",
+            "description": "The reply the bot would send: the optional header and the syntax/preview rows"
+          },
+          "formats": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "format": {
+                  "type": "string",
+                  "description": "Discord timestamp style (d, D, t, T, f, F, s, S or R)"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "description": "Markdown to paste into Discord, e.g. <t:1650802953:R>"
+                }
+              },
+              "required": [
+                "format",
+                "timestamp"
+              ]
+            }
+          },
+          "telemetry": {
+            "$ref": "#/components/schemas/Telemetry"
+          }
+        },
+        "required": [
+          "command",
+          "unix",
+          "timezone",
+          "header",
+          "content",
+          "formats"
+        ]
+      },
+      "Telemetry": {
+        "type": "object",
+        "properties": {
+          "executionNumber": {
+            "type": "integer",
+            "description": "How many times the command has been run, across Discord and the API"
+          },
+          "command": {
+            "type": "string"
+          },
+          "privacyPolicyUrl": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string",
+            "description": "The sentence the bot appends to its replies"
+          }
+        },
+        "required": [
+          "executionNumber",
+          "command",
+          "privacyPolicyUrl",
+          "note"
+        ],
+        "description": "Present only when usage telemetry is enabled in the settings of the account the key acts as"
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Machine-readable reason. For rejected command input this is the bot's locale key, e.g. commands.at.responses.hourRange"
+              },
+              "message": {
+                "type": "string",
+                "description": "English explanation, the same text the Discord bot replies with"
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Values interpolated into the message"
+              },
+              "issues": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "message"
+                  ]
+                },
+                "description": "For invalid_request: what is wrong with which field"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "AddRequest": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "number",
+            "description": "The UNIX timestamp in seconds"
+          },
+          "years": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many years to add to the specified timestamp"
+          },
+          "months": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many months to add to the specified timestamp"
+          },
+          "days": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many days to add to the specified timestamp"
+          },
+          "hours": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many hours to add to the specified timestamp"
+          },
+          "minutes": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many minutes to add to the specified timestamp"
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0.001,
+            "description": "How many seconds to add to the specified timestamp"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "d",
+              "f",
+              "t",
+              "D",
+              "F",
+              "s",
+              "S",
+              "R",
+              "T",
+              "all"
+            ],
+            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+          },
+          "header": {
+            "type": "boolean",
+            "description": "Display the initial time (as interpreted by the bot) on top of the response"
+          },
+          "columns": {
+            "type": "string",
+            "enum": [
+              "both",
+              "preview",
+              "syntax"
+            ],
+            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+          },
+          "ephemeral": {
+            "type": "boolean",
+            "description": "When true the response will only be visible to you"
+          }
+        },
+        "required": [
+          "to"
+        ]
+      },
+      "AgoRequest": {
+        "type": "object",
+        "properties": {
+          "years": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many years to subtract from the current time"
+          },
+          "months": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many months to subtract from the current time"
+          },
+          "days": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many days to subtract from the current time"
+          },
+          "hours": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many hours to subtract from the current time"
+          },
+          "minutes": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many minutes to subtract from the current time"
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0.001,
+            "description": "How many seconds to subtract from the current time"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "d",
+              "f",
+              "t",
+              "D",
+              "F",
+              "s",
+              "S",
+              "R",
+              "T",
+              "all"
+            ],
+            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+          },
+          "header": {
+            "type": "boolean",
+            "description": "Display the initial time (as interpreted by the bot) on top of the response"
+          },
+          "columns": {
+            "type": "string",
+            "enum": [
+              "both",
+              "preview",
+              "syntax"
+            ],
+            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+          },
+          "ephemeral": {
+            "type": "boolean",
+            "description": "When true the response will only be visible to you"
+          }
+        }
+      },
+      "AtRequest": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "description": "Specify the year (defaults to current year)"
+          },
+          "month": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12,
+            "description": "Specify the month (defaults to current month)"
+          },
+          "day": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 31,
+            "description": "Specify the day (defaults to current day)"
+          },
+          "hour": {
+            "type": "string",
+            "description": "Specify the hour (defaults to current hour)"
+          },
+          "hour12": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12,
+            "description": "Specify the hour using 12-hour clock (defaults to current hour)"
+          },
+          "am": {
+            "type": "boolean",
+            "description": "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)"
+          },
+          "pm": {
+            "type": "boolean",
+            "description": "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)"
+          },
+          "minute": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 59,
+            "description": "Specify the minute (defaults to current minute)"
+          },
+          "second": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 59.999,
+            "description": "Specify the second (defaults to 0)"
+          },
+          "timezone": {
+            "type": "string",
+            "minLength": 3,
+            "description": "Specify the timezone (defaults to GMT)"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "d",
+              "f",
+              "t",
+              "D",
+              "F",
+              "s",
+              "S",
+              "R",
+              "T",
+              "all"
+            ],
+            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+          },
+          "header": {
+            "type": "boolean",
+            "description": "Display the initial time (as interpreted by the bot) on top of the response"
+          },
+          "columns": {
+            "type": "string",
+            "enum": [
+              "both",
+              "preview",
+              "syntax"
+            ],
+            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+          },
+          "ephemeral": {
+            "type": "boolean",
+            "description": "When true the response will only be visible to you"
+          }
+        }
+      },
+      "At12Request": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "description": "Specify the year (defaults to current year)"
+          },
+          "month": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12,
+            "description": "Specify the month (defaults to current month)"
+          },
+          "day": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 31,
+            "description": "Specify the day (defaults to current day)"
+          },
+          "hour": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12,
+            "description": "Specify the hour (defaults to current hour)"
+          },
+          "am": {
+            "type": "boolean",
+            "description": "When True, hour will be interpreted as am (ante meridiem, before noon)"
+          },
+          "pm": {
+            "type": "boolean",
+            "description": "When True, hour will be interpreted as pm (post meridiem, after noon)"
+          },
+          "minute": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 59,
+            "description": "Specify the minute (defaults to current minute)"
+          },
+          "second": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 59.999,
+            "description": "Specify the second (defaults to 0)"
+          },
+          "timezone": {
+            "type": "string",
+            "minLength": 3,
+            "description": "Specify the timezone (defaults to GMT)"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "d",
+              "f",
+              "t",
+              "D",
+              "F",
+              "s",
+              "S",
+              "R",
+              "T",
+              "all"
+            ],
+            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+          },
+          "header": {
+            "type": "boolean",
+            "description": "Display the initial time (as interpreted by the bot) on top of the response"
+          },
+          "columns": {
+            "type": "string",
+            "enum": [
+              "both",
+              "preview",
+              "syntax"
+            ],
+            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+          },
+          "ephemeral": {
+            "type": "boolean",
+            "description": "When true the response will only be visible to you"
+          }
+        }
+      },
+      "InRequest": {
+        "type": "object",
+        "properties": {
+          "years": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many years to add to the current time"
+          },
+          "months": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many months to add to the current time"
+          },
+          "days": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many days to add to the current time"
+          },
+          "hours": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many hours to add to the current time"
+          },
+          "minutes": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many minutes to add to the current time"
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0.001,
+            "description": "How many seconds to add to the current time"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "d",
+              "f",
+              "t",
+              "D",
+              "F",
+              "s",
+              "S",
+              "R",
+              "T",
+              "all"
+            ],
+            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+          },
+          "header": {
+            "type": "boolean",
+            "description": "Display the initial time (as interpreted by the bot) on top of the response"
+          },
+          "columns": {
+            "type": "string",
+            "enum": [
+              "both",
+              "preview",
+              "syntax"
+            ],
+            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+          },
+          "ephemeral": {
+            "type": "boolean",
+            "description": "When true the response will only be visible to you"
+          }
+        }
+      },
+      "IsoRequest": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 25,
+            "description": "The ISO 8601 standard timestamp"
+          },
+          "timezone": {
+            "type": "string",
+            "minLength": 3,
+            "description": "Specify the timezone (defaults to GMT)"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "d",
+              "f",
+              "t",
+              "D",
+              "F",
+              "s",
+              "S",
+              "R",
+              "T",
+              "all"
+            ],
+            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+          },
+          "header": {
+            "type": "boolean",
+            "description": "Display the initial time (as interpreted by the bot) on top of the response"
+          },
+          "columns": {
+            "type": "string",
+            "enum": [
+              "both",
+              "preview",
+              "syntax"
+            ],
+            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+          },
+          "ephemeral": {
+            "type": "boolean",
+            "description": "When true the response will only be visible to you"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      },
+      "SnowflakeRequest": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The Snowflake number"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "d",
+              "f",
+              "t",
+              "D",
+              "F",
+              "s",
+              "S",
+              "R",
+              "T",
+              "all"
+            ],
+            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+          },
+          "header": {
+            "type": "boolean",
+            "description": "Display the initial time (as interpreted by the bot) on top of the response"
+          },
+          "columns": {
+            "type": "string",
+            "enum": [
+              "both",
+              "preview",
+              "syntax"
+            ],
+            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+          },
+          "ephemeral": {
+            "type": "boolean",
+            "description": "When true the response will only be visible to you"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      },
+      "SubtractRequest": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "number",
+            "description": "The UNIX timestamp in seconds"
+          },
+          "years": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many years to subtract from the specified timestamp"
+          },
+          "months": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many months to subtract from the specified timestamp"
+          },
+          "days": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many days to subtract from the specified timestamp"
+          },
+          "hours": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many hours to subtract from the specified timestamp"
+          },
+          "minutes": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many minutes to subtract from the specified timestamp"
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0.001,
+            "description": "How many seconds to subtract from the specified timestamp"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "d",
+              "f",
+              "t",
+              "D",
+              "F",
+              "s",
+              "S",
+              "R",
+              "T",
+              "all"
+            ],
+            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+          },
+          "header": {
+            "type": "boolean",
+            "description": "Display the initial time (as interpreted by the bot) on top of the response"
+          },
+          "columns": {
+            "type": "string",
+            "enum": [
+              "both",
+              "preview",
+              "syntax"
+            ],
+            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+          },
+          "ephemeral": {
+            "type": "boolean",
+            "description": "When true the response will only be visible to you"
+          }
+        },
+        "required": [
+          "from"
+        ]
+      },
+      "UnixRequest": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer",
+            "description": "The UNIX timestamp in seconds"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "d",
+              "f",
+              "t",
+              "D",
+              "F",
+              "s",
+              "S",
+              "R",
+              "T",
+              "all"
+            ],
+            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+          },
+          "header": {
+            "type": "boolean",
+            "description": "Display the initial time (as interpreted by the bot) on top of the response"
+          },
+          "columns": {
+            "type": "string",
+            "enum": [
+              "both",
+              "preview",
+              "syntax"
+            ],
+            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+          },
+          "ephemeral": {
+            "type": "boolean",
+            "description": "When true the response will only be visible to you"
+          }
+        },
+        "required": [
+          "value"
+        ]
+      },
+      "Settings": {
+        "type": "object",
+        "properties": {
+          "ephemeral": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Whether the bot replies are only visible to you (no effect on the API)"
+          },
+          "timezone": {
+            "type": "string",
+            "nullable": true,
+            "description": "Timezone used when a command does not specify one"
+          },
+          "header": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Whether replies start with the exact time as interpreted"
+          },
+          "boldPreview": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Whether previews are bold when listing all formats"
+          },
+          "columns": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "both",
+              "preview",
+              "syntax",
+              null
+            ],
+            "description": "Which columns replies show"
+          },
+          "format": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "d",
+              "D",
+              "t",
+              "T",
+              "f",
+              "F",
+              "s",
+              "S",
+              "R",
+              null
+            ],
+            "description": "Only return this format instead of all of them"
+          },
+          "formatMinimalReply": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "With a single format, reply with just the preview"
+          },
+          "telemetry": {
+            "type": "boolean",
+            "nullable": true,
+            "description": "Whether anonymous command usage is recorded, and the run count shown in replies"
+          },
+          "defaultAtHour": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Hour (0-23) used by the at command when none is given"
+          },
+          "defaultAt12Hour": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Hour (1-12) used by the at12 and at commands when none is given"
+          },
+          "defaultAtMinute": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Minute used by the at commands when none is given"
+          },
+          "defaultAtSecond": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Second used by the at commands when none is given"
+          }
+        },
+        "required": [
+          "ephemeral",
+          "timezone",
+          "header",
+          "boldPreview",
+          "columns",
+          "format",
+          "formatMinimalReply",
+          "telemetry",
+          "defaultAtHour",
+          "defaultAt12Hour",
+          "defaultAtMinute",
+          "defaultAtSecond"
+        ]
+      },
+      "SettingsPatch": {
+        "type": "object",
+        "properties": {
+          "ephemeral": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "timezone": {
+            "type": "string",
+            "nullable": true,
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "header": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "boldPreview": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "columns": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "both",
+              "preview",
+              "syntax",
+              null
+            ]
+          },
+          "format": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "d",
+              "D",
+              "t",
+              "T",
+              "f",
+              "F",
+              "s",
+              "S",
+              "R",
+              null
+            ]
+          },
+          "formatMinimalReply": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "telemetry": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "defaultAtHour": {
+            "type": "integer",
+            "nullable": true,
+            "minimum": 0,
+            "maximum": 23
+          },
+          "defaultAt12Hour": {
+            "type": "integer",
+            "nullable": true,
+            "minimum": 1,
+            "maximum": 12
+          },
+          "defaultAtMinute": {
+            "type": "integer",
+            "nullable": true,
+            "minimum": 0,
+            "maximum": 59
+          },
+          "defaultAtSecond": {
+            "type": "integer",
+            "nullable": true,
+            "minimum": 0,
+            "maximum": 59
+          }
+        }
+      },
+      "KeyInfo": {
+        "type": "object",
+        "properties": {
+          "keyId": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "user",
+              "service"
+            ]
+          },
+          "discordUserId": {
+            "type": "string",
+            "description": "The Discord account the key acts as"
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "keyId",
+          "kind",
+          "discordUserId",
+          "scopes"
+        ]
+      },
+      "Health": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      }
+    },
+    "parameters": {}
+  },
+  "paths": {
+    "/add": {
+      "post": {
+        "operationId": "PostAdd",
+        "tags": [
+          "timestamps"
+        ],
+        "summary": "/add",
+        "description": "Add some time to the specified UNIX timestamp. Equivalent to the bot's /add command: the same options, and any option left out falls back to the account's saved settings.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The timestamp, in every format or the requested one",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timestamp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input is invalid, see error.code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ago": {
+      "post": {
+        "operationId": "PostAgo",
+        "tags": [
+          "timestamps"
+        ],
+        "summary": "/ago",
+        "description": "Specify a timestamp in the past relative to the current time. Equivalent to the bot's /ago command: the same options, and any option left out falls back to the account's saved settings.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The timestamp, in every format or the requested one",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timestamp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input is invalid, see error.code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/at": {
+      "post": {
+        "operationId": "PostAt",
+        "tags": [
+          "timestamps"
+        ],
+        "summary": "/at",
+        "description": "Specify the exact components of the timestamp (including the timezone). Equivalent to the bot's /at command: the same options, and any option left out falls back to the account's saved settings.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The timestamp, in every format or the requested one",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timestamp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input is invalid, see error.code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/at12": {
+      "post": {
+        "operationId": "PostAt12",
+        "tags": [
+          "timestamps"
+        ],
+        "summary": "/at12",
+        "description": "Specify the exact components of the timestamp (using a 12-hour clock). Equivalent to the bot's /at12 command: the same options, and any option left out falls back to the account's saved settings.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/At12Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The timestamp, in every format or the requested one",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timestamp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input is invalid, see error.code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/in": {
+      "post": {
+        "operationId": "PostIn",
+        "tags": [
+          "timestamps"
+        ],
+        "summary": "/in",
+        "description": "Specify a timestamp in the future relative to the current time. Equivalent to the bot's /in command: the same options, and any option left out falls back to the account's saved settings.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The timestamp, in every format or the requested one",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timestamp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input is invalid, see error.code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/iso": {
+      "post": {
+        "operationId": "PostIso",
+        "tags": [
+          "timestamps"
+        ],
+        "summary": "/iso",
+        "description": "Display the syntaxes for a specific ISO 8601 timestamp. Equivalent to the bot's /iso command: the same options, and any option left out falls back to the account's saved settings.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IsoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The timestamp, in every format or the requested one",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timestamp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input is invalid, see error.code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/snowflake": {
+      "post": {
+        "operationId": "PostSnowflake",
+        "tags": [
+          "timestamps"
+        ],
+        "summary": "/snowflake",
+        "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord). Equivalent to the bot's /snowflake command: the same options, and any option left out falls back to the account's saved settings.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SnowflakeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The timestamp, in every format or the requested one",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timestamp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input is invalid, see error.code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subtract": {
+      "post": {
+        "operationId": "PostSubtract",
+        "tags": [
+          "timestamps"
+        ],
+        "summary": "/subtract",
+        "description": "Subtract some time from the specified UNIX timestamp. Equivalent to the bot's /subtract command: the same options, and any option left out falls back to the account's saved settings.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubtractRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The timestamp, in every format or the requested one",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timestamp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input is invalid, see error.code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unix": {
+      "post": {
+        "operationId": "PostUnix",
+        "tags": [
+          "timestamps"
+        ],
+        "summary": "/unix",
+        "description": "Display the syntaxes for a specific UNIX timestamp. Equivalent to the bot's /unix command: the same options, and any option left out falls back to the account's saved settings.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UnixRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The timestamp, in every format or the requested one",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timestamp"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The input is invalid, see error.code",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/settings": {
+      "get": {
+        "operationId": "GetSettings",
+        "tags": [
+          "settings"
+        ],
+        "summary": "/settings",
+        "description": "The saved settings of the account the key acts as. These are the defaults the timestamp endpoints fall back to.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The settings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Settings"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "PatchSettings",
+        "tags": [
+          "settings"
+        ],
+        "summary": "/settings",
+        "description": "Changes the given settings only. A null value resets a setting to its default.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The settings after the change",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Settings"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A value is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "operationId": "GetMe",
+        "tags": [
+          "keys"
+        ],
+        "summary": "/me",
+        "description": "Which account the key acts as and what it is allowed to do.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KeyInfo"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, unknown, revoked or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The API key does not have the scope this endpoint needs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The service is read-only while it is being deployed, retry after the number of seconds in Retry-After",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "GetHealth",
+        "tags": [
+          "server info"
+        ],
+        "summary": "/health",
+        "description": "Whether the service is up.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "The service is up",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

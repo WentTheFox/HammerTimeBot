@@ -1,5 +1,5 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
-import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
+import { MessageTimestamp, MessageTimestampFormat } from '@went.tf/hammertime-core';
 import { EPHEMERAL_OPTION_DEFAULT_VALUE, getBareNumberFormatter, isEphemeralResponse } from '../utils/messaging.js';
 import { env } from '../env.js';
 import { MessageFlags } from 'discord-api-types/v10';

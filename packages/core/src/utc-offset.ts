@@ -1,4 +1,4 @@
-import { pad } from '../utils/numbers.js';
+import { pad } from './numbers.js';
 
 export class UtcOffset {
   get totalMinutes(): number {

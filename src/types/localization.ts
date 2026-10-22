@@ -1,7 +1,7 @@
 import { APIApplicationCommand, APIApplicationCommandOption } from 'discord-api-types/v10';
 import { BotMessageComponentType } from './bot-interaction.js';
 import type { BotMessageContextMenuCommandName } from '../utils/interactions/registries.js';
-import { MessageTimestampFormat } from '../classes/message-timestamp.js';
+import { MessageTimestampFormat, ResponseColumnChoices } from '@went.tf/hammertime-core';
 
 export const enum GlobalCommandOptionName {
   COLUMNS = 'columns',
@@ -168,11 +168,7 @@ interface ComponentsMap {
   settings: ['openSettingsButton'],
 }
 
-export const enum ResponseColumnChoices {
-  SYNTAX_ONLY = 'syntax',
-  PREVIEW_ONLY = 'preview',
-  BOTH = 'both',
-}
+export { ResponseColumnChoices };
 
 interface OptionChoicesMap {
   [GlobalCommandOptionName.COLUMNS]: ResponseColumnChoices,

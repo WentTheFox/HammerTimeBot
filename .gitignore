@@ -7,3 +7,4 @@ config.js
 /sync-commands.log
 /.command-sync-state.json
 /logs
+/packages/*/dist

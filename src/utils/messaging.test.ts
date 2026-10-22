@@ -1,4 +1,4 @@
-import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
+import { MessageTimestamp, MessageTimestampFormat } from '@went.tf/hammertime-core';
 import { EmbedTextData, findEmbedsTextFields, findTextComponentContentsRecursively } from './messaging.js';
 import { ComponentType, TopLevelComponent } from 'discord.js';
 import { describe, expect, it } from 'vitest';

@@ -1,7 +1,7 @@
 import { BotMessageContextMenuCommand } from '../types/bot-interaction.js';
 import { ComponentType, MessageFlags } from 'discord-api-types/v10';
 import { extractTimestampsFromStrings } from '../utils/extract-timestamps-from-strings.js';
-import { RESPONSE_FORMATTERS } from '../utils/time.js';
+import { RESPONSE_FORMATTERS } from '@went.tf/hammertime-core';
 import { ResponseColumnChoices } from '../types/localization.js';
 import { interactionReply } from '../utils/interaction-reply.js';
 import { findEmbedsTextFields, findTextComponentContentsRecursively } from '../utils/messaging.js';

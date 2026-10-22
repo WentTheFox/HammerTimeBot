@@ -1,5 +1,5 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
-import { constrain, convertHour12To24, getGmtTimezoneValue, gmtZoneRegex } from '../utils/time.js';
+import { constrain, convertHour12To24, getGmtTimezoneValue, gmtZoneRegex , TimezoneError } from '@went.tf/hammertime-core';
 import { At12CommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
 import { MessageFlags } from 'discord-api-types/v10';
@@ -7,7 +7,6 @@ import { findTimezoneOptionValue, handleTimezoneAutocomplete } from '../utils/me
 import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 import { setDate, setHours, setMilliseconds, setMinutes, setMonth, setSeconds, setYear } from 'date-fns';
-import { TimezoneError } from '../classes/timezone-error.js';
 
 export const at12Command: BotChatInputCommand = {
   name: 'at12',

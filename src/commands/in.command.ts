@@ -1,5 +1,5 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
-import { adjustDate, TimeMap } from '../utils/time.js';
+import { adjustDate, TimeMap } from '@went.tf/hammertime-core';
 import { InCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
 import { atLeastOneNonZeroKey } from '../utils/at-least-one-non-zero-key.js';

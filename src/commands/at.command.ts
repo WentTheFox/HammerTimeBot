@@ -1,5 +1,12 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
-import { constrain, getGmtTimezoneValue, gmtZoneRegex, processMixedHourParameters } from '../utils/time.js';
+import {
+  constrain,
+  getGmtTimezoneValue,
+  gmtZoneRegex,
+  isHourParameterError,
+  processMixedHourParameters,
+  TimezoneError,
+} from '@went.tf/hammertime-core';
 import { AtCommandOptionName, GlobalCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
 import { MessageFlags } from 'discord-api-types/v10';
@@ -7,7 +14,6 @@ import { findTimezoneOptionValue, handleHourAutocomplete, handleTimezoneAutocomp
 import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 import { setDate, setHours, setMilliseconds, setMinutes, setMonth, setSeconds, setYear } from 'date-fns';
-import { TimezoneError } from '../classes/timezone-error.js';
 
 export const atCommand: BotChatInputCommand = {
   name: 'at',
@@ -28,10 +34,10 @@ export const atCommand: BotChatInputCommand = {
     const am = interaction.options.getBoolean(AtCommandOptionName.AM);
     const pm = interaction.options.getBoolean(AtCommandOptionName.PM);
 
-    const hour = processMixedHourParameters({ t, settings, hourStr, hour12, am, pm });
-    if (typeof hour === 'string') {
+    const hour = processMixedHourParameters({ settings, hourStr, hour12, am, pm });
+    if (isHourParameterError(hour)) {
       await interactionReply(context, interaction, {
-        content: hour,
+        content: t(hour.error),
         flags: MessageFlags.Ephemeral,
       });
       return;

@@ -1,7 +1,7 @@
 import { BotMessageComponent, BotMessageComponentType } from '../types/bot-interaction.js';
 import { ComponentType, MessageComponentInteraction, StringSelectMenuInteraction } from 'discord.js';
 import { TFunction } from 'i18next';
-import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
+import { MessageTimestamp, MessageTimestampFormat } from '@went.tf/hammertime-core';
 import { APISelectMenuOption } from 'discord-api-types/v9';
 import { MessageFlags } from 'discord-api-types/v10';
 import { findTextComponentContentsRecursively } from '../utils/messaging.js';

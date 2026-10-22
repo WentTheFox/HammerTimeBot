@@ -7,7 +7,7 @@ import {
 } from 'discord-api-types/v10';
 import { env } from '../env.js';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
-import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
+import { MessageTimestamp, MessageTimestampFormat } from '@went.tf/hammertime-core';
 import { backendApiRequest } from '../utils/backend-api-request.js';
 import typia from 'typia';
 

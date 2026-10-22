@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { ComponentType } from 'discord.js';
 import { MessageFlags } from 'discord-api-types/v10';
-import { MessageTimestampFormat } from '../classes/message-timestamp.js';
+import { MessageTimestampFormat } from '@went.tf/hammertime-core';
 
 vi.mock('../utils/messaging.js', () => ({
   findTextComponentContentsRecursively: () => [],

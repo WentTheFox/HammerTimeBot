@@ -6,7 +6,7 @@ import { findTimezoneOptionValue, handleTimezoneAutocomplete } from '../utils/me
 import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';
 import { isValid } from 'date-fns';
-import { TimezoneError } from '../classes/timezone-error.js';
+import { TimezoneError } from '@went.tf/hammertime-core';
 
 export const isoCommand: BotChatInputCommand = {
   name: 'iso',

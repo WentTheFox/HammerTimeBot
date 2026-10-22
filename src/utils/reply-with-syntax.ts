@@ -1,5 +1,4 @@
-import { MessageTimestamp } from '../classes/message-timestamp.js';
-import { formattedResponse, supportedFormats } from './time.js';
+import { MessageTimestamp , formattedResponse, supportedFormats } from '@went.tf/hammertime-core';
 import {
   ChatInputCommandInteraction,
   ComponentType,

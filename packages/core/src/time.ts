@@ -1,11 +1,9 @@
 import levenshtein from 'js-levenshtein';
-import { TimezoneError } from '../classes/timezone-error.js';
-import { MessageTimestamp, MessageTimestampFormat } from '../classes/message-timestamp.js';
-import { ResponseColumnChoices } from '../types/localization.js';
-import { UtcOffset } from '../classes/utc-offset.js';
+import { TimezoneError } from './timezone-error.js';
+import { MessageTimestamp, MessageTimestampFormat } from './message-timestamp.js';
+import { ResponseColumnChoices } from './settings.js';
+import { UtcOffset } from './utc-offset.js';
 import { pad, PadDirection } from './numbers.js';
-import { TFunction } from 'i18next';
-import { SettingsValue } from './settings.js';
 import {
   addDays,
   addHours,
@@ -296,69 +294,6 @@ export const convertHour12To24 = (hour12: number | null, amOption: boolean | nul
       hour = hour12 === 12 ? 0 : hour12;
     } else {
       hour = hour12 === 12 ? 12 : 12 + hour12;
-    }
-  }
-  return hour;
-};
-
-interface ProcessMixedHourParametersOptions {
-  t: TFunction;
-  settings: Pick<SettingsValue, 'defaultAtHour' | 'defaultAt12Hour'>;
-  hourStr: string | null;
-  hour12: number | null;
-  am: boolean | null;
-  pm: boolean | null;
-}
-
-export const processMixedHourParameters = ({
-  t,
-  settings,
-  hourStr,
-  hour12: hour12Input,
-  am,
-  pm,
-}: ProcessMixedHourParametersOptions): string | number | null => {
-  let meridiemParamUsed = am !== null || pm !== null;
-  let hour: number | null = settings.defaultAtHour;
-  let hour12: number | null = hour12Input;
-  if (hourStr !== null && hour12 !== null) {
-    return t('commands.at.responses.hourOrHour12Only');
-  }
-  const hourStrRegex = /^(-?\d{1,2})([ap]m)?$/;
-  if (hourStr !== null) {
-    const hourStrMatch = hourStr.toLowerCase().match(hourStrRegex);
-    if (hourStrMatch) {
-      hour = parseInt(hourStrMatch[1], 10);
-      if (hourStrMatch[2]) {
-        if (meridiemParamUsed) {
-          return t('commands.at.responses.noAmOrPmWithMeridiem');
-        }
-        am = hourStrMatch[2] === 'am';
-        meridiemParamUsed = true;
-        hour12 = null;
-      }
-    }
-    if (hour === null || hour < 0 || hour > 23) {
-      return t(meridiemParamUsed ? 'commands.at.responses.hour12Range' : 'commands.at.responses.hourRange');
-    }
-  }
-  if (hour === null) {
-    hour12 ??= settings.defaultAt12Hour;
-  }
-  if (meridiemParamUsed || hour12 !== null) {
-    if (am !== null && pm !== null) {
-      return t('commands.at.responses.amOrPmOnly');
-    }
-    if (hour12 !== null) {
-      if (am === null && pm === null) {
-        return t('commands.at.responses.meridiemRequired');
-      }
-      hour = convertHour12To24(hour12, am, pm);
-    } else if (hour !== null) {
-      if (hour < 1 || hour > 12) {
-        return t('commands.at.responses.hour12Range');
-      }
-      hour = convertHour12To24(hour, am, pm);
     }
   }
   return hour;

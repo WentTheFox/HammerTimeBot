@@ -66,6 +66,11 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000, 
 
   app.onError((error, c) => {
     if (error instanceof BackendError) {
+      // The failures of the backend that are not the client's doing (it could not be reached, or it answered something
+      // unexpected, such as a refused secret), so a misconfiguration shows up in the log instead of as unexplained errors
+      if (error.status === 502) {
+        console.error(`Backend failure: ${error.message}`);
+      }
       const headers: Record<string, string> = error.retryAfter ? { 'Retry-After': String(error.retryAfter) } : {};
       const body = errorBody(error.status === 400 ? 'invalid_request' : 'backend_error', error.message);
       if (Array.isArray(error.details) && error.details.length > 0) {

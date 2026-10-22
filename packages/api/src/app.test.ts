@@ -1,5 +1,6 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createApp } from './app.js';
+import { BackendError } from './backend.js';
 import { commandNames } from './generated/commands.js';
 import { commandResolvers } from './commands.js';
 import { DISCORD_USER_ID, FakeBackend, SERVICE_TOKEN, USER_TOKEN } from './testing/fake-backend.js';
@@ -204,6 +205,29 @@ describe('telemetry', () => {
     const { status, json } = await call('/unix', { body: { value: 0 } });
     expect(status).toBe(200);
     expect(json.telemetry).toBeUndefined();
+  });
+});
+
+describe('a backend that fails', () => {
+  it('answers 502 and says why in the log', async () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    backend.getSettings = async () => { throw new BackendError(502, 'The backend answered with HTTP 403'); };
+
+    const { status, json } = await call('/settings', { method: 'GET' });
+
+    expect(status).toBe(502);
+    expect(json.error.code).toBe('backend_error');
+    expect(error).toHaveBeenCalledWith(expect.stringContaining('HTTP 403'));
+    error.mockRestore();
+  });
+
+  it('does not log a read-only window, which is nobody\'s fault', async () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    backend.readOnly = true;
+
+    expect((await call('/settings', { method: 'PATCH', body: { header: false } })).status).toBe(503);
+    expect(error).not.toHaveBeenCalled();
+    error.mockRestore();
   });
 });
 

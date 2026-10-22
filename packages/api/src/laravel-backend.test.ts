@@ -37,6 +37,11 @@ describe('LaravelBackend', () => {
       expect(await setup(() => reply(401, { message: 'Unauthenticated.' })).backend.validateKey('x')).toBeNull();
     });
 
+    it('does not mistake a refused secret for an unknown key', async () => {
+      // Laravel answers 403 for a wrong shared secret and 401 for a key it does not know
+      await expect(setup(() => reply(403, { message: 'Forbidden.' })).backend.validateKey('x')).rejects.toMatchObject({ status: 502 });
+    });
+
     it('rejects a response of the wrong shape', async () => {
       await expect(setup(() => reply(200, { kind: 'wizard' })).backend.validateKey('x')).rejects.toMatchObject({ status: 502 });
     });

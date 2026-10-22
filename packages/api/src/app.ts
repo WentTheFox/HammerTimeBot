@@ -1,12 +1,14 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import type { MiddlewareHandler } from 'hono';
-import pkg from '../package.json' with { type: 'json' };
-import { Backend, BackendError, KeyContext, RequestSource, Scope } from './backend.js';
+import { authenticate, errorBody, ResolvedKey } from './auth.js';
+import { Backend, BackendError, RequestSource, Scope } from './backend.js';
+import { createMcpHandler } from './mcp.js';
 import { commandNames, commandRequestSchemas, commandSummaries } from './generated/commands.js';
 import { runCommand } from './run-command.js';
-import { ErrorBody, ErrorSchema, HealthSchema, KeyInfoSchema, TimestampSchema } from './schemas.js';
+import { ErrorSchema, HealthSchema, KeyInfoSchema, TimestampSchema } from './schemas.js';
 import { SettingsPatchSchema, SettingsSchema } from './settings-schema.js';
+import { API_VERSION } from './version.js';
 
 export interface AppDependencies {
   backend: Backend;
@@ -15,21 +17,9 @@ export interface AppDependencies {
   telemetryTimeoutMs?: number;
 }
 
-export interface ResolvedKey extends KeyContext {
-  /** Always set: a service key has to name the account it acts for */
-  discordUserId: string;
-}
-
 export interface AppEnv {
   Variables: { key: ResolvedKey };
 }
-
-/** major.minor of the package version, like Luna's API_VERSION */
-export const API_VERSION = pkg.version.split('.').slice(0, 2).join('.');
-
-const SNOWFLAKE_REGEX = /^\d{15,25}$/;
-
-const errorBody = (code: string, message: string): ErrorBody => ({ error: { code, message } });
 
 const pascalCase = (value: string): string => value.replace(/(^|[-_/])(\w)/g, (_, __, char: string) => char.toUpperCase());
 
@@ -81,31 +71,18 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000 }
     return c.json(errorBody('internal_error', 'Something went wrong'), 500);
   });
 
-  const authenticate = (scope: (method: string) => Scope): MiddlewareHandler<AppEnv> => async (c, next) => {
-    const token = c.req.header('Authorization')?.match(/^Bearer (.+)$/i)?.[1];
-    const key = token ? await backend.validateKey(token) : null;
-    if (!key) {
-      return c.json(errorBody('unauthorized', 'A valid API key is required'), 401, { 'WWW-Authenticate': 'Bearer' });
-    }
-
-    let discordUserId = key.discordUserId;
-    if (key.kind === 'service') {
-      const header = c.req.header('X-Discord-User-Id');
-      if (!header || !SNOWFLAKE_REGEX.test(header)) {
-        return c.json(errorBody('invalid_request', 'Service keys must name the Discord account in the X-Discord-User-Id header'), 400);
-      }
-      discordUserId = header;
-    }
-    if (!discordUserId) {
-      return c.json(errorBody('unauthorized', 'The API key is not linked to a Discord account'), 401);
+  const requireScope = (scope: (method: string) => Scope): MiddlewareHandler<AppEnv> => async (c, next) => {
+    const authentication = await authenticate(backend, c.req.raw.headers);
+    if (!authentication.ok) {
+      return c.json(authentication.body, authentication.status, authentication.headers);
     }
 
     const needed = scope(c.req.method);
-    if (!key.scopes.includes(needed)) {
+    if (!authentication.key.scopes.includes(needed)) {
       return c.json(errorBody('forbidden', `The API key needs the ${needed} scope`), 403);
     }
 
-    c.set('key', { ...key, discordUserId });
+    c.set('key', authentication.key);
     await next();
   };
 
@@ -113,7 +90,7 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000 }
 
   for (const name of commandNames) {
     const path = `/${name}`;
-    app.use(path, authenticate(() => 'timestamps:create'));
+    app.use(path, requireScope(() => 'timestamps:create'));
     app.openapi(
       createRoute({
         method: 'post',
@@ -148,7 +125,7 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000 }
     );
   }
 
-  app.use('/settings', authenticate(method => (method === 'GET' ? 'settings:read' : 'settings:write')));
+  app.use('/settings', requireScope(method => (method === 'GET' ? 'settings:read' : 'settings:write')));
   app.openapi(
     createRoute({
       method: 'get',
@@ -181,7 +158,7 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000 }
     async (c) => c.json(await backend.updateSettings(c.get('key').discordUserId, c.req.valid('json')), 200),
   );
 
-  app.use('/me', authenticate(() => 'settings:read'));
+  app.use('/me', requireScope(() => 'settings:read'));
   app.openapi(
     createRoute({
       method: 'get',
@@ -218,7 +195,7 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000 }
     info: {
       title: 'HammerTime API',
       version: API_VERSION,
-      description: 'Generate Discord timestamps and manage the settings of the HammerTime bot. Every timestamp endpoint is the bot command of the same name.',
+      description: 'Generate Discord timestamps and manage the settings of the HammerTime bot. Every timestamp endpoint is the bot command of the same name. The same commands are available to AI assistants as tools of the MCP server at /mcp, with the same API keys.',
     },
     servers: [{ url: '/', description: 'Current Host' }],
     tags: [
@@ -230,7 +207,12 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000 }
   });
   app.get('/', swaggerUI({ url: '/generated/api-docs.json' }));
 
+  // The MCP endpoint is not REST, so it is not part of the OpenAPI document
+  const mcp = createMcpHandler({ backend, now, telemetryTimeoutMs });
+  app.all('/mcp', (c) => mcp(c.req.raw));
+
   return app;
 };
 
+export { API_VERSION };
 export type App = ReturnType<typeof createApp>;

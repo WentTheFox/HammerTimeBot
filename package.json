@@ -17,7 +17,7 @@
     "sync-commands": "node --enable-source-maps ./build/src/sync-commands-cli.js",
     "generate-translation-credits": "tsx ./utils/translation-credits",
     "start:dev": "pnpm run build:clean && pnpm run build && pnpm run start",
-    "pretest": "pnpm run build:core",
+    "pretest": "pnpm run build:core && pnpm run generate-faq",
     "test": "vitest",
     "test:packages": "pnpm run build:core && pnpm -r --filter \"./packages/*\" run test",
     "test:watch": "vitest --watch",

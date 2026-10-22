@@ -114,6 +114,19 @@ describe('timestamp endpoints', () => {
     expect(json.header).toBeNull();
   });
 
+  it('says which format was asked for and whether the reply is minimal', async () => {
+    expect((await call('/unix', { body: { value: 0, format: 'R' } })).json).toMatchObject({ singleFormat: 'R', minimalReply: true });
+    expect((await call('/unix', { body: { value: 0 } })).json).toMatchObject({ singleFormat: null, minimalReply: false });
+    backend.settings.set(DISCORD_USER_ID, { ...(await backend.getSettings(DISCORD_USER_ID)), formatMinimalReply: false });
+    expect((await call('/unix', { body: { value: 0, format: 'R' } })).json).toMatchObject({ singleFormat: 'R', minimalReply: false });
+  });
+
+  it('flags a bare 24-hour value for at, and only there', async () => {
+    expect((await call('/at', { body: { hour: '9', minute: 0 } })).json.usingAtHoursOnly).toBe(true);
+    expect((await call('/at', { body: { hour: '9pm', minute: 0 } })).json.usingAtHoursOnly).toBe(false);
+    expect((await call('/unix', { body: { value: 0 } })).json).not.toHaveProperty('usingAtHoursOnly');
+  });
+
   it('lets an explicit "all" format override a saved format', async () => {
     backend.settings.set(DISCORD_USER_ID, { ...(await backend.getSettings(DISCORD_USER_ID)), format: 'R' as never });
     expect((await call('/unix', { body: { value: 0, format: 'all' } })).json.formats).toHaveLength(9);

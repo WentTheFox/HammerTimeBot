@@ -115,6 +115,9 @@ export const runCommand = async (options: RunCommandOptions): Promise<CommandRun
       timezone: resolved.timezone ?? null,
       header: rendered.header,
       content: rendered.content,
+      singleFormat: rendered.singleFormat,
+      minimalReply: rendered.minimalReply,
+      ...(resolved.usingAtHoursOnly !== undefined ? { usingAtHoursOnly: resolved.usingAtHoursOnly } : {}),
       formats: rendered.formats.map((format: MessageTimestampFormat) => ({
         format,
         timestamp: MessageTimestamp.fromTimestamp(rendered.unix, format),

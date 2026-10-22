@@ -27,6 +27,13 @@ export const TimestampSchema = z.object({
   timezone: z.string().nullable().openapi({ description: 'The timezone the input was interpreted in, null for commands that have none' }),
   header: z.string().nullable().openapi({ description: 'The exact time as interpreted, null when the header is turned off' }),
   content: z.string().openapi({ description: 'The reply the bot would send: the optional header and the syntax/preview rows' }),
+  singleFormat: z.string().nullable().openapi({ description: 'The one format that was asked for (by option or setting), null when every format is listed' }),
+  minimalReply: z.boolean().openapi({
+    description: 'True when only the preview of a single format is meant to be shown, which the formatMinimalReply setting asks for',
+  }),
+  usingAtHoursOnly: z.boolean().optional().openapi({
+    description: 'Only for at: the hour was given as a bare 24-hour value, which the at12 command or a meridiem makes unambiguous',
+  }),
   formats: z.array(z.object({
     format: z.string().openapi({ description: 'Discord timestamp style (d, D, t, T, f, F, s, S or R)' }),
     timestamp: z.string().openapi({ description: 'Markdown to paste into Discord, e.g. <t:1650802953:R>' }),

@@ -73,6 +73,19 @@
             "type": "string",
             "description": "The reply the bot would send: the optional header and the syntax/preview rows"
           },
+          "singleFormat": {
+            "type": "string",
+            "nullable": true,
+            "description": "The one format that was asked for (by option or setting), null when every format is listed"
+          },
+          "minimalReply": {
+            "type": "boolean",
+            "description": "True when only the preview of a single format is meant to be shown, which the formatMinimalReply setting asks for"
+          },
+          "usingAtHoursOnly": {
+            "type": "boolean",
+            "description": "Only for at: the hour was given as a bare 24-hour value, which the at12 command or a meridiem makes unambiguous"
+          },
           "formats": {
             "type": "array",
             "items": {
@@ -103,6 +116,8 @@
           "timezone",
           "header",
           "content",
+          "singleFormat",
+          "minimalReply",
           "formats"
         ]
       },

@@ -1,7 +1,7 @@
 import { TZDate } from '@date-fns/tz';
 import { isValid, setDate, setHours, setMilliseconds, setMinutes, setMonth, setSeconds, setYear } from 'date-fns';
 import { atLeastOneNonZeroKey } from './at-least-one-non-zero-key.js';
-import { HourParameterErrorKey, isHourParameterError, processMixedHourParameters } from './hour-parameters.js';
+import { hourParameterErrorKeys, isHourParameterError, processMixedHourParameters } from './hour-parameters.js';
 import { SettingsValue } from './settings.js';
 import { SnowflakeError } from './snowflake-error.js';
 import snowflakeToUnix from './snowflake.js';
@@ -20,16 +20,19 @@ import {
  * Locale keys (from the bot's locale files) describing why a command input was rejected, so each consumer
  * decides how to present the message
  */
-export type CommandErrorKey =
-  | HourParameterErrorKey
-  | 'commands.at12.responses.amOrPmOnly'
-  | 'commands.at12.responses.meridiemRequired'
-  | 'commands.global.responses.invalidDate'
-  | 'commands.global.responses.noComponentsCurrentTime'
-  | 'commands.global.responses.noComponentsUnix'
-  | 'commands.global.responses.unsupportedTimezone'
-  | 'commands.iso.responses.invalidIsoFormat'
-  | 'commands.snowflake.responses.invalidSnowflake';
+export const commandErrorKeys = [
+  ...hourParameterErrorKeys,
+  'commands.at12.responses.amOrPmOnly',
+  'commands.at12.responses.meridiemRequired',
+  'commands.global.responses.invalidDate',
+  'commands.global.responses.noComponentsCurrentTime',
+  'commands.global.responses.noComponentsUnix',
+  'commands.global.responses.unsupportedTimezone',
+  'commands.iso.responses.invalidIsoFormat',
+  'commands.snowflake.responses.invalidSnowflake',
+] as const;
+
+export type CommandErrorKey = typeof commandErrorKeys[number];
 
 export interface CommandError {
   error: CommandErrorKey;

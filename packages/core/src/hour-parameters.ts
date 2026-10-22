@@ -5,13 +5,16 @@ import { convertHour12To24 } from './time.js';
  * Translation keys (under the bot's locale files) describing why the hour parameters were rejected,
  * so each consumer decides how to present the message.
  */
-export type HourParameterErrorKey =
-  | 'commands.at.responses.hourOrHour12Only'
-  | 'commands.at.responses.noAmOrPmWithMeridiem'
-  | 'commands.at.responses.hour12Range'
-  | 'commands.at.responses.hourRange'
-  | 'commands.at.responses.amOrPmOnly'
-  | 'commands.at.responses.meridiemRequired';
+export const hourParameterErrorKeys = [
+  'commands.at.responses.hourOrHour12Only',
+  'commands.at.responses.noAmOrPmWithMeridiem',
+  'commands.at.responses.hour12Range',
+  'commands.at.responses.hourRange',
+  'commands.at.responses.amOrPmOnly',
+  'commands.at.responses.meridiemRequired',
+] as const;
+
+export type HourParameterErrorKey = typeof hourParameterErrorKeys[number];
 
 export interface HourParameterError {
   error: HourParameterErrorKey;

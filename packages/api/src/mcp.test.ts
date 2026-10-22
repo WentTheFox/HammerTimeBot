@@ -118,6 +118,15 @@ describe('calling a command', () => {
     expect(result.structuredContent).toMatchObject({ command: 'at', unix: expectedUnix, timezone: 'GMT+2' });
   });
 
+  it('reads a plain number as the hour text', async () => {
+    const client = await connect();
+
+    const result = await client.callTool({ name: 'at', arguments: { hour: 9, minute: 0, timezone: 'GMT+2' } });
+
+    expect(result.isError).toBeFalsy();
+    expect(result.structuredContent).toMatchObject({ command: 'at', unix: unixOf('2022-04-24T07:00:00Z') });
+  });
+
   it('uses the settings of the account the key acts as', async () => {
     backend.settings.set(DISCORD_USER_ID, { ...(await backend.getSettings(DISCORD_USER_ID)), timezone: 'GMT-5' });
 

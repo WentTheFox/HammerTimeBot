@@ -59,6 +59,13 @@ const optionDescription = (locale: LocaleFile, command: string, option: string):
   return requireString(locale, ['commands', 'global', 'options', option, 'description']);
 };
 
+/**
+ * Text options that also take a plain number, since that is what a caller types for them (an hour is `18`, not
+ * `"18"`) and the API is mostly called by programs and LLMs that send what the value looks like. Deliberately a short list:
+ * a number can not carry a snowflake id without losing digits, so `snowflake` stays text only.
+ */
+const NUMBER_ACCEPTING_TEXT_OPTIONS: ReadonlySet<string> = new Set(['at.hour']);
+
 const literal = (value: unknown): string => JSON.stringify(value);
 
 const pascalCase = (name: string): string => name.replace(/(^|[-_])(\w)/g, (_, __, char: string) => char.toUpperCase());
@@ -79,7 +86,9 @@ const zodExpression = (command: string, option: CommandOption, locale: LocaleFil
         expression = `z.enum([${option.choices.map(choice => literal(choice.value)).join(', ')}])`;
         description += ` Choices: ${option.choices.map(choice => `${choice.value} (${choice.name})`).join(', ')}.`;
       } else {
-        expression = 'z.string()';
+        const acceptsNumber = NUMBER_ACCEPTING_TEXT_OPTIONS.has(`${command}.${option.name}`);
+        expression = acceptsNumber ? 'z.union([z.string(), z.number().finite()]).transform(String).pipe(z.string())' : 'z.string()';
+        if (acceptsNumber) description += '. A plain number is accepted and read as text.';
         if (typeof option.min_length === 'number') expression += `.min(${option.min_length})`;
         if (typeof option.max_length === 'number') expression += `.max(${option.max_length})`;
       }

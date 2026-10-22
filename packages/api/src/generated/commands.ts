@@ -155,7 +155,7 @@ export const commandRequestSchemas = {
     "year": z.number().int().optional().openapi({ description: "Specify the year (defaults to current year)" }),
     "month": z.number().int().min(1).max(12).optional().openapi({ description: "Specify the month (defaults to current month)" }),
     "day": z.number().int().min(1).max(31).optional().openapi({ description: "Specify the day (defaults to current day)" }),
-    "hour": z.string().optional().openapi({ description: "Specify the hour (defaults to current hour)" }),
+    "hour": z.union([z.string(), z.number().finite()]).transform(String).pipe(z.string()).optional().openapi({ description: "Specify the hour (defaults to current hour). A plain number is accepted and read as text." }),
     "hour12": z.number().int().min(1).max(12).optional().openapi({ description: "Specify the hour using 12-hour clock (defaults to current hour)" }),
     "am": z.boolean().optional().openapi({ description: "When True, hour must be between 1 to 12 and will be interpreted as AM (ante meridiem)" }),
     "pm": z.boolean().optional().openapi({ description: "When True, hour must be between 1 to 12 and will be interpreted as PM (post meridiem)" }),

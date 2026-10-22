@@ -361,8 +361,15 @@
             "description": "Specify the day (defaults to current day)"
           },
           "hour": {
-            "type": "string",
-            "description": "Specify the hour (defaults to current hour)"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "description": "Specify the hour (defaults to current hour). A plain number is accepted and read as text."
           },
           "hour12": {
             "type": "integer",

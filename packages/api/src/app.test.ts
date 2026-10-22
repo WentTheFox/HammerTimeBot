@@ -103,6 +103,21 @@ describe('timestamp endpoints', () => {
     expect(json.content).toContain(json.header);
   });
 
+  it('reads a plain number as the hour text, the same as the string', async () => {
+    const asNumber = await call('/at', { body: { hour: 9, minute: 0, timezone: 'GMT+2' } });
+    const asString = await call('/at', { body: { hour: '9', minute: 0, timezone: 'GMT+2' } });
+
+    expect(asNumber.status).toBe(200);
+    expect(asNumber.json.unix).toBe(asString.json.unix);
+    expect(asNumber.json.usingAtHoursOnly).toBe(true);
+  });
+
+  it('does not turn numbers into text for the other text options', async () => {
+    // A number can not carry a snowflake id without losing digits, so only the hour is allowed to
+    expect((await call('/snowflake', { body: { value: 175928847299117063 } })).status).toBe(400);
+    expect((await call('/at', { body: { hour: '9', timezone: 5 } })).status).toBe(400);
+  });
+
   it('falls back to the saved settings', async () => {
     backend.settings.set(DISCORD_USER_ID, { ...(await backend.getSettings(DISCORD_USER_ID)), timezone: 'GMT-5', defaultAtMinute: 30 });
     expect((await call('/at', { body: { hour: '9' } })).json.unix).toBe(unixOf('2022-04-24T14:30:00Z'));

@@ -38,6 +38,15 @@ export const env = defineEnv({
   API_URL: z.string().min(1),
   /** SledgeHammerTime backend auth token. Optional: unset means backend API calls run unauthenticated (and fail server-side, which is handled). */
   API_TOKEN: z.string().optional().default(''),
+  /**
+   * Origin of the HammerTime API (packages/api). Optional: unset means every command is resolved by this process, as before.
+   * When set together with COMMANDS_API_KEY the timestamp commands are asked of the API, and handled here only when it does not answer.
+   */
+  COMMANDS_API_URL: z.string().optional().default(''),
+  /** The bot's service key, created with `php artisan bot-token:generate --service` on the SledgeHammerTime backend. */
+  COMMANDS_API_KEY: z.string().optional().default(''),
+  /** How long to wait for the API before handling the command here instead. Interactions have to be answered within 3 seconds. */
+  COMMANDS_API_TIMEOUT_MS: z.coerce.number().int().min(100).max(2500).optional().default(1500),
   /** Server ID used to resolve role mentions in FAQ entries. Optional. */
   SUPPORT_SERVER_ID: z.string().optional().default(''),
   /** Discord webhook URL logs of warn level and above are fanned out to. Optional. */

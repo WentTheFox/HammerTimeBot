@@ -9,6 +9,7 @@ import {
   InteractionContext,
   InteractionHandlerContext,
   LoggerContext,
+  UserInteractionContext,
   UserSettingsContext,
 } from '../types/bot-interaction.js';
 import { TelemetryResponse } from './add-telemetry-note-to-reply.js';
@@ -218,12 +219,17 @@ export const sendWebhookDelivery = async (context: LoggerContext, record: Webhoo
   }
 };
 
-export const sendCommandTelemetry = async (context: LoggerContext & UserSettingsContext, interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction): Promise<TelemetryResponse | undefined | null> => {
+export const sendCommandTelemetry = async (context: LoggerContext & UserSettingsContext & Partial<Pick<UserInteractionContext, 'commandRecordedByApi'>>, interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction): Promise<TelemetryResponse | undefined | null> => {
   const logger = context.logger.nest('sendCommandTelemetry').muteMethods(['info', 'debug']);
   // Call sites use this void-fired (fire-and-forget, no .catch()), so it must never reject - hit in
   // practice: getSettings() briefly returning undefined instead of its documented fallback (fixed
   // separately) turned `settings.telemetry` into an unhandled rejection here. try/catch as a second
   // line of defense against whatever the next surprise from an external call turns out to be.
+  // The API recorded this run itself and put the note in the reply, counting it again would count it twice
+  if (context.commandRecordedByApi) {
+    logger.debug('Already recorded by the API, skip sending telemetry');
+    return null;
+  }
   try {
     logger.debug('Obtaining user consent…');
     const settings = await context.getSettings();

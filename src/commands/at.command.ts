@@ -4,6 +4,7 @@ import { AtCommandOptionName, GlobalCommandOptionName } from '../types/localizat
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
 import { handleHourAutocomplete, handleTimezoneAutocomplete } from '../utils/messaging.js';
 import { replyWithCommandError } from '../utils/command-error.js';
+import { handleTimestampCommand } from '../utils/handle-timestamp-command.js';
 
 export const atCommand: BotChatInputCommand = {
   name: 'at',
@@ -13,31 +14,39 @@ export const atCommand: BotChatInputCommand = {
   },
   async handle(interaction, context) {
     const settings = await context.getSettings();
-    const { options } = interaction;
-    const result = resolveAt({
-      year: options.getInteger(AtCommandOptionName.YEAR),
-      month: options.getInteger(AtCommandOptionName.MONTH),
-      day: options.getInteger(AtCommandOptionName.DATE),
-      hour: options.getString(AtCommandOptionName.HOUR),
-      hour12: options.getInteger(AtCommandOptionName.HOUR12),
-      minute: options.getInteger(AtCommandOptionName.MINUTE),
-      second: options.getNumber(AtCommandOptionName.SECOND),
-      am: options.getBoolean(AtCommandOptionName.AM),
-      pm: options.getBoolean(AtCommandOptionName.PM),
-      timezone: options.getString(GlobalCommandOptionName.TIMEZONE),
-    }, settings);
-    if (isCommandError(result)) {
-      await replyWithCommandError(context, interaction, settings, result);
-      return;
-    }
-
-    await replyWithSyntax({
-      localDate: result.date,
+    await handleTimestampCommand({
+      name: 'at',
       interaction,
       context,
-      timezone: result.timezone,
       settings,
-      usingAtHoursOnly: result.usingAtHoursOnly,
+      handleLocally: async () => {
+        const { options } = interaction;
+        const result = resolveAt({
+          year: options.getInteger(AtCommandOptionName.YEAR),
+          month: options.getInteger(AtCommandOptionName.MONTH),
+          day: options.getInteger(AtCommandOptionName.DATE),
+          hour: options.getString(AtCommandOptionName.HOUR),
+          hour12: options.getInteger(AtCommandOptionName.HOUR12),
+          minute: options.getInteger(AtCommandOptionName.MINUTE),
+          second: options.getNumber(AtCommandOptionName.SECOND),
+          am: options.getBoolean(AtCommandOptionName.AM),
+          pm: options.getBoolean(AtCommandOptionName.PM),
+          timezone: options.getString(GlobalCommandOptionName.TIMEZONE),
+        }, settings);
+        if (isCommandError(result)) {
+          await replyWithCommandError(context, interaction, settings, result);
+          return;
+        }
+
+        await replyWithSyntax({
+          localDate: result.date,
+          interaction,
+          context,
+          timezone: result.timezone,
+          settings,
+          usingAtHoursOnly: result.usingAtHoursOnly,
+        });
+      },
     });
   },
 };

@@ -5,13 +5,13 @@ import {
   SeparatorSpacingSize,
 } from 'discord.js';
 import { InteractionContext } from '../types/bot-interaction.js';
-import { APISeparatorComponent, ComponentType } from 'discord-api-types/v10';
+import { APISeparatorComponent, APITextDisplayComponent, ComponentType } from 'discord-api-types/v10';
 import { env } from '../env.js';
 import { EmojiCharacters } from '../constants/emoji-characters.js';
 import { emoji, getBareNumberFormatter } from './messaging.js';
 import { createCommandMention } from './interaction-reply.js';
 
-const telemetryPlaceholderSeparator: APISeparatorComponent = {
+export const telemetryPlaceholderSeparator: APISeparatorComponent = {
   type: ComponentType.Separator,
   divider: true,
   spacing: SeparatorSpacingSize.Large,
@@ -23,6 +23,33 @@ export interface TelemetryResponse {
   commandName: string | undefined;
   commandId: string | undefined;
 }
+
+/**
+ * The small print at the end of a reply: how many times the command was run (when the backend said so) and the thank you
+ * with the privacy policy link
+ */
+export const buildTelemetryNote = (
+  context: InteractionContext,
+  interaction: Pick<ChatInputCommandInteraction | ContextMenuCommandInteraction, 'locale' | 'commandName'>,
+  telemetryResponse: TelemetryResponse | undefined,
+): APITextDisplayComponent => {
+  const numberFormatter = getBareNumberFormatter(interaction, context);
+  const privacyPolicyUrl = telemetryResponse?.privacyPolicyUrl ?? `${env.API_URL}/legal#privacy-policy`;
+
+  return {
+    type: ComponentType.TextDisplay,
+    content: [
+      '-#',
+      telemetryResponse ? context.t('commands.global.components.telemetryInfoCount', {
+        executionNumber: numberFormatter.format(telemetryResponse.executionNumber ?? -1),
+        command: createCommandMention(telemetryResponse.commandName ?? interaction.commandName, context),
+      }) : null,
+      context.t('commands.global.components.telemetryThankYou', {
+        privacyPolicy: `[${context.t('commands.global.components.privacyPolicyLink')}](<${privacyPolicyUrl}>)`,
+      }),
+    ].filter(Boolean).join(' '),
+  };
+};
 
 export const addTelemetryNoteToReply = async (
   context: InteractionContext,
@@ -69,24 +96,10 @@ export const addTelemetryNoteToReply = async (
     replyComponentsWithoutPlaceholder = [...replyComponentsWithoutPlaceholder, telemetryPlaceholderSeparator];
   }
 
-  const numberFormatter = getBareNumberFormatter(interaction, context);
-  const privacyPolicyUrl = telemetryResponse?.privacyPolicyUrl ?? `${env.API_URL}/legal#privacy-policy`;
   await interaction.editReply({
     components: [
       ...replyComponentsWithoutPlaceholder,
-      {
-        type: ComponentType.TextDisplay,
-        content: [
-          '-#',
-          telemetryResponse ? context.t('commands.global.components.telemetryInfoCount', {
-            executionNumber: numberFormatter.format(telemetryResponse.executionNumber ?? -1),
-            command: createCommandMention(telemetryResponse.commandName ?? interaction.commandName, context),
-          }) : null,
-          context.t('commands.global.components.telemetryThankYou', {
-            privacyPolicy: `[${context.t('commands.global.components.privacyPolicyLink')}](<${privacyPolicyUrl}>)`,
-          }),
-        ].filter(Boolean).join(' '),
-      },
+      buildTelemetryNote(context, interaction, telemetryResponse),
     ],
   });
   logger.debug('Successfully added telemetry note to reply');

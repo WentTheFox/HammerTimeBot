@@ -28,6 +28,15 @@ An MCP client is configured with the URL of `/mcp` and the header, for example:
 { "mcpServers": { "hammertime": { "type": "http", "url": "https://<host>/mcp", "headers": { "Authorization": "Bearer htk_..." } } } }
 ```
 
+## The bot as a client
+
+The bot can ask this API to handle its timestamp commands (`COMMANDS_API_URL` and `COMMANDS_API_KEY` in the bot's `.env`, see
+`.env.example`). It sends the options the user gave, as the service key with `X-Discord-User-Id`, and turns the answer into the
+Discord reply. The API has recorded the run by then and the reply carries the note about it, so the bot does not record it a
+second time. When the API is down, slow (`COMMANDS_API_TIMEOUT_MS`), refuses the bot or limits it, the bot handles the
+command itself exactly as it did before, including recording the run, so an outage of this service costs nothing but
+the logged warning. Input the API rejects is worded by the bot and recorded as it always was.
+
 ## Rate limits
 
 Each key may make `RATE_LIMIT_PER_MINUTE` requests (60) on average, with a burst of half of that, across the REST endpoints

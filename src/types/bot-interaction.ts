@@ -41,7 +41,13 @@ export interface InteractionContext extends Omit<InteractionHandlerContext, 'i18
   t: TFunction;
 }
 
-export type UserInteractionContext = InteractionContext & UserSettingsContext;
+export type UserInteractionContext = InteractionContext & UserSettingsContext & {
+  /**
+   * Set by a command that the API handled: the API already recorded the run, and its note is part of the reply, so
+   * this process must not record it again
+   */
+  commandRecordedByApi?: boolean;
+};
 
 export type BotChatInputCommand = NamedChatInputCommand<UserInteractionContext>;
 

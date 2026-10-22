@@ -14,7 +14,12 @@ import { formatSelectComponent } from '../components/format-select.component.js'
 import { EmojiCharacters } from '../constants/emoji-characters.js';
 import { InteractionContext } from '../types/bot-interaction.js';
 import { addIncompleteTranslationsFooter, createCommandMention } from './interaction-reply.js';
-import { getTelemetryPlaceholder } from './add-telemetry-note-to-reply.js';
+import {
+  buildTelemetryNote,
+  getTelemetryPlaceholder,
+  telemetryPlaceholderSeparator,
+  TelemetryResponse,
+} from './add-telemetry-note-to-reply.js';
 import { TZDate } from '@date-fns/tz';
 
 type HandledInteractions = ChatInputCommandInteraction | ContextMenuCommandInteraction;
@@ -59,29 +64,36 @@ interface SyntaxReplyOptions {
   usingAtHoursOnly?: boolean;
 }
 
-export const getSyntaxReplyOptions = async ({
-  localDate,
+/** How the reply deals with the telemetry note */
+export type TelemetryPresentation =
+  /** The run is recorded after the reply, a placeholder is replaced by the note once that is done */
+  | { type: 'placeholder' }
+  /** The run was recorded already (by the API), so the note is part of the reply. null when the account opted out. */
+  | { type: 'recorded'; response: TelemetryResponse | undefined | null };
+
+interface BuildSyntaxReplyOptions {
+  rendered: { content: string; singleFormat: string | null; minimalReply: boolean };
+  interaction: HandledInteractions;
+  context: InteractionContext;
+  settings: Pick<SettingsValue, 'ephemeral' | 'columns' | 'format' | 'header' | 'telemetry'> | undefined;
+  usingAtHoursOnly?: boolean;
+  telemetry: TelemetryPresentation;
+}
+
+/**
+ * The Discord reply for a rendered timestamp: the reply itself is decided elsewhere (here or by the API), this
+ * is the part that is about Discord, such as the format picker, the hints and the telemetry note
+ */
+export const buildSyntaxReplyOptions = ({
+  rendered: { content, singleFormat: formatInput, minimalReply: singleFormatReply },
   interaction,
   context,
-  timezone = 'UTC',
   settings,
   usingAtHoursOnly = false,
-}: SyntaxReplyOptions): Promise<InteractionReplyOptions> => {
+  telemetry,
+}: BuildSyntaxReplyOptions): InteractionReplyOptions => {
   const { t, emojiIdMap } = context;
   const syntaxInteraction = mapCommandInteractionToSyntaxInteraction(interaction, settings);
-  const rendered = renderTimestamp(localDate, timezone, {
-    columns: syntaxInteraction.columns,
-    format: syntaxInteraction.format,
-    header: syntaxInteraction.header,
-  }, settings);
-  if (isCommandError(rendered)) {
-    return {
-      content: t(rendered.error),
-      flags: MessageFlags.Ephemeral,
-    };
-  }
-
-  const { content, singleFormat: formatInput, minimalReply: singleFormatReply } = rendered;
   const shouldReplyBeEphemeral = syntaxInteraction.ephemeral ?? EPHEMERAL_OPTION_DEFAULT_VALUE;
 
   if (singleFormatReply) {
@@ -92,7 +104,7 @@ export const getSyntaxReplyOptions = async ({
   }
 
   const telemetryPlaceholder: InteractionReplyOptions['components'] =
-    settings?.telemetry ? getTelemetryPlaceholder(context) ?? [] : [];
+    telemetry.type === 'placeholder' && settings?.telemetry ? getTelemetryPlaceholder(context) ?? [] : [];
   let replyOptions: InteractionReplyOptions = {
     flags: MessageFlags.IsComponentsV2 | (shouldReplyBeEphemeral ? MessageFlags.Ephemeral : 0),
     components: [
@@ -147,7 +159,45 @@ export const getSyntaxReplyOptions = async ({
       ],
     });
   }
+
+  if (telemetry.type === 'recorded' && telemetry.response !== null) {
+    // Last, which is where the note ends up when it is added to the reply afterwards
+    replyOptions = {
+      ...replyOptions,
+      components: [
+        ...(replyOptions.components ?? []),
+        telemetryPlaceholderSeparator,
+        buildTelemetryNote(context, interaction, telemetry.response),
+      ],
+    };
+  }
+
   return replyOptions;
+};
+
+export const getSyntaxReplyOptions = async ({
+  localDate,
+  interaction,
+  context,
+  timezone = 'UTC',
+  settings,
+  usingAtHoursOnly = false,
+}: SyntaxReplyOptions): Promise<InteractionReplyOptions> => {
+  const { t } = context;
+  const syntaxInteraction = mapCommandInteractionToSyntaxInteraction(interaction, settings);
+  const rendered = renderTimestamp(localDate, timezone, {
+    columns: syntaxInteraction.columns,
+    format: syntaxInteraction.format,
+    header: syntaxInteraction.header,
+  }, settings);
+  if (isCommandError(rendered)) {
+    return {
+      content: t(rendered.error),
+      flags: MessageFlags.Ephemeral,
+    };
+  }
+
+  return buildSyntaxReplyOptions({ rendered, interaction, context, settings, usingAtHoursOnly, telemetry: { type: 'placeholder' } });
 };
 
 interface ReplyWithSyntaxParams {

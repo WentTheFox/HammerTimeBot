@@ -1,4 +1,4 @@
-import { SnowflakeError } from '../classes/snowflake-error.js';
+import { SnowflakeError } from './snowflake-error.js';
 
 const DISCORD_EPOCH = 1420070400000;
 const SNOWFLAKE_MIN_VALUE = 4194304;

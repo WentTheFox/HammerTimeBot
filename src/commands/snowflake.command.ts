@@ -1,8 +1,7 @@
 import { BotChatInputCommand } from '../types/bot-interaction.js';
 import { SnowflakeCommandOptionName } from '../types/localization.js';
 import { replyWithSyntax } from '../utils/reply-with-syntax.js';
-import snowflakeToUnix from '../utils/snowflake.js';
-import { SnowflakeError } from '../classes/snowflake-error.js';
+import { snowflakeToUnix , SnowflakeError } from '@went.tf/hammertime-core';
 import { MessageFlags } from 'discord-api-types/v10';
 import { interactionReply } from '../utils/interaction-reply.js';
 import { TZDate } from '@date-fns/tz';

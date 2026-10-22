@@ -1,5 +1,5 @@
 import { getExactTimePrefix } from './get-exact-time-prefix.js';
-import { EmojiCharacters } from '../constants/emoji-characters.js';
+import { EmojiCharacters } from './emoji-characters.js';
 import { describe, expect, it } from 'vitest';
 import { TZDate } from '@date-fns/tz';
 

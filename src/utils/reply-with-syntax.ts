@@ -1,4 +1,4 @@
-import { MessageTimestamp , formattedResponse, supportedFormats } from '@went.tf/hammertime-core';
+import { MessageTimestamp , formattedResponse, supportedFormats , getExactTimePrefix } from '@went.tf/hammertime-core';
 import {
   ChatInputCommandInteraction,
   ComponentType,
@@ -9,7 +9,6 @@ import {
 } from 'discord.js';
 import { GlobalCommandOptionName, ResponseColumnChoices } from '../types/localization.js';
 import { EPHEMERAL_OPTION_DEFAULT_VALUE, isEphemeralResponse } from './messaging.js';
-import { getExactTimePrefix } from './get-exact-time-prefix.js';
 import { SettingsValue } from './settings.js';
 import { formatSelectComponent } from '../components/format-select.component.js';
 import { EmojiCharacters } from '../constants/emoji-characters.js';

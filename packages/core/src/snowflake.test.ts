@@ -1,5 +1,5 @@
 import snowflakeToUnix from './snowflake.js';
-import { SnowflakeError } from '../classes/snowflake-error.js';
+import { SnowflakeError } from './snowflake-error.js';
 import { describe, expect, it } from 'vitest';
 
 describe('snowflakeToUnix', () => {

@@ -39,7 +39,7 @@ export interface LaravelBackendOptions {
  * endpoints, which are only reachable with the shared secret:
  *
  * - POST /internal/keys/validate {token} -> {kind, discord_user_id, scopes, key_id}, 401 for an unknown key
- * - GET|PUT /internal/settings/{discordUserId} -> the settings (PUT takes the patch, a null resets a setting)
+ * - GET|PATCH /internal/settings/{discordUserId} -> the settings (PATCH takes the patch, a null resets a setting)
  * - POST /internal/command-telemetry -> {executionNumber, privacyPolicyUrl, commandName, commandId}
  */
 export class LaravelBackend implements Backend {
@@ -120,7 +120,7 @@ export class LaravelBackend implements Backend {
   }
 
   async updateSettings(discordUserId: string, patch: SettingsPatch): Promise<SettingsValue> {
-    const response = await this.request('PUT', `/internal/settings/${encodeURIComponent(discordUserId)}`, patch);
+    const response = await this.request('PATCH', `/internal/settings/${encodeURIComponent(discordUserId)}`, patch);
     if (!response.ok) {
       return this.fail(response);
     }

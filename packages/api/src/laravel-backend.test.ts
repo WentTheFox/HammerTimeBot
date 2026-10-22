@@ -48,11 +48,11 @@ describe('LaravelBackend', () => {
       await expect(setup(() => reply(200, { ...settings, columns: 'sideways' })).backend.getSettings('1')).rejects.toMatchObject({ status: 502 });
     });
 
-    it('sends the patch as a PUT and returns the result', async () => {
+    it('sends the patch as a PATCH and returns the result', async () => {
       const { backend, fetchMock } = setup(() => reply(200, { ...settings, timezone: 'GMT+2' }));
       expect((await backend.updateSettings('1', { timezone: 'GMT+2' })).timezone).toBe('GMT+2');
       const [, init] = fetchMock.mock.calls[0];
-      expect(init?.method).toBe('PUT');
+      expect(init?.method).toBe('PATCH');
       expect(JSON.parse(init?.body as string)).toEqual({ timezone: 'GMT+2' });
     });
 

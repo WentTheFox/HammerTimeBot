@@ -10,7 +10,8 @@
     "lint:fix": "pnpm run lint -- --fix",
     "generate-faq": "tsx ./utils/generate-faq",
     "build:core": "pnpm --filter @went.tf/hammertime-core run build",
-    "build": "pnpm run build:core && pnpm run generate-faq && tsc",
+    "build:api": "pnpm --filter @went.tf/hammertime-api run build",
+    "build": "pnpm run build:core && pnpm run build:api && pnpm run generate-faq && tsc",
     "build:clean": "rimraf build",
     "start": "node --enable-source-maps ./build/src/webhook.js",
     "sync-commands": "node --enable-source-maps ./build/src/sync-commands-cli.js",
@@ -18,6 +19,7 @@
     "start:dev": "pnpm run build:clean && pnpm run build && pnpm run start",
     "pretest": "pnpm run build:core",
     "test": "vitest",
+    "test:packages": "pnpm run build:core && pnpm -r --filter \"./packages/*\" run test",
     "test:watch": "vitest --watch",
     "prepare": "ts-patch install"
   },

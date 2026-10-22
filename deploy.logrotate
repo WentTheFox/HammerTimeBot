@@ -5,7 +5,8 @@
 # to (the SledgeHammerTime site's legal page, lang/en/legal.php): "The Bot
 # records Command executions for debugging purposes ... This data is stored on
 # the Project server for up to 30 days". The webhook process's output is where
-# those records end up, so it is kept for at most 30 days.
+# those records end up, so it is kept for at most 30 days. The API server (packages/api) writes no per-user data
+# to its logs, but gets the same retention so that stays true if it ever does.
 # With `daily`, `rotate 29` keeps today's file plus 29 rotated ones, so
 # nothing is older than 30 days. `maxage 30` is a second, independent cap.
 #
@@ -13,7 +14,9 @@
 # kept for two weeks. Both are owned by the deploy user.
 
 @WORKTREE@/logs/pm2-webhook-out.log
-@WORKTREE@/logs/pm2-webhook-error.log {
+@WORKTREE@/logs/pm2-webhook-error.log
+@WORKTREE@/logs/pm2-api-out.log
+@WORKTREE@/logs/pm2-api-error.log {
 	su deploy deploy
 	daily
 	rotate 29

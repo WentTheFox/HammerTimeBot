@@ -11,6 +11,19 @@
       "env": {
         "NODE_OPTIONS": "--use-openssl-ca"
       }
+    },
+    {
+      "name": "HammerTimeBot:Api",
+      "script": "packages/api/dist/src/server.js",
+      "node_args": "--env-file=.env.api",
+      "log_date_format": "YYYY-MM-DD HH:mm:ss Z",
+      "out_file": "logs/pm2-api-out.log",
+      "error_file": "logs/pm2-api-error.log",
+      "merge_logs": true,
+      "source_map_support": true,
+      "env": {
+        "NODE_OPTIONS": "--use-openssl-ca"
+      }
     }
   ]
 }

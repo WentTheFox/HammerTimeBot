@@ -14,7 +14,7 @@
 
 @WORKTREE@/logs/pm2-webhook-out.log
 @WORKTREE@/logs/pm2-webhook-error.log {
-	su chisel chisel
+	su deploy deploy
 	daily
 	rotate 29
 	maxage 30
@@ -26,7 +26,7 @@
 }
 
 @WORKTREE@/sync-commands.log {
-	su chisel chisel
+	su deploy deploy
 	daily
 	rotate 13
 	maxage 14

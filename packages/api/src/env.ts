@@ -7,6 +7,8 @@ const EnvSchema = z.object({
   LARAVEL_URL: z.url(),
   /** Shared secret of the Laravel app's internal endpoints */
   INTERNAL_API_SECRET: z.string().min(16),
+  /** How long an API key is trusted without asking the Laravel app again, a revoked key keeps working that long. 0 turns the cache off. */
+  KEY_CACHE_TTL_SECONDS: z.coerce.number().int().min(0).max(300).default(30),
 });
 
 export type Env = z.infer<typeof EnvSchema>;

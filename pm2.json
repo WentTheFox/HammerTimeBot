@@ -20,7 +20,6 @@
     {
       "name": "HammerTimeBot:Api",
       "script": "packages/api/dist/src/server.js",
-      "node_args": "--env-file=packages/api/.env",
       "exec_mode": "cluster",
       "instances": 2,
       "wait_ready": true,

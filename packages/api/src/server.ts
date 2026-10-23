@@ -5,9 +5,13 @@ import { CachingBackend } from './caching-backend.js';
 import { loadEnv } from './env.js';
 import { announceReady, shutdownGracefully } from './graceful-shutdown.js';
 import { LaravelBackend } from './laravel-backend.js';
+import { loadEnvFile } from './load-env-file.js';
 import { createRateLimits } from './rate-limit.js';
 import { connectToRedis, redisLimiterFactory, redisTargetFromEnv } from './redis-rate-limit.js';
 
+// Before anything reads the environment. By the location of the package, not the working directory, see load-env-file.ts
+const envFile = loadEnvFile();
+if (envFile) console.log(`Settings read from ${envFile}`);
 const env = loadEnv();
 const redisTarget = redisTargetFromEnv(env);
 const redis = redisTarget ? connectToRedis(redisTarget, console.warn) : null;

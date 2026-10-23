@@ -100,7 +100,7 @@ pnpm --filter @went.tf/hammertime-api run openapi:sync [-- --check]      # after
 ```sh
 pnpm run build:core && pnpm --filter @went.tf/hammertime-api run build
 cp packages/api/.env.example packages/api/.env    # fill it in, git ignores it
-node --env-file=packages/api/.env packages/api/dist/src/server.js
+node packages/api/dist/src/server.js    # reads packages/api/.env by itself
 ```
 
 On the server pm2 runs it (`HammerTimeBot:Api` in `pm2.json`), but only when `packages/api/.env` exists, see `deploy.conf`. (It used to be `.env.api` in the root of the repository, the deploy moves such a file by itself.) Deploy the

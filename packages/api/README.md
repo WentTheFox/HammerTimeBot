@@ -50,7 +50,31 @@ address waits, which can catch innocent users behind a shared address, so keep t
 
 Behind a reverse proxy every client has the proxy's address, so they would all count as one. Set `CLIENT_IP_HEADER` to a header
 the proxy sets to the client's address **and overwrites** (nginx: `proxy_set_header X-Real-IP $remote_addr;`), otherwise anyone
-could pick the address they are counted under. The limits are kept in memory, per process, and nothing runs in the background.
+could pick the address they are counted under. Nothing runs in the background to clean up after the limits: a bucket is only brought up to date when it is used, and Redis forgets
+one by itself when it has filled up again.
+
+### Counting in Redis
+
+`pm2.json` runs two workers (see below). Left alone, each counts for itself, so a key can make up to the number of workers times
+`RATE_LIMIT_PER_MINUTE` requests, and the same goes for the failed authentications of an address. Set up Redis to count them as one:
+either `REDIS_URL`, or `REDIS_HOST` with `REDIS_PORT`, `REDIS_USERNAME`, `REDIS_PASSWORD`, `REDIS_DB` and `REDIS_TLS` (see
+`.env.example`), and the limits are shared by every worker.
+
+- One Lua script refills the bucket, checks it and spends from it, so two workers can not both take the last token. The keys are
+  `<REDIS_KEY_PREFIX><kind>:<key or address>` (`hammertime-api:requests:key:42`) and expire by themselves. Give the API a
+  database of its own (`REDIS_DB`), the prefix keeps the keys of the Laravel app, which may share the Redis, safe in any case.
+- A request never waits for Redis for more than 150 ms. When it does not answer, that request is counted in memory, per worker,
+  as it is without Redis: a limit that is a little looser is better than an API that is down because its rate limiter is. It says so
+  in the log, once a minute at most, and counts in Redis again when Redis is back.
+- `REDIS_TLS=true` is for a Redis on another machine, on this one it is not needed.
+
+## Running as a cluster
+
+pm2 runs the server as two workers that share the port (`exec_mode`, `instances`, `wait_ready` and `kill_timeout` in `pm2.json`). A
+worker sends `ready` once it listens and stops on `SIGINT` by finishing the requests in flight, which is what lets a deploy replace
+them one at a time without dropping any (`src/graceful-shutdown.ts`, the bot has the same one). Nothing a request needs is
+kept from the one before. The key cache is per worker, so each of them validates a key against the Laravel app once per
+`KEY_CACHE_TTL_SECONDS`, and the rate limits are per worker too unless [Redis](#counting-in-redis) is set up.
 
 ## Where the data lives
 

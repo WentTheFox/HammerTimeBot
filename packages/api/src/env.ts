@@ -21,6 +21,23 @@ const EnvSchema = z.object({
    * Without it every client behind the proxy is counted as one address.
    */
   CLIENT_IP_HEADER: z.string().optional().transform(value => value || undefined),
+  /**
+   * Where the rate limits are counted, so that every worker counts into the same ones. Without any Redis setting each worker counts
+   * for itself, and a client can make as many requests as there are workers times the limit. Either a URL
+   * (redis://user:password@host:6379/2, a password with special characters has to be escaped in it), or the settings one by one:
+   * REDIS_HOST turns it on, the others have defaults. REDIS_URL wins when both are set.
+   */
+  REDIS_URL: z.string().optional().transform(value => value || undefined),
+  REDIS_HOST: z.string().optional().transform(value => value || undefined),
+  REDIS_PORT: z.coerce.number().int().min(1).max(65_535).default(6379),
+  REDIS_USERNAME: z.string().optional().transform(value => value || undefined),
+  REDIS_PASSWORD: z.string().optional().transform(value => value || undefined),
+  /** The database of its own the limits live in, apart from the one of the Laravel app (the keys have a prefix in any case) */
+  REDIS_DB: z.coerce.number().int().min(0).max(1_000).default(0),
+  /** Connect with TLS, for a Redis that is not on this machine */
+  REDIS_TLS: z.enum(['true', 'false', '1', '0']).default('false').transform(value => value === 'true' || value === '1'),
+  /** In front of every key the limits have in Redis, which the other applications in that Redis have to stay clear of */
+  REDIS_KEY_PREFIX: z.string().default('hammertime-api:'),
 });
 
 export type Env = z.infer<typeof EnvSchema>;

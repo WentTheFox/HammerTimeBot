@@ -18,6 +18,7 @@ import { initI18next } from './constants/locales.js';
 import { getEmojiIdMap } from './utils/get-emoji-id-map.js';
 import { getCommandIdMap } from './utils/get-command-id-map.js';
 import { createAppLogger } from './utils/create-app-logger.js';
+import { announceReady, shutdownGracefully } from './utils/graceful-shutdown.js';
 import { InteractionHandlerContext, UserInteractionContext } from './types/bot-interaction.js';
 import { buildUserInteractionContext } from './utils/build-user-interaction-context.js';
 import { handleInteractionError } from './utils/interaction-handlers/handle-interaction-error.js';
@@ -31,7 +32,7 @@ import { describeSlowWebhookDelivery, WebhookDeliveryTiming } from './utils/desc
 
 // This is the bot's only entry point: an HTTP Interactions Endpoint, not a gateway connection, so
 // there's no ShardingManager here - concurrency is whatever the process/PM2/nginx in front of it
-// provides instead. See CLAUDE.md's ./webhook entry in discord-bot-framework for why this exists.
+// provides instead (pm2.json runs it as a cluster of workers). See CLAUDE.md's ./webhook entry in discord-bot-framework for why this exists.
 
 const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((resolve, reject) => {
   const chunks: Buffer[] = [];
@@ -237,7 +238,12 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
       });
   });
 
+  // Under pm2 this process is one of several workers sharing the port, and they are replaced one at a time on a deploy.
+  // Nothing here is kept between requests, so any worker can take any interaction. pm2 waits for the ready message before it
+  // stops the worker that is being replaced, and the signal it sends then lets the interactions in flight finish.
+  shutdownGracefully(server, { log: message => logger.log(message) });
   server.listen(env.WEBHOOK_PORT, env.WEBHOOK_HOST, () => {
     logger.log(`Listening on ${env.WEBHOOK_HOST}:${env.WEBHOOK_PORT}`);
+    announceReady();
   });
 })();

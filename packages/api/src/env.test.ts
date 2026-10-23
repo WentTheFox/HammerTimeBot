@@ -14,7 +14,27 @@ describe('loadEnv', () => {
       RATE_LIMIT_BURST: undefined,
       AUTH_FAILURES_PER_MINUTE: 20,
       CLIENT_IP_HEADER: undefined,
+      REDIS_URL: undefined,
+      REDIS_HOST: undefined,
+      REDIS_PORT: 6379,
+      REDIS_USERNAME: undefined,
+      REDIS_PASSWORD: undefined,
+      REDIS_DB: 0,
+      REDIS_TLS: false,
+      REDIS_KEY_PREFIX: 'hammertime-api:',
     });
+  });
+
+  it('reads the Redis settings, and treats empty ones as not set', () => {
+    expect(loadEnv({ ...valid, REDIS_HOST: '127.0.0.1', REDIS_PORT: '6380', REDIS_DB: '2', REDIS_PASSWORD: 'p@ss:word', REDIS_TLS: '1', REDIS_KEY_PREFIX: 'x:' }))
+      .toMatchObject({ REDIS_HOST: '127.0.0.1', REDIS_PORT: 6380, REDIS_DB: 2, REDIS_PASSWORD: 'p@ss:word', REDIS_TLS: true, REDIS_KEY_PREFIX: 'x:' });
+    expect(loadEnv({ ...valid, REDIS_URL: '', REDIS_HOST: '', REDIS_PASSWORD: '', REDIS_USERNAME: '' }))
+      .toMatchObject({ REDIS_URL: undefined, REDIS_HOST: undefined, REDIS_PASSWORD: undefined, REDIS_USERNAME: undefined });
+  });
+
+  it('names a Redis setting that is wrong', () => {
+    expect(() => loadEnv({ ...valid, REDIS_PORT: 'abc' })).toThrow(/REDIS_PORT/);
+    expect(() => loadEnv({ ...valid, REDIS_TLS: 'maybe' })).toThrow(/REDIS_TLS/);
   });
 
   it('reads the rate limits', () => {

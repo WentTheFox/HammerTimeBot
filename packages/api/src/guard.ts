@@ -36,7 +36,7 @@ const tooMany = (message: string, headers: Record<string, string>): GuardOutcome
 export const guard = async ({ backend, limits, request, socketAddress, allowServiceKeys }: GuardOptions): Promise<GuardOutcome> => {
   const ip = limits.clientIp(request, socketAddress);
 
-  const lockout = limits.authFailures.peek(ip);
+  const lockout = await limits.authFailures.peek(ip);
   if (!lockout.allowed) {
     // Only when to come back: the RateLimit headers describe the quota of a key, not this counter of failures
     return tooMany('Too many failed attempts to authenticate, try again later', { 'Retry-After': String(Math.max(1, lockout.retryAfterSeconds)) });
@@ -45,13 +45,13 @@ export const guard = async ({ backend, limits, request, socketAddress, allowServ
   const authentication = await authenticate(backend, request.headers, { allowServiceKeys });
   if (!authentication.ok) {
     if (authentication.status === 401) {
-      limits.authFailures.consume(ip);
+      await limits.authFailures.consume(ip);
     }
     return authentication;
   }
 
   const { key } = authentication;
-  const result = limits.requests.consume(key.kind === 'service' ? `account:${key.discordUserId}` : `key:${key.keyId}`);
+  const result = await limits.requests.consume(key.kind === 'service' ? `account:${key.discordUserId}` : `key:${key.keyId}`);
   const headers = rateLimitHeaders(result);
   if (!result.allowed) {
     return tooMany('Too many requests, slow down', headers);

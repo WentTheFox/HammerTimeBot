@@ -35,12 +35,49 @@ One-time production server setup:
    `WEBHOOK_PATH_SECRET` (a long random URL-safe token - see its doc comment in `src/env.ts` for how
    to generate one), and optionally `WEBHOOK_PORT` (defaults to `3939`) and `WEBHOOK_HOST` (defaults to
    `127.0.0.1`, so only the reverse proxy in front of it can reach the endpoint) in the server's `.env`.
-5. `pm2 start pm2.json` (or `pm2 restart pm2.json` if already running) to bring up
-   `HammerTimeBot:Webhook`.
+5. `pm2 startOrReload pm2.json --only HammerTimeBot:Webhook` to bring up `HammerTimeBot:Webhook` (or replace its workers
+   if it is already running, see [Clustering](#clustering)).
 6. Once confident locally/in staging, set the Interactions Endpoint URL to
    `https://<webhook subdomain>/<WEBHOOK_PATH_SECRET>` in the Developer Portal - this is the actual
    cutover step (see above). The endpoint only serves interactions at that secret path (anything else,
    including `/`, 404s) so scanner/health-check noise never reaches signature verification.
+
+### Clustering
+
+Both pm2 apps in `pm2.json` (the webhook and the [API server](#api-and-mcp-server)) run as a cluster of two workers that share
+their port, so more requests can be handled at once and one worker can be replaced while the other answers. Nothing is kept in
+memory between interactions, which is why any worker can take any of them.
+
+A deploy runs `pm2 reload`, which replaces the workers one at a time: a new worker sends `ready` once it is listening (`wait_ready`),
+and only then does the old one get its `SIGINT`, which makes it stop taking connections, finish the requests in flight and exit
+(`kill_timeout` is how long it gets). Nothing is dropped, which a rehearsal under load with the real `pm2.json` confirmed.
+The first deploy after switching from a single process deletes and starts the app once, which has a short gap, and says so.
+
+Change `instances` in `pm2.json` for another number of workers. Each one has its own copy of what the process keeps in memory:
+for the API server that is a cache of validated keys, and the [rate limits](packages/api/README.md#rate-limits), which are counted
+per worker unless `REDIS_URL` or `REDIS_HOST` is set in `packages/api/.env`, then they are shared.
+
+## API and MCP server
+
+The same commands are also available outside Discord, as a public REST API and as an MCP server, both served by
+`packages/api` at `https://api.hammertime.cyou`:
+
+- **REST API**: one `POST` endpoint per timestamp command (`/at`, `/in`, `/snowflake`, ...) with the command's options as the JSON
+  body, `GET`/`PATCH /settings` for the bot settings, and `GET /me` for the key in use. Requests follow the settings of the Discord
+  account the key was created for, and are counted like bot commands. The interactive reference is at
+  [api.hammertime.cyou](https://api.hammertime.cyou/), the OpenAPI document at `/generated/api-docs.json` (and in this repository
+  as `docs/openapi/api-docs.json`).
+- **MCP server**: the Streamable HTTP endpoint `https://api.hammertime.cyou/mcp`, with one tool per command plus `settings`. It uses
+  the same keys, and only offers the tools a key's permissions allow, so any MCP consumer can use it. It is listed in the
+  [MCP Registry](https://registry.modelcontextprotocol.io/) as `io.github.WentTheFox/hammertime`.
+- **Keys**: created, rotated and revoked on the [API page](https://hammertime.cyou/en/api) of the website, after logging in with
+  Discord. A key acts as one linked Discord account and has permissions (`timestamps:create`, `settings:read`, `settings:write`),
+  which the page lists together with the endpoints.
+
+The commands, their options and the OpenAPI document are generated from `src/commands.json`, so the API can not drift from the bot,
+and the bot can use the API itself for the timestamp commands (`COMMANDS_API_URL` and `COMMANDS_API_KEY` in `.env`, falling back to
+its own logic when the API does not answer). The users, keys and settings stay in the website's database, the API server only talks
+to it over HTTP. How it is built, configured and released is in [`packages/api/README.md`](packages/api/README.md).
 
 ## Translation
 

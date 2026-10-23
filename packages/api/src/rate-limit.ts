@@ -20,6 +20,46 @@ export interface RateLimitResult {
   retryAfterSeconds: number;
 }
 
+/**
+ * What a limiter offers the guard. A result may come back at once (in memory) or later (Redis), so callers await it.
+ */
+export interface Limiter {
+  /** Whether a limit is set at all, 0 per minute turns it off */
+  readonly enabled: boolean;
+  readonly limit: number;
+  /** Spends a token when there is one */
+  consume(id: string): RateLimitResult | Promise<RateLimitResult>;
+  /** Whether a request would be allowed, without spending anything */
+  peek(id: string): RateLimitResult | Promise<RateLimitResult>;
+}
+
+export type LimiterFactory = (name: string, options: RateLimitOptions) => Limiter;
+
+/** What every request gets while a limit is off */
+export const UNLIMITED: RateLimitResult = { allowed: true, limit: 0, remaining: Number.MAX_SAFE_INTEGER, resetSeconds: 0, retryAfterSeconds: 0 };
+
+/** The bucket size for a limit: half a minute's worth unless set */
+export const bucketCapacity = ({ perMinute, burst }: Pick<RateLimitOptions, 'perMinute' | 'burst'>): number => Math.max(1, burst ?? Math.ceil(perMinute / 2));
+
+/**
+ * What a bucket that has `tokens` left means for the caller. The same for every kind of limiter, so the headers do not depend on
+ * where the counting is done.
+ */
+export const describeBucket = (
+  tokens: number,
+  allowed: boolean,
+  { limit, capacity, refillPerMs }: { limit: number; capacity: number; refillPerMs: number },
+): RateLimitResult => {
+  // Whether the request was allowed is what the bucket held before it, `tokens` is what is left after
+  return {
+    allowed,
+    limit,
+    remaining: Math.floor(tokens),
+    resetSeconds: Math.ceil((capacity - tokens) / refillPerMs / 1000),
+    retryAfterSeconds: allowed ? 0 : Math.ceil((1 - tokens) / refillPerMs / 1000),
+  };
+};
+
 interface Bucket {
   tokens: number;
   updatedAt: number;
@@ -30,7 +70,7 @@ interface Bucket {
  * bursts without allowing more than the average over time. The buckets are brought up to date when they are used, so
  * nothing runs in the background, and an idle bucket is simply a full one that gets dropped when the map is full.
  */
-export class RateLimiter {
+export class RateLimiter implements Limiter {
   readonly enabled: boolean;
   readonly limit: number;
   private readonly capacity: number;
@@ -42,7 +82,7 @@ export class RateLimiter {
   constructor({ perMinute, burst, maxEntries = 50_000, now = Date.now }: RateLimitOptions) {
     this.enabled = perMinute > 0;
     this.limit = perMinute;
-    this.capacity = Math.max(1, burst ?? Math.ceil(perMinute / 2));
+    this.capacity = bucketCapacity({ perMinute, burst });
     this.refillPerMs = perMinute / 60_000;
     this.maxEntries = maxEntries;
     this.now = now;
@@ -60,7 +100,7 @@ export class RateLimiter {
 
   private take(id: string, spend: boolean): RateLimitResult {
     if (!this.enabled) {
-      return { allowed: true, limit: 0, remaining: Number.MAX_SAFE_INTEGER, resetSeconds: 0, retryAfterSeconds: 0 };
+      return UNLIMITED;
     }
 
     const now = this.now();
@@ -79,13 +119,7 @@ export class RateLimiter {
       this.evict();
     }
 
-    return {
-      allowed,
-      limit: this.limit,
-      remaining: Math.floor(bucket.tokens),
-      resetSeconds: Math.ceil((this.capacity - bucket.tokens) / this.refillPerMs / 1000),
-      retryAfterSeconds: allowed ? 0 : Math.ceil((1 - bucket.tokens) / this.refillPerMs / 1000),
-    };
+    return describeBucket(bucket.tokens, allowed, { limit: this.limit, capacity: this.capacity, refillPerMs: this.refillPerMs });
   }
 
   private evict(): void {
@@ -113,9 +147,9 @@ export const rateLimitHeaders = (result: RateLimitResult): Record<string, string
 
 export interface RateLimits {
   /** Requests per API key, or per Discord account for the bot's service key */
-  requests: RateLimiter;
+  requests: Limiter;
   /** Failed authentications per client address, so bad keys do not each cost a lookup */
-  authFailures: RateLimiter;
+  authFailures: Limiter;
   /** Where the client address comes from */
   clientIp: (request: Request, socketAddress: string | undefined) => string;
 }
@@ -131,6 +165,11 @@ export interface RateLimitConfig {
    */
   clientIpHeader?: string;
   now?: () => number;
+  /**
+   * Makes the limiter of a kind of limit. In memory by default, which counts per process: with several workers a client can
+   * make as many requests as there are workers times the limit. server.ts passes one that counts in Redis when it is set up.
+   */
+  limiterFactory?: LimiterFactory;
 }
 
 export const DEFAULT_REQUESTS_PER_MINUTE = 60;
@@ -142,10 +181,11 @@ export const createRateLimits = ({
   authFailuresPerMinute = DEFAULT_AUTH_FAILURES_PER_MINUTE,
   clientIpHeader,
   now,
+  limiterFactory = (_name, options) => new RateLimiter(options),
 }: RateLimitConfig = {}): RateLimits => ({
-  requests: new RateLimiter({ perMinute: requestsPerMinute, burst: requestsBurst, now }),
+  requests: limiterFactory('requests', { perMinute: requestsPerMinute, burst: requestsBurst, now }),
   // As many failures at once as the limit says per minute, so "20 per minute" means 20 failures and then a wait
-  authFailures: new RateLimiter({ perMinute: authFailuresPerMinute, burst: authFailuresPerMinute, now }),
+  authFailures: limiterFactory('auth-failures', { perMinute: authFailuresPerMinute, burst: authFailuresPerMinute, now }),
   clientIp: (request, socketAddress) => {
     const header = clientIpHeader ? request.headers.get(clientIpHeader) : null;
     // X-Forwarded-For style lists put the client first

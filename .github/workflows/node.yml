@@ -23,6 +23,19 @@ jobs:
   lint-and-test:
     name: 'Building, Linting and Unit Tests'
     runs-on: ubuntu-24.04
+    # The API server counts its rate limits in Redis, and its tests of that need one (without it they are skipped)
+    services:
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      TEST_REDIS_URL: redis://127.0.0.1:6379/15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 

@@ -5,10 +5,18 @@ and `packages/api` (the public REST API and the MCP server, `@went.tf/hammertime
 record, the API server never talks to the database itself.
 
 - Checks: `pnpm run lint`, `pnpm test` (the bot), `pnpm run test:packages` (core and api). CI runs all of them and a build.
+  The API's tests of the Redis limiter run against a real Redis when `TEST_REDIS_URL` is set (CI has one, `redis://127.0.0.1:6379/15`)
+  and are skipped without it.
 - The API's generated files are committed and kept in sync by tests: `pnpm --filter @went.tf/hammertime-api run generate`
   (from `src/commands.json`) and `... run openapi:sync` (`docs/openapi/api-docs.json`). Add `-- --check` to only compare.
-- Deploys are `git push deploy`, which restarts both pm2 apps (`HammerTimeBot:Webhook` and `HammerTimeBot:Api`). The API reads
+- Deploys are `git push deploy`, which reloads both pm2 apps (`HammerTimeBot:Webhook` and `HammerTimeBot:Api`). The API reads
   `packages/api/.env`, see `packages/api/.env.example`.
+- Both apps run as a pm2 cluster of two workers (`pm2.json`), reloaded one at a time with `wait_ready`. Keep it that way:
+  a process must not keep anything in memory that a request needs from the one before (the API's key cache is per worker on purpose, and
+  its rate limits are counted in Redis when `REDIS_URL` or `REDIS_HOST` is set, see `packages/api/README.md`), and has to call `announceReady()` once listening and stop through
+  `shutdownGracefully()` (`graceful-shutdown.ts`, one copy in `src/utils` and one in `packages/api/src`, change both). A new
+  worker count is `instances` in `pm2.json`. Switching an app from a single process to a cluster deletes and starts it once
+  (`deploy_pm2_app` in `deploy.conf`).
 
 ## Releasing the MCP server to the MCP Registry
 

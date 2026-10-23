@@ -17,7 +17,22 @@ export const SettingsSchema = z.object({
   defaultAt12Hour: z.number().int().nullable().openapi({ description: 'Hour (1-12) used by the at12 and at commands when none is given' }),
   defaultAtMinute: z.number().int().nullable().openapi({ description: 'Minute used by the at commands when none is given' }),
   defaultAtSecond: z.number().int().nullable().openapi({ description: 'Second used by the at commands when none is given' }),
-}).openapi('Settings');
+}).openapi('Settings', {
+  example: {
+    ephemeral: true,
+    timezone: 'Europe/Budapest',
+    header: true,
+    boldPreview: true,
+    columns: null,
+    format: null,
+    formatMinimalReply: true,
+    telemetry: true,
+    defaultAtHour: null,
+    defaultAt12Hour: null,
+    defaultAtMinute: null,
+    defaultAtSecond: 0,
+  },
+});
 
 /** Only the given settings change, a null resets one to its default. The backend does the final validation (e.g. known timezones). */
 export const SettingsPatchSchema = z.object({

@@ -12,14 +12,23 @@ export const ErrorSchema = z.object({
       description: 'For invalid_request: what is wrong with which field',
     }),
   }),
-}).openapi('Error');
+}).openapi('Error', {
+  example: { error: { code: 'commands.at.responses.hourRange', message: 'When a meridiem is not specified, hour must be a number between 0 and 23' } },
+});
 
 export const TelemetrySchema = z.object({
   executionNumber: z.number().int().openapi({ description: 'How many times the command has been run, across Discord and the API' }),
   command: z.string(),
   privacyPolicyUrl: z.string(),
   note: z.string().openapi({ description: 'The sentence the bot appends to its replies' }),
-}).openapi('Telemetry');
+}).openapi('Telemetry', {
+  example: {
+    executionNumber: 1234,
+    command: 'at',
+    privacyPolicyUrl: 'https://hammertime.cyou/en/legal#telemetry-statistics',
+    note: 'This is execution #1234 for the /at command (since we started counting). Thank you for contributing telemetry data, which helps the bot\'s future development.',
+  },
+});
 
 export const TimestampSchema = z.object({
   command: z.enum(commandNames),
@@ -41,7 +50,28 @@ export const TimestampSchema = z.object({
   telemetry: TelemetrySchema.optional().openapi({
     description: 'Present only when usage telemetry is enabled in the settings of the account the key acts as',
   }),
-}).openapi('Timestamp');
+}).openapi('Timestamp', {
+  example: {
+    command: 'at',
+    unix: 1792773000,
+    timezone: 'Europe/Budapest',
+    header: '📅 2026-10-23 • 🕕 18:30:00 • 🌐 Europe/Budapest',
+    content: '📅 2026-10-23 • 🕕 18:30:00 • 🌐 Europe/Budapest\n`<t:1792773000:d>` → **<t:1792773000:d>**\n`<t:1792773000:R>` → **<t:1792773000:R>**',
+    singleFormat: null,
+    minimalReply: false,
+    usingAtHoursOnly: true,
+    formats: [
+      { format: 'd', timestamp: '<t:1792773000:d>' },
+      { format: 'R', timestamp: '<t:1792773000:R>' },
+    ],
+    telemetry: {
+      executionNumber: 1234,
+      command: 'at',
+      privacyPolicyUrl: 'https://hammertime.cyou/en/legal#telemetry-statistics',
+      note: 'This is execution #1234 for the /at command (since we started counting). Thank you for contributing telemetry data, which helps the bot\'s future development.',
+    },
+  },
+});
 
 export type ErrorBody = z.infer<typeof ErrorSchema>;
 export type TimestampBody = z.infer<typeof TimestampSchema>;
@@ -51,6 +81,8 @@ export const KeyInfoSchema = z.object({
   kind: z.enum(['user', 'service']),
   discordUserId: z.string().openapi({ description: 'The Discord account the key acts as' }),
   scopes: z.array(z.string()),
-}).openapi('KeyInfo');
+}).openapi('KeyInfo', {
+  example: { keyId: '42', kind: 'user', discordUserId: '140360880079503362', scopes: ['timestamps:create', 'settings:read', 'settings:write'] },
+});
 
 export const HealthSchema = z.object({ status: z.literal('ok') }).openapi('Health');

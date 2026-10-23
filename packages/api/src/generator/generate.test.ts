@@ -34,15 +34,17 @@ describe('generateSource', () => {
     expect(source).toContain('"am": z.boolean().optional()');
   });
 
-  it('turns choices into enums and lists them in the description', () => {
+  it('turns choices into enums and keeps their names as data, not in the description', () => {
     expect(source).toContain('z.enum(["d", "f", "t", "D", "F", "s", "S", "R", "T", "all"])');
-    expect(source).toContain('Choices: d (short date), f (date and time)');
+    expect(source).toContain(`'x-enum-labels': {"d":"short date","f":"date and time"`);
+    expect(source).toMatch(/commandChoiceLabels[^]*"at": \{\n {4}"format": \{"d":"short date"/);
+    expect(source).not.toContain('Choices:');
     expect(source).toContain('z.enum(["both", "preview", "syntax"])');
   });
 
   it('takes descriptions from the command, falling back to the shared option texts', () => {
     expect(source).toContain('"Specify the year (defaults to current year)"');
-    expect(source).toContain('"Returns only the specified format in the response Choices: d (short date)');
+    expect(source).toContain('"Returns only the specified format in the response"');
   });
 
   it('reports the Discord option type of every option', () => {

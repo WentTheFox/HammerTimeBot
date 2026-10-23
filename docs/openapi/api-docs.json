@@ -119,7 +119,33 @@
           "singleFormat",
           "minimalReply",
           "formats"
-        ]
+        ],
+        "example": {
+          "command": "at",
+          "unix": 1792773000,
+          "timezone": "Europe/Budapest",
+          "header": "📅 2026-10-23 • 🕕 18:30:00 • 🌐 Europe/Budapest",
+          "content": "📅 2026-10-23 • 🕕 18:30:00 • 🌐 Europe/Budapest\n`<t:1792773000:d>` → **<t:1792773000:d>**\n`<t:1792773000:R>` → **<t:1792773000:R>**",
+          "singleFormat": null,
+          "minimalReply": false,
+          "usingAtHoursOnly": true,
+          "formats": [
+            {
+              "format": "d",
+              "timestamp": "<t:1792773000:d>"
+            },
+            {
+              "format": "R",
+              "timestamp": "<t:1792773000:R>"
+            }
+          ],
+          "telemetry": {
+            "executionNumber": 1234,
+            "command": "at",
+            "privacyPolicyUrl": "https://hammertime.cyou/en/legal#telemetry-statistics",
+            "note": "This is execution #1234 for the /at command (since we started counting). Thank you for contributing telemetry data, which helps the bot's future development."
+          }
+        }
       },
       "Telemetry": {
         "type": "object",
@@ -145,6 +171,12 @@
           "privacyPolicyUrl",
           "note"
         ],
+        "example": {
+          "executionNumber": 1234,
+          "command": "at",
+          "privacyPolicyUrl": "https://hammertime.cyou/en/legal#telemetry-statistics",
+          "note": "This is execution #1234 for the /at command (since we started counting). Thank you for contributing telemetry data, which helps the bot's future development."
+        },
         "description": "Present only when usage telemetry is enabled in the settings of the account the key acts as"
       },
       "Error": {
@@ -196,7 +228,13 @@
         },
         "required": [
           "error"
-        ]
+        ],
+        "example": {
+          "error": {
+            "code": "commands.at.responses.hourRange",
+            "message": "When a meridiem is not specified, hour must be a number between 0 and 23"
+          }
+        }
       },
       "AddRequest": {
         "type": "object",
@@ -249,7 +287,19 @@
               "T",
               "all"
             ],
-            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+            "description": "Returns only the specified format in the response",
+            "x-enum-labels": {
+              "d": "short date",
+              "f": "date and time",
+              "t": "short time",
+              "D": "long date",
+              "F": "weekday, date and time",
+              "s": "short date and short time",
+              "S": "short date and long time",
+              "R": "relative",
+              "T": "long time",
+              "all": "all (default)"
+            }
           },
           "header": {
             "type": "boolean",
@@ -262,7 +312,12 @@
               "preview",
               "syntax"
             ],
-            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+            "description": "Specify which columns to display in the returned response",
+            "x-enum-labels": {
+              "both": "both syntax and preview",
+              "preview": "preview only",
+              "syntax": "syntax only"
+            }
           },
           "ephemeral": {
             "type": "boolean",
@@ -320,7 +375,19 @@
               "T",
               "all"
             ],
-            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+            "description": "Returns only the specified format in the response",
+            "x-enum-labels": {
+              "d": "short date",
+              "f": "date and time",
+              "t": "short time",
+              "D": "long date",
+              "F": "weekday, date and time",
+              "s": "short date and short time",
+              "S": "short date and long time",
+              "R": "relative",
+              "T": "long time",
+              "all": "all (default)"
+            }
           },
           "header": {
             "type": "boolean",
@@ -333,7 +400,12 @@
               "preview",
               "syntax"
             ],
-            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+            "description": "Specify which columns to display in the returned response",
+            "x-enum-labels": {
+              "both": "both syntax and preview",
+              "preview": "preview only",
+              "syntax": "syntax only"
+            }
           },
           "ephemeral": {
             "type": "boolean",
@@ -416,7 +488,19 @@
               "T",
               "all"
             ],
-            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+            "description": "Returns only the specified format in the response",
+            "x-enum-labels": {
+              "d": "short date",
+              "f": "date and time",
+              "t": "short time",
+              "D": "long date",
+              "F": "weekday, date and time",
+              "s": "short date and short time",
+              "S": "short date and long time",
+              "R": "relative",
+              "T": "long time",
+              "all": "all (default)"
+            }
           },
           "header": {
             "type": "boolean",
@@ -429,7 +513,12 @@
               "preview",
               "syntax"
             ],
-            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+            "description": "Specify which columns to display in the returned response",
+            "x-enum-labels": {
+              "both": "both syntax and preview",
+              "preview": "preview only",
+              "syntax": "syntax only"
+            }
           },
           "ephemeral": {
             "type": "boolean",
@@ -501,7 +590,19 @@
               "T",
               "all"
             ],
-            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+            "description": "Returns only the specified format in the response",
+            "x-enum-labels": {
+              "d": "short date",
+              "f": "date and time",
+              "t": "short time",
+              "D": "long date",
+              "F": "weekday, date and time",
+              "s": "short date and short time",
+              "S": "short date and long time",
+              "R": "relative",
+              "T": "long time",
+              "all": "all (default)"
+            }
           },
           "header": {
             "type": "boolean",
@@ -514,7 +615,12 @@
               "preview",
               "syntax"
             ],
-            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+            "description": "Specify which columns to display in the returned response",
+            "x-enum-labels": {
+              "both": "both syntax and preview",
+              "preview": "preview only",
+              "syntax": "syntax only"
+            }
           },
           "ephemeral": {
             "type": "boolean",
@@ -569,7 +675,19 @@
               "T",
               "all"
             ],
-            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+            "description": "Returns only the specified format in the response",
+            "x-enum-labels": {
+              "d": "short date",
+              "f": "date and time",
+              "t": "short time",
+              "D": "long date",
+              "F": "weekday, date and time",
+              "s": "short date and short time",
+              "S": "short date and long time",
+              "R": "relative",
+              "T": "long time",
+              "all": "all (default)"
+            }
           },
           "header": {
             "type": "boolean",
@@ -582,7 +700,12 @@
               "preview",
               "syntax"
             ],
-            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+            "description": "Specify which columns to display in the returned response",
+            "x-enum-labels": {
+              "both": "both syntax and preview",
+              "preview": "preview only",
+              "syntax": "syntax only"
+            }
           },
           "ephemeral": {
             "type": "boolean",
@@ -618,7 +741,19 @@
               "T",
               "all"
             ],
-            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+            "description": "Returns only the specified format in the response",
+            "x-enum-labels": {
+              "d": "short date",
+              "f": "date and time",
+              "t": "short time",
+              "D": "long date",
+              "F": "weekday, date and time",
+              "s": "short date and short time",
+              "S": "short date and long time",
+              "R": "relative",
+              "T": "long time",
+              "all": "all (default)"
+            }
           },
           "header": {
             "type": "boolean",
@@ -631,7 +766,12 @@
               "preview",
               "syntax"
             ],
-            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+            "description": "Specify which columns to display in the returned response",
+            "x-enum-labels": {
+              "both": "both syntax and preview",
+              "preview": "preview only",
+              "syntax": "syntax only"
+            }
           },
           "ephemeral": {
             "type": "boolean",
@@ -664,7 +804,19 @@
               "T",
               "all"
             ],
-            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+            "description": "Returns only the specified format in the response",
+            "x-enum-labels": {
+              "d": "short date",
+              "f": "date and time",
+              "t": "short time",
+              "D": "long date",
+              "F": "weekday, date and time",
+              "s": "short date and short time",
+              "S": "short date and long time",
+              "R": "relative",
+              "T": "long time",
+              "all": "all (default)"
+            }
           },
           "header": {
             "type": "boolean",
@@ -677,7 +829,12 @@
               "preview",
               "syntax"
             ],
-            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+            "description": "Specify which columns to display in the returned response",
+            "x-enum-labels": {
+              "both": "both syntax and preview",
+              "preview": "preview only",
+              "syntax": "syntax only"
+            }
           },
           "ephemeral": {
             "type": "boolean",
@@ -739,7 +896,19 @@
               "T",
               "all"
             ],
-            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+            "description": "Returns only the specified format in the response",
+            "x-enum-labels": {
+              "d": "short date",
+              "f": "date and time",
+              "t": "short time",
+              "D": "long date",
+              "F": "weekday, date and time",
+              "s": "short date and short time",
+              "S": "short date and long time",
+              "R": "relative",
+              "T": "long time",
+              "all": "all (default)"
+            }
           },
           "header": {
             "type": "boolean",
@@ -752,7 +921,12 @@
               "preview",
               "syntax"
             ],
-            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+            "description": "Specify which columns to display in the returned response",
+            "x-enum-labels": {
+              "both": "both syntax and preview",
+              "preview": "preview only",
+              "syntax": "syntax only"
+            }
           },
           "ephemeral": {
             "type": "boolean",
@@ -784,7 +958,19 @@
               "T",
               "all"
             ],
-            "description": "Returns only the specified format in the response Choices: d (short date), f (date and time), t (short time), D (long date), F (weekday, date and time), s (short date and short time), S (short date and long time), R (relative), T (long time), all (all (default))."
+            "description": "Returns only the specified format in the response",
+            "x-enum-labels": {
+              "d": "short date",
+              "f": "date and time",
+              "t": "short time",
+              "D": "long date",
+              "F": "weekday, date and time",
+              "s": "short date and short time",
+              "S": "short date and long time",
+              "R": "relative",
+              "T": "long time",
+              "all": "all (default)"
+            }
           },
           "header": {
             "type": "boolean",
@@ -797,7 +983,12 @@
               "preview",
               "syntax"
             ],
-            "description": "Specify which columns to display in the returned response Choices: both (both syntax and preview), preview (preview only), syntax (syntax only)."
+            "description": "Specify which columns to display in the returned response",
+            "x-enum-labels": {
+              "both": "both syntax and preview",
+              "preview": "preview only",
+              "syntax": "syntax only"
+            }
           },
           "ephemeral": {
             "type": "boolean",
@@ -903,7 +1094,21 @@
           "defaultAt12Hour",
           "defaultAtMinute",
           "defaultAtSecond"
-        ]
+        ],
+        "example": {
+          "ephemeral": true,
+          "timezone": "Europe/Budapest",
+          "header": true,
+          "boldPreview": true,
+          "columns": null,
+          "format": null,
+          "formatMinimalReply": true,
+          "telemetry": true,
+          "defaultAtHour": null,
+          "defaultAt12Hour": null,
+          "defaultAtMinute": null,
+          "defaultAtSecond": 0
+        }
       },
       "SettingsPatch": {
         "type": "object",
@@ -1015,7 +1220,17 @@
           "kind",
           "discordUserId",
           "scopes"
-        ]
+        ],
+        "example": {
+          "keyId": "42",
+          "kind": "user",
+          "discordUserId": "140360880079503362",
+          "scopes": [
+            "timestamps:create",
+            "settings:read",
+            "settings:write"
+          ]
+        }
       },
       "Health": {
         "type": "object",
@@ -1041,13 +1256,14 @@
         "tags": [
           "timestamps"
         ],
-        "summary": "/add",
-        "description": "Add some time to the specified UNIX timestamp. Equivalent to the bot's /add command: the same options, and any option left out falls back to the account's saved settings.",
+        "summary": "Add some time to the specified UNIX timestamp",
+        "description": "Equivalent to the bot's /add command: the same options, and any option left out falls back to the account's saved settings.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "timestamps:create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1128,13 +1344,14 @@
         "tags": [
           "timestamps"
         ],
-        "summary": "/ago",
-        "description": "Specify a timestamp in the past relative to the current time. Equivalent to the bot's /ago command: the same options, and any option left out falls back to the account's saved settings.",
+        "summary": "Specify a timestamp in the past relative to the current time",
+        "description": "Equivalent to the bot's /ago command: the same options, and any option left out falls back to the account's saved settings.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "timestamps:create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1215,13 +1432,14 @@
         "tags": [
           "timestamps"
         ],
-        "summary": "/at",
-        "description": "Specify the exact components of the timestamp (including the timezone). Equivalent to the bot's /at command: the same options, and any option left out falls back to the account's saved settings.",
+        "summary": "Specify the exact components of the timestamp (including the timezone)",
+        "description": "Equivalent to the bot's /at command: the same options, and any option left out falls back to the account's saved settings.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "timestamps:create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1302,13 +1520,14 @@
         "tags": [
           "timestamps"
         ],
-        "summary": "/at12",
-        "description": "Specify the exact components of the timestamp (using a 12-hour clock). Equivalent to the bot's /at12 command: the same options, and any option left out falls back to the account's saved settings.",
+        "summary": "Specify the exact components of the timestamp (using a 12-hour clock)",
+        "description": "Equivalent to the bot's /at12 command: the same options, and any option left out falls back to the account's saved settings.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "timestamps:create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1389,13 +1608,14 @@
         "tags": [
           "timestamps"
         ],
-        "summary": "/in",
-        "description": "Specify a timestamp in the future relative to the current time. Equivalent to the bot's /in command: the same options, and any option left out falls back to the account's saved settings.",
+        "summary": "Specify a timestamp in the future relative to the current time",
+        "description": "Equivalent to the bot's /in command: the same options, and any option left out falls back to the account's saved settings.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "timestamps:create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1476,13 +1696,14 @@
         "tags": [
           "timestamps"
         ],
-        "summary": "/iso",
-        "description": "Display the syntaxes for a specific ISO 8601 timestamp. Equivalent to the bot's /iso command: the same options, and any option left out falls back to the account's saved settings.",
+        "summary": "Display the syntaxes for a specific ISO 8601 timestamp",
+        "description": "Equivalent to the bot's /iso command: the same options, and any option left out falls back to the account's saved settings.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "timestamps:create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1563,13 +1784,14 @@
         "tags": [
           "timestamps"
         ],
-        "summary": "/snowflake",
-        "description": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord). Equivalent to the bot's /snowflake command: the same options, and any option left out falls back to the account's saved settings.",
+        "summary": "Display the syntax for the timestamp of a Snowflake (most IDs within Discord)",
+        "description": "Equivalent to the bot's /snowflake command: the same options, and any option left out falls back to the account's saved settings.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "timestamps:create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1650,13 +1872,14 @@
         "tags": [
           "timestamps"
         ],
-        "summary": "/subtract",
-        "description": "Subtract some time from the specified UNIX timestamp. Equivalent to the bot's /subtract command: the same options, and any option left out falls back to the account's saved settings.",
+        "summary": "Subtract some time from the specified UNIX timestamp",
+        "description": "Equivalent to the bot's /subtract command: the same options, and any option left out falls back to the account's saved settings.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "timestamps:create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1737,13 +1960,14 @@
         "tags": [
           "timestamps"
         ],
-        "summary": "/unix",
-        "description": "Display the syntaxes for a specific UNIX timestamp. Equivalent to the bot's /unix command: the same options, and any option left out falls back to the account's saved settings.",
+        "summary": "Display the syntaxes for a specific UNIX timestamp",
+        "description": "Equivalent to the bot's /unix command: the same options, and any option left out falls back to the account's saved settings.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "timestamps:create",
         "requestBody": {
           "required": true,
           "content": {
@@ -1824,13 +2048,14 @@
         "tags": [
           "settings"
         ],
-        "summary": "/settings",
+        "summary": "Read the settings",
         "description": "The saved settings of the account the key acts as. These are the defaults the timestamp endpoints fall back to.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "settings:read",
         "responses": {
           "200": {
             "description": "The settings",
@@ -1889,13 +2114,14 @@
         "tags": [
           "settings"
         ],
-        "summary": "/settings",
+        "summary": "Change the settings",
         "description": "Changes the given settings only. A null value resets a setting to its default.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "settings:write",
         "requestBody": {
           "required": true,
           "content": {
@@ -1976,13 +2202,14 @@
         "tags": [
           "keys"
         ],
-        "summary": "/me",
+        "summary": "Show the key's account and permissions",
         "description": "Which account the key acts as and what it is allowed to do.",
         "security": [
           {
             "BearerAuth": []
           }
         ],
+        "x-required-scope": "settings:read",
         "responses": {
           "200": {
             "description": "The key",
@@ -2043,7 +2270,7 @@
         "tags": [
           "server info"
         ],
-        "summary": "/health",
+        "summary": "Check that the service is up",
         "description": "Whether the service is up.",
         "security": [],
         "responses": {

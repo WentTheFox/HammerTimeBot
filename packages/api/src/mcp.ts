@@ -1,9 +1,10 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import type { z } from '@hono/zod-openapi';
 import { errorBody, ResolvedKey } from './auth.js';
 import { Backend, BackendError, Scope } from './backend.js';
-import { commandNames, commandRequestSchemas, commandSummaries } from './generated/commands.js';
+import { type CommandName, commandChoiceLabels, commandNames, commandOptionDescriptions, commandRequestSchemas, commandSummaries } from './generated/commands.js';
 import { guard } from './guard.js';
 import type { RateLimits } from './rate-limit.js';
 import { runCommand } from './run-command.js';
@@ -42,6 +43,19 @@ const backendFailure = (error: unknown): CallToolResult => {
 };
 
 /**
+ * What the OpenAPI document gets from the metadata of the schemas has to be given to the tools separately. A model also has
+ * no table next to the description to read the names of the choices from, so they are part of the description.
+ */
+const withDescriptions = (command: CommandName, shape: Record<string, z.ZodType>): Record<string, z.ZodType> => Object.fromEntries(
+  Object.entries(shape).map(([option, schema]) => {
+    const description = commandOptionDescriptions[command][option];
+    const labels = commandChoiceLabels[command]?.[option];
+    const choices = labels ? ` Choices: ${Object.entries(labels).map(([value, label]) => `${value} (${label})`).join(', ')}.` : '';
+    return [option, description ? schema.meta({ description: `${description}.${choices}` }) : schema];
+  }),
+);
+
+/**
  * One MCP server for one request. The endpoint is stateless, so what a key is allowed to do is decided here, per
  * request, and the key only sees the tools it can use.
  */
@@ -57,7 +71,7 @@ const createServer = (key: ResolvedKey, { backend, now = Date.now, telemetryTime
           title: `/${name}`,
           description: `${commandSummaries[name]}. Equivalent to the bot's /${name} command.`,
           // The same generated schemas as the REST endpoints, so the names, types and bounds are the command's options
-          inputSchema: commandRequestSchemas[name].shape,
+          inputSchema: withDescriptions(name, commandRequestSchemas[name].shape),
           annotations: { readOnlyHint: true, openWorldHint: false },
         },
         async (args: Record<string, unknown>) => {

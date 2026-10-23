@@ -37,6 +37,29 @@ const call = async (path: string, { method = 'POST', token = USER_TOKEN, body, h
   return { status: response.status, headers: response.headers, json: (await response.json()) as any };
 };
 
+describe('the documented permissions', () => {
+  it('are what each endpoint enforces', async () => {
+    const allScopes = ['timestamps:create', 'settings:read', 'settings:write'];
+    const spec = (await call('/generated/api-docs.json', { method: 'GET', token: null })).json;
+    let checked = 0;
+
+    for (const [path, operations] of Object.entries<Record<string, { 'x-required-scope'?: string }>>(spec.paths)) {
+      for (const [method, operation] of Object.entries(operations)) {
+        const scope = operation['x-required-scope'];
+        if (!scope) continue;
+        const token = `without-${scope}`;
+        backend.keys.set(token, { kind: 'user', discordUserId: DISCORD_USER_ID, scopes: allScopes.filter(other => other !== scope), keyId: 'k' });
+
+        const response = await call(path, { method: method.toUpperCase(), token, body: method === 'get' ? undefined : {} });
+
+        expect(response.status, `${method} ${path} without ${scope}`).toBe(403);
+        checked++;
+      }
+    }
+    expect(checked).toBe(commandNames.length + 3);
+  });
+});
+
 describe('authentication', () => {
   it('serves the health check without a key', async () => {
     expect(await call('/health', { method: 'GET', token: null })).toMatchObject({ status: 200, json: { status: 'ok' } });

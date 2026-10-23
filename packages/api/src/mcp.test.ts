@@ -92,6 +92,17 @@ describe('tools', () => {
     expect(add.inputSchema.required).toEqual(['to']);
   });
 
+  it('describes every option, with the names of its choices, a model has no other table for them', async () => {
+    const { tools } = await (await connect()).listTools();
+    const at = tools.find(tool => tool.name === 'at')!;
+    const format = at.inputSchema.properties!.format as { description: string };
+
+    expect(at.inputSchema.properties!.month).toMatchObject({ description: 'Specify the month (defaults to current month).' });
+
+    expect(format.description).toMatch(/^Returns only the specified format in the response\. Choices: d \(short date\), /);
+    expect(format.description).toContain('R (relative)');
+  });
+
   it('only offers what the key may do', async () => {
     addKey('timestamps-only', ['timestamps:create']);
     addKey('settings-only', ['settings:read']);

@@ -43,6 +43,9 @@ const authResponses = {
   503: json(ErrorSchema, 'The service is read-only while it is being deployed, retry after the number of seconds in Retry-After'),
 };
 
+/** For the endpoints that do not need a scope, so there is no 403 to document */
+const { 403: _scopeMissing, ...authResponsesWithoutScope } = authResponses;
+
 export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000, limits = createRateLimits({ now }) }: AppDependencies) => {
   const app = new OpenAPIHono<AppEnv>({
     defaultHook: (result, c) => {
@@ -91,7 +94,8 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000, 
     }
   };
 
-  const requireScope = (scope: (method: string) => Scope): MiddlewareHandler<AppEnv> => async (c, next) => {
+  /** A null scope means any valid key will do */
+  const requireScope = (scope: (method: string) => Scope | null): MiddlewareHandler<AppEnv> => async (c, next) => {
     const guarded = await guard({ backend, limits, request: c.req.raw, socketAddress: socketAddress(c) });
     if (!guarded.ok) {
       return c.json(guarded.body, guarded.status, guarded.headers);
@@ -101,7 +105,7 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000, 
     }
 
     const needed = scope(c.req.method);
-    if (!guarded.key.scopes.includes(needed)) {
+    if (needed !== null && !guarded.key.scopes.includes(needed)) {
       return c.json(errorBody('forbidden', `The API key needs the ${needed} scope`), 403);
     }
 
@@ -184,7 +188,8 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000, 
     async (c) => c.json(await backend.updateSettings(c.get('key').discordUserId, c.req.valid('json')), 200),
   );
 
-  app.use('/me', requireScope(() => 'settings:read'));
+  // Any valid key, a key has to be able to tell what it is allowed to do whatever that is
+  app.use('/me', requireScope(() => null));
   app.openapi(
     createRoute({
       method: 'get',
@@ -194,8 +199,7 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000, 
       summary: 'Show the key\'s account and permissions',
       description: 'Which account the key acts as and what it is allowed to do.',
       security: [{ BearerAuth: [] }],
-      'x-required-scope': 'settings:read',
-      responses: { 200: json(KeyInfoSchema, 'The key'), ...authResponses },
+      responses: { 200: json(KeyInfoSchema, 'The key'), ...authResponsesWithoutScope },
     }),
     (c) => {
       const { keyId, kind, discordUserId, scopes } = c.get('key');

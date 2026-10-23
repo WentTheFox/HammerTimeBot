@@ -56,7 +56,8 @@ describe('the documented permissions', () => {
         checked++;
       }
     }
-    expect(checked).toBe(commandNames.length + 3);
+    // Every command and the two settings operations, /me and /health need no scope
+    expect(checked).toBe(commandNames.length + 2);
   });
 });
 
@@ -81,6 +82,13 @@ describe('authentication', () => {
     const response = await call('/at', { body: {}, token: 'read-only' });
     expect(response.status).toBe(403);
     expect(response.json.error.message).toContain('timestamps:create');
+  });
+
+  it('tells any valid key what it is, whatever scopes it has', async () => {
+    backend.keys.set('timestamps-only', { kind: 'user', discordUserId: DISCORD_USER_ID, scopes: ['timestamps:create'], keyId: 'k2' });
+
+    expect(await call('/me', { method: 'GET', token: 'timestamps-only' })).toMatchObject({ status: 200, json: { keyId: 'k2', scopes: ['timestamps:create'] } });
+    expect((await call('/me', { method: 'GET', token: null })).status).toBe(401);
   });
 
   it('reports the key on /me', async () => {

@@ -2209,7 +2209,6 @@
             "BearerAuth": []
           }
         ],
-        "x-required-scope": "settings:read",
         "responses": {
           "200": {
             "description": "The key",
@@ -2223,16 +2222,6 @@
           },
           "401": {
             "description": "The API key is missing, unknown, revoked or expired",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "The API key does not have the scope this endpoint needs",
             "content": {
               "application/json": {
                 "schema": {

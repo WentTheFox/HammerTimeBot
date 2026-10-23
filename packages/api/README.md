@@ -87,3 +87,19 @@ to a hostname: `nginx/api.hammertime.cyou.conf` is the vhost, with the one-time 
 
 `pnpm run test:packages` from the root (core and API). They run the app in-process against an in-memory backend, the MCP
 tests use the real MCP SDK client.
+
+## Listing in the MCP Registry
+
+`server.json` is what the [MCP Registry](https://registry.modelcontextprotocol.io/) lists: the endpoint of the MCP server and
+that it wants the API key as a bearer token. The registry only keeps metadata, so there is no package to publish.
+
+The name is `io.github.WentTheFox/hammertime`. The workflow in `.github/workflows/publish-mcp.yml` authenticates with the
+OIDC token of GitHub Actions, which proves that the repository belongs to that owner, so no secret is stored anywhere.
+
+To publish a version:
+
+1. Raise `version` in both `packages/api/package.json` and `packages/api/server.json`. A test fails when they differ.
+2. Merge it, then tag it: `git tag mcp-v0.2.0 && git push origin mcp-v0.2.0`.
+
+The workflow tests the packages, checks that the tag matches `server.json`, validates it with `mcp-publisher validate` and publishes.
+A version can be published once. To try the file without publishing, run `mcp-publisher validate` in `packages/api`.

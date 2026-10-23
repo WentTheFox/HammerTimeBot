@@ -1,0 +1,75 @@
+name: Publish to the MCP Registry
+
+# Publishes packages/api/server.json, which lists the MCP endpoint of the API server. Push a tag that matches its version:
+#   git tag mcp-v0.1.0 && git push origin mcp-v0.1.0
+# Run by hand, it publishes whatever version server.json has. Each version can be published once.
+
+on:
+  push:
+    tags: ['mcp-v*']
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: publish-mcp
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: 'Publish server.json'
+    runs-on: ubuntu-24.04
+    permissions:
+      # The registry authenticates the workflow by its OIDC token, which is why no secret is needed. It proves the repository
+      # belongs to WentTheFox, so the name in server.json has to start with io.github.WentTheFox/
+      id-token: write
+      contents: read
+    env:
+      # Pinned, with the checksum of the archive from the release's checksums file, not whatever is latest
+      MCP_PUBLISHER_VERSION: 1.8.1
+      MCP_PUBLISHER_SHA256: a06c9096dcb9727c13555b6be26c7effa707b01f06a4c561ba7a3635443cf2cc
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@d15e628ca66d93ee5f352c71671a7bc6a97af5c9 # v6.0.8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      # Includes the checks of server.json
+      - name: Test the packages
+        run: pnpm run test:packages
+
+      - name: The tag is the version of server.json
+        if: github.ref_type == 'tag'
+        run: |
+          expected="mcp-v$(jq -r .version packages/api/server.json)"
+          if [ "$GITHUB_REF_NAME" != "$expected" ]; then
+            echo "::error::The tag is $GITHUB_REF_NAME but the version in packages/api/server.json calls for $expected"
+            exit 1
+          fi
+
+      - name: Install mcp-publisher
+        run: |
+          curl -fsSL -o mcp-publisher.tar.gz "https://github.com/modelcontextprotocol/registry/releases/download/v${MCP_PUBLISHER_VERSION}/mcp-publisher_linux_amd64.tar.gz"
+          echo "${MCP_PUBLISHER_SHA256}  mcp-publisher.tar.gz" | sha256sum --check
+          tar xzf mcp-publisher.tar.gz mcp-publisher
+
+      # Checks server.json against the registry's rules, without logging in or publishing anything
+      - name: Validate server.json
+        working-directory: packages/api
+        run: ../../mcp-publisher validate
+
+      - name: Authenticate to the MCP Registry
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish to the MCP Registry
+        working-directory: packages/api
+        run: ../../mcp-publisher publish

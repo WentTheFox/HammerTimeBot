@@ -75,11 +75,11 @@ pnpm --filter @went.tf/hammertime-api run openapi:sync [-- --check]      # after
 
 ```sh
 pnpm run build:core && pnpm --filter @went.tf/hammertime-api run build
-cp packages/api/.env.example .env.api    # fill it in
-node --env-file=.env.api packages/api/dist/src/server.js
+cp packages/api/.env.example packages/api/.env    # fill it in, git ignores it
+node --env-file=packages/api/.env packages/api/dist/src/server.js
 ```
 
-On the server pm2 runs it (`HammerTimeBot:Api` in `pm2.json`), but only when `.env.api` exists, see `deploy.conf`. Deploy the
+On the server pm2 runs it (`HammerTimeBot:Api` in `pm2.json`), but only when `packages/api/.env` exists, see `deploy.conf`. (It used to be `.env.api` in the root of the repository, the deploy moves such a file by itself.) Deploy the
 Laravel app first, since this service calls its internal endpoints. It listens on `127.0.0.1:3010` only, so nginx has to proxy it
 to a hostname: `nginx/api.hammertime.cyou.conf` is the vhost, with the one-time setup in its header.
 

@@ -8,4 +8,7 @@ config.js
 /.command-sync-state.json
 /logs
 /packages/*/dist
+# The environment of the API server (packages/api). *.env above already covers the new path, this makes it explicit.
+/packages/api/.env
+# Where it used to be
 /.env.api

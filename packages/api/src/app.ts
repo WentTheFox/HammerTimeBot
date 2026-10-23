@@ -222,7 +222,7 @@ export const createApp = ({ backend, now = Date.now, telemetryTimeoutMs = 1000, 
     info: {
       title: 'HammerTime API',
       version: API_VERSION,
-      description: 'Generate Discord timestamps and manage the settings of the HammerTime bot. Every timestamp endpoint is the bot command of the same name. The same commands are available to AI assistants as tools of the MCP server at /mcp, with the same API keys.',
+      description: 'Generate Discord timestamps and manage the settings of the HammerTime bot. Every timestamp endpoint is the bot command of the same name. The same commands are available to consumers of the MCP server at /mcp, with the same API keys.',
     },
     servers: [{ url: '/', description: 'Current Host' }],
     tags: [

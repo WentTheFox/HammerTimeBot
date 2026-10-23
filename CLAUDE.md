@@ -17,6 +17,12 @@ record, the API server never talks to the database itself.
   `shutdownGracefully()` (`graceful-shutdown.ts`, one copy in `src/utils` and one in `packages/api/src`, change both). A new
   worker count is `instances` in `pm2.json`. Switching an app from a single process to a cluster deletes and starts it once
   (`deploy_pm2_app` in `deploy.conf`).
+- pm2 starts the workers of a cluster from a directory of its own, so nothing a process needs may be a path relative to the working
+  directory: a relative `--env-file` is how the API once failed to start on the server, and it did not show locally because the
+  local pm2 daemon happened to run in the repository. The API reads `packages/api/.env` by the location of the package
+  (`load-env-file.ts`). To rehearse something that changes how pm2 starts a process, start the pm2 daemon from another directory.
+- The deploy never reloads an app that is not online, it starts it fresh, and every pm2 call has a time limit
+  (`PM2_DEPLOY_TIMEOUT`): a reload of workers that never become ready held a deploy, and the ones after it, up.
 
 ## Releasing the MCP server to the MCP Registry
 

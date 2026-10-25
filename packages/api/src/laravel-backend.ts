@@ -66,7 +66,7 @@ export class LaravelBackend implements Backend {
         signal: AbortSignal.timeout(timeoutMs),
       });
     } catch {
-      throw new BackendError(502, 'The backend could not be reached');
+      throw new BackendError(502, 'The backend could not be reached', undefined, { path });
     }
   }
 

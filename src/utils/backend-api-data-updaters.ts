@@ -36,6 +36,8 @@ import {
  */
 const BACKGROUND_SYNC_RETRY = { maxAttempts: 6, initialDelayMs: 2000 };
 
+const WEBHOOK_DELIVERY_TIMEOUT_MS = 15_000;
+
 type MinimalAPIApplicationCommand =
   Pick<APIApplicationCommand, 'id' | 'name' | 'name_localizations' | 'description' | 'description_localizations' | 'type'>
   & {
@@ -205,6 +207,10 @@ export const sendWebhookDelivery = async (context: LoggerContext, record: Webhoo
       validator: typia.createValidate<Record<string, unknown>>(),
       failOnInvalidResponse: false,
       retry: BACKGROUND_SYNC_RETRY,
+      // The endpoint only validates and enqueues (typically well under a second), so a request that hangs is a
+      // stall on the backend. Without this it sits until nginx gives up with a 504 after 60s; with it the retry
+      // starts in seconds instead.
+      timeoutMs: WEBHOOK_DELIVERY_TIMEOUT_MS,
     });
     if (result.ok) {
       logger.info('Successfully sent webhook delivery record');

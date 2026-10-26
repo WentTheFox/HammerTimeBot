@@ -257,13 +257,15 @@ describe('telemetry', () => {
 describe('a backend that fails', () => {
   it('answers 502 and says why in the log', async () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => undefined);
-    backend.getSettings = async () => { throw new BackendError(502, 'The backend answered with HTTP 403'); };
+    backend.getSettings = async () => { throw new BackendError(502, 'The backend answered with HTTP 403', undefined, { path: '/settings' }); };
 
     const { status, json } = await call('/settings', { method: 'GET' });
 
     expect(status).toBe(502);
     expect(json.error.code).toBe('backend_error');
-    expect(error).toHaveBeenCalledWith(expect.stringContaining('HTTP 403'));
+    // The details of the failure go to the log next to the message, never into the response
+    expect(error).toHaveBeenCalledWith(expect.stringContaining('HTTP 403'), { path: '/settings' });
+    expect(JSON.stringify(json)).not.toContain('/settings');
     error.mockRestore();
   });
 

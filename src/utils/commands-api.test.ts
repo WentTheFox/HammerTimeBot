@@ -24,6 +24,17 @@ const setup = (respond: (url: string, init: RequestInit) => Response | Promise<R
 };
 
 describe('createCommandsApiClient', () => {
+  it('does not ask the API in read-only mode, and logs it instead of warning', async () => {
+    const fetchMock = vi.fn();
+    const log = vi.fn();
+    const warn = vi.fn();
+    const client = createCommandsApiClient({ url: 'https://api.test/', key: 'k', timeoutMs: 100, readOnly: true, fetch: fetchMock as unknown as typeof fetch })!;
+    expect(await client.run({ log, warn } as unknown as ILogger, '1', 'at', {})).toBeNull();
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(log).toHaveBeenCalledOnce();
+    expect(warn).not.toHaveBeenCalled();
+  });
+
   it('is nothing without an address and a key', () => {
     expect(createCommandsApiClient({ url: '', key: 'k', timeoutMs: 100 })).toBeNull();
     expect(createCommandsApiClient({ url: 'https://api.test', key: '', timeoutMs: 100 })).toBeNull();

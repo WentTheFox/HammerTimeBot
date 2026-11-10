@@ -64,6 +64,10 @@ export const updateBotCommandsInApi = async (parentContext: LoggerContext, input
   if (!result) return;
 
   const logger = parentContext.logger.nest('updateBotCommandsInApi');
+  if (env.READ_ONLY) {
+    logger.log('Skipped, read-only mode');
+    return;
+  }
   logger.log('Updating…');
   const resultWithOptions = augmentResultWithOptions(input, result);
   try {
@@ -87,6 +91,10 @@ export const updateBotCommandsInApi = async (parentContext: LoggerContext, input
 
 export const updateFaqEntriesInApi = async (parentContext: LoggerContext): Promise<void> => {
   const logger = parentContext.logger.nest('updateFaqEntriesInApi');
+  if (env.READ_ONLY) {
+    logger.log('Skipped, read-only mode');
+    return;
+  }
   if (!env.SUPPORT_SERVER_ID) {
     logger.warn('Skipped due to missing SUPPORT_SERVER_ID env var');
     return;
@@ -128,6 +136,10 @@ export const updateFaqEntriesInApi = async (parentContext: LoggerContext): Promi
 export const updateBotTimezonesInApi = async (parentContext: LoggerContext): Promise<void> => {
   const logger = parentContext.logger.nest('updateBotTimezonesInApi');
   const context = { ...parentContext, logger };
+  if (env.READ_ONLY) {
+    logger.log('Skipped, read-only mode');
+    return;
+  }
   logger.log('Updating…');
   try {
     const response = await backendApiRequest(context, {
@@ -194,6 +206,10 @@ export interface WebhookDeliveryRecord {
 
 export const sendWebhookDelivery = async (context: LoggerContext, record: WebhookDeliveryRecord): Promise<boolean> => {
   const logger = context.logger.nest('sendWebhookDelivery').muteMethods(['debug', 'info']);
+  if (env.READ_ONLY) {
+    logger.debug('Skipped, read-only mode');
+    return false;
+  }
   logger.debug('Sending webhook delivery record…', record);
   // Stats reporting must never take the webhook handler down with it - webhook.ts calls this
   // `void`-fired (fire-and-forget, no .catch()), and backendApiRequest only converts HTTP-status
@@ -234,6 +250,10 @@ export const sendCommandTelemetry = async (context: LoggerContext & UserSettings
   // The API recorded this run itself and put the note in the reply, counting it again would count it twice
   if (context.commandRecordedByApi) {
     logger.debug('Already recorded by the API, skip sending telemetry');
+    return null;
+  }
+  if (env.READ_ONLY) {
+    logger.debug('Skipped, read-only mode');
     return null;
   }
   try {

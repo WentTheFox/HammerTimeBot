@@ -2,7 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { backendApiRequest } from './backend-api-request.js';
 import { ILogger } from '../types/logger-types.js';
 
-vi.mock('../env.js', () => ({ env: { API_URL: 'https://backend.test', API_TOKEN: 'token' } }));
+const mockEnv = vi.hoisted(() => ({ API_URL: 'https://backend.test', API_TOKEN: 'token', READ_ONLY: false }));
+vi.mock('../env.js', () => ({ env: mockEnv }));
 
 const createLogger = () => {
   const logger = {
@@ -85,5 +86,31 @@ describe('backendApiRequest', () => {
     expect(result).toMatchObject({ ok: false, status: 503 });
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(logger.error).toHaveBeenCalledTimes(1);
+  });
+
+  describe('read-only mode', () => {
+    beforeEach(() => {
+      mockEnv.READ_ONLY = true;
+    });
+    afterEach(() => {
+      mockEnv.READ_ONLY = false;
+    });
+
+    it.each(['PUT', 'POST', 'PATCH', 'DELETE', 'put'])('does not send %s requests', async (method) => {
+      const logger = createLogger();
+      const result = await backendApiRequest({ logger }, { path: '/x', method, body: {}, validator });
+      expect(fetchMock).not.toHaveBeenCalled();
+      expect(result.ok).toBe(false);
+      expect(result.status).toBe(503);
+      expect(logger.warn).not.toHaveBeenCalled();
+      expect(logger.error).not.toHaveBeenCalled();
+    });
+
+    it.each([undefined, 'GET'])('still sends reads (%s)', async (method) => {
+      fetchMock.mockResolvedValue(success());
+      const result = await backendApiRequest({ logger: createLogger() }, { path: '/x', method, validator });
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      expect(result.ok).toBe(true);
+    });
   });
 });

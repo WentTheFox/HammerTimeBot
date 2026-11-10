@@ -33,6 +33,11 @@ export const env = defineEnv({
   LOCAL: boolFromString().default(false),
   DEBUG_I18N: boolFromString().default(false),
   DISABLE_SETTINGS: boolFromString().default(false),
+  /**
+   * Read-only mode: no write (anything but GET/HEAD) is sent to the SledgeHammerTime backend API. The startup data syncs,
+   * webhook delivery stats and command telemetry are skipped quietly, and any other write is refused in backendApiRequest.
+   */
+  READ_ONLY: boolFromString().default(false),
   UA_STRING: z.string().min(1),
   DISCORD_INVITE_URL: z.string().min(1),
   API_URL: z.string().min(1),

@@ -38,6 +38,8 @@ export interface BackendApiResponse<T> {
   validation: IValidation<T>;
   ok: boolean;
   status: number;
+  /** True when read-only mode (READ_ONLY) kept the request from being sent at all */
+  skipped?: boolean;
 }
 
 // Same rule as ApiClient's own default: HTTP failures retry on 5xx/429, anything else (network errors,
@@ -74,12 +76,28 @@ const createDeferredLogger = (logger: ILogger) => {
   };
 };
 
+/** Whether the request is a write that read-only mode (the READ_ONLY env var) keeps from being sent */
+export const isBlockedByReadOnly = (method?: string): boolean =>
+  env.READ_ONLY && !['GET', 'HEAD'].includes((method ?? 'GET').toUpperCase());
+
 const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 export const backendApiRequest = async <T>(
   { logger }: LoggerContext,
   params: BackendApiRequest<T>,
 ): Promise<BackendApiResponse<T>> => {
+  if (isBlockedByReadOnly(params.method)) {
+    logger.log(`Read-only mode, skipped ${params.method} ${params.path}`);
+    return {
+      responseText: undefined,
+      response: undefined as T,
+      validation: { success: false, errors: [] } as unknown as IValidation<T>,
+      ok: false,
+      status: 503,
+      skipped: true,
+    };
+  }
+
   const { maxAttempts = 1, initialDelayMs = 500, shouldRetry = defaultShouldRetry } = params.retry ?? {};
 
   for (let attempt = 0; ; attempt++) {

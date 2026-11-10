@@ -48,6 +48,11 @@ export interface CommandsApiClientOptions {
   url: string;
   key: string;
   timeoutMs: number;
+  /**
+   * Read-only mode (the READ_ONLY env var): the API records a run of the command, which is a write, so it is not asked at
+   * all and the caller handles the command itself.
+   */
+  readOnly?: boolean;
   /** Injectable for tests */
   fetch?: typeof fetch;
 }
@@ -55,7 +60,7 @@ export interface CommandsApiClientOptions {
 const knownErrorKeys: ReadonlySet<string> = new Set(commandErrorKeys);
 
 /** Null when no API is configured */
-export const createCommandsApiClient = ({ url, key, timeoutMs, fetch: fetchImpl = fetch }: CommandsApiClientOptions): CommandsApiClient | null => {
+export const createCommandsApiClient = ({ url, key, timeoutMs, readOnly = false, fetch: fetchImpl = fetch }: CommandsApiClientOptions): CommandsApiClient | null => {
   if (!url || !key) {
     return null;
   }
@@ -63,6 +68,10 @@ export const createCommandsApiClient = ({ url, key, timeoutMs, fetch: fetchImpl 
 
   return {
     async run(logger, discordUserId, command, options) {
+      if (readOnly) {
+        logger.log(`Read-only mode, skipped asking the API, handling /${command} here`);
+        return null;
+      }
       const startedAt = Date.now();
       const fallback = (reason: string): null => {
         logger.warn(`Handling /${command} here instead of through the API: ${reason} (after ${Date.now() - startedAt}ms)`);
@@ -108,4 +117,5 @@ export const commandsApi: CommandsApiClient | null = createCommandsApiClient({
   url: env.COMMANDS_API_URL,
   key: env.COMMANDS_API_KEY,
   timeoutMs: env.COMMANDS_API_TIMEOUT_MS,
+  readOnly: env.READ_ONLY,
 });

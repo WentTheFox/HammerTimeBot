@@ -48,9 +48,13 @@ jobs:
           default_bump: false
           dry_run: true
 
-      - name: Set lowercase image name
+      - name: Set image name and X.Y version
         if: steps.tag.outputs.new_tag
-        run: echo "IMAGE_NAME=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
+        env:
+          NEW_VERSION: ${{ steps.tag.outputs.new_version }}
+        run: |
+          echo "IMAGE_NAME=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
+          echo "MINOR_VERSION=${NEW_VERSION%.*}" >> "$GITHUB_ENV"
 
       - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
         if: steps.tag.outputs.new_tag
@@ -76,7 +80,7 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.new_version }}
-            ${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.new_major }}.${{ steps.tag.outputs.new_minor }}
+            ${{ env.IMAGE_NAME }}:${{ env.MINOR_VERSION }}
             ${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

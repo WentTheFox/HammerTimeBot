@@ -219,7 +219,7 @@
     },
     "17274016": {
       "username": "nicohele",
-      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17274016/medium/eefaaa81aa2c3b25889aab4b3208bceb.jpg"
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17274016/medium/ef0a551c14ebaac7d91e5a73e05f7e5d_default.png"
     },
     "17322000": {
       "username": "hvalomi",
@@ -398,7 +398,7 @@
       ],
       "progress": {
         "approval": 98,
-        "translation": 98
+        "translation": 100
       }
     },
     "it": {

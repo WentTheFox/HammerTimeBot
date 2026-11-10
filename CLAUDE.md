@@ -24,6 +24,17 @@ record, the API server never talks to the database itself.
 - The deploy never reloads an app that is not online, it starts it fresh, and every pm2 call has a time limit
   (`PM2_DEPLOY_TIMEOUT`): a reload of workers that never become ready held a deploy, and the ones after it, up.
 
+## Commits and the container image
+
+- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): subject`, with `type` one of
+  `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert` (`!` before the colon for a breaking
+  change). Scopes in use are e.g. `api` and `deploy`. `.github/workflows/commits.yml` checks the subjects of a pull request's commits.
+  History is not rewritten.
+- `Dockerfile` builds one image with two commands (webhook and API), published by `.github/workflows/docker.yml` as
+  `ghcr.io/wentthefox/hammertimebot` for linux/amd64 and linux/arm64. It runs on a `vX.Y.Z` tag or by hand, never on a push to `main`,
+  and tags the image `X.Y.Z`, `X.Y`, `X` and `sha-<short commit>` (no `latest`). The build stage needs `python3 make g++` because
+  `bufferutil` and `utf-8-validate` have no prebuilt arm64 binary. Keep secrets out of the image, see `.dockerignore`.
+
 ## Releasing the MCP server to the MCP Registry
 
 `packages/api/server.json` is what [registry.modelcontextprotocol.io](https://registry.modelcontextprotocol.io/) lists as

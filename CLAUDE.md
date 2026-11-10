@@ -28,12 +28,14 @@ record, the API server never talks to the database itself.
 
 - Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): subject`, with `type` one of
   `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert` (`!` before the colon for a breaking
-  change). Scopes in use are e.g. `api` and `deploy`. `.github/workflows/commits.yml` checks the subjects of a pull request's commits.
-  History is not rewritten.
-- `Dockerfile` builds one image with two commands (webhook and API), published by `.github/workflows/docker.yml` as
-  `ghcr.io/wentthefox/hammertimebot` for linux/amd64 and linux/arm64. It runs on a `vX.Y.Z` tag or by hand, never on a push to `main`,
-  and tags the image `X.Y.Z`, `X.Y`, `X` and `sha-<short commit>` (no `latest`). The build stage needs `python3 make g++` because
-  `bufferutil` and `utf-8-validate` have no prebuilt arm64 binary. Keep secrets out of the image, see `.dockerignore`.
+  change). Scopes in use are e.g. `api` and `deploy`. Enforced by commitlint (`commitlint.config.js`, the husky `commit-msg` hook and
+  the `Commitlint` workflow on pull requests), do not bypass it with `--no-verify`. History is not rewritten.
+- It matters beyond style: `.github/workflows/docker.yml` publishes `ghcr.io/wentthefox/hammertimebot` (linux/amd64 and linux/arm64,
+  from `Dockerfile`: one image, two commands) on every push to `main`, and derives the version from the commit types since the last `v*`
+  tag (`feat` = minor, `fix` and other types = patch, `!` or `BREAKING CHANGE` = major; nothing to release = no publish). Tags:
+  `X.Y.Z`, `X.Y`, `sha-<commit>`, no `latest`. The `v*` tag is pushed after the image. `mcp-v*` tags are the MCP registry's, not this.
+- The build stage needs `python3 make g++` because `bufferutil` and `utf-8-validate` have no prebuilt arm64 binary. Keep secrets out
+  of the image, see `.dockerignore`.
 
 ## Releasing the MCP server to the MCP Registry
 

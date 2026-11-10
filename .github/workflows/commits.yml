@@ -1,0 +1,33 @@
+name: Commit messages
+
+# Conventional Commits: https://www.conventionalcommits.org/ . Only the commits of the pull request are checked,
+# merge commits and fixup!/squash!/revert commits are skipped.
+on:
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  conventional:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Check subjects
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          pattern='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z0-9._/-]+\))?!?: .+'
+          bad=0
+          while IFS=$'\t' read -r sha subject; do
+            case "$subject" in Merge\ *|fixup!\ *|squash!\ *|Revert\ \"*) continue ;; esac
+            if ! printf '%s' "$subject" | grep -Eq "$pattern"; then
+              echo "::error::${sha:0:7} is not a conventional commit: $subject"
+              bad=1
+            fi
+          done < <(git log --no-merges --format='%H%x09%s' "$BASE..$HEAD")
+          exit $bad

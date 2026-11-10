@@ -1,0 +1,18 @@
+.git
+.github
+.idea
+.claude
+node_modules
+**/node_modules
+build
+coverage
+logs
+packages/*/dist
+# secrets and local configuration, never part of an image
+.env
+*.env
+.env.*
+!.env.example
+config.js
+Dockerfile
+.dockerignore

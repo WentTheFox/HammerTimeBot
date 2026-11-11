@@ -162,7 +162,16 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
 
   const webhookPath = `/${env.WEBHOOK_PATH_SECRET}`;
 
+  // The bare root is what a person gets by opening the bot's host in a browser, send them to the web app.
+  // Temporary redirect, so browsers do not remember it should API_URL ever change.
+  const rootRedirectUrl = `${env.API_URL.replace(/\/+$/, '')}/app`;
+
   const server = createServer((req, res) => {
+    if ((req.method === 'GET' || req.method === 'HEAD') && req.url === '/') {
+      res.writeHead(302, { Location: rootRedirectUrl }).end();
+      return;
+    }
+
     // The path itself is the "is this actually Discord" check - keeps internet-scanner/health-check
     // noise that will never know the secret path out of the signature-rejection logs. See
     // WEBHOOK_PATH_SECRET's doc comment in env.ts.

@@ -13,7 +13,8 @@ import { BotCommands, buildCommandsBody, createRegistrar } from './update-guild-
  * (gitignored, and the deploy hook's `checkout -f` leaves ignored files alone). npm scripts always
  * run from the package root, which is what makes process.cwd() the worktree here.
  */
-const SYNC_STATE_PATH = resolve(process.cwd(), '.command-sync-state.json');
+// COMMAND_SYNC_STATE_PATH lets containers (read-only app directory) keep it somewhere writable
+const SYNC_STATE_PATH = process.env.COMMAND_SYNC_STATE_PATH ?? resolve(process.cwd(), '.command-sync-state.json');
 
 interface CommandSyncState {
   hash: string;

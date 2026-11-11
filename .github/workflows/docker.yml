@@ -1,10 +1,11 @@
 name: Publish container image
 
 # Publishes ghcr.io/wentthefox/hammertimebot (linux/amd64 + linux/arm64) on every push to main, like Fantastick.
-# The version comes from the Conventional Commits since the last `v*` tag (feat = minor, fix and the other recognized
-# types = patch, `!` / BREAKING CHANGE = major); a push with nothing to release publishes nothing. The tag is created only
-# after the image was pushed. (`mcp-v*` tags belong to the MCP registry release and are ignored here.)
-# Tags: X.Y.Z, X.Y and sha-<short commit>. There is no `latest`. Nothing secret is in the image (see .dockerignore).
+# Every push gets sha-<7 hex> and sha-<40 hex>. The version comes from the Conventional Commits since the last `v*` tag
+# (feat = minor, fix and the other recognized types = patch, `!` / BREAKING CHANGE = major); a push with nothing to release
+# (ci:, docs:, chore: ...) only gets the sha tags, no version tag. The `v*` git tag is created only after the image was pushed.
+# (`mcp-v*` tags belong to the MCP registry release and are ignored here.)
+# Tags: sha-<7>, sha-<40>, and for releases X.Y.Z and X.Y. There is no `latest`. Nothing secret is in the image (see .dockerignore).
 on:
   push:
     branches: [ main ]
@@ -48,40 +49,45 @@ jobs:
           default_bump: false
           dry_run: true
 
-      - name: Set image name and X.Y version
-        if: steps.tag.outputs.new_tag
+      # Every push to main is published as sha-<7 hex> (and the full sha-<40 hex>); the version tags are added only
+      # when the commits since the last tag are releasable.
+      - name: Compute image tags
         env:
           NEW_VERSION: ${{ steps.tag.outputs.new_version }}
+          NEW_TAG: ${{ steps.tag.outputs.new_tag }}
         run: |
-          echo "IMAGE_NAME=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_ENV"
-          echo "MINOR_VERSION=${NEW_VERSION%.*}" >> "$GITHUB_ENV"
+          image="ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')"
+          {
+            echo "TAGS<<EOF"
+            echo "${image}:sha-${GITHUB_SHA:0:7}"
+            echo "${image}:sha-${GITHUB_SHA}"
+            if [ -n "$NEW_TAG" ]; then
+              echo "${image}:${NEW_VERSION}"
+              echo "${image}:${NEW_VERSION%.*}"
+            fi
+            echo "EOF"
+          } >> "$GITHUB_ENV"
 
       - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
-        if: steps.tag.outputs.new_tag
         with:
           platforms: arm64
 
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
-        if: steps.tag.outputs.new_tag
 
       - uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
-        if: steps.tag.outputs.new_tag
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # One multi-platform build: the tags are manifest lists, pushed only once both architectures are built.
       - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
-        if: steps.tag.outputs.new_tag
         with:
           context: .
           target: runtime
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: |
-            ${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.new_version }}
-            ${{ env.IMAGE_NAME }}:${{ env.MINOR_VERSION }}
-            ${{ env.IMAGE_NAME }}:sha-${{ github.sha }}
+          tags: ${{ env.TAGS }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

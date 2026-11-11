@@ -14,7 +14,7 @@ export interface SyncStartupDataOptions {
 
 /**
  * Registers the current slash/context-menu commands with Discord and syncs FAQ/timezone data with
- * the backend API. Run by the deploy hook as a one-off step on every deploy, separately from the
+ * the backend API. Run by the deploy (an Argo CD PostSync Job) as a one-off step on every sync, separately from the
  * long-lived webhook.js process. Each step is independent: one failing doesn't cut the others short,
  * but still makes the process exit non-zero once they've all finished.
  */

@@ -5,17 +5,28 @@ Discord bot written in Node.js (using [discord.js](https://www.npmjs.com/package
 [HammerTime]: https://github.com/WentTheFox/HammerTime
 
 ```
-$ sudo npm install -g pm2
-$ npm install
+$ pnpm install
 $ cp .env.example .env
 $ nano .env # Fill in the neccessary environment variables
-$ npm build
-$ pm2 start pm2.json
+$ pnpm run build
+$ pnpm start
 ```
+
+Production runs the container image (`ghcr.io/wentthefox/hammertimebot`, tagged `sha-<commit>`) on a Kubernetes cluster managed by
+Argo CD. Every push to `main` builds the image, and production is only synced on purpose by running the **Deploy** workflow
+(`.github/workflows/deploy.yml`), see [Deploying](#deploying).
+
+## Deploying
+
+The **Deploy** workflow is a "sync to production" button: it runs only when started by hand (`workflow_dispatch`), and makes GitHub send
+a signed `workflow_run` webhook to a receiver in the cluster, which asks Argo CD to sync the Application `hammertimebot` (webhook and
+API server) with the sha image that Image Updater has pinned. Cluster configuration, such as the environment of the webhook, lives
+in the cluster's own repository, not here. Registering commands and syncing FAQ/timezone data (`sync-commands`) runs as an Argo CD
+PostSync Job, and keeps its state at `COMMAND_SYNC_STATE_PATH`.
 
 ## Webhook deployment
 
-`src/webhook.ts` is the bot's only entry point (`npm start`/`pm2.json`'s `HammerTimeBot:Webhook`) -
+`src/webhook.ts` is the bot's only entry point (`pnpm start`, the image's command) -
 it receives interactions over Discord's HTTP Interactions Endpoint rather than a gateway connection,
 so there's no ShardingManager/gateway mode to speak of. **Setting an Interactions Endpoint URL on the
 application in the Discord Developer Portal is what actually switches interaction delivery over** -
@@ -24,7 +35,8 @@ which is why this needs to be a real HTTP server rather than something that only
 you're sure: there's no dual-running fallback. Don't set that URL against production until you're
 confident in the webhook path (test it against a dev subdomain / secondary application first).
 
-One-time production server setup:
+One-time setup of a server that is not the cluster (the cluster has its own configuration; `pm2.json` and `deploy/nginx/` are what the
+former pm2 host used):
 
 1. `deploy/nginx/` → symlink the config into `/etc/nginx/sites-available/` and
    `/etc/nginx/sites-enabled/`, matching how this project's other nginx configs are laid out on that
@@ -35,27 +47,26 @@ One-time production server setup:
    `WEBHOOK_PATH_SECRET` (a long random URL-safe token - see its doc comment in `src/env.ts` for how
    to generate one), and optionally `WEBHOOK_PORT` (defaults to `3939`) and `WEBHOOK_HOST` (defaults to
    `127.0.0.1`, so only the reverse proxy in front of it can reach the endpoint) in the server's `.env`.
-5. `pm2 startOrReload pm2.json --only HammerTimeBot:Webhook` to bring up `HammerTimeBot:Webhook` (or replace its workers
-   if it is already running, see [Clustering](#clustering)).
+5. Start the webhook, `pnpm start` (on the former pm2 host: `pm2 startOrReload pm2.json --only HammerTimeBot:Webhook`, see
+   [Clustering](#clustering)).
 6. Once confident locally/in staging, set the Interactions Endpoint URL to
    `https://<webhook subdomain>/<WEBHOOK_PATH_SECRET>` in the Developer Portal - this is the actual
-   cutover step (see above). The endpoint only serves interactions at that secret path (anything else,
-   including `/`, 404s) so scanner/health-check noise never reaches signature verification.
+   cutover step (see above). The endpoint only serves interactions at that secret path. A `GET` or `HEAD` of `/` redirects to
+   `${API_URL}/app` (the web app), anything else 404s, so scanner/health-check noise never reaches signature verification.
 
 ### Clustering
 
-Both pm2 apps in `pm2.json` (the webhook and the [API server](#api-and-mcp-server)) run as a cluster of two workers that share
-their port, so more requests can be handled at once and one worker can be replaced while the other answers. Nothing is kept in
-memory between interactions, which is why any worker can take any of them.
+Several copies of the webhook and of the [API server](#api-and-mcp-server) can run at once, sharing a port or behind a load balancer,
+so more requests can be handled at once and one copy can be replaced while the others answer. Nothing is kept in memory between
+interactions, which is why any copy can take any of them. A copy sends `ready` once it is listening (`announceReady()`) and stops on
+`SIGINT`/`SIGTERM` by finishing the requests in flight (`shutdownGracefully()`).
 
-A deploy runs `pm2 reload`, which replaces the workers one at a time: a new worker sends `ready` once it is listening (`wait_ready`),
-and only then does the old one get its `SIGINT`, which makes it stop taking connections, finish the requests in flight and exit
-(`kill_timeout` is how long it gets). Nothing is dropped, which a rehearsal under load with the real `pm2.json` confirmed.
-The first deploy after switching from a single process deletes and starts the app once, which has a short gap, and says so.
+The former pm2 host ran each as a cluster of two workers (`pm2.json`: `instances`, `wait_ready`, `kill_timeout`), reloaded one at a
+time by `deploy.conf` of the git-deploy toolkit. That setup is kept in the repository but production no longer uses it.
 
-Change `instances` in `pm2.json` for another number of workers. Each one has its own copy of what the process keeps in memory:
-for the API server that is a cache of validated keys, and the [rate limits](packages/api/README.md#rate-limits), which are counted
-per worker unless `REDIS_URL` or `REDIS_HOST` is set in `packages/api/.env`, then they are shared.
+Each copy has its own copy of what the process keeps in memory: for the API server that is a cache of validated keys, and the
+[rate limits](packages/api/README.md#rate-limits), which are counted per copy unless `REDIS_URL` or `REDIS_HOST` is set (in
+`packages/api/.env` or the environment), then they are shared.
 
 ## API and MCP server
 

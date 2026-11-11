@@ -31,8 +31,8 @@ import { trackFirstAckTimestamp } from './utils/track-first-ack-timestamp.js';
 import { describeSlowWebhookDelivery, WebhookDeliveryTiming } from './utils/describe-slow-webhook-delivery.js';
 
 // This is the bot's only entry point: an HTTP Interactions Endpoint, not a gateway connection, so
-// there's no ShardingManager here - concurrency is whatever the process/PM2/nginx in front of it
-// provides instead (pm2.json runs it as a cluster of workers). See CLAUDE.md's ./webhook entry in discord-bot-framework for why this exists.
+// there's no ShardingManager here - concurrency is whatever the orchestrator/nginx in front of it
+// provides instead (several copies, formerly a pm2 cluster of workers, see pm2.json). See CLAUDE.md's ./webhook entry in discord-bot-framework for why this exists.
 
 const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((resolve, reject) => {
   const chunks: Buffer[] = [];
@@ -247,9 +247,9 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
       });
   });
 
-  // Under pm2 this process is one of several workers sharing the port, and they are replaced one at a time on a deploy.
-  // Nothing here is kept between requests, so any worker can take any interaction. pm2 waits for the ready message before it
-  // stops the worker that is being replaced, and the signal it sends then lets the interactions in flight finish.
+  // This process is one of several copies, replaced one at a time on a deploy (pm2 workers sharing the port on the former host).
+  // Nothing here is kept between requests, so any copy can take any interaction. The ready message is what tells the process
+  // manager the new copy can take over, and the signal the old one gets then lets the interactions in flight finish.
   shutdownGracefully(server, { log: message => logger.log(message) });
   server.listen(env.WEBHOOK_PORT, env.WEBHOOK_HOST, () => {
     logger.log(`Listening on ${env.WEBHOOK_HOST}:${env.WEBHOOK_PORT}`);

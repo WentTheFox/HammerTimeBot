@@ -55,7 +55,7 @@ one by itself when it has filled up again.
 
 ### Counting in Redis
 
-`pm2.json` runs two workers (see below). Left alone, each counts for itself, so a key can make up to the number of workers times
+The server can run as several workers or replicas (see below). Left alone, each counts for itself, so a key can make up to the number of them times
 `RATE_LIMIT_PER_MINUTE` requests, and the same goes for the failed authentications of an address. Set up Redis to count them as one:
 either `REDIS_URL`, or `REDIS_HOST` with `REDIS_PORT`, `REDIS_USERNAME`, `REDIS_PASSWORD`, `REDIS_DB` and `REDIS_TLS` (see
 `.env.example`), and the limits are shared by every worker.
@@ -70,9 +70,9 @@ either `REDIS_URL`, or `REDIS_HOST` with `REDIS_PORT`, `REDIS_USERNAME`, `REDIS_
 
 ## Running as a cluster
 
-pm2 runs the server as two workers that share the port (`exec_mode`, `instances`, `wait_ready` and `kill_timeout` in `pm2.json`). A
-worker sends `ready` once it listens and stops on `SIGINT` by finishing the requests in flight, which is what lets a deploy replace
-them one at a time without dropping any (`src/graceful-shutdown.ts`, the bot has the same one). Nothing a request needs is
+Several copies of the server can run at once (the former pm2 host ran two workers sharing the port, see `pm2.json`). A copy
+sends `ready` once it listens and stops on `SIGINT` by finishing the requests in flight, which is what lets a deploy replace them one
+at a time without dropping any (`src/graceful-shutdown.ts`, the bot has the same one). Nothing a request needs is
 kept from the one before. The key cache is per worker, so each of them validates a key against the Laravel app once per
 `KEY_CACHE_TTL_SECONDS`, and the rate limits are per worker too unless [Redis](#counting-in-redis) is set up.
 
@@ -103,9 +103,10 @@ cp packages/api/.env.example packages/api/.env    # fill it in, git ignores it
 node packages/api/dist/src/server.js    # reads packages/api/.env by itself
 ```
 
-On the server pm2 runs it (`HammerTimeBot:Api` in `pm2.json`), but only when `packages/api/.env` exists, see `deploy.conf`. (It used to be `.env.api` in the root of the repository, the deploy moves such a file by itself.) Deploy the
-Laravel app first, since this service calls its internal endpoints. It listens on `127.0.0.1:3010` only, so nginx has to proxy it
-to a hostname: `nginx/api.hammertime.cyou.conf` is the vhost, with the one-time setup in its header.
+In production it runs from the container image on the cluster, deployed with the rest of the app by the **Deploy** workflow (see the
+root README). Deploy the Laravel app first, since this service calls its internal endpoints. The former pm2 host ran it as
+`HammerTimeBot:Api` in `pm2.json`, listening on `127.0.0.1:3010` only behind nginx (`nginx/api.hammertime.cyou.conf`), when
+`packages/api/.env` existed, see `deploy.conf`.
 
 ## Tests
 

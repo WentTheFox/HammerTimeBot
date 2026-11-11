@@ -30,10 +30,10 @@ record, the API server never talks to the database itself.
   `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert` (`!` before the colon for a breaking
   change). Scopes in use are e.g. `api` and `deploy`. Enforced by commitlint (`commitlint.config.js`, the husky `commit-msg` hook and
   the `Commitlint` workflow on pull requests), do not bypass it with `--no-verify`. History is not rewritten.
-- It matters beyond style: `.github/workflows/docker.yml` publishes `ghcr.io/wentthefox/hammertimebot` (linux/amd64 and linux/arm64,
-  from `Dockerfile`: one image, two commands) on every push to `main`, and derives the version from the commit types since the last `v*`
-  tag (`feat` = minor, `fix` and other types = patch, `!` or `BREAKING CHANGE` = major; nothing to release = only the sha tags, no version bump). Tags:
-  `sha-<7 hex>` and `sha-<40 hex>` on every push, plus `X.Y.Z`, `X.Y` on releases, no `latest`. The `v*` tag is pushed after the image. `mcp-v*` tags are the MCP registry's, not this.
+- The types are for readability and the changelog only, they do not drive any versioning. `.github/workflows/docker.yml` publishes
+  `ghcr.io/wentthefox/hammertimebot` (linux/amd64 and linux/arm64, from `Dockerfile`: one image, two commands) on every push to
+  `main`, tagged `sha-<7 hex>` and `sha-<40 hex>` only: the commit is the version. No version tags, no `latest`, no `v*` git
+  tags. `mcp-v*` tags are the MCP registry's, not this.
 - The build stage needs `python3 make g++` because `bufferutil` and `utf-8-validate` have no prebuilt arm64 binary. Keep secrets out
   of the image, see `.dockerignore`.
 

@@ -9,20 +9,21 @@ record, the API server never talks to the database itself.
   and are skipped without it.
 - The API's generated files are committed and kept in sync by tests: `pnpm --filter @went.tf/hammertime-api run generate`
   (from `src/commands.json`) and `... run openapi:sync` (`docs/openapi/api-docs.json`). Add `-- --check` to only compare.
-- Deploys are `git push deploy`, which reloads both pm2 apps (`HammerTimeBot:Webhook` and `HammerTimeBot:Api`). The API reads
-  `packages/api/.env`, see `packages/api/.env.example`.
-- Both apps run as a pm2 cluster of two workers (`pm2.json`), reloaded one at a time with `wait_ready`. Keep it that way:
-  a process must not keep anything in memory that a request needs from the one before (the API's key cache is per worker on purpose, and
-  its rate limits are counted in Redis when `REDIS_URL` or `REDIS_HOST` is set, see `packages/api/README.md`), and has to call `announceReady()` once listening and stop through
-  `shutdownGracefully()` (`graceful-shutdown.ts`, one copy in `src/utils` and one in `packages/api/src`, change both). A new
-  worker count is `instances` in `pm2.json`. Switching an app from a single process to a cluster deletes and starts it once
-  (`deploy_pm2_app` in `deploy.conf`).
-- pm2 starts the workers of a cluster from a directory of its own, so nothing a process needs may be a path relative to the working
-  directory: a relative `--env-file` is how the API once failed to start on the server, and it did not show locally because the
-  local pm2 daemon happened to run in the repository. The API reads `packages/api/.env` by the location of the package
-  (`load-env-file.ts`). To rehearse something that changes how pm2 starts a process, start the pm2 daemon from another directory.
-- The deploy never reloads an app that is not online, it starts it fresh, and every pm2 call has a time limit
-  (`PM2_DEPLOY_TIMEOUT`): a reload of workers that never become ready held a deploy, and the ones after it, up.
+- Production runs the container image (see below) on the Rathalos cluster, managed by Argo CD (Application `hammertimebot`). There is
+  no `git push deploy` any more and the `vinyl`/`hammertime.vps` toolkit is gone. Every push to `main` builds the image, Image Updater
+  pins the new sha image, and production is only changed on purpose: run the **Deploy** workflow (`.github/workflows/deploy.yml`,
+  `workflow_dispatch` only), which makes GitHub send a signed `workflow_run` webhook to the cluster's receiver, which asks Argo CD to
+  sync `hammertimebot`. Do not sync production without the user's go-ahead. Cluster config (e.g. `API_URL` in the webhook ConfigMap)
+  lives in the Rathalos repository, not here. The command sync (`sync-commands`) runs as an Argo PostSync Job and keeps its state at
+  `COMMAND_SYNC_STATE_PATH`. The API reads `packages/api/.env` (`packages/api/.env.example`) when run outside the cluster.
+- Several copies of a process can run at once and are replaced one at a time, so a process must not keep anything in memory that a
+  request needs from the one before (the API's key cache is per worker on purpose, and its rate limits are counted in Redis when
+  `REDIS_URL` or `REDIS_HOST` is set, see `packages/api/README.md`), and has to call `announceReady()` once listening and stop through
+  `shutdownGracefully()` (`graceful-shutdown.ts`, one copy in `src/utils` and one in `packages/api/src`, change both).
+- Legacy: `pm2.json`, `deploy.conf` and `deploy/` are from the pm2 era (two-worker clusters reloaded with `wait_ready`, `PM2_DEPLOY_TIMEOUT`,
+  `deploy_pm2_app`) and are not how production is deployed now. If you change how a process starts, note that pm2 started workers from a
+  directory of its own, so nothing a process needs may be a path relative to the working directory (the API reads `packages/api/.env`
+  by the location of the package, `load-env-file.ts`).
 
 ## Commits and the container image
 

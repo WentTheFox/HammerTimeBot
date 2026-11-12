@@ -9,11 +9,12 @@ record, the API server never talks to the database itself.
   and are skipped without it.
 - The API's generated files are committed and kept in sync by tests: `pnpm --filter @went.tf/hammertime-api run generate`
   (from `src/commands.json`) and `... run openapi:sync` (`docs/openapi/api-docs.json`). Add `-- --check` to only compare.
-- Production runs the container image (see below) on the Rathalos cluster, managed by Argo CD (Application `hammertimebot`). There is
-  no `git push deploy` any more and the `vinyl`/`hammertime.vps` toolkit is gone. Every push to `main` builds the image, Image Updater
-  pins the new sha image, and production is only changed on purpose: run the **Deploy** workflow (`.github/workflows/deploy.yml`,
-  `workflow_dispatch` only), which makes GitHub send a signed `workflow_run` webhook to the cluster's receiver, which asks Argo CD to
-  sync `hammertimebot`. Do not sync production without the user's go-ahead. Cluster config (e.g. `API_URL` in the webhook ConfigMap)
+- Production runs the container image (see below) on the Rathalos cluster, managed by Argo CD (Application `hammertimebot-prod`, automatic
+  sync, two copies of the webhook and of the API). There is no `git push deploy` any more and the `vinyl`/`hammertime.vps` toolkit is
+  gone. Every push to `main` builds the image, Image Updater pins the new sha image and Argo CD deploys it by itself, so **a push to
+  `main` is a production deploy**: do not push to `main` without the user's go-ahead. The **Deploy** workflow
+  (`.github/workflows/deploy.yml`, `workflow_dispatch` only) is just a manual "sync now" button: it makes GitHub send a signed
+  `workflow_run` webhook to the cluster's receiver, which asks Argo CD to sync `hammertimebot-prod`. Cluster config (e.g. `API_URL` in the webhook ConfigMap)
   lives in the Rathalos repository, not here. The command sync (`sync-commands`) runs as an Argo PostSync Job and keeps its state at
   `COMMAND_SYNC_STATE_PATH`. The API reads `packages/api/.env` (`packages/api/.env.example`) when run outside the cluster.
 - Several copies of a process can run at once and are replaced one at a time, so a process must not keep anything in memory that a

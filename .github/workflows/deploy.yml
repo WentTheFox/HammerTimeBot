@@ -1,14 +1,14 @@
-# "Sync to production" button for HammerTimeBot production (webhook and API).
+# "Sync now" button for HammerTimeBot production (webhook and API).
 #
-# Images are built by the other workflows; the Rathalos cluster's Argo CD deploys beta by itself, but production is only changed on purpose.
-# This workflow is that purpose: running it makes GitHub send a signed `workflow_run` webhook (event `workflow_run`, action `requested`) to the
+# Images are built by the other workflows; the Rathalos cluster's Image Updater pins each new image and Argo CD syncs the production
+# Application automatically, so this button is only for forcing an immediate sync. Running it makes GitHub send a signed `workflow_run` webhook (event `workflow_run`, action `requested`) to the
 # receiver in the cluster (https://webhook.hammertime.cyou, Rathalos repo platform/deploy-hook). The receiver checks the signature, that this
-# is the Deploy workflow started by hand (workflow_dispatch) on main, and then asks Argo CD to sync the Application `hammertimebot`
+# is the Deploy workflow started by hand (workflow_dispatch) on main, and then asks Argo CD to sync the Application `hammertimebot-prod`
 # (the same as pressing Sync in the Argo CD UI, including the migrate hook where the app has one). It cannot choose an image, revision or
 # application. Nothing is stored in GitHub Actions secrets and no deployment record or environment is created: the job below only gives the
 # run something to show. The result is visible in Argo CD and in the "production" deployment records its notifications write.
 #
-# workflow_dispatch only, never automatic: syncing production is always a deliberate decision.
+# workflow_dispatch only: the button itself is never triggered automatically.
 name: Deploy
 
 on:

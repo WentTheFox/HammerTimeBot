@@ -18,9 +18,10 @@ Argo CD. Every push to `main` builds the image, and production is only synced on
 
 ## Deploying
 
-The **Deploy** workflow is a "sync to production" button: it runs only when started by hand (`workflow_dispatch`), and makes GitHub send
-a signed `workflow_run` webhook to a receiver in the cluster, which asks Argo CD to sync the Application `hammertimebot` (webhook and
-API server) with the sha image that Image Updater has pinned. Cluster configuration, such as the environment of the webhook, lives
+Production deploys by itself: every push to `main` builds an image, Image Updater pins it on the Argo CD Application
+`hammertimebot-prod` (webhook and API server, two copies of each) and Argo CD syncs it automatically. The **Deploy** workflow is a
+manual "sync now" button: it runs only when started by hand (`workflow_dispatch`), and makes GitHub send a signed `workflow_run` webhook
+to a receiver in the cluster, which asks Argo CD to sync that Application right away with the sha image that Image Updater has pinned. Cluster configuration, such as the environment of the webhook, lives
 in the cluster's own repository, not here. Registering commands and syncing FAQ/timezone data (`sync-commands`) runs as an Argo CD
 PostSync Job, and keeps its state at `COMMAND_SYNC_STATE_PATH`.
 

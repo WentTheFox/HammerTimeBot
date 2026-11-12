@@ -30,8 +30,7 @@ record, the API server never talks to the database itself.
 
 - Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): subject`, with `type` one of
   `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert` (`!` before the colon for a breaking
-  change). Scopes in use are e.g. `api` and `deploy`. Enforced by commitlint (`commitlint.config.js`, the husky `commit-msg` hook and
-  the `Commitlint` workflow on pull requests), do not bypass it with `--no-verify`. History is not rewritten.
+  change). Scopes in use are e.g. `api` and `deploy`. History is not rewritten.
 - The types are for readability and the changelog only, they do not drive any versioning. `.github/workflows/docker.yml` publishes
   `ghcr.io/wentthefox/hammertimebot` (linux/amd64 and linux/arm64, from `Dockerfile`: one image, two commands) on every push to
   `main`, tagged `sha-<7 hex>` and `sha-<40 hex>` only: the commit is the version. No version tags, no `latest`, no `v*` git

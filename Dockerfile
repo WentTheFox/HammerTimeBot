@@ -27,4 +27,4 @@ WORKDIR /app
 COPY --from=build --chown=node:node /app /app
 USER 1000:1000
 EXPOSE 3939 3010
-CMD ["node", "--enable-source-maps", "build/src/webhook.js"]
+CMD ["node", "--require", "./docker/otel.cjs", "--enable-source-maps", "build/src/webhook.js"]

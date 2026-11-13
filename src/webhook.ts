@@ -13,6 +13,7 @@ import {
 } from '@went.tf/discord-bot-framework/interactions';
 import { APIInteraction, InteractionType, MessageFlags } from 'discord-api-types/v10';
 import { RESTEvents } from '@discordjs/rest';
+import { SpanStatusCode, trace } from '@opentelemetry/api';
 import { env } from './env.js';
 import { initI18next } from './constants/locales.js';
 import { getEmojiIdMap } from './utils/get-emoji-id-map.js';
@@ -28,6 +29,7 @@ import { sendCommandTelemetry, sendWebhookDelivery } from './utils/backend-api-d
 import { addTelemetryNoteToReply } from './utils/add-telemetry-note-to-reply.js';
 import { getUserIdentifier } from './utils/messaging.js';
 import { trackFirstAckTimestamp } from './utils/track-first-ack-timestamp.js';
+import { componentNameFromCustomId, InteractionSpanInfo, withInteractionSpan } from './utils/tracing.js';
 import { describeSlowWebhookDelivery, WebhookDeliveryTiming } from './utils/describe-slow-webhook-delivery.js';
 
 // This is the bot's only entry point: an HTTP Interactions Endpoint, not a gateway connection, so
@@ -60,10 +62,33 @@ const readRawBody = (req: IncomingMessage): Promise<Buffer> => new Promise((reso
   });
 
   const onError: OnDispatchError<UserInteractionContext> = async (interaction, dispatchContext) => {
+    // dispatch catches handler errors and ends up here, so this is where the interaction's span learns it failed
+    trace.getActiveSpan()?.setStatus({ code: SpanStatusCode.ERROR, message: 'command failed' });
     await handleInteractionError(interaction as Parameters<typeof handleInteractionError>[0], dispatchContext);
   };
 
-  const createOnInteraction = (timing: WebhookDeliveryTiming) => async (data: APIInteraction) => {
+  /** The span label comes from the registered command name or the static part of a component id, never from options or ids of people. */
+  const describeInteraction = (data: APIInteraction): InteractionSpanInfo => {
+    const payload = data.data as { name?: string; custom_id?: string } | undefined;
+    switch (data.type) {
+      case InteractionType.ApplicationCommand:
+        return { kind: 'Command', name: payload?.name };
+      case InteractionType.ApplicationCommandAutocomplete:
+        return { kind: 'Autocomplete', name: payload?.name };
+      case InteractionType.MessageComponent:
+        return { kind: 'Component', name: componentNameFromCustomId(payload?.custom_id ?? '') };
+      default:
+        return { kind: InteractionType[data.type] ?? 'Unknown' };
+    }
+  };
+
+  const createOnInteraction = (timing: WebhookDeliveryTiming) => async (data: APIInteraction) => withInteractionSpan(
+    describeInteraction(data),
+    timing,
+    () => handleInteraction(data, timing),
+  );
+
+  const handleInteraction = async (data: APIInteraction, timing: WebhookDeliveryTiming) => {
     const interaction = interactionFromWebhookPayload(client, data);
     timing.interactionId = interaction.id;
     timing.interactionCreatedAt = interaction.createdTimestamp;

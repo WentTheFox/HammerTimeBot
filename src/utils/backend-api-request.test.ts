@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { backendApiRequest } from './backend-api-request.js';
 import { ILogger } from '../types/logger-types.js';
 
-const mockEnv = vi.hoisted(() => ({ API_URL: 'https://backend.test', API_TOKEN: 'token', READ_ONLY: false }));
+const mockEnv = vi.hoisted(() => ({ API_URL: 'https://backend.test', BACKEND_API_URL: '', API_TOKEN: 'token', READ_ONLY: false }));
 vi.mock('../env.js', () => ({ env: mockEnv }));
 
 const createLogger = () => {
@@ -111,6 +111,25 @@ describe('backendApiRequest', () => {
       const result = await backendApiRequest({ logger: createLogger() }, { path: '/x', method, validator });
       expect(fetchMock).toHaveBeenCalledTimes(1);
       expect(result.ok).toBe(true);
+    });
+  });
+
+  describe('origin', () => {
+    afterEach(() => {
+      mockEnv.BACKEND_API_URL = '';
+    });
+
+    it('calls API_URL when BACKEND_API_URL is not set', async () => {
+      fetchMock.mockResolvedValueOnce(success());
+      await run(createLogger());
+      expect(String(fetchMock.mock.calls[0][0])).toBe('https://backend.test/api/x');
+    });
+
+    it('calls BACKEND_API_URL instead of API_URL when it is set (trailing slash ignored)', async () => {
+      mockEnv.BACKEND_API_URL = 'http://web.internal/';
+      fetchMock.mockResolvedValueOnce(success());
+      await run(createLogger());
+      expect(String(fetchMock.mock.calls[0][0])).toBe('http://web.internal/api/x');
     });
   });
 });

@@ -81,10 +81,13 @@ const createDeferredLogger = (logger: ILogger) => {
 export const isBlockedByReadOnly = (method?: string): boolean =>
   env.READ_ONLY && !['GET', 'HEAD'].includes((method ?? 'GET').toUpperCase());
 
+/** Origin the backend API is called on: BACKEND_API_URL when set, else the public API_URL. */
+const backendOrigin = (): string => (env.BACKEND_API_URL || env.API_URL).replace(/\/+$/, '');
+
 /** Host of the backend API for span attributes; never throws. */
 const apiHost = (): string | undefined => {
   try {
-    return new URL(env.API_URL).host;
+    return new URL(backendOrigin()).host;
   } catch {
     return undefined;
   }
@@ -117,7 +120,7 @@ export const backendApiRequest = async <T>(
         { method: (params.method ?? 'GET').toUpperCase(), route: routeFromApiPath(params.path), host: apiHost(), timeoutMs: params.timeoutMs, attempt: attempt + 1 },
         async ({ headers, setStatus }) => {
           const apiClient = new ApiClient(attemptLogger.logger, {
-            baseUrl: `${env.API_URL}/api`,
+            baseUrl: `${backendOrigin()}/api`,
             authentication: { type: ApiAuthType.AUTHORIZATION_HEADER, getValue: () => env.API_TOKEN },
             fixedHeaders: headers,
           });

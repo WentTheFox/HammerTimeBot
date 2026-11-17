@@ -41,6 +41,12 @@ export const env = defineEnv({
   UA_STRING: z.string().min(1),
   DISCORD_INVITE_URL: z.string().min(1),
   API_URL: z.string().min(1),
+  /**
+   * Origin the backend API calls (backendApiRequest) are sent to. Optional: unset means API_URL. In the cluster this is the in-cluster address of
+   * the SledgeHammerTime web pod, so the calls (settings has a 1 s budget) skip the public route through Cloudflare and the ingress. API_URL
+   * stays the public origin used for links shown to users.
+   */
+  BACKEND_API_URL: z.string().optional().default(''),
   /** SledgeHammerTime backend auth token. Optional: unset means backend API calls run unauthenticated (and fail server-side, which is handled). */
   API_TOKEN: z.string().optional().default(''),
   /**

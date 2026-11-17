@@ -124,7 +124,9 @@ English and Hungarian translations have been included, so no translators will be
 - 🇨🇿 Czech
   - [Blurplix](https://crowdin.com/profile/Blurplix)
   - [klauny](https://crowdin.com/profile/klauny)
-- 🇳🇱 Dutch: [Jesse](https://crowdin.com/profile/Jessuh)
+- 🇳🇱 Dutch
+  - [Jesse](https://crowdin.com/profile/Jessuh)
+  - [SixieP](https://crowdin.com/profile/SixieP)
 - 🇫🇮 Finnish: [nicohele](https://crowdin.com/profile/nicohele)
 - 🇫🇷 French
   - [Cookie Kiro](https://crowdin.com/profile/Cookikui)
@@ -161,6 +163,7 @@ English and Hungarian translations have been included, so no translators will be
 - 🇧🇷 Portuguese, Brazilian
   - [Daniel Souza](https://crowdin.com/profile/dansansou)
   - [leo0six](https://crowdin.com/profile/leo0six)
+  - [ynpz](https://crowdin.com/profile/ynpz)
 - 🇷🇴 Romanian
   - [Ant. Rares](https://crowdin.com/profile/Iepurooy)
   - [mihai](https://crowdin.com/profile/mihaiofficialRO)
@@ -187,7 +190,6 @@ English and Hungarian translations have been included, so no translators will be
   - [Baran Moroğan](https://crowdin.com/profile/okunamayanad)
   - [tututuana](https://crowdin.com/profile/tututuana)
 - 🇺🇦 Ukrainian
-  - [DmitroMeow](https://crowdin.com/profile/DmitroMeow)
   - [GameHacker](https://crowdin.com/profile/GameHacker)
   - [Артем](https://crowdin.com/profile/artenovis9020)
   - [Кухарчук Ярослав](https://crowdin.com/profile/Gamer_Yaroslaw)

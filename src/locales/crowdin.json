@@ -189,10 +189,6 @@
       "username": "barecharge",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/16831061/medium/a10112ec2019490be2c108a3c55cf606.png"
     },
-    "17096866": {
-      "username": "DmitroMeow",
-      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17096866/medium/2761e5e49bb89d33fb4f655592ac19be.png"
-    },
     "17099634": {
       "username": "dansansou",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17099634/medium/8749431c352e1eada5f2e4a67eb35e1d.jpeg",
@@ -260,6 +256,10 @@
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17660166/medium/31a9672afef81938820200b502e357c3.png",
       "fullName": "오렌지"
     },
+    "17745657": {
+      "username": "SixieP",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17745657/medium/bcd96540b32c62f6f4a2fe9ea9cb331f.png"
+    },
     "17804643": {
       "username": "artenovis9020",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17804643/medium/e1386f1b0db35da655e08680e0d4241f.png",
@@ -269,6 +269,10 @@
       "username": "lalauya1122",
       "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17829725/medium/46211e236c0fe5265b9bda2228f3f0a9.jpeg",
       "fullName": "神風神鵝 エホバ神魔狼"
+    },
+    "17968829": {
+      "username": "ynpz",
+      "avatarUrl": "https://crowdin-static.cf-downloads.crowdin.com/avatar/17968829/medium/ca9299f6ae1916ebdd38ab61202b37c7.jpg"
     }
   },
   "languages": {
@@ -445,11 +449,12 @@
     },
     "nl": {
       "translatorIds": [
-        "14730100"
+        "14730100",
+        "17745657"
       ],
       "progress": {
         "approval": 98,
-        "translation": 98
+        "translation": 100
       }
     },
     "no": {
@@ -478,11 +483,12 @@
     "pt-BR": {
       "translatorIds": [
         "14830652",
-        "17099634"
+        "17099634",
+        "17968829"
       ],
       "progress": {
         "approval": 64,
-        "translation": 64
+        "translation": 65
       }
     },
     "ro": {
@@ -541,8 +547,7 @@
       "translatorIds": [
         "15276044",
         "17804643",
-        "17111570",
-        "17096866"
+        "17111570"
       ],
       "progress": {
         "approval": 97,

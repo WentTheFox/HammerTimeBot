@@ -3,6 +3,7 @@ import { ApiAuthType, ApiClient, ApiHttpException, RetryOptions } from '@went.tf
 import { env } from '../env.js';
 import { LoggerContext } from '../types/bot-interaction.js';
 import { ILogger, LogMethod } from '../types/logger-types.js';
+import { routeFromApiPath, withBackendRequestSpan } from './tracing.js';
 
 export interface BackendApiRequest<T> {
   path: string;
@@ -80,6 +81,15 @@ const createDeferredLogger = (logger: ILogger) => {
 export const isBlockedByReadOnly = (method?: string): boolean =>
   env.READ_ONLY && !['GET', 'HEAD'].includes((method ?? 'GET').toUpperCase());
 
+/** Host of the backend API for span attributes; never throws. */
+const apiHost = (): string | undefined => {
+  try {
+    return new URL(env.API_URL).host;
+  } catch {
+    return undefined;
+  }
+};
+
 const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 export const backendApiRequest = async <T>(
@@ -102,20 +112,27 @@ export const backendApiRequest = async <T>(
 
   for (let attempt = 0; ; attempt++) {
     const attemptLogger = createDeferredLogger(logger);
-    const apiClient = new ApiClient(attemptLogger.logger, {
-      baseUrl: `${env.API_URL}/api`,
-      authentication: { type: ApiAuthType.AUTHORIZATION_HEADER, getValue: () => env.API_TOKEN },
-    });
-
     try {
-      const result = await apiClient.request<T>({
-        path: params.path,
-        method: params.method,
-        body: params.body,
-        validator: params.validator,
-        failOnInvalidResponse: params.failOnInvalidResponse,
-        timeoutMs: params.timeoutMs,
-      });
+      const result = await withBackendRequestSpan(
+        { method: (params.method ?? 'GET').toUpperCase(), route: routeFromApiPath(params.path), host: apiHost(), timeoutMs: params.timeoutMs, attempt: attempt + 1 },
+        async ({ headers, setStatus }) => {
+          const apiClient = new ApiClient(attemptLogger.logger, {
+            baseUrl: `${env.API_URL}/api`,
+            authentication: { type: ApiAuthType.AUTHORIZATION_HEADER, getValue: () => env.API_TOKEN },
+            fixedHeaders: headers,
+          });
+          const response = await apiClient.request<T>({
+            path: params.path,
+            method: params.method,
+            body: params.body,
+            validator: params.validator,
+            failOnInvalidResponse: params.failOnInvalidResponse,
+            timeoutMs: params.timeoutMs,
+          });
+          setStatus(response.status);
+          return response;
+        },
+      );
       attemptLogger.flush();
       if (attempt > 0) {
         logger.info(`Request to ${params.path} succeeded on attempt ${attempt + 1}/${maxAttempts}`);

@@ -1,8 +1,9 @@
 // Loaded with `node --require` before the webhook server. Tracing is opt-in and configured purely through the standard
 // OTEL_* environment variables: without OTEL_EXPORTER_OTLP_ENDPOINT (or OTEL_EXPORTER_OTLP_TRACES_ENDPOINT), or with
 // OTEL_SDK_DISABLED=true, this file does nothing and the @opentelemetry/api calls in the app are no-ops.
-// No instrumentations on purpose: the only spans are the per-interaction ones in src/utils/tracing.ts. The HTTP instrumentation
-// would record the webhook URL, whose path is the WEBHOOK_PATH_SECRET.
+// No instrumentations on purpose: the only spans are the hand-made ones in src/utils/tracing.ts (one per interaction, plus one CLIENT
+// span per backend API attempt that also sends a `traceparent` header). The HTTP instrumentation would record the webhook URL, whose
+// path is the WEBHOOK_PATH_SECRET.
 const enabled =
   (process.env.OTEL_EXPORTER_OTLP_ENDPOINT || process.env.OTEL_EXPORTER_OTLP_TRACES_ENDPOINT) &&
   process.env.OTEL_SDK_DISABLED !== 'true';

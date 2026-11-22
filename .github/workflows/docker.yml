@@ -1,7 +1,7 @@
 name: Publish container image
 
 # Publishes ghcr.io/wentthefox/hammertimebot (linux/amd64 + linux/arm64) on every push to main, like Fantastick.
-# Every push gets sha-<7 hex> and sha-<40 hex>. There are no version tags, no `latest` and no `v*` git tags: the commit is
+# Every push gets sha-<7 hex> and sha-<40 hex>. There are no version tags and no `v*` git tags (`latest` is also pushed as a moving convenience tag; deployments pin sha-): the commit is
 # the version. (`mcp-v*` git tags belong to the MCP registry release, see publish-mcp.yml.)
 # Nothing secret is in the image (see .dockerignore).
 on:
@@ -35,6 +35,7 @@ jobs:
             echo "TAGS<<EOF"
             echo "${image}:sha-${GITHUB_SHA:0:7}"
             echo "${image}:sha-${GITHUB_SHA}"
+            echo "${image}:latest"
             echo "EOF"
           } >> "$GITHUB_ENV"
 
